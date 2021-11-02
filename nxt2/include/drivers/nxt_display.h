@@ -12,7 +12,7 @@
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #ifdef __cplusplus
 extern "C" {

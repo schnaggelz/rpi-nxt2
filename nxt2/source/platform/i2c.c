@@ -1,9 +1,10 @@
-#include "../../include/platform/i2c.h"
-#include "../../include/platform/aic.h"
-#include "at91/at91sam7s256.h"
-#include "../../include/platform/irqs.h"
-#include "../../include/platform/ports.h"
-#include "../../include/platform/systick.h"
+#include "platform/i2c.h"
+#include "platform/aic.h"
+#include "platform/irqs.h"
+#include "platform/ports.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7s256.h"
 
 #include <string.h>
 

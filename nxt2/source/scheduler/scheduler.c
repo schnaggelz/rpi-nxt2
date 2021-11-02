@@ -1,5 +1,7 @@
-#include "../../include/scheduler/scheduler.h"
-#include "irqs.h"
+#include "scheduler/scheduler.h"
+
+#include "platform/systypes.h"
+#include "platform/irqs.h"
 
 /* Index of highest priority task. */
 uint8 current_task = 0;
@@ -8,7 +10,7 @@ uint8 current_task = 0;
 uint8 scheduler_busy = 0;
 
 /* Running tasks, [0] always idle task. */
-uint8 running_tasks[OS_MAX_TASKS] = { OS_IDLE_TASK_ID }; 
+uint8 running_tasks[OS_MAX_TASKS] = { OS_IDLE_TASK_ID };
 
 /* Scheduler configuration structure */
 typedef struct os_scheduler 

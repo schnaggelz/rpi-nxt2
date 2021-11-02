@@ -13,14 +13,13 @@
  * slightly early avoids a data over-run. It is a little iffy though!
  */
 
-#include "../../include/platform/twi.h"
+#include "platform/twi.h"
 
-#include "at91/at91sam7.h"
-#include "../../include/platform/irqs.h"
+#include "platform/at91/at91sam7.h"
+#include "platform/irqs.h"
 
-#include "../../include/platform/aic.h"
-#include "../../include/platform/systick.h"
-#include "byte_fifo.h"
+#include "platform/aic.h"
+#include "platform/systick.h"
 
 // Required clock divisor
 #define I2CCLK 400000L

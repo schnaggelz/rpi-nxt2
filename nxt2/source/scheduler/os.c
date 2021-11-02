@@ -1,6 +1,6 @@
-#include "../../include/scheduler/os.h"
+#include "scheduler/os.h"
 
-#include "systick.h"
+#include "platform/systick.h"
 
 /* Flag to notify OS has been started. */
 static volatile uint8 os_started;
@@ -18,7 +18,7 @@ void os_start(void)
     /* OS now running. */
     os_started = 1;
 
-    while (1) 
+    while (1)
     {
         /* Idle loop. */
         systick_wait_ms(100);

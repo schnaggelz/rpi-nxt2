@@ -1,8 +1,7 @@
-#include "../../include/drivers/nxt_lcd.h"
+#include "drivers/nxt_lcd.h"
+#include "drivers/nxt_spi.h"
 
-#include "systick.h"
-
-#include "../../include/drivers/nxt_spi.h"
+#include "platform/systick.h"
 
 static uint8 *display = (uint8 *) 0;
 

@@ -1,8 +1,8 @@
-#include "../../include/drivers/nxt_spi.h"
+#include "drivers/nxt_spi.h"
 
-#include "at91sam7.h"
-#include "irqs.h"
-#include "aic.h"
+#include "platform/irqs.h"
+#include "platform/aic.h"
+#include "platform/at91/at91sam7.h"
 
 const uint8 *display = (uint8 *) 0;
 volatile uint8 dirty = 0;

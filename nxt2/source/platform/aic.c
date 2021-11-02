@@ -5,10 +5,10 @@
  * CPU core for handling, according to each peripheral's configured
  * priority. */
 
-#include "at91/at91sam7.h"
-#include "../../include/platform/irqs.h"
+#include "platform/irqs.h"
+#include "platform/aic.h"
 
-#include "../../include/platform/aic.h"
+#include "platform/at91/at91sam7.h"
 
 /* Default handler installed for all vectors by default. */
 static void aic_default_handler(void)

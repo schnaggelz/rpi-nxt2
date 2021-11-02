@@ -1,8 +1,9 @@
-#include "../../include/drivers/nxt_color_sensor.h"
+#include "drivers/nxt_color_sensor.h"
 
-#include "at91sam7.h"
-#include "ports.h"
-#include "systick.h"
+#include "platform/ports.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
 
 /*  NXT color sensor mode commands (each bit is sent to the sensor) */
 #define COLORSENSOR        (0xB0)

@@ -1,10 +1,9 @@
 /* Provides a 1000Hz tick for the system. */
 
-#include "../../include/platform/systick.h"
-
-#include "at91/at91sam7s256.h"
-#include "../../include/platform/irqs.h"
-#include "../../include/platform/aic.h"
+#include "platform/at91/at91sam7s256.h"
+#include "platform/irqs.h"
+#include "platform/aic.h"
+#include "platform/systick.h"
 
 #define CLK_FREQ 48054841
 #define PIT_FREQ 1000 /* Hz */

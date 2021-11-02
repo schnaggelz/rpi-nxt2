@@ -1,11 +1,11 @@
+#include "platform/udp.h"
+#include "platform/aic.h"
+#include "platform/irqs.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
+
 #include <string.h>
-
-#include "at91/at91sam7.h"
-#include "../../include/platform/irqs.h"
-#include "../../include/platform/udp.h"
-
-#include "../../include/platform/aic.h"
-#include "../../include/platform/systick.h"
 
 #define MAX_BUF   64
 #define EP_OUT    1

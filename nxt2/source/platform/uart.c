@@ -1,11 +1,9 @@
-#include "../../include/platform/uart.h"
+#include "platform/uart.h"
+#include "platform/irqs.h"
+#include "platform/aic.h"
+#include "platform/at91/at91sam7.h"
 
-#include "at91/at91sam7.h"
-#include "../../include/platform/irqs.h"
-#include "../../include/platform/aic.h"
-#include "byte_fifo.h"
-
-#include "../../include/platform/aic.h"
+#include "include/utils/byte_fifo.h"
 
 #define N_UARTS      1
 #define TX_FIFO_SIZE 64

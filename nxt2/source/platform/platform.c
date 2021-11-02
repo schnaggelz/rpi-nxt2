@@ -1,11 +1,9 @@
-#include "at91/at91sam7s256.h"
-
-#include "../../include/platform/platform.h"
-#include "../../include/platform/irqs.h"
-#include "../../include/platform/aic.h"
-#include "../../include/platform/twi.h"
-#include "../../include/platform/systick.h"
-#include "../../include/platform/i2c.h"
+#include "platform/platform.h"
+#include "platform/irqs.h"
+#include "platform/aic.h"
+#include "platform/twi.h"
+#include "platform/systick.h"
+#include "platform/i2c.h"
 
 void at91_platform_init()
 {

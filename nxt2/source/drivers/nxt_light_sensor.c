@@ -1,11 +1,7 @@
-#include "../../include/drivers/nxt_light_sensor.h"
+#include "drivers/nxt_light_sensor.h"
 
-#include "at91sam7.h"
-#include "ports.h"
-#include "systick.h"
-
-#include "../../include/drivers/nxt_sensors.h"
-#include "../../include/drivers/nxt_avr.h"
+#include "drivers/nxt_sensors.h"
+#include "drivers/nxt_avr.h"
 
 void nxt_light_sensor_init(uint8 port)
 {

@@ -1,24 +1,20 @@
 /*
- * This module handles communications between the NXT main ARM processor and
- * the AVR processor. The AVR provides support for the motors, analogue sensors
- * keyboard and power. The two processors are linked via a TWI connection. This
- * is used to exchange a message every 1ms. The message alternates between
- * sending commands to the AVR and receiving status from it.
- * NOTES:
- * The time window for read requests is very tight. On some NXT devices it can
- * be exceeded. This code has been optimized to maximize the read window and
- * to handle the times that the window is exceeded.
- */
-#include "../../include/drivers/nxt_avr.h"
+* This module handles communications between the NXT main ARM processor and
+* the AVR processor. The AVR provides support for the motors, analogue sensors
+* keyboard and power. The two processors are linked via a TWI connection. This
+* is used to exchange a message every 1ms. The message alternates between
+* sending commands to the AVR and receiving status from it.
+* NOTES:
+* The time window for read requests is very tight. On some NXT devices it can
+* be exceeded. This code has been optimized to maximize the read window and
+* to handle the times that the window is exceeded.
+*/
+#include "drivers/nxt_avr.h"
+#include "drivers/nxt_motors.h"
+
+#include "platform/twi.h"
 
 #include <string.h>
-
-#include "at91sam7s256.h"
-
-#include "twi.h"
-#include "systick.h"
-
-#include "../../include/drivers/nxt_motors.h"
 
 /* Link states */
 #define LS_CLOSED 0

@@ -1,10 +1,9 @@
-#include "../../include/drivers/nxt_display.h"
+#include "drivers/nxt_display.h"
+#include "drivers/nxt_lcd.h"
 
 #include <string.h>
 
-#include "systick.h"
-
-#include "../../include/drivers/nxt_lcd.h"
+#include "platform/systick.h"
 
 #define DISPLAY_WIDTH (NXT_LCD_WIDTH)
 #define DISPLAY_DEPTH (NXT_LCD_DEPTH)
