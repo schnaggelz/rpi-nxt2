@@ -72,8 +72,8 @@ set(FW_PLATFORM_SOURCE_FILES
 )
 
 set(FW_UTILS_HEADER_FILES
-    header/utils/byte_fifo.h
-    header/utils/maths.h
+    include/utils/byte_fifo.h
+    include/utils/maths.h
 )
 
 set(FW_UTILS_SOURCE_FILES
@@ -162,6 +162,8 @@ add_executable(${PROJECT_NAME}
     ${FW_OS_SOURCE_FILES}
     ${FW_DRIVERS_INCLUDE_FILES}
     ${FW_DRIVERS_SOURCE_FILES}
+    ${FW_UTILS_HEADER_FILES}
+    ${FW_UTILS_SOURCE_FILES}
     ${FW_CPP_API_INCLUDE_FILES}
     ${FW_CPP_API_SOURCE_FILES}
 )
