@@ -40,9 +40,6 @@ os_task_t;
 extern "C" {
 #endif
 
-/* Application background task. */
-extern void app_bg_task();
-
 #ifdef __cplusplus
 }
 #endif

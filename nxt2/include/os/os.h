@@ -21,9 +21,6 @@
 extern "C" {
 #endif
 
-/* Init application callback. */
-extern void os_app_init();
-
 #ifdef __cplusplus
 }
 #endif

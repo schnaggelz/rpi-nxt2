@@ -12,6 +12,13 @@
 
 #include "platform/systick.h"
 
+/* Init application callback. */
+extern void os_app_init(void);
+
+#ifdef NXT_DUMMY_APP_INIT
+void os_app_init(void) {};
+#endif
+
 /* Flag to notify OS has been started. */
 static volatile uint8 os_started;
 
@@ -44,3 +51,6 @@ uint8 os_running(void)
 {
     return os_started;
 }
+
+
+

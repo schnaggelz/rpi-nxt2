@@ -170,5 +170,9 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE NXT_DUMMY_APP_BG_TASK NXT_DUMMY_APP_INIT
+)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 generate_object(${PROJECT_NAME})

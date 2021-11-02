@@ -9,9 +9,14 @@
 *******************************************************************************/
 
 extern void nxt_bg_task(void);
+extern void app_bg_task(void);
 
-/* Background processing called by the 1kHz 
-   timer interrupt hander. */
+#ifdef NXT_DUMMY_APP_BG_TASK
+void app_bg_task(void) {};
+#endif
+
+/* Background processing called by the 1kHz
+   timer interrupt handler. */
 void bg_task()
 {
     /* System background process. */
