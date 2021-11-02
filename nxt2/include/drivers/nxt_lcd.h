@@ -1,5 +1,5 @@
 #ifndef __NXT_LCD_H__
-#  define __NXT_LCD_H__
+#define __NXT_LCD_H__
 
 #include "platform/systypes.h"
 

@@ -19,6 +19,7 @@ unsigned irqs_get_and_restore(unsigned val);
 unsigned fiqs_get_and_restore(unsigned val);
 unsigned irqs_get_and_enable(void);
 unsigned fiqs_get_and_enable(void);
+
 void irqs_enable(void);
 void fiqs_enable(void);
 
