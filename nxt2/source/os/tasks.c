@@ -1,4 +1,4 @@
-#include "../../include/scheduler/tasks.h"
+#include "os/tasks.h"
 
 extern void nxt_bg_task(void);
 

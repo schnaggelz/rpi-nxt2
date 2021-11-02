@@ -80,16 +80,16 @@ set(FW_UTILS_SOURCE_FILES
     source/utils/byte_fifo.c
 )
 
-set(FW_SCHEDULER_INCLUDE_FILES
-    include/scheduler/scheduler.h
-    include/scheduler/tasks.h
-    include/scheduler/os.h
+set(FW_OS_INCLUDE_FILES
+    include/os/scheduler.h
+    include/os/tasks.h
+    include/os/os.h
 )
 
-set(FW_SCHEDULER_SOURCE_FILES
-    source/scheduler/scheduler.c
-    source/scheduler/tasks.c
-    source/scheduler/os.c
+set(FW_OS_SOURCE_FILES
+    source/os/scheduler.c
+    source/os/tasks.c
+    source/os/os.c
 )
 
 set(FW_DRIVERS_INCLUDE_FILES
@@ -158,8 +158,8 @@ add_executable(${PROJECT_NAME}
     ${FW_STARTUP_SOURCE_FILES}
     ${FW_PLATFORM_INCLUDE_FILES}
     ${FW_PLATFORM_SOURCE_FILES}
-    ${FW_SCHEDULER_INCLUDE_FILES}
-    ${FW_SCHEDULER_SOURCE_FILES}
+    ${FW_OS_INCLUDE_FILES}
+    ${FW_OS_SOURCE_FILES}
     ${FW_DRIVERS_INCLUDE_FILES}
     ${FW_DRIVERS_SOURCE_FILES}
     ${FW_CPP_API_INCLUDE_FILES}

@@ -1,4 +1,4 @@
-#include "scheduler/scheduler.h"
+#include "os/scheduler.h"
 
 #include "platform/systypes.h"
 #include "platform/irqs.h"
