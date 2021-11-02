@@ -235,8 +235,7 @@ sint32 udp_read(uint8* buf, uint16 off, uint16 len)
 
         /* We may have an enable/reset pending - do it now if there
            is no data in the buffers. */
-        if (delay_on &&
-            ((*AT91C_UDP_CSR1) & AT91C_UDP_RXBYTECNT) == 0)
+        if (delay_on && ((*AT91C_UDP_CSR1) & AT91C_UDP_RXBYTECNT) == 0)
         {
             delay_on = 0;
 
@@ -374,7 +373,7 @@ static void udp_enumerate()
     {
         /* Clear the state */
         UDP_CLEAREPFLAGS(*AT91C_UDP_CSR0,
-                (AT91C_UDP_ISOERROR | AT91C_UDP_FORCESTALL));
+                         (AT91C_UDP_ISOERROR | AT91C_UDP_FORCESTALL));
     }
 
     if (!((*AT91C_UDP_CSR0) & AT91C_UDP_RXSETUP))
@@ -400,7 +399,8 @@ static void udp_enumerate()
        to allow initialization/enumeration operations to continue to work when
        a program that is not using USB is running, but to prevent attempts to
        perform actual data transfers. */
-    if ((config_state & (ST_DISABLED | ST_CONFIGURED)) == (ST_DISABLED | ST_CONFIGURED) &&
+    if ((config_state & (ST_DISABLED | ST_CONFIGURED)) ==
+            (ST_DISABLED | ST_CONFIGURED) &&
         (req < STD_GET_STATUS_ZERO || req > STD_GET_STATUS_ENDPOINT))
     {
         udp_send_stall();
@@ -408,8 +408,7 @@ static void udp_enumerate()
     }
     switch (req)
     {
-    case STD_GET_DESCRIPTOR:
-    {
+    case STD_GET_DESCRIPTOR: {
         if (val == 0x100) /* Device descriptor */
         {
             udp_send_control((uint8*)dd, MIN(sizeof(dd), len));
@@ -459,14 +458,14 @@ static void udp_enumerate()
 
             /* Now enable the endpoints ... */
             UDP_SETEPFLAGS(*AT91C_UDP_CSR1,
-                    (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_BULK_OUT));
+                           (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_BULK_OUT));
             UDP_SETEPFLAGS(*AT91C_UDP_CSR2,
-                    (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_BULK_IN));
+                           (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_BULK_IN));
             UDP_SETEPFLAGS(*AT91C_UDP_CSR3, AT91C_UDP_EPTYPE_INT_IN);
 
             /* ... and reset them. */
             (*AT91C_UDP_RSTEP) |=
-                    (AT91C_UDP_EP1 | AT91C_UDP_EP2 | AT91C_UDP_EP3);
+                (AT91C_UDP_EP1 | AT91C_UDP_EP2 | AT91C_UDP_EP3);
             (*AT91C_UDP_RSTEP) &=
                 ~(AT91C_UDP_EP1 | AT91C_UDP_EP2 | AT91C_UDP_EP3);
             if (config_state & ST_DISABLED)
@@ -481,9 +480,9 @@ static void udp_enumerate()
             *AT91C_UDP_GLBSTATE = AT91C_UDP_FADDEN;
             delay_on = 0;
             UDP_CLEAREPFLAGS(*AT91C_UDP_CSR1,
-                    AT91C_UDP_EPEDS | AT91C_UDP_FORCESTALL);
+                             AT91C_UDP_EPEDS | AT91C_UDP_FORCESTALL);
             UDP_CLEAREPFLAGS(*AT91C_UDP_CSR2,
-                    AT91C_UDP_EPEDS | AT91C_UDP_FORCESTALL);
+                             AT91C_UDP_EPEDS | AT91C_UDP_FORCESTALL);
             *AT91C_UDP_CSR3 = 0;
         }
 
@@ -671,9 +670,9 @@ void udp_isr_handler(void)
         reset();
 
         UDP_SETEPFLAGS(*AT91C_UDP_CSR0,
-                (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_CTRL));
+                       (AT91C_UDP_EPEDS | AT91C_UDP_EPTYPE_CTRL));
         *AT91C_UDP_IER =
-                (AT91C_UDP_EPINT0 | AT91C_UDP_RXSUSP | AT91C_UDP_RXRSM);
+            (AT91C_UDP_EPINT0 | AT91C_UDP_RXSUSP | AT91C_UDP_RXRSM);
         return;
     }
     if (*AT91C_UDP_ISR & SUSPEND_INT)
@@ -751,7 +750,7 @@ void udp_enable(sint32 reset)
        some of the USB operations can run for a relatively long time. */
     aic_mask_off(AT91C_PERIPHERAL_ID_UDP);
     aic_set_vector(AT91C_PERIPHERAL_ID_UDP, AIC_INT_LEVEL_LOWEST,
-            (uint32)udp_isr_handler);
+                   (uint32)udp_isr_handler);
     aic_mask_on(AT91C_PERIPHERAL_ID_UDP);
 
     *AT91C_UDP_IER = (AT91C_UDP_EPINT0 | AT91C_UDP_RXSUSP | AT91C_UDP_RXRSM);
