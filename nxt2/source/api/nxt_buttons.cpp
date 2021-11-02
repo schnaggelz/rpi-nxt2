@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_buttons.hpp"
+#include "api/nxt_buttons.hpp"
 
-#include "nxt_buttons.h"
+#include "drivers/nxt_buttons.h"
 
 using namespace nxt;
 

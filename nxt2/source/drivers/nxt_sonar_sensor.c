@@ -1,8 +1,8 @@
-#include "../../include/drivers/nxt_sonar_sensor.h"
+#include "drivers/nxt_sonar_sensor.h"
 
-#include "i2c.h"
+#include "drivers/nxt_sensors.h"
 
-#include "../../include/drivers/nxt_sensors.h"
+#include "platform/i2c.h"
 
 static sint32 distance_state[4] = { -1, -1, -1, -1 }; /* -1: sensor is not connected */
 

@@ -1,8 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_utils.hpp"
+#include "api/nxt_ht_compass_sensor.hpp"
 
-#include "../../../include/drivers/cpp/nxt_ht_compass_sensor.hpp"
-
-#include "nxt_ht_compass_sensor.h"
+#include "drivers/nxt_ht_compass_sensor.h"
 
 using namespace nxt::ht;
 

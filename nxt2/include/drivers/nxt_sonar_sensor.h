@@ -1,7 +1,7 @@
 #ifndef __NXT_SONAR_SENSOR_H__
 #define __NXT_SONAR_SENSOR_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #ifdef __cplusplus
 extern "C" {

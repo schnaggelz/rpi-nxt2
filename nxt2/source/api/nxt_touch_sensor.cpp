@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_touch_sensor.hpp"
+#include "api//nxt_touch_sensor.hpp"
 
-#include "nxt_touch_sensor.h"
+#include "drivers/nxt_touch_sensor.h"
 
 using namespace nxt;
 

@@ -1,10 +1,10 @@
-#include "../../include/drivers/nxt_sensors.h"
+#include "drivers/nxt_sensors.h"
 
-#include "at91sam7s256.h"
-#include "i2c.h"
+#include "drivers/nxt_avr.h"
 
-#include "../../include/drivers/nxt_devices.h"
-#include "../../include/drivers/nxt_avr.h"
+#include "platform/i2c.h"
+
+#include "platform/at91/at91sam7s256.h"
 
 typedef struct
 {
@@ -12,7 +12,7 @@ typedef struct
     sint8 mode;
     sint8 boolean;
     sint16 raw;
-    sint16 value;    
+    sint16 value;
 } sensor_port;
 
 static sensor_port sensor_ports[NXT_NUM_SENSOR_PORTS] =

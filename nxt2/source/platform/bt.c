@@ -1,9 +1,9 @@
-#include "../../include/platform/bt.h"
+#include "platform/bt.h"
 
-#include "at91/at91sam7.h"
-#include "../../include/platform/uart.h"
-#include "../../include/platform/aic.h"
-#include "../../include/platform/systick.h"
+#include "platform/aic.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
 
 #include <string.h>
 

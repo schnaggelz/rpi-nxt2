@@ -1,8 +1,8 @@
-#include "../../include/drivers/nxt_ht_ir_seeker.h"
+#include "drivers/nxt_ht_ir_seeker.h"
 
-#include "i2c.h"
+#include "drivers/nxt_sensors.h"
 
-#include "../../include/drivers/nxt_sensors.h"
+#include "platform/i2c.h"
 
 static uint8 sensor_data_state[12];
 

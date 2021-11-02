@@ -1,8 +1,8 @@
-#include "../../include/drivers/nxt_ht_compass_sensor.h"
+#include "drivers/nxt_ht_compass_sensor.h"
 
-#include "i2c.h"
+#include "drivers/nxt_sensors.h"
 
-#include "../../include/drivers/nxt_sensors.h"
+#include "platform/i2c.h"
 
 void nxt_ht_compass_sensor_init(uint8 port)
 {
