@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_sensing_motor.hpp"
+#include "api/nxt_sensing_motor.hpp"
 
-#include "nxt_motors.h"
+#include "drivers/nxt_motors.h"
 
 using namespace nxt;
 

@@ -1,7 +1,7 @@
 #ifndef __NXT_SOUND_H__
 #define __NXT_SOUND_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 void nxt_sound_init(void);
 void nxt_sound_enable(void);

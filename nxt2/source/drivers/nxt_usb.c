@@ -1,8 +1,8 @@
-#include <stddef.h>
-#include <string.h>
+#include "drivers/nxt_usb.h"
 
-#include "udp.h"
-#include "../../include/drivers/nxt_usb.h"
+#include "platform/udp.h"
+
+#include <string.h>
 
 /*==============================================================================
  * NXT USB API for LEGO fantom driver

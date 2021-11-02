@@ -1,8 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_utils.hpp"
+#include "api/nxt_ht_ir_seeker.hpp"
 
-#include "../../../include/drivers/cpp/nxt_ht_ir_seeker.hpp"
-
-#include "nxt_ht_ir_seeker.h"
+#include "drivers/nxt_ht_ir_seeker.h"
 
 using namespace nxt::ht;
 

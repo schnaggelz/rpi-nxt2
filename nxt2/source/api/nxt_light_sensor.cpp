@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_light_sensor.hpp"
+#include "api/nxt_light_sensor.hpp"
 
-#include "nxt_light_sensor.h"
+#include "drivers/nxt_light_sensor.h"
 
 using namespace nxt;
 

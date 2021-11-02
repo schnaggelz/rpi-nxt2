@@ -1,9 +1,8 @@
-#include "../../../include/drivers/cpp/nxt_utils.hpp"
-#include "../../../include/drivers/cpp/nxt_color_sensor.hpp"
+#include "api/nxt_color_sensor.hpp"
 
-#include "nxt_color_sensor.h"
+#include "api/nxt_utils.hpp"
 
-using namespace nxt;
+#include "drivers/nxt_color_sensor.h"
 
 void ColorSensor::init()
 {

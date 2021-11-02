@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_distance_sensor.hpp"
+#include "api/nxt_distance_sensor.hpp"
 
-#include "nxt_sonar_sensor.h"
+#include "drivers/nxt_sonar_sensor.h"
 
 using namespace nxt;
 

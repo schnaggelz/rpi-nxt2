@@ -1,6 +1,6 @@
-#include "../../../include/drivers/cpp/nxt_usb_port.hpp"
+#include "api/nxt_usb_port.hpp"
 
-#include "nxt_usb.h"
+#include "drivers/nxt_usb.h"
 
 using namespace nxt;
 

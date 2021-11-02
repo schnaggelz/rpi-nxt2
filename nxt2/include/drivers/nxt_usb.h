@@ -1,7 +1,7 @@
 #ifndef _NXT_USB_H_
 #define _NXT_USB_H_
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define MAX_DEV_NAME_LEN 16
 #define MAX_USB_DATA_LEN 64
