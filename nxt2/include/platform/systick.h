@@ -1,0 +1,26 @@
+#ifndef  __SYSTICK_H__
+#define __SYSTICK_H__
+
+#include "systypes.h"
+
+#define CLOCK_FREQUENCY 48054850
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void systick_init(void);
+void systick_wait_ms(uint32 ms);
+void systick_wait_ns(uint32 ns);
+void systick_test(void);
+void systick_suspend(void);
+void systick_resume(void);
+
+uint32 systick_get_ms(void);
+uint64 systick_get_ns(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
