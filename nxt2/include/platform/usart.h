@@ -17,7 +17,7 @@ typedef struct
   uint8 out_base;
 } usart;
 
-usart *usart_allocate(AT91S_USART *dev, AT91S_PDC *dma, int inSz, int outSz);
+usart *usart_allocate(AT91S_USART *dev, AT91S_PDC *dma, int32 in_size, int32 out_size);
 void usart_enable(usart *us);
 void usart_disable(usart *us);
 void usart_free(usart *us);
