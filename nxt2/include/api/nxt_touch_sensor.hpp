@@ -5,16 +5,16 @@
 
 namespace nxt
 {
-    class TouchSensor : public Sensor
+class TouchSensor : public Sensor
+{
+  public:
+    TouchSensor(std::uint8_t port_number)
+        : Sensor(port_number)
     {
-    public:
-        TouchSensor(uint8_t port_number)
-            : Sensor(port_number)
-        {
-        }
+    }
 
-        bool isPressed();
-    };
+    bool isPressed();
 };
+}; // namespace nxt
 
 #endif /* __NXT_TOUCH_SENSOR_HPP__ */

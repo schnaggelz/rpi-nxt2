@@ -5,22 +5,21 @@
 
 namespace nxt
 {
-    enum class Button
-    {
-        ENTER,
-        ESC,
-        LEFT,
-        RIGHT
-    };
-
-    class Buttons
-    {
-    public:
-
-        Buttons() = default;
-
-        bool isPressed(Button button);
-    };
+enum class Button : std::uint8_t
+{
+    ENTER,
+    ESC,
+    LEFT,
+    RIGHT
 };
+
+class Buttons
+{
+  public:
+    Buttons() = default;
+
+    bool isPressed(Button button);
+};
+} // namespace nxt
 
 #endif /* __NXT_BUTTONS_HPP__ */

@@ -2,8 +2,8 @@
 
 #include "drivers/nxt_motors.h"
 
-using namespace nxt;
-
+namespace nxt
+{
 void SensingMotor::init()
 {
     nxt_motor_set_speed(_port_number, 0, _brake ? 1 : 0);
@@ -25,3 +25,4 @@ void SensingMotor::setSpeed(int32_t speed)
 
     nxt_motor_set_speed(_port_number, speed, _brake ? 1 : 0);
 }
+} // namespace nxt

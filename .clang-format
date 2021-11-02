@@ -10,6 +10,7 @@ BraceWrapping:
   AfterFunction: true
   AfterControlStatement: true
   AfterNamespace: true
+  "AfterClass": true
   AfterStruct: true
   AfterEnum: true
   BeforeElse: true

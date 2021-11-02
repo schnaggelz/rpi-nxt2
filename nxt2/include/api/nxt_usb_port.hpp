@@ -5,21 +5,19 @@
 
 namespace nxt
 {
-    class USBPort
-    {
-    public:
-        USBPort() = default;
+class USBPort
+{
+  public:
+    USBPort() = default;
 
-        bool isConnected();
+    bool isConnected();
 
-        bool read(nxt::USBData& data);
-        bool write(nxt::USBData& data);
+    bool read(nxt::USBData& data);
+    bool write(nxt::USBData& data);
 
-        void init();
-        void exit();
-
-    private:
-    };
+    void init();
+    void exit();
 };
+} // namespace nxt
 
 #endif /* __NXT_USB_PORT_HPP__ */

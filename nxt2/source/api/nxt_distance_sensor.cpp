@@ -2,8 +2,8 @@
 
 #include "drivers/nxt_sonar_sensor.h"
 
-using namespace nxt;
-
+namespace nxt
+{
 void DistanceSensor::init()
 {
     nxt_sonar_sensor_init(_port_number);
@@ -19,3 +19,4 @@ void DistanceSensor::read()
     _current_distance = nxt_sonar_sensor_get_distance(_port_number);
 }
 
+} // namespace nxt

@@ -7,29 +7,30 @@ namespace nxt
 {
 namespace ht
 {
-    class CompassSensor : public Sensor
+class CompassSensor : public Sensor
+{
+  public:
+    CompassSensor(std::uint8_t port_number)
+        : Sensor(port_number), _heading(0xFFFF)
     {
-    public:
-        CompassSensor(uint8_t port_number)
-            : Sensor(port_number)
-            , _heading(0xFFFF)
-        {
-        }
+    }
 
-        uint16_t getHeading() { return _heading; }
+    std::uint16_t getHeading()
+    {
+        return _heading;
+    }
 
-        void init() override;
-        void read() override;
-        void exit() override;
+    void init() override;
+    void read() override;
+    void exit() override;
 
-        bool calibrate();
+    bool calibrate();
 
-    private:
+  private:
+    std::int16_t _heading;
+};
 
-        int16_t _heading;
-
-    };
-} // ht
-} // nxt
+} // namespace ht
+} // namespace nxt
 
 #endif /* __NXT_HT_COMPASS_SENSOR_HPP__ */

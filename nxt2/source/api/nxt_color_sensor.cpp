@@ -4,6 +4,8 @@
 
 #include "drivers/nxt_color_sensor.h"
 
+namespace nxt
+{
 void ColorSensor::init()
 {
     nxt_color_sensor_init(_port_number);
@@ -30,30 +32,25 @@ void ColorSensor::setMode(ColorSensorMode mode)
 {
     switch (mode)
     {
-        case ColorSensorMode::COLOR_SENSOR:
-            nxt_color_sensor_set_mode(
-                _port_number, NXT_COLORSENSOR);
-            break;
+    case ColorSensorMode::COLOR_SENSOR:
+        nxt_color_sensor_set_mode(_port_number, NXT_COLORSENSOR);
+        break;
 
-        case ColorSensorMode::LIGHT_SENSOR_RED:
-            nxt_color_sensor_set_mode(
-                _port_number, NXT_LIGHTSENSOR_RED);
-            break;
+    case ColorSensorMode::LIGHT_SENSOR_RED:
+        nxt_color_sensor_set_mode(_port_number, NXT_LIGHTSENSOR_RED);
+        break;
 
-        case ColorSensorMode::LIGHT_SENSOR_GREEN:
-            nxt_color_sensor_set_mode(
-                _port_number, NXT_LIGHTSENSOR_GREEN);
-            break;
+    case ColorSensorMode::LIGHT_SENSOR_GREEN:
+        nxt_color_sensor_set_mode(_port_number, NXT_LIGHTSENSOR_GREEN);
+        break;
 
-        case ColorSensorMode::LIGHT_SENSOR_BLUE:
-            nxt_color_sensor_set_mode(
-                _port_number, NXT_LIGHTSENSOR_BLUE);
-            break;
+    case ColorSensorMode::LIGHT_SENSOR_BLUE:
+        nxt_color_sensor_set_mode(_port_number, NXT_LIGHTSENSOR_BLUE);
+        break;
 
-        case ColorSensorMode::LIGHT_SENSOR_NONE:
-            nxt_color_sensor_set_mode(
-                _port_number, NXT_LIGHTSENSOR_NONE);
-            break;
+    case ColorSensorMode::LIGHT_SENSOR_NONE:
+        nxt_color_sensor_set_mode(_port_number, NXT_LIGHTSENSOR_NONE);
+        break;
     }
 
     _sensor_mode = mode;
@@ -68,3 +65,5 @@ int16_t ColorSensor::getLight()
 {
     return _light_data;
 }
+
+} // namespace nxt

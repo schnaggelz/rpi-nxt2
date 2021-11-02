@@ -11,19 +11,17 @@ namespace nxt
 
 class Sensor
 {
-public:
-    Sensor(uint8_t port_number) 
-        : _port_number(port_number) {};
+  public:
+    Sensor(std::uint8_t port_number) : _port_number(port_number){};
 
-    virtual void init() {};
-    virtual void read() {};
-    virtual void exit() {};
+    virtual void init(){};
+    virtual void read(){};
+    virtual void exit(){};
 
-protected:
-
-    uint8_t _port_number;
+  protected:
+    std::uint8_t _port_number;
 };
 
-} // nxt
+} // namespace nxt
 
 #endif /* __NXT_SENSOR_HPP__ */

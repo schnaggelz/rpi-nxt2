@@ -5,25 +5,26 @@
 
 namespace nxt
 {
-    class LightSensor : public Sensor
+class LightSensor : public Sensor
+{
+  public:
+    LightSensor(std::uint8_t port_number)
+        : Sensor(port_number), _brightness(0)
     {
-    public:
-        LightSensor(uint8_t port_number)
-            : Sensor(port_number)
-            , _brightness(0)
-        {
-        }
+    }
 
-        void init() override;
-        void read() override;
-        void exit() override;
+    void init() override;
+    void read() override;
+    void exit() override;
 
-        int16_t getBrightness() { return _brightness; };
+    std::int16_t getBrightness()
+    {
+        return _brightness;
+    }
 
-    private:
-
-        int16_t _brightness;
-    };
+  private:
+    std::int16_t _brightness;
 };
+} // namespace nxt
 
 #endif /* __NXT_LIGHT_SENSOR_HPP__ */
