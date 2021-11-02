@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (C) 2012 T. Reich
+ *
+ * This file is part of rpi-nxt2 experiment. Some code was inspired by the
+ * Lejos project.
+ *
+ * NXT display driver code.
+ *
+ * License notes see LICENSE.txt
+ ******************************************************************************/
+
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 

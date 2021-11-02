@@ -1,8 +1,9 @@
 #ifndef __SCHEDULER_H__
 #define __SCHEDULER_H__
 
-#include "systypes.h"
 #include "tasks.h"
+
+#include "platform/systypes.h"
 
 #define OS_MAX_TASKS 9
 #define OS_TICK_RATE 1    /* 1 ms */

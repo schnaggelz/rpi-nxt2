@@ -1,7 +1,7 @@
 #ifndef __TASKS_H__
 #define __TASKS_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define OS_IDLE_TASK_ID 255
 

@@ -1,7 +1,7 @@
 #ifndef __NXT_SENSORS_H__
 #define __NXT_SENSORS_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define NXT_LOWSPEED_PORT_9V 1
 #define NXT_LOWSPEED_PORT    2

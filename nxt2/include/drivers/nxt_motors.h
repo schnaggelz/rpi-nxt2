@@ -1,7 +1,7 @@
 #ifndef __NXT_MOTORS_H__
 #define __NXT_MOTORS_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define NXT_NUM_MOTOR_PORTS  3
 

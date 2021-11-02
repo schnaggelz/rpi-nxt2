@@ -1,10 +1,11 @@
 #ifndef __OS_H__
 #define __OS_H__
 
-#include "systypes.h"
-#include "systick.h"
 #include "scheduler.h"
 #include "tasks.h"
+
+#include "platform/systypes.h"
+#include "platform/systick.h"
 
 #ifdef __cplusplus
 extern "C" {

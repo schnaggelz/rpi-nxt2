@@ -1,7 +1,7 @@
 #ifndef __NXT_LCD_H__
 #  define __NXT_LCD_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define NXT_LCD_WIDTH 100
 #define NXT_LCD_DEPTH 8

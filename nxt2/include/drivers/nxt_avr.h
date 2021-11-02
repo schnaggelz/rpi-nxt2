@@ -1,7 +1,7 @@
 #ifndef __NXT_AVR_H__
 #define __NXT_AVR_H__
 
-#include "systypes.h"
+#include "platform/systypes.h"
 
 #define NXT_AVR_ADDRESS   1
 #define NXT_AVR_N_OUTPUTS 4
