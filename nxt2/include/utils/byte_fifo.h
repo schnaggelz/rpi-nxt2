@@ -1,7 +1,7 @@
 #ifndef __BFIFO_H__
 #define __BFIFO_H__
 
-#include "../../include/platform/systypes.h"
+#include "include/platform/systypes.h"
 
 /* The byte FIFO control structure. */
 struct byte_fifo
