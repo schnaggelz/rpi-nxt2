@@ -1,4 +1,5 @@
-#include "rtos/os.h"
+#include "scheduler/os.h"
+
 #include "platform/platform.h"
 
 /* External init functions. */

@@ -5,7 +5,7 @@ Purpose : Sample initialisation for ARM7
 --------- END-OF-HEADER ----------------------------------------------
 */
 
-#include "at91sam7s256.h"
+#include "platform/at91/at91sam7s256.h"
 
 /* Shorthand for addressing the System Controller structure defined in
  * the AT91 platform package, where the AIC's registers are defined.
