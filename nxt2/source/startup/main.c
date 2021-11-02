@@ -1,4 +1,4 @@
-#include "scheduler/os.h"
+#include "os/os.h"
 
 #include "platform/platform.h"
 

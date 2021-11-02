@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment.
+*
+* Simple run-to-completion tasker. Not really an OS, but we name it like that.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "os/os.h"
 
 #include "platform/systick.h"

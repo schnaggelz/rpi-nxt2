@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment.
+*
+* Simple run-to-completion tasker. Not really an OS, but we name it like that.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __TASKS_H__
 #define __TASKS_H__
 

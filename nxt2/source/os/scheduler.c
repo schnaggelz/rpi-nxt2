@@ -1,9 +1,18 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment.
+*
+* Simple run-to-completion tasker. Not really an OS, but we name it like that.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "os/scheduler.h"
 
 #include "platform/systypes.h"
-#include "platform/irqs.h"
 
-/* Index of highest priority task. */
+/* Index of the highest priority task. */
 uint8 current_task = 0;
 
 /* Busy state */

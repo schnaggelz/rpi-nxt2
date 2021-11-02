@@ -1,4 +1,12 @@
-#include "os/tasks.h"
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment.
+*
+* Simple run-to-completion tasker. Not really an OS, but we name it like that.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
 
 extern void nxt_bg_task(void);
 
