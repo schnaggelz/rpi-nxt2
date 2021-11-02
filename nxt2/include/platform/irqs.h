@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __IRQS_H__
 #define __IRQS_H__
 

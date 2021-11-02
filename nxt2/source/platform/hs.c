@@ -1,6 +1,12 @@
-/**
- * High Speed / RS485 Interface
- */
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Driver for the High Speed / RS485 interface.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
 
 #include "platform/hs.h"
 

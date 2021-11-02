@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Initialisation for ARM7
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "os/os.h"
 
 #include "platform/platform.h"

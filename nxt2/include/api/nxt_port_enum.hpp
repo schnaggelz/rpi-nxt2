@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* NXT C++ driver API
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __NXT_PORT_ENUM_HPP__
 #define __NXT_PORT_ENUM_HPP__
 

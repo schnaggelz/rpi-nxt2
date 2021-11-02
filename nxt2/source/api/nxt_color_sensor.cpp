@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* NXT C++ driver API
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "api/nxt_color_sensor.hpp"
 
 #include "api/nxt_utils.hpp"

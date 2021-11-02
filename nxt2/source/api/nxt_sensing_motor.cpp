@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* NXT C++ driver API
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "api/nxt_sensing_motor.hpp"
 
 #include "drivers/nxt_motors.h"

@@ -1,3 +1,15 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Generic methods to support I/O to an AT91 usart. The actual detailed
+* hardware setup must be performed by a hardware specific set of
+* functions before calling the enable methods provided here.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 /**
  * Generic methods to support I/O to an AT91 usart. The actual detailed
  * hardware setup must be performed by a hardware specific set of

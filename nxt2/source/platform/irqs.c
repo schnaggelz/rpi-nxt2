@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "platform/irqs.h"
 
 #define IRQ_MASK 0x00000080

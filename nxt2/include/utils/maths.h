@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __MATHS_H__
 #define __MATHS_H__
 

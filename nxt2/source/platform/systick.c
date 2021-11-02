@@ -1,4 +1,14 @@
-/* Provides a 1000Hz tick for the system. */
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Provides a 1000Hz tick for the system.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
+
 #include "platform/systick.h"
 
 #include "platform/irqs.h"

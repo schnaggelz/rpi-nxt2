@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Driver for the AT91SAM7's Bluetooth PIO.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __BT_H__
 #define __BT_H__
 

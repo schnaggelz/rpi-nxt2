@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* NXT C++ driver API
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __NXT_TOUCH_SENSOR_HPP__
 #define __NXT_TOUCH_SENSOR_HPP__
 

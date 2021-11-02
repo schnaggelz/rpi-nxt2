@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Driver for the I2C interface.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "platform/i2c.h"
 
 #include "platform/aic.h"

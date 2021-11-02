@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __UDP_H__
 #define __UDP_H__
 

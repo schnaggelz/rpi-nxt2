@@ -1,9 +1,12 @@
-/*********************************************************************
-----------------------------------------------------------------------
-File    : init.c
-Purpose : Sample initialisation for ARM7
---------- END-OF-HEADER ----------------------------------------------
-*/
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Initialisation for ARM7
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
 
 #include "platform/at91/at91sam7s256.h"
 

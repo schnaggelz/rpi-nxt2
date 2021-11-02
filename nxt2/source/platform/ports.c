@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "platform/ports.h"
 
 #include "drivers/nxt_avr.h" // TODO

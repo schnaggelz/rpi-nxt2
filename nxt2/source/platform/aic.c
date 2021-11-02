@@ -1,9 +1,17 @@
-/* Driver for the AT91SAM7's Advanced Interrupt Controller (AIC).
- *
- * The AIC is responsible for queuing interrupts from other
- * peripherals on the board. It then hands them one by one to the ARM
- * CPU core for handling, according to each peripheral's configured
- * priority. */
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Driver for the AT91SAM7's Advanced Interrupt Controller (AIC).
+*
+* The AIC is responsible for queuing interrupts from other
+* peripherals on the board. It then hands them one by one to the ARM
+* CPU core for handling, according to each peripheral's configured
+* priority.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
 
 #include "platform/aic.h"
 

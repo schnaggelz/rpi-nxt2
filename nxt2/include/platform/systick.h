@@ -1,3 +1,13 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Provides a 1000Hz tick for the system.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef  __SYSTICK_H__
 #define __SYSTICK_H__
 

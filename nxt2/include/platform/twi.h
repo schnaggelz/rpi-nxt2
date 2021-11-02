@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #ifndef __AT91_TWI_H__
 #define __AT91_TWI_H__
 

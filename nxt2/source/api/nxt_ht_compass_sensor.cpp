@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* NXT C++ driver API
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "api/nxt_ht_compass_sensor.hpp"
 
 #include "drivers/nxt_ht_compass_sensor.h"

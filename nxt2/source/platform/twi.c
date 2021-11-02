@@ -1,17 +1,24 @@
-/*
- * I2C/TWI communications driver
- * Provide read/write to an I2C/TWI device (in this case the ATMega
- * co-processor). Uses the hardware TWI device in interrupt mode.
- * NOTES
- * This code does not support single byte read/write operation.
- * This code does not support internal register addressing.
- * Runs at high priority interrupt to minimize chance of early
- * write termination (have never seen this but...).
- * For read operations we do not wait for the complete event before 
- * marking the read as over. We do this because the time window for
- * a read when talking to the ATMega is very tight, so finishing
- * slightly early avoids a data over-run. It is a little iffy though!
- */
+/*******************************************************************************
+* Copyright (C) 2015 T. Reich
+*
+* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+*
+* Driver for the I2C/TWI interface
+*
+* Provide read/write to an I2C/TWI device (in this case the ATMega
+* co-processor). Uses the hardware TWI device in interrupt mode.
+* NOTES
+* This code does not support single byte read/write operation.
+* This code does not support internal register addressing.
+* Runs at high priority interrupt to minimize chance of early
+* write termination (have never seen this but...).
+* For read operations we do not wait for the complete event before
+* marking the read as over. We do this because the time window for
+* a read when talking to the ATMega is very tight, so finishing
+* slightly early avoids a data over-run. It is a little iffy though!
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
 
 #include "platform/twi.h"
 
