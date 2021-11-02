@@ -1,11 +1,10 @@
 #ifndef __NXT_SENSOR_HPP__
 #define __NXT_SENSOR_HPP__
 
-#include <stdint.h>
+#include "nxt_port_enum.hpp"
 
 #include <array>
-
-#include "nxt_port_enum.hpp"
+#include <cstdint>
 
 namespace nxt
 {

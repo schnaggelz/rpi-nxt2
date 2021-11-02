@@ -1,8 +1,6 @@
 #ifndef __NXT_SENSING_MOTOR_HPP__
 #define __NXT_SENSING_MOTOR_HPP__
 
-#include <stdint.h>
-
 #include "nxt_sensor.hpp"
 
 namespace nxt

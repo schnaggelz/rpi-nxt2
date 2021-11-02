@@ -1,10 +1,6 @@
 #ifndef __NXT_LIGHT_SENSOR_HPP__
 #define __NXT_LIGHT_SENSOR_HPP__
 
-#include <stdint.h>
-
-#include <array>
-
 #include "nxt_sensor.hpp"
 
 namespace nxt

@@ -1,8 +1,6 @@
 #ifndef __NXT_UTILS_HPP__
 #define __NXT_UTILS_HPP__
 
-#include <stdint.h>
-
 #include <type_traits>
 
 namespace nxt

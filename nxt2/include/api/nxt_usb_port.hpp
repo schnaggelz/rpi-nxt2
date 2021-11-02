@@ -1,9 +1,6 @@
 #ifndef __NXT_USB_PORT_HPP__
 #define __NXT_USB_PORT_HPP__
 
-#include <assert.h>
-#include <stdint.h>
-
 #include "nxt_usb_data.hpp"
 
 namespace nxt

@@ -1,9 +1,8 @@
 #ifndef __NXT_USB_DATA_HPP__
 #define __NXT_USB_DATA_HPP__
 
-#include <stdint.h>
-
 #include <type_traits>
+
 namespace nxt
 {
     enum class USBCommand : uint16_t

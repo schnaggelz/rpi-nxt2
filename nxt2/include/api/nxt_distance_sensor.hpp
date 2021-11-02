@@ -1,8 +1,6 @@
 #ifndef __NXT_DISTANCE_SENSOR_HPP__
 #define __NXT_DISTANCE_SENSOR_HPP__
 
-#include <stdint.h>
-
 #include "nxt_sensor.hpp"
 
 namespace nxt

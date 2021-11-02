@@ -1,8 +1,6 @@
 #ifndef __NXT_TOUCH_SENSOR_HPP__
 #define __NXT_TOUCH_SENSOR_HPP__
 
-#include <stdint.h>
-
 #include "nxt_sensor.hpp"
 
 namespace nxt
