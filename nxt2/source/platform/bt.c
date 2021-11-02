@@ -10,7 +10,7 @@
 static uint8 in_buf[2][128];
 static uint8 in_buf_in_ptr, out_buf_ptr;
 static uint8 out_buf[2][256];
-static uint8 *buf_ptr;
+static uint8* buf_ptr;
 
 static int in_buf_idx = 0;
 
@@ -31,14 +31,14 @@ void bt_init(void)
     *AT91C_US1_RTOR = 10000;
     *AT91C_US1_IDR = AT91C_US_TIMEOUT;
 
-    *AT91C_US1_MR = (AT91C_US_USMODE_HWHSH & ~AT91C_US_SYNC) | 
-                     AT91C_US_CLKS_CLOCK | AT91C_US_CHRL_8_BITS | 
-                     AT91C_US_PAR_NONE | AT91C_US_NBSTOP_1_BIT | 
+    *AT91C_US1_MR = (AT91C_US_USMODE_HWHSH & ~AT91C_US_SYNC) |
+                     AT91C_US_CLKS_CLOCK | AT91C_US_CHRL_8_BITS |
+                     AT91C_US_PAR_NONE | AT91C_US_NBSTOP_1_BIT |
                      AT91C_US_OVER;
 
     *AT91C_US1_BRGR = ((CLOCK_RATE / 8 / BAUD_RATE) | (
-                      ((CLOCK_RATE / 8) - 
-                      ((CLOCK_RATE / 8 / BAUD_RATE) * BAUD_RATE)) / 
+                      ((CLOCK_RATE / 8) -
+                      ((CLOCK_RATE / 8 / BAUD_RATE) * BAUD_RATE)) /
                       ((BAUD_RATE + 4) / 8)) << 16);
 
     *AT91C_US1_PTCR = (AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS);
@@ -75,10 +75,10 @@ void bt_init(void)
     *AT91C_TC1_CCR = AT91C_TC_CLKDIS;
     *AT91C_TC1_IDR = ~0;
     trash2 = *AT91C_TC1_SR;
-    *AT91C_TC1_CMR = AT91C_TC_WAVE | AT91C_TC_WAVESEL_UP_AUTO | 
-                     AT91C_TC_ACPA_SET | AT91C_TC_ACPC_CLEAR | 
+    *AT91C_TC1_CMR = AT91C_TC_WAVE | AT91C_TC_WAVESEL_UP_AUTO |
+                     AT91C_TC_ACPA_SET | AT91C_TC_ACPC_CLEAR |
                      AT91C_TC_ASWTRG_SET; /* MCLK/2, wave mode 10 */
-    
+
     *AT91C_TC1_RC = (CLOCK_FREQUENCY / 2) / (2000);
     *AT91C_TC1_RA = (CLOCK_FREQUENCY / 2) / (4000);
     *AT91C_TC1_CCR = AT91C_TC_CLKEN;
@@ -101,7 +101,7 @@ uint32 bt_get_mode()
     return (uint32)*AT91C_ADC_CDR6;
 }
 
-void bt_send(uint8 *buf, uint32 len)
+void bt_send(uint8* buf, uint32 len)
 {
     if (*AT91C_US1_TNCR == 0)
     {
@@ -112,11 +112,13 @@ void bt_send(uint8 *buf, uint32 len)
     }
 }
 
-uint32 bt_write(uint8 *buf, uint32 off, uint32 len)
+uint32 bt_write(uint8* buf, uint32 off, uint32 len)
 {
     if (*AT91C_US1_TNCR == 0)
     {
-        if (len > 256) len = 256;
+        if (len > 256)
+            len = 256;
+
         memcpy(&(out_buf[out_buf_ptr][0]), buf + off, len);
         *AT91C_US1_TNPR = (unsigned int)&(out_buf[out_buf_ptr][0]);
         *AT91C_US1_TNCR = len;
@@ -129,7 +131,7 @@ uint32 bt_write(uint8 *buf, uint32 off, uint32 len)
 
 uint32 bt_pending()
 {
-    /* Return the state of any pending I/O requests one bit for 
+    /* Return the state of any pending I/O requests one bit for
        input, one bit for output. First check for any input. */
     int ret = 0;
     int bytes_ready;
@@ -146,26 +148,17 @@ uint32 bt_pending()
     return ret;
 }
 
-void bt_clear_arm7_cmd(void)
-{
-    *AT91C_PIOA_CODR = BT_ARM7_CMD_PIN;
-}
+void bt_clear_arm7_cmd(void) { *AT91C_PIOA_CODR = BT_ARM7_CMD_PIN; }
 
-void bt_set_arm7_cmd(void)
-{
-    *AT91C_PIOA_SODR = BT_ARM7_CMD_PIN;
-}
+void bt_set_arm7_cmd(void) { *AT91C_PIOA_SODR = BT_ARM7_CMD_PIN; }
 
-void bt_set_reset_high(void)
-{
-    *AT91C_PIOA_SODR = BT_RST_PIN;
-}
+void bt_set_reset_high(void) { *AT91C_PIOA_SODR = BT_RST_PIN; }
 
-void bt_receive(uint8 *buf)
+void bt_receive(uint8* buf)
 {
     int bytes_ready, total_bytes_ready;
     int cmd_len, i;
-    uint8 *tmp_ptr;
+    uint8* tmp_ptr;
 
     buf[0] = 0;
     buf[1] = 0;
@@ -231,11 +224,11 @@ void bt_receive(uint8 *buf)
     }
 }
 
-uint32 bt_read(uint8 *buf, uint32 off, uint32 len)
+uint32 bt_read(uint8* buf, uint32 off, uint32 len)
 {
     int bytes_ready, total_bytes_ready;
     int cmd_len, i;
-    uint8 *tmp_ptr;
+    uint8* tmp_ptr;
 
     cmd_len = 0;
     if (*AT91C_US1_RNCR == 0)
@@ -292,10 +285,7 @@ uint32 bt_read(uint8 *buf, uint32 off, uint32 len)
     return cmd_len;
 }
 
-void bt_set_reset_low(void)
-{
-    *AT91C_PIOA_CODR = BT_RST_PIN;
-}
+void bt_set_reset_low(void) { *AT91C_PIOA_CODR = BT_RST_PIN; }
 
 void bt_reset(void)
 {
@@ -316,7 +306,7 @@ void bt_reset(void)
 
     /* Wait and discard any packets that may be around. */
     int cnt = 100;
-    uint8 *buf = out_buf[0];
+    uint8* buf = out_buf[0];
     while (cnt-- > 0)
     {
         bt_receive(buf);
