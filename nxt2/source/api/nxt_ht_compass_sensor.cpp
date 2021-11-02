@@ -2,8 +2,10 @@
 
 #include "drivers/nxt_ht_compass_sensor.h"
 
-using namespace nxt::ht;
-
+namespace nxt
+{
+namespace ht
+{
 void CompassSensor::init()
 {
     nxt_ht_compass_sensor_init(_port_number);
@@ -23,3 +25,6 @@ void CompassSensor::read()
 {
     _heading = nxt_ht_compass_sensor_get_direction(_port_number);
 }
+
+} // namespace ht
+} // namespace nxt
