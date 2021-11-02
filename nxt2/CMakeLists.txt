@@ -107,6 +107,7 @@ set(FW_DRIVERS_INCLUDE_FILES
     include/drivers/nxt_sonar_sensor.h
     include/drivers/nxt_ht_compass_sensor.h
     include/drivers/nxt_ht_ir_seeker.h
+    include/drivers/nxt_ht_ir_receiver.h
     include/drivers/nxt_devices.h
 )
 
@@ -125,6 +126,7 @@ set(FW_DRIVERS_SOURCE_FILES
     source/drivers/nxt_sonar_sensor.c
     source/drivers/nxt_ht_compass_sensor.c
     source/drivers/nxt_ht_ir_seeker.c
+    #source/drivers/nxt_ht_ir_receiver.c
     source/drivers/nxt_devices.c
 )
 
