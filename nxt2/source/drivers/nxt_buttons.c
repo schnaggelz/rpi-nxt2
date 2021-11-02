@@ -1,6 +1,6 @@
-#include "../../include/drivers/nxt_buttons.h"
+#include "drivers/nxt_buttons.h"
 
-#include "../../include/drivers/nxt_avr.h"
+#include "drivers/nxt_avr.h"
 
 uint8 nxt_avr_check_buttons_event(uint8 filter)
 {

@@ -5,8 +5,9 @@
  * CPU core for handling, according to each peripheral's configured
  * priority. */
 
-#include "platform/irqs.h"
 #include "platform/aic.h"
+
+#include "platform/irqs.h"
 
 #include "platform/at91/at91sam7.h"
 

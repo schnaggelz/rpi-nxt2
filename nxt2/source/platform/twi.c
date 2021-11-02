@@ -15,11 +15,11 @@
 
 #include "platform/twi.h"
 
-#include "platform/at91/at91sam7.h"
 #include "platform/irqs.h"
-
 #include "platform/aic.h"
 #include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
 
 // Required clock divisor
 #define I2CCLK 400000L

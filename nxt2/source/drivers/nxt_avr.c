@@ -10,6 +10,7 @@
 * to handle the times that the window is exceeded.
 */
 #include "drivers/nxt_avr.h"
+
 #include "drivers/nxt_motors.h"
 
 #include "platform/twi.h"

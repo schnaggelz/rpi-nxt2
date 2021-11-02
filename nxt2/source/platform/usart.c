@@ -3,14 +3,16 @@
  * hardware setup must be performed by a hardware specific set of
  * functions before calling the enable methos provided here.
  */
-#include "at91/at91sam7.h"
-#include "../../include/platform/hs.h"
-#include "../../include/platform/aic.h"
-#include  <string.h>
-//#include "display.h"
-#include "../../include/platform/systick.h"
-#include "../../include/platform/ports.h"
-#include "../../include/platform/usart.h"
+#include "platform/usart.h"
+
+#include "platform/aic.h"
+#include "platform/hs.h"
+#include "platform/ports.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
+
+#include <string.h>
 
 /**
  * Allocate the required buffers and structures from system memory to allow

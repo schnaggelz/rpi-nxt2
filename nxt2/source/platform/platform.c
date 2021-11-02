@@ -1,9 +1,10 @@
 #include "platform/platform.h"
-#include "platform/irqs.h"
+
 #include "platform/aic.h"
-#include "platform/twi.h"
-#include "platform/systick.h"
 #include "platform/i2c.h"
+#include "platform/irqs.h"
+#include "platform/systick.h"
+#include "platform/twi.h"
 
 void at91_platform_init()
 {

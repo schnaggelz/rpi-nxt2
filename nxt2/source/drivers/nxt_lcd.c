@@ -1,4 +1,5 @@
 #include "drivers/nxt_lcd.h"
+
 #include "drivers/nxt_spi.h"
 
 #include "platform/systick.h"

@@ -1,4 +1,4 @@
-#include "../../include/platform/irqs.h"
+#include "platform/irqs.h"
 
 #define IRQ_MASK 0x00000080
 #define FIQ_MASK 0x00000040

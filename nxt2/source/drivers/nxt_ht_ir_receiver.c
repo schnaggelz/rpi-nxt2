@@ -1,10 +1,10 @@
-#include "../../include/drivers/nxt_ht_ir_receiver.h"
+#include "drivers/nxt_ht_ir_receiver.h"
 
-#include "i2c.h"
+#include "platform/i2c.h"
 
 void nxt_ht_ir_receiver_init(uint8 port)
 {
-    nxt_i2c_init(port, NXT_LOWSPEED_PORT);
+    i2c_init(port, LOWSPEED_PORT);
 }
 
 sint8 nxt_ht_ir_receiver_get_motor_control(uint8 port, uint8 channel_id, uint8 motor_id)

@@ -1,6 +1,6 @@
-#include "../../include/drivers/nxt_touch_sensor.h"
+#include "drivers/nxt_touch_sensor.h"
 
-#include "../../include/drivers/nxt_avr.h"
+#include "drivers/nxt_avr.h"
 
 uint8 nxt_touch_sensor_is_pressed(uint8 port)
 {

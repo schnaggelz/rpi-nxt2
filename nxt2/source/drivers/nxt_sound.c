@@ -15,15 +15,16 @@
  * to port at fixed intervals and is used to output the pdm audio.
  */
 
-#include "../../include/drivers/nxt_sound.h"
+#include "drivers/nxt_sound.h"
+
+#include "drivers/nxt_avr.h"
+
+#include "platform/aic.h"
+#include "platform/systick.h"
+
+#include "platform/at91/at91sam7.h"
 
 #include <string.h>
-
-#include "at91sam7.h"
-#include "aic.h"
-#include "systick.h"
-
-#include "../../include/drivers/nxt_avr.h"
 
 /* Buffer length must be a multiple of 8 and at most 64 (preferably as long as possible) */
 #define PDM_BUFFER_LENGTH 64
@@ -84,11 +85,11 @@ struct
  *
  * A number of sample wave shapes have been tried, an accurate sine wave, a
  * square wave, triangular wave and a rough approximation of a sine wave.
- * Currently the rough sine wave is used, the square wave also works well.
+ * Currently, the rough sine wave is used, the square wave also works well.
  * The purer shapes do not seem to work very well at frequencies below
  * about 800Hz. It seems that a combination of the sounder and the Lego
  * amplifier electronics mean that the response below this is very poor.
- * However by using a waveform like a square wave that has a lot of harmonics
+ * However, by using a waveform like a square wave that has a lot of harmonics
  * the ear can be fooled into hearing the lower frequencies. Using a pure wave
  * form like the sine wave results in a very low volume. This rather surprising
  * result has to some extent been validated using an audio spectrum analyzer

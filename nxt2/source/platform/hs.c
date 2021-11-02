@@ -2,16 +2,17 @@
  * High Speed / RS485 Interface
  */
 
+#include "platform/hs.h"
+
+#include "platform/aic.h"
+#include "platform/display.h"
+#include "platform/systick.h"
+#include "platform/sensors.h"
+#include "platform/usart.h"
+
+#include "platform/at91/at91sam7.h"
+
 #include  <string.h>
-
-#include "AT91SAM7.h"
-#include "../../include/platform/hs.h"
-#include "../../include/platform/aic.h"
-
-#include "display.h"
-#include "../../include/platform/systick.h"
-#include "sensors.h"
-#include "../../include/platform/usart.h"
 
 /* Max data size. */
 #define BUFSZ 128

@@ -1,7 +1,8 @@
-#include "platform/at91/at91sam7.h"
 #include "platform/ports.h"
 
-#include "drivers/nxt_avr.h"
+#include "drivers/nxt_avr.h" // TODO
+
+#include "platform/at91/at91sam7.h"
 
 /* Sensor port digital pins */
 const port_pins sensor_pins[4] =
