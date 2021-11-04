@@ -11,6 +11,24 @@ on the RPi (for the algorithms).
 Most of the code is coming from my Bitbucket repo at https://bitbucket.org/schnaggelz/nxt/src/master. I decided to move
 to Github for upcoming experiments.
 
+# Prerequisites
+
+I'm using Ubuntu 20 as development platform. The embedded cross-build environment can be caught via Docker image below.
+
+## General requirements
+
+Install host build environment
+
+````
+sudo apt install git cmake gcc g++
+````
+
+Install required libraries
+
+````
+sudo apt install libusb-1.0-0-dev
+````
+
 # Build
 
 ## Docker
@@ -52,7 +70,7 @@ To re-run after exit:
 docker start rpi-nxt2 -i
 ````
 
-## Build in Docker
+### Run Build Script
 
 Run in container:
 
