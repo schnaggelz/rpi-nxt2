@@ -70,11 +70,23 @@ To re-run after exit:
 docker start rpi-nxt2 -i
 ````
 
-### Run Build Script
+### Run Build Scripts
 
-Run in container:
+### ARM7 FW Build
+
+Run (in container):
 
 ````
 cd /home/rpi-nxt2
-scripts/build_nxt_fw.sh <build_type> <app_name>
+scripts/build_nxt.sh <build_type> <app_name>
 ````
+
+### Linux SW Build
+
+Run (in container):
+
+````
+cd /home/rpi-nxt2
+scripts/build_linux.sh <build_type>
+````
+
