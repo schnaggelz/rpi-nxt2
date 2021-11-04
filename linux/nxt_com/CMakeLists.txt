@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(usb_com CXX)
+project(nxt_com CXX)
 
 find_package(Threads REQUIRED)
 
 add_library(${PROJECT_NAME}
-    include/usb/usb_device.hpp
+    include/nxt_usb/usb_device.hpp
     source/usb_device.cpp
 )
 
