@@ -12,7 +12,7 @@ string(CONCAT LINKER_FLAGS
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
-option(APP_NAME "Application to build" "rc")
+set(APP_NAME "rc" CACHE STRING "Application to build on top of the BIOS")
 
 add_subdirectory(fw)
-add_subdirectory(apps/rc)
+add_subdirectory(apps/${APP_NAME})

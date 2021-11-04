@@ -76,5 +76,5 @@ Run in container:
 
 ````
 cd /home/rpi-nxt2
-scripts/build_nxt_fw.sh
+scripts/build_nxt_fw.sh <build_type> <app_name>
 ````
