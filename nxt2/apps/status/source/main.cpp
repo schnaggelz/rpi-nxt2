@@ -33,7 +33,15 @@ static void addTasks()
 
 extern "C" {
 
-void app_bg_task(){};
+void app_bg_task()
+{
+    static int counter = 0;
+
+    if (counter % 100 == 0)
+    {
+        status_monitor.update();
+    }
+};
 void os_app_init()
 {
     // Setup OS tasks
@@ -41,5 +49,19 @@ void os_app_init()
 
     // Set up our application display
     status_monitor.setTitle("GENERIC TESTER 3");
+
+    status_monitor.setLineName(0, "0:");
+    status_monitor.setLineName(1, "1:");
+    status_monitor.setLineName(2, "2:");
+    status_monitor.setLineName(3, "3:");
+    status_monitor.setLineName(4, "4:");
+    status_monitor.setLineName(5, "5:");
+    status_monitor.setLineName(6, "6:");
+
+    // Set up status display
+    status_monitor.init();
+
+    // Update the display once
+    status_monitor.update();
 };
 }
