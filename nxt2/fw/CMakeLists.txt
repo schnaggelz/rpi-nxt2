@@ -2,17 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 project(nxt_bios CXX C ASM)
 
-include(arm-gcc-toolchain.cmake)
+include(arm-gcc-toolchain)
 
-set(APP_NAME "appname" CACHE STRING "Application to build")
-set(LINKER_FILE nxt.lds)
-
-string(CONCAT C_FLAGS
-    " -Wall"
-    " -Werror"
-    " -Wno-unused-variable"
-    " -Wno-unused-but-set-variable" # HW register read
-    " -Werror=implicit-function-declaration")
+set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/nxt.lds)
 
 string(CONCAT CXX_FLAGS
     " -Wall"
@@ -23,17 +15,8 @@ string(CONCAT LINKER_FLAGS
     " -T${LINKER_FILE}"
     " -Wl,-Map,${PROJECT_NAME}.map")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-include_directories(platform drivers rtos apps)
-
-# Get application source files
-#include(apps/common.cmake)
-#include(apps/${APP_NAME}/${APP_NAME}.cmake)
 
 set(FW_STARTUP_SOURCE_FILES
     source/startup/startup.s

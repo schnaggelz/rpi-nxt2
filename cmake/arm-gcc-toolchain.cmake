@@ -12,11 +12,26 @@ set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
 set(CMAKE_EXE_LINKER   ${TOOLCHAIN_PREFIX}-ld)
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 
+string(CONCAT C_FLAGS
+    " -Wall"
+    " -Werror"
+    " -Wno-unused-variable"
+    " -Wno-unused-but-set-variable" # HW register read
+    " -Werror=implicit-function-declaration"
+)
+
+string(CONCAT CXX_FLAGS
+    " -Wall"
+    " -Werror"
+    " -Wno-unused-variable"
+    " -Wno-unused-but-set-variable" # HW register read
+)
+
 set(CMAKE_TARGET_FLAGS "-mcpu=arm7tdmi")
 set(CMAKE_ASM_FLAGS "${CMAKE_TARGET_FLAGS}")
-set(CMAKE_C_FLAGS "${CMAKE_TARGET_FLAGS} -O0")
+set(CMAKE_C_FLAGS "${CMAKE_TARGET_FLAGS} ${C_FLAGS} -O0")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding -fsigned-char -ffunction-sections -fdata-sections")
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fno-rtti -fno-common -fno-exceptions")
+set(CMAKE_CXX_FLAGS "${CMAKE_TARGET_FLAGS} ${CXX_FLAGS} -fno-rtti -fno-common -fno-exceptions")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++14")
 
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs")
