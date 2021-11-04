@@ -2,16 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(nxt_bios CXX C ASM)
 
-include(arm-gcc-toolchain)
-
-set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/nxt.lds)
-
-string(CONCAT LINKER_FLAGS
-    " -T${LINKER_FILE}"
-    " -Wl,-Map,${PROJECT_NAME}.map")
-
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
-
 set(FW_STARTUP_SOURCE_FILES
     source/startup/startup.s
     source/startup/crt.s
@@ -133,7 +123,7 @@ set(FW_CPP_API_SOURCE_FILES
     source/api/nxt_usb_port.cpp
 )
 
-add_executable(${PROJECT_NAME}
+add_library(${PROJECT_NAME} STATIC
     ${FW_STARTUP_SOURCE_FILES}
     ${FW_PLATFORM_INCLUDE_FILES}
     ${FW_PLATFORM_SOURCE_FILES}
@@ -148,13 +138,6 @@ add_executable(${PROJECT_NAME}
 )
 
 target_include_directories(${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-
-target_compile_definitions(${PROJECT_NAME}
-    PRIVATE NXT_DUMMY_APP_BG_TASK NXT_DUMMY_APP_INIT
-)
-
-set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-generate_object(${PROJECT_NAME})
