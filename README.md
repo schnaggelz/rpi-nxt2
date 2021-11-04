@@ -2,6 +2,8 @@
 
 Lego NXT2 C/C++ FW communicating with Raspberry Pi C++/Python SW.
 
+Log-term goal: Raspberry Pi solving a Rubik's cube via Python/OpenCV and then controlling the NXT to physically solve it.
+
 HIGHLY WORK-IN-PROGRESS, CODE NOT BUILDING YET
 
 Unfortunately I only have Lego NXTs and don't want to buy a new set. However, ARM low-level programming is more fun for
