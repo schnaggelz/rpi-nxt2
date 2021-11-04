@@ -18,6 +18,10 @@ string(CONCAT C_FLAGS
     " -Wno-unused-variable"
     " -Wno-unused-but-set-variable" # HW register read
     " -Werror=implicit-function-declaration"
+    " -ffreestanding"
+    " -fsigned-char"
+    " -ffunction-sections"
+    " -fdata-sections"
 )
 
 string(CONCAT CXX_FLAGS
@@ -25,18 +29,33 @@ string(CONCAT CXX_FLAGS
     " -Werror"
     " -Wno-unused-variable"
     " -Wno-unused-but-set-variable" # HW register read
+    " -Wno-write-strings"
+    " -fno-rtti"
+    " -fno-common"
+    " -fno-exceptions"
+    " --std=c++14"
 )
 
-set(CMAKE_TARGET_FLAGS "-mcpu=arm7tdmi")
-set(CMAKE_ASM_FLAGS "${CMAKE_TARGET_FLAGS}")
-set(CMAKE_C_FLAGS "${CMAKE_TARGET_FLAGS} ${C_FLAGS} -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding -fsigned-char -ffunction-sections -fdata-sections")
-set(CMAKE_CXX_FLAGS "${CMAKE_TARGET_FLAGS} ${CXX_FLAGS} -fno-rtti -fno-common -fno-exceptions")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++14")
+string(CONCAT LINKER_FLAGS
+    " -nostartfiles"
+    " -lc"
+    " -lgcc"
+    " -lstdc++"
+    " -lm"
+    " -Wl,--cref"
+    " -Wl,--gc-sections"
+)
+
+string(CONCAT TARGET_FLAGS
+    " -mcpu=arm7tdmi"
+)
+
+set(CMAKE_ASM_FLAGS "${TARGET_FLAGS}")
+set(CMAKE_C_FLAGS "${TARGET_FLAGS} ${C_FLAGS} -O0")
+set(CMAKE_CXX_FLAGS "${TARGET_FLAGS} ${CXX_FLAGS}")
 
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=nosys.specs -nostartfiles -lc -lgcc -lstdc++ -lm")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--cref -Wl,--gc-sections")
+set(CMAKE_EXE_LINKER_FLAGS "${LINKER_FLAGS}")
 
 set(CMAKE_FIND_ROOT_PATH ${BINUTILS_PATH})
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

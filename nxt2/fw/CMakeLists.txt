@@ -6,16 +6,10 @@ include(arm-gcc-toolchain)
 
 set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/nxt.lds)
 
-string(CONCAT CXX_FLAGS
-    " -Wall"
-    " -Werror"
-    " -Wno-write-strings")
-
 string(CONCAT LINKER_FLAGS
     " -T${LINKER_FILE}"
     " -Wl,-Map,${PROJECT_NAME}.map")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINKER_FLAGS}")
 
 set(FW_STARTUP_SOURCE_FILES
