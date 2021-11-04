@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.5)
 
 project(nxt_bios CXX C ASM)
 
-include(arm-gcc-toolchain)
+include(arm-gcc-toolchain.cmake)
 
 set(APP_NAME "appname" CACHE STRING "Application to build")
-set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/nxt.lds)
+set(LINKER_FILE nxt.lds)
 
 string(CONCAT C_FLAGS
     " -Wall"
@@ -171,7 +171,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_include_directories(${PROJECT_NAME}
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PRIVATE include
 )
 
 target_compile_definitions(${PROJECT_NAME}
