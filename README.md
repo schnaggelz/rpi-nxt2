@@ -10,9 +10,6 @@ Unfortunately I only have Lego NXTs and don't want to buy a new set. However, AR
 me. So I experiment with own bare-metal firmware on the NXT (for sensor/actuator management) and application software
 on the RPi (for the algorithms).
 
-Most of the code is coming from my Bitbucket repo at https://bitbucket.org/schnaggelz/nxt/src/master. I decided to move
-to Github for upcoming experiments.
-
 # Prerequisites
 
 I'm using Ubuntu 20 as development platform. The embedded cross-build environment can be caught via Docker image below.
