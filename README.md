@@ -43,7 +43,7 @@ cd docker
 Run the container:
 
 ````
-docker run --name rpi-nxt2 -it -v ~/Develop/rpi-nxt2:/home/rpi-nxt2 ubuntu20-gcc-arm-none-eabi:latest
+docker run --name rpi-nxt2 -it -v <root>/rpi-nxt2:/home/rpi-nxt2 ubuntu20-gcc-arm-none-eabi:latest
 ````
 
 To re-run after exit:
@@ -52,3 +52,11 @@ To re-run after exit:
 docker start rpi-nxt2 -i
 ````
 
+## Build in Docker
+
+Run in container:
+
+````
+cd /home/rpi-nxt2
+scripts/build_nxt_fw.sh
+````

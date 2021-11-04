@@ -1,4 +1,8 @@
-#/bin/bash
+#!/bin/bash
+
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+
 
 if [ $# -eq 0 ]
   then
@@ -13,7 +17,7 @@ mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
 # -DCMAKE_TOOLCHAIN_FILE=../cmake/arm-gcc-toolchain
-cmake -DAPP_NAME=$1 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MODULE_PATH=../cmake ../nxt2
+cmake -DAPP_NAME=$1 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MODULE_PATH=../cmake ../nxt2/fw
 make clean
 make -j 16 # VERBOSE=1
 
