@@ -89,3 +89,22 @@ Run:
 cd /home/rpi-nxt2
 scripts/build_linux.sh <build_type>
 ````
+
+# Debugging
+
+For debugging on the NXT I use the SEGGER J-Link ICE (EDU version). For that I soldered pins of the NXT board to expose
+the JTAG interface. Via adapter, I then connect the ICE to the NXT.
+
+## Debugging the FW
+
+### Install J-Link
+
+The Debian package can be downloaded from https://www.segger.com/downloads/jlink.
+
+### Run GDB Server
+
+TODO
+
+### Attach to GDB Server
+
+TODO

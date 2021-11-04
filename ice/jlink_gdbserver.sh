@@ -1,4 +1,6 @@
-export PATH=/opt/segger/jlink:$PATH
+#!/bin/bash
+
+# Assuming soft-link for /opt/segger/jlink/JLinkGDBServerCLExe
 
 LOCAL_DIR=$(dirname $(readlink -e $0))
 
