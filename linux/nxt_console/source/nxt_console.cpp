@@ -123,7 +123,7 @@ int main()
         return 1;
     }
 
-    LOG_INFO("... connected (quit wit <BACKSPACE>)");
+    LOG_INFO("... connected (quit wit <ESC>)");
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -140,7 +140,7 @@ int main()
 
     int ch;
 
-    while ((ch = getch()) != KEY_BACKSPACE)
+    while ((ch = getch()) != 27)
     {
         switch (ch)
         {
