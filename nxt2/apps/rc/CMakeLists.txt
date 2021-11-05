@@ -4,6 +4,8 @@ project(nxt_rc CXX)
 
 add_executable(${PROJECT_NAME}
     source/main.cpp
+    source/remote.hpp
+    source/remote.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
