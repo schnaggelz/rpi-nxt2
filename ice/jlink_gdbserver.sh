@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Assuming soft-link for /opt/segger/jlink/JLinkGDBServerCLExe
+# Assuming soft-link for `JLinkGDBServerCLExe`
 
-LOCAL_DIR=$(dirname $(readlink -e $0))
+LOCAL_DIR=$(dirname $(readlink -e "$0"))
 
 echo Starting GDB server in "$LOCAL_DIR" ...
-xterm -title jlink-gdbsvr -geometry 120x50 -e bash -l -c \
-        "JLinkGDBServerCLExe -device AT91SAM7S256 -endian little -if JTAG -speed 30 -ir -vd -notimeout -halt -xc ${LOCAL_DIR}/gdb/jlink_init.gdb"
+xterm -title jlink-gdbsvr -geometry 200x50 -e bash -l -c \
+        "jlink-gdbsvr -device AT91SAM7S256 -endian little -if JTAG -speed 30 -ir -vd -notimeout -halt -xc ${LOCAL_DIR}/gdb/jlink_init.gdb"
 echo ... done

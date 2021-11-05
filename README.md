@@ -98,10 +98,20 @@ the JTAG interface. Via adapter, I then connect the ICE to the NXT.
 
 The Debian package can be downloaded from https://www.segger.com/downloads/jlink.
 
+Set soft-link for `JLinkGDBServerCLExe`:
+
+````
+ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbsvr
+````
+
 ### Run GDB Server
 
-TODO
+Connect the JTAG connector to the J-Link ICE and run:
+
+````
+ice/jlink_gdbserver.sh
+````
 
 ### Attach to GDB Server
 
-TODO
+This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB script `ice/gdb/host_init.gdb`.
