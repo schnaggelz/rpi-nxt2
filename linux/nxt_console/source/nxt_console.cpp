@@ -12,11 +12,11 @@
 
 #include <ncurses.h>
 
+#include <atomic>
 #include <chrono>
-#include <iostream>
 #include <thread>
 
-bool exiting = false;
+std::atomic<bool> exiting = false;
 
 nxt_com::usb::USBDevice nxt_usb_dev;
 nxt_com::usb::DataPacket nxt_pkg_tx;
@@ -55,12 +55,12 @@ void receive()
 {
     int counter = 0;
 
-    mvprintw(2, 0, "RCV: %5d", 0);
-    mvprintw(3, 0, "ID:  %5d, SIZE: %5d", 0, 0);
-    mvprintw(4, 0, "GENERIC: V0=%5d V1=%5d V2=%5d V3=%5d", 0, 0, 0, 0);
-    mvprintw(5, 0, "GENERIC: V4=%5d V5=%5d V6=%5d V7=%5d", 0, 0, 0, 0);
-    mvprintw(6, 0, "SONAR: L=%4d C=%4d R=%4d", 0, 0, 0);
-    mvprintw(7, 0, "COLOR: R=%4d G=%4d B=%4d", 0, 0, 0);
+    mvprintw(3, 0, "RCV    : SQ:%8d|", 0);
+    mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", 0, 0);
+    mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
+    mvprintw(7, 0, "GENERIC: V4=%8d| V5=%8d| V6=%5d| V7=%8d|", 0, 0, 0, 0);
+    mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|", 0, 0, 0);
+    mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|", 0, 0, 0);
 
     while (!exiting)
     {
@@ -68,32 +68,35 @@ void receive()
         {
             nxt_usb_dev.read(nxt_pkg_rx);
 
-            mvprintw(2, 0, "RCV: %5d", counter++);
-            mvprintw(3, 0, "ID:  %5d, SIZE: %5d", nxt_pkg_rx.id,
+            mvprintw(3, 0, "RCV    : SQ:%8d|", counter++);
+            mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", nxt_pkg_rx.id,
                      nxt_pkg_rx.size);
 
             switch (nxt_pkg_rx.id)
             {
             case 0x00: // GENERIC
             {
-                mvprintw(4, 0, "GENERIC: V0=%4d;V1=%4d;V2=%4d;V3=%4d",
+                mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
                          nxt_pkg_rx.data[2], nxt_pkg_rx.data[3]);
-                mvprintw(5, 0, "GENERIC: V4=%4d;V5=%4d;V6=%5d;V7=4d",
+
+                mvprintw(7, 0, "GENERIC: V4=%8d| V5=%8d| V6=%8d| V7=%8d|",
                          nxt_pkg_rx.data[4], nxt_pkg_rx.data[5],
                          nxt_pkg_rx.data[6], nxt_pkg_rx.data[7]);
                 break;
             }
             case 0x10: // SONAR
             {
-                mvprintw(6, 0, "SONAR: L=%4d;C=%4d;R=%4d", nxt_pkg_rx.data[0],
-                         nxt_pkg_rx.data[1], nxt_pkg_rx.data[2]);
+                mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|",
+                         nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
+                         nxt_pkg_rx.data[2]);
                 break;
             }
             case 0x11: // COLOR
             {
-                mvprintw(7, 0, "COLOR: R=%4d;G=%4d;B=%4d", nxt_pkg_rx.data[0],
-                         nxt_pkg_rx.data[1], nxt_pkg_rx.data[2]);
+                mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|",
+                         nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
+                         nxt_pkg_rx.data[2]);
                 break;
             }
             }
@@ -120,6 +123,10 @@ int main()
         return 1;
     }
 
+    LOG_INFO("... connected (quit wit <BACKSPACE>)");
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
     initscr();
     keypad(stdscr, TRUE);
     noecho();
@@ -133,7 +140,7 @@ int main()
 
     int ch;
 
-    while ((ch = getch()) != '#')
+    while ((ch = getch()) != KEY_BACKSPACE)
     {
         switch (ch)
         {
