@@ -12,23 +12,25 @@ set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}-g++)
 set(CMAKE_EXE_LINKER   ${TOOLCHAIN_PREFIX}-ld)
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}-objcopy)
 
-string(CONCAT C_FLAGS
+string(CONCAT C_CXX_FLAGS
     " -Wall"
     " -Werror"
     " -Wno-unused-variable"
     " -Wno-unused-but-set-variable" # HW register read
-    " -Werror=implicit-function-declaration"
     " -ffreestanding"
     " -fsigned-char"
     " -ffunction-sections"
     " -fdata-sections"
+    " -O0"
+)
+
+string(CONCAT C_FLAGS
+    ${C_CXX_FLAGS}
+    " -Werror=implicit-function-declaration"
 )
 
 string(CONCAT CXX_FLAGS
-    " -Wall"
-    " -Werror"
-    " -Wno-unused-variable"
-    " -Wno-unused-but-set-variable" # HW register read
+    ${C_CXX_FLAGS}
     " -Wno-write-strings"
     " -fno-rtti"
     " -fno-common"
@@ -51,7 +53,7 @@ string(CONCAT TARGET_FLAGS
 )
 
 set(CMAKE_ASM_FLAGS "${TARGET_FLAGS}")
-set(CMAKE_C_FLAGS "${TARGET_FLAGS} ${C_FLAGS} -O0")
+set(CMAKE_C_FLAGS "${TARGET_FLAGS} ${C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${TARGET_FLAGS} ${CXX_FLAGS}")
 
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs")
