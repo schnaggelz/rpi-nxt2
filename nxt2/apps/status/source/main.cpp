@@ -33,15 +33,34 @@ static void addTasks()
 
 extern "C" {
 
+//
+// Background processing
+//
+
 void app_bg_task()
 {
     static int counter = 0;
 
     if (counter % 100 == 0)
     {
+        status_monitor.setLineValue(0, 0);
+        status_monitor.setLineValue(1, 0);
+        status_monitor.setLineValue(2, 0);
+        status_monitor.setLineValue(3, 0);
+        status_monitor.setLineValue(4, 0);
+        status_monitor.setLineValue(5, 0);
+        status_monitor.setLineValue(6, 0);
+
         status_monitor.update();
     }
-};
+
+    counter++;
+}
+
+//
+// Runnable initialization
+//
+
 void os_app_init()
 {
     // Setup OS tasks
@@ -63,5 +82,5 @@ void os_app_init()
 
     // Update the display once
     status_monitor.update();
-};
+}
 }
