@@ -30,17 +30,17 @@ class Remote
     void run();
     void exit();
 
-  private:
-    void send();
-
-  private:
+  protected:
     static constexpr uint8_t NUM_DATA_BYTES = 8;
+    using DataArray = std::array<std::uint32_t, NUM_DATA_BYTES>;
 
+  private:
+    void send(const DataArray& data);
+
+  private:
     nxt::USBPort _usb_port;
     nxt::USBData _usb_data_rx;
     nxt::USBData _usb_data_tx;
-
-    std::array<std::uint32_t, NUM_DATA_BYTES> _data;
 };
 } // namespace libs
 } // namespace nxt

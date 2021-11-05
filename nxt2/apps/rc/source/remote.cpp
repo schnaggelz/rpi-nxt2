@@ -21,31 +21,34 @@ void Remote::init()
 
 void Remote::run()
 {
+    DataArray data;
+
     // Send some test data
-    _data[0] = 1;
-    _data[1] = 2;
-    _data[2] = 3;
-    _data[3] = 4;
-    _data[4] = 5;
-    _data[5] = 6;
-    _data[6] = 7;
-    _data[7] = 8;
+    data[0] = 1;
+    data[1] = 2;
+    data[2] = 3;
+    data[3] = 4;
+    data[4] = 5;
+    data[5] = 6;
+    data[6] = 7;
+    data[7] = 8;
+
+    send(data);
 }
 
-void Remote::send()
+void Remote::send(const DataArray& data)
 {
-    _usb_data_tx.id = nxt::to_underlying(
-        USBCommand::GENERIC);
+    _usb_data_tx.id = nxt::to_underlying(USBCommand::GENERIC);
 
-    _usb_data_tx.size = _data.size();
+    _usb_data_tx.size = data.size();
 
-    for (unsigned i = 0; i < _data.size(); ++i)
+    for (unsigned i = 0; i < data.size(); ++i)
     {
-        _usb_data_tx.data[i] = _data[i];
+        _usb_data_tx.data[i] = data[i];
     }
 
     _usb_port.write(_usb_data_tx);
-
+}
 
 void Remote::exit()
 {
