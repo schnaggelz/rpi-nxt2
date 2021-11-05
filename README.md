@@ -91,13 +91,16 @@ scripts/build_linux.sh <build_type>
 
 # Flashing
 
-## Flashing the FW
+## Flashing the NXT FW
 
 ### Install Atmel SAM-BA
 
-TODO
+SAM-BA is a flash programmer formerly developed by Atmel (from where the AT91S silicon was originally coming).
 
-Set soft-link for `sam-ba_64`:
+The SAM-BA flash programmer can be downloaded from MICROCHIP: 
+https://www.microchip.com/en-us/development-tool/SAM-BA-IN-SYSTEM-PROGRAMMER#
+
+Unpack it and set a soft-link for `sam-ba_64`:
 
 ````
 sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
@@ -135,11 +138,11 @@ You need to apply the USB permissions rules in the `udev/rules.d` directory to g
 For debugging on the NXT I use the SEGGER J-Link ICE (EDU version). For that I soldered pins of the NXT board to expose
 the JTAG interface. Via adapter, I then connect the ICE to the NXT.
 
-## Debugging the FW
+## Debugging the NXT FW
 
 ### Install J-Link
 
-The Debian package can be downloaded from https://www.segger.com/downloads/jlink.
+The Debian package can be downloaded from SEGGER: https://www.segger.com/downloads/jlink.
 
 Set soft-link for `JLinkGDBServerCLExe`:
 
