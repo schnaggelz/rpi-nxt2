@@ -42,7 +42,7 @@ static_assert(sizeof(DataPacket) == 36);
 class USBDevice
 {
   public:
-    USBDevice() : m_dev_handle(NULL), m_dev_ready(false){};
+    USBDevice() : _dev_handle(NULL), _dev_ready(false){};
 
     bool init();
     bool open();
@@ -51,15 +51,15 @@ class USBDevice
 
     inline bool isReady()
     {
-        return m_dev_ready;
+        return _dev_ready;
     };
 
     void read(DataPacket&);
     void write(const DataPacket&);
 
   private:
-    struct libusb_device_handle* m_dev_handle{NULL};
-    bool m_dev_ready{false};
+    struct libusb_device_handle* _dev_handle{NULL};
+    bool _dev_ready{false};
 };
 } // namespace nxt_com
 

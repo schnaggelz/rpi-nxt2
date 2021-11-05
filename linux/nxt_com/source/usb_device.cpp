@@ -25,7 +25,7 @@ bool USBDevice::open()
 
     ssize_t num_dev = libusb_get_device_list(0, &dev_list);
 
-    for (size_t dev_idx = 0; dev_idx < num_dev; ++dev_idx)
+    for (size_t dev_idx = 0; dev_idx < nu_dev; ++dev_idx)
     {
         libusb_device* dev = dev_list[dev_idx];
         libusb_device_descriptor dev_desc = {0};
@@ -45,18 +45,18 @@ bool USBDevice::open()
 
     if (nxt_dev)
     {
-        rc = libusb_open(nxt_dev, &m_dev_handle);
-        if (rc >= 0 && m_dev_handle != 0)
+        rc = libusb_open(nxt_dev, &_dev_handle);
+        if (rc >= 0 && _dev_handle != 0)
         {
-            libusb_detach_kernel_driver(m_dev_handle, 0);
+            libusb_detach_kernel_driver(_dev_handle, 0);
 
-            rc = libusb_set_configuration(m_dev_handle, 1);
+            rc = libusb_set_configuration(_dev_handle, 1);
             if (rc >= 0)
             {
-                rc = libusb_claim_interface(m_dev_handle, 0);
+                rc = libusb_claim_interface(_dev_handle, 0);
                 if (rc >= 0)
                 {
-                    m_dev_ready = true;
+                    _dev_ready = true;
                     return true;
                 }
             }
@@ -77,9 +77,9 @@ void USBDevice::read(DataPacket& pkg)
     unsigned char buf[sizeof(pkg)];
     int nbytes;
 
-    if (m_dev_ready)
+    if (_dev_ready)
     {
-        rc = libusb_bulk_transfer(m_dev_handle, LIBUSB_ENDPOINT_IN, buf,
+        rc = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
                                   sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
 
         if (rc == 0 && nbytes >= 4)
@@ -109,7 +109,7 @@ void USBDevice::write(const DataPacket& pkg)
     unsigned char buf[sizeof(pkg)];
     int nbytes;
 
-    if (m_dev_ready)
+    if (_dev_ready)
     {
         buf[0] = (pkg.id >> 0) & 0xFF;
         buf[1] = (pkg.id >> 8) & 0xFF;
@@ -125,19 +125,19 @@ void USBDevice::write(const DataPacket& pkg)
             ptr[3] = (pkg.data[i] >> 24) & 0xFF;
         }
 
-        rc = libusb_bulk_transfer(m_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
+        rc = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
                                   sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
     }
 }
 
 void USBDevice::close()
 {
-    if (m_dev_ready)
+    if (_dev_ready)
     {
-        libusb_release_interface(m_dev_handle, 0);
-        libusb_close(m_dev_handle);
+        libusb_release_interface(_dev_handle, 0);
+        libusb_close(_dev_handle);
 
-        m_dev_ready = false;
+        _dev_ready = false;
     }
 }
 
