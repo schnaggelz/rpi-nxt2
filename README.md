@@ -21,7 +21,7 @@ I'm using Ubuntu 20 as development platform. The embedded cross-build environmen
 Install host build environment
 
 ````
-sudo apt install git cmake gcc g++
+sudo apt install git cmake gcc g++ gdb-multiarch
 ````
 
 Install required libraries
