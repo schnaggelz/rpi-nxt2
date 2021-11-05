@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2015 T. Reich
  *
- * NXT status monitor helper for displaying status messages on the screen
+ * NXT monitor wrapper for displaying status messages on the LCD screen.
  *
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#ifndef __STATUS_MONITOR_HPP__
-#define __STATUS_MONITOR_HPP__
+#ifndef __NXT_LIBS_MONITOR_HPP__
+#define __NXT_LIBS_MONITOR_HPP__
 
-#include <cstdint>
 #include <array>
+#include <cstdint>
 
 #define BIOS_VERSION "NXT BIOS 0.03"
 
@@ -18,14 +18,12 @@ namespace nxt
 {
 namespace libs
 {
-
-
-class StatusMonitor
+class Monitor
 {
     static constexpr std::uint8_t NUM_VALUE_LINES = 7;
 
   public:
-    StatusMonitor() : _values(), _title(nullptr) {}
+    Monitor() : _values(), _title(nullptr) {}
 
     void setTitle(const char* title)
     {
@@ -53,4 +51,4 @@ class StatusMonitor
 } // namespace libs
 } // namespace nxt
 
-#endif /* __STATUS_MONITOR_HPP__ */
+#endif /* __NXT_LIBS_MONITOR_HPP__ */

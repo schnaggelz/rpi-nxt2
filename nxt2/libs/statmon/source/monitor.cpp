@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright (C) 2015 T. Reich
  *
- * NXT status monitor helper for displaying status messages on the screen
+ * NXT monitor wrapper for displaying status messages on the LCD screen.
  *
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#include "statmon/status_monitor.hpp"
+#include "monitor/monitor.hpp"
 
 #include "drivers/nxt_display.h"
 
@@ -14,7 +14,7 @@ namespace nxt
 {
 namespace libs
 {
-void StatusMonitor::init()
+void Monitor::init()
 {
     nxt_display_clear(0);
     nxt_display_goto_xy(0, 0);
@@ -31,7 +31,7 @@ void StatusMonitor::init()
     nxt_display_update();
 }
 
-void StatusMonitor::update()
+void Monitor::update()
 {
     for (auto i = 0U; i < _values.size(); ++i)
     {
@@ -44,13 +44,13 @@ void StatusMonitor::update()
     nxt_display_update();
 }
 
-void StatusMonitor::setLineName(std::uint16_t line, char* name)
+void Monitor::setLineName(std::uint16_t line, char* name)
 {
     if (line < _values.size())
         _values[line].name = name;
 }
 
-void StatusMonitor::setLineValue(std::uint16_t line, int32_t value)
+void Monitor::setLineValue(std::uint16_t line, int32_t value)
 {
     if (line < _values.size())
         _values[line].value = value;

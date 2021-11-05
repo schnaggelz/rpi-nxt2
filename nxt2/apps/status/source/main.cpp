@@ -3,16 +3,16 @@
  *
  * This file is part of rpi-nxt2 experiment.
  *
- * Remote control application. Brick is controlled by a Raspberry Pi
+ * Status display application. Just for debugging.
  *
  * License notes see LICENSE.txt
  *******************************************************************************/
 
 #include "os/os.h"
 
-#include "statmon/status_monitor.hpp"
+#include "monitor/monitor.hpp"
 
-nxt::libs::StatusMonitor status_monitor;
+nxt::libs::Monitor monitor;
 
 //
 // Runnable scheduling
@@ -43,15 +43,15 @@ void app_bg_task()
 
     if (counter % 100 == 0)
     {
-        status_monitor.setLineValue(0, 0);
-        status_monitor.setLineValue(1, 0);
-        status_monitor.setLineValue(2, 0);
-        status_monitor.setLineValue(3, 0);
-        status_monitor.setLineValue(4, 0);
-        status_monitor.setLineValue(5, 0);
-        status_monitor.setLineValue(6, 0);
+        monitor.setLineValue(0, 0);
+        monitor.setLineValue(1, 0);
+        monitor.setLineValue(2, 0);
+        monitor.setLineValue(3, 0);
+        monitor.setLineValue(4, 0);
+        monitor.setLineValue(5, 0);
+        monitor.setLineValue(6, 0);
 
-        status_monitor.update();
+        monitor.update();
     }
 
     counter++;
@@ -67,20 +67,20 @@ void os_app_init()
     addTasks();
 
     // Set up our application display
-    status_monitor.setTitle("GENERIC TESTER 3");
+    monitor.setTitle("GENERIC STATUS 3");
 
-    status_monitor.setLineName(0, "0:");
-    status_monitor.setLineName(1, "1:");
-    status_monitor.setLineName(2, "2:");
-    status_monitor.setLineName(3, "3:");
-    status_monitor.setLineName(4, "4:");
-    status_monitor.setLineName(5, "5:");
-    status_monitor.setLineName(6, "6:");
+    monitor.setLineName(0, "0:");
+    monitor.setLineName(1, "1:");
+    monitor.setLineName(2, "2:");
+    monitor.setLineName(3, "3:");
+    monitor.setLineName(4, "4:");
+    monitor.setLineName(5, "5:");
+    monitor.setLineName(6, "6:");
 
     // Set up status display
-    status_monitor.init();
+    monitor.init();
 
     // Update the display once
-    status_monitor.update();
+    monitor.update();
 }
 }
