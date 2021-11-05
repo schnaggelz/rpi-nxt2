@@ -11,11 +11,13 @@
 #ifndef __NXT_APPS_REMOTE_HPP__
 #define __NXT_APPS_REMOTE_HPP__
 
-#include <array>
-#include <cstdint>
+#include "base/runnable_base.hpp"
 
 #include "api/nxt_utils.hpp"
 #include "api/nxt_usb_port.hpp"
+
+#include <array>
+#include <cstdint>
 
 namespace nxt
 {
@@ -26,11 +28,19 @@ class Remote
   public:
     void init();
     void run();
+    void exit();
 
   private:
-    nxt::USBPort _usb_port;
+    void send();
 
-    std::array<std::uint32_t, 8> _data;
+  private:
+    static constexpr uint8_t NUM_DATA_BYTES = 8;
+
+    nxt::USBPort _usb_port;
+    nxt::USBData _usb_data_rx;
+    nxt::USBData _usb_data_tx;
+
+    std::array<std::uint32_t, NUM_DATA_BYTES> _data;
 };
 } // namespace libs
 } // namespace nxt
