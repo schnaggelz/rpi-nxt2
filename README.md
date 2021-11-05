@@ -111,6 +111,25 @@ Bring the NXT into flash mode and connect it to USB or JTAG, then:
 ice/sam-ba.sh
 ````
 
+# Running
+
+## Starting the NXT
+
+To start the NXT, just insert the batteries, and it will boot. You should see the title according to your selected
+application (see `<app_name>` above).
+
+## Starting the Linux SW
+
+### USB Connection Console
+
+There is only the USB connection monitoring console tool available yet:
+
+````
+build/linux/nxt_console/nxt_console
+````
+
+You need to apply the USB permissions rules in the `udev/rules.d` directory to get it running.
+
 # Debugging
 
 For debugging on the NXT I use the SEGGER J-Link ICE (EDU version). For that I soldered pins of the NXT board to expose
@@ -139,3 +158,7 @@ ice/jlink_gdbserver.sh
 ### Attach to GDB Server
 
 This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB script `ice/gdb/host_init.gdb`.
+
+## Debugging the Linux SW
+
+This is a trivial process and well-documented for your IDE.
