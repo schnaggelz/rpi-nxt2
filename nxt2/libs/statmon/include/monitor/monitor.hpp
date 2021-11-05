@@ -30,8 +30,8 @@ class Monitor
         _title = title;
     }
 
-    void setLineName(std::uint16_t line, char* name);
-    void setLineValue(std::uint16_t line, int32_t value);
+    void setLineName(std::uint8_t line, char* name);
+    void setLineValue(std::uint8_t line, std::int32_t value);
 
     void init();
     void update();

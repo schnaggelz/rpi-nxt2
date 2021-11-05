@@ -25,6 +25,8 @@ class Remote
 {
   private:
     nxt::USBPort _usb_port;
+
+    std::array<std::uint32_t, 8> _data;
 };
 } // namespace libs
 } // namespace nxt

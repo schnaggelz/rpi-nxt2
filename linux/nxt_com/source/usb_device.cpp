@@ -84,17 +84,18 @@ void USBDevice::read(DataPacket& pkg)
 
         if (rc == 0 && nbytes >= 4)
         {
-            pkg.id = ((uint16_t)buf[1] << 8) | (uint8_t)buf[0];
-            pkg.size = ((uint16_t)buf[3] << 8) | (uint8_t)buf[2];
+            pkg.id = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
+            pkg.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
 
             size_t ndata = (nbytes - 4) / 4;
 
             for (int i = 0; i < ndata; ++i)
             {
                 unsigned char* ptr = &(buf[4 * i + 4]);
-                int32_t v = (((int32_t)ptr[3]) << 24) |
-                            (((int32_t)ptr[2]) << 16) |
-                            (((int32_t)ptr[1]) << 8) | (((int32_t)ptr[0]) << 0);
+                std::int32_t v = (((std::int32_t)ptr[3]) << 24) |
+                                 (((std::int32_t)ptr[2]) << 16) |
+                                 (((std::int32_t)ptr[1]) << 8) |
+                                 (((std::int32_t)ptr[0]) << 0);
 
                 pkg.data[i] = v;
             }

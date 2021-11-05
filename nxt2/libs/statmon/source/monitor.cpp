@@ -44,13 +44,13 @@ void Monitor::update()
     nxt_display_update();
 }
 
-void Monitor::setLineName(std::uint16_t line, char* name)
+void Monitor::setLineName(std::uint8_t line, char* name)
 {
     if (line < _values.size())
         _values[line].name = name;
 }
 
-void Monitor::setLineValue(std::uint16_t line, int32_t value)
+void Monitor::setLineValue(std::uint8_t line, std::int32_t value)
 {
     if (line < _values.size())
         _values[line].value = value;

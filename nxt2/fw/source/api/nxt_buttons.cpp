@@ -14,7 +14,7 @@ namespace nxt
 {
 bool Buttons::isPressed(Button button)
 {
-    uint8_t state = 0;
+    std::uint8_t state = 0;
 
     switch (button)
     {

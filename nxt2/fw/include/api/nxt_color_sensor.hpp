@@ -33,7 +33,7 @@ enum class Colors
 class ColorSensor : public Sensor
 {
   public:
-    ColorSensor(uint8_t port_number)
+    ColorSensor(std::uint8_t port_number)
         : Sensor(port_number), _sensor_mode(ColorSensorMode::LIGHT_SENSOR_NONE)
     {
     }

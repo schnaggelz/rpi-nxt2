@@ -32,9 +32,9 @@ namespace nxt_com
 {
 struct DataPacket
 {
-    uint16_t id;
-    uint16_t size;
-    int32_t data[8];
+    std::uint16_t id;
+    std::uint16_t size;
+    std::int32_t data[8];
 };
 
 static_assert(sizeof(DataPacket) == 36);
