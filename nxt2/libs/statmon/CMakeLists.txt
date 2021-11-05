@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.8)
+
 project(nxt_monitor CXX)
 
 add_library(${PROJECT_NAME} STATIC
