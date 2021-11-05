@@ -102,7 +102,7 @@ sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
 
 ### Run Flash Tool
 
-Bring the NXT into flash mode and connect it to USB, then:
+Bring the NXT into flash mode and connect it to USB or JTAG, then:
 
 ````
 ice/sam-ba.sh
