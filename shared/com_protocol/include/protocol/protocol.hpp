@@ -16,18 +16,14 @@ namespace protocol
 {
 enum class Command : std::uint16_t
 {
-    GENERIC = 0x00,
-    GET_DISTANCE = 0x10,
-    GET_COLORS = 0x11,
-    START = 0xA0,
-    STOP = 0xA1,
-    MOVE_FORWARD = 0xA2,
-    MOVE_BACK = 0xA3,
-    TURN_LEFT = 0xA4,
-    TURN_RIGHT = 0xA5,
-    RUN_FASTER = 0xA6,
-    RUN_SLOWER = 0xA7,
-    UNDEFINED = 0x0F
+    GENERIC    = 0x00,
+    GET_DIST   = 0x10,
+    GET_COLOR  = 0x11,
+    MOTOR_FWD  = 0x20,
+    MOTOR_REV  = 0x21,
+    MOTOR_TGT  = 0x22,
+    MOTOR_STOP = 0x2F,
+    UNDEFINED  = 0xFF
 };
 
 struct Packet

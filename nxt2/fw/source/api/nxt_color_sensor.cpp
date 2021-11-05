@@ -8,9 +8,9 @@
 
 #include "api/nxt_color_sensor.hpp"
 
-#include "api/nxt_utils.hpp"
-
 #include "drivers/nxt_color_sensor.h"
+
+#include "utils/conversion.hpp"
 
 namespace nxt
 {
@@ -66,7 +66,7 @@ void ColorSensor::setMode(ColorSensorMode mode)
 
 std::int16_t ColorSensor::getColor(Colors col)
 {
-    return _color_data[nxt::to_underlying(col)];
+    return _color_data[nxt::utils::to_underlying(col)];
 }
 
 std::int16_t ColorSensor::getLight()

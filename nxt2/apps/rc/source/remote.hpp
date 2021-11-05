@@ -13,7 +13,8 @@
 
 #include "base/runnable_base.hpp"
 
-#include "api/nxt_utils.hpp"
+#include "utils/conversion.hpp"
+
 #include "api/nxt_usb_port.hpp"
 
 #include <array>

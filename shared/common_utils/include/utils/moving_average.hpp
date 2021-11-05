@@ -3,13 +3,13 @@
 *
 * This file is part of rpi-nxt2 experiment.
 *
-* NXT application utilities
+* NXT shared utilities
 *
 * License notes see LICENSE.txt
 *******************************************************************************/
 
 
-#ifndef __NXT_UTILS_MOVING_AVERAGE_HPP__
+#ifndef __NXT_COMMON_UTILS_MOVING_AVERAGE_HPP__
 #define __NXT_UTILS_MOVING_AVERAGE_HPP__
 
 namespace nxt

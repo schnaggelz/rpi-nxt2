@@ -17,6 +17,8 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         nxt_com_protocol
+        nxt_common_utils
+    PRIVATE
         pthread
         usb-1.0
 )

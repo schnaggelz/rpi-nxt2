@@ -16,6 +16,5 @@ add_subdirectory(fw)
 
 add_subdirectory(libs/wrappers)
 add_subdirectory(libs/app_base)
-add_subdirectory(libs/utils)
 
 add_subdirectory(apps/${APP_NAME})

@@ -8,6 +8,8 @@
 
 #include "simple_logger/logger.hpp"
 
+#include "utils/conversion.hpp"
+
 #include "nxt_usb/usb_device.hpp"
 
 #include <ncurses.h>
@@ -39,13 +41,13 @@ bool connect()
     return false;
 }
 
-void send(uint16_t id)
+void send(const nxt::protocol::Command command, const std::uint32_t data = 0U)
 {
     if (nxt_usb_dev.isReady())
     {
-        nxt_pkg_tx.command = id;
+        nxt_pkg_tx.command = nxt::utils::to_underlying(command);
         nxt_pkg_tx.size = 1;
-        nxt_pkg_tx.data[0] = 42;
+        nxt_pkg_tx.data[0] = data;
 
         nxt_usb_dev.write(nxt_pkg_tx);
     }
@@ -145,73 +147,24 @@ int main()
         switch (ch)
         {
         case KEY_F(0):
-        case 'd':
+        case 'f':
         {
-            mvprintw(0, 5, "<D>");
-            send(0x10);
+            mvprintw(0, 5, "<f>");
+            send(nxt::protocol::Command::MOTOR_FWD, 50);
         }
         break;
         case KEY_F(1):
-        case 'c':
+        case 'r':
         {
-            mvprintw(0, 5, "<C>");
-            send(0x11);
-        }
-        break;
-        case KEY_HOME:
-        case ' ':
-        {
-            mvprintw(0, 5, "<_>");
-            send(0xA0);
+            mvprintw(0, 5, "<r>");
+            send(nxt::protocol::Command::MOTOR_REV, 50);
         }
         break;
         case KEY_BACKSPACE:
         case '!':
         {
             mvprintw(0, 5, "<!>");
-            send(0xA1);
-        }
-        break;
-        case KEY_UP:
-        case 'w':
-        {
-            mvprintw(0, 5, "<F>");
-            send(0xA2);
-        }
-        break;
-        case KEY_DOWN:
-        case 'y':
-        {
-            mvprintw(0, 5, "<R>");
-            send(0xA3);
-        }
-        break;
-        case KEY_LEFT:
-        case 'a':
-        {
-            mvprintw(0, 5, "<L>");
-            send(0xA4);
-        }
-        break;
-        case KEY_RIGHT:
-        case 's':
-        {
-            mvprintw(0, 5, "<R>");
-            send(0xA5);
-        }
-        break;
-        case KEY_NPAGE:
-        case '+':
-        {
-            mvprintw(0, 5, "<+>");
-            send(0xA6);
-        }
-        break;
-        case KEY_PPAGE:
-        case '-':
-        {
-            mvprintw(0, 5, "<->");
-            send(0xA7);
+            send(nxt::protocol::Command::MOTOR_STOP);
         }
         break;
         }
