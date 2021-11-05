@@ -143,7 +143,7 @@ void USBDevice::close()
     }
 }
 
-void exit()
+void USBDevice::exit()
 {
     libusb_exit(0);
 }

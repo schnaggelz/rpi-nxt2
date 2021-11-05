@@ -24,14 +24,19 @@ nxt_com::usb::DataPacket nxt_pkg_rx;
 
 bool connect()
 {
-    bool success = true;
-
-    if (success = nxt_usb_dev.init())
+    if (nxt_usb_dev.init())
     {
-        success = nxt_usb_dev.open();
+        if (nxt_usb_dev.open())
+        {
+            return true;
+        }
+        else
+        {
+            nxt_usb_dev.exit();
+        }
     }
 
-    return success;
+    return false;
 }
 
 void send(uint16_t id)
