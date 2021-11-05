@@ -86,6 +86,28 @@ cd /home/rpi-nxt2
 scripts/build_linux.sh <build_type>
 ````
 
+# Flashing
+
+## Flashing the FW
+
+### Install Atmel SAM-BA
+
+TODO
+
+Set soft-link for `sam-ba_64`:
+
+````
+sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
+````
+
+### Run Flash Tool
+
+Bring the NXT into flash mode and connect it to USB, then:
+
+````
+ice/sam-ba.sh
+````
+
 # Debugging
 
 For debugging on the NXT I use the SEGGER J-Link ICE (EDU version). For that I soldered pins of the NXT board to expose
@@ -100,7 +122,7 @@ The Debian package can be downloaded from https://www.segger.com/downloads/jlink
 Set soft-link for `JLinkGDBServerCLExe`:
 
 ````
-ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbsvr
+sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbsvr
 ````
 
 ### Run GDB Server
