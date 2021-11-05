@@ -10,7 +10,8 @@
 
 namespace nxt_com
 {
-
+namespace usb
+{
 bool USBDevice::init()
 {
     return libusb_init(0) == 0;
@@ -25,7 +26,7 @@ bool USBDevice::open()
 
     ssize_t num_dev = libusb_get_device_list(0, &dev_list);
 
-    for (size_t dev_idx = 0; dev_idx < nu_dev; ++dev_idx)
+    for (size_t dev_idx = 0; dev_idx < num_dev; ++dev_idx)
     {
         libusb_device* dev = dev_list[dev_idx];
         libusb_device_descriptor dev_desc = {0};
@@ -146,5 +147,7 @@ void exit()
 {
     libusb_exit(0);
 }
+
+} // namespace usb
 
 } // namespace nxt_com

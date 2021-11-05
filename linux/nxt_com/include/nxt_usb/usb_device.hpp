@@ -17,18 +17,9 @@
 #define NULL ((void*)0)
 #endif
 
-#define VENDOR_ID 0x0694
-#define PRODUCT_ID 0x0002
-
-#define LIBUSB_ENDPOINT_OUT 0x01
-#define LIBUSB_ENDPOINT_IN 0x82
-#define LIBUSB_RX_TIMEOUT 1000
-
-#define DEFAULT_CMD_ID 42
-#define MAX_CMD_VALUES 4
-#define TX_RX_BYTES MAX_CMD_VALUES * 4 + 2
-
 namespace nxt_com
+{
+namespace usb
 {
 struct DataPacket
 {
@@ -38,6 +29,19 @@ struct DataPacket
 };
 
 static_assert(sizeof(DataPacket) == 36);
+
+constexpr std::uint16_t VENDOR_ID = 0x0694;
+constexpr std::uint16_t PRODUCT_ID = 0x0002;
+
+constexpr std::uint8_t LIBUSB_ENDPOINT_OUT = 0x01;
+constexpr std::uint8_t LIBUSB_ENDPOINT_IN = 0x82;
+
+constexpr std::uint16_t LIBUSB_RX_TIMEOUT = 1000;
+
+constexpr std::uint8_t DEFAULT_CMD_ID = 42;
+constexpr std::uint8_t MAX_CMD_VALUES = 4;
+
+constexpr std::uint16_t TX_RX_BYTES = MAX_CMD_VALUES * 4 + 2;
 
 class USBDevice
 {
@@ -61,6 +65,7 @@ class USBDevice
     struct libusb_device_handle* _dev_handle{NULL};
     bool _dev_ready{false};
 };
+} // namespace usb
 } // namespace nxt_com
 
 #endif /* __NXT_COM_USB_DEVICE_HPP__ */

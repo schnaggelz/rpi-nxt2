@@ -11,9 +11,9 @@
 
 bool exiting = false;
 
-nxt_com::USBDevice nxt_usb_dev;
-nxt_com::DataPacket nxt_pkg_tx;
-nxt_com::DataPacket nxt_pkg_rx;
+nxt_com::usb::USBDevice nxt_usb_dev;
+nxt_com::usb::DataPacket nxt_pkg_tx;
+nxt_com::usb::DataPacket nxt_pkg_rx;
 
 using namespace std;
 
