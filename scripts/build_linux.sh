@@ -17,6 +17,6 @@ cd "$BUILD_DIR"
 # -DCMAKE_TOOLCHAIN_FILE=../cmake/arm-gcc-toolchain
 cmake -DCMAKE_BUILD_TYPE="$0" "${ROOT_DIR}/linux"
 make clean
-make -j 16 # VERBOSE=1
+make -j 16 VERBOSE=1
 
 cd ..
