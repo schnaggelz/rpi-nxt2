@@ -2,7 +2,8 @@
 
 HIGHLY WORK-IN-PROGRESS, CODE NOT COMPLETELY WORKING YET AND MAY NOT BUILD.
 
-Lego NXT2 (ARM7-TDMI, bare metal) C/C++ FW communicating with Raspberry Pi (Cortex-A53, Debian Linux) C++/Python SW. 
+Lego NXT2 (ARM7-TDMI, bare metal) C/C++ FW communicating with Raspberry Pi (Cortex-A53, Debian Linux) C++/Python SW.
+
 Long-term goal: Raspberry Pi3 (or: Pi4, Pi Zero2, ...) solving a Rubik's cube via Python/OpenCV and then controlling 
 the NXT to physically solve it.
 
