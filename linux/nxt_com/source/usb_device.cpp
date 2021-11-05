@@ -12,12 +12,12 @@ namespace nxt_com
 {
 namespace usb
 {
-bool USBDevice::init()
+bool Device::init()
 {
     return libusb_init(0) == 0;
 }
 
-bool USBDevice::open()
+bool Device::open()
 {
     int rc = 0;
 
@@ -71,7 +71,7 @@ bool USBDevice::open()
     return false;
 }
 
-void USBDevice::read(DataPacket& pkg)
+void Device::read(DataPacket& pkg)
 {
     int rc = 0;
 
@@ -85,7 +85,7 @@ void USBDevice::read(DataPacket& pkg)
 
         if (rc == 0 && nbytes >= 4)
         {
-            pkg.id = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
+            pkg.command = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
             pkg.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
 
             size_t ndata = (nbytes - 4) / 4;
@@ -104,7 +104,7 @@ void USBDevice::read(DataPacket& pkg)
     }
 }
 
-void USBDevice::write(const DataPacket& pkg)
+void Device::write(const DataPacket& pkg)
 {
     int rc = 0;
 
@@ -113,8 +113,8 @@ void USBDevice::write(const DataPacket& pkg)
 
     if (_dev_ready)
     {
-        buf[0] = (pkg.id >> 0) & 0xFF;
-        buf[1] = (pkg.id >> 8) & 0xFF;
+        buf[0] = (pkg.command >> 0) & 0xFF;
+        buf[1] = (pkg.command >> 8) & 0xFF;
         buf[2] = (pkg.size >> 0) & 0xFF;
         buf[3] = (pkg.size >> 8) & 0xFF;
 
@@ -132,7 +132,7 @@ void USBDevice::write(const DataPacket& pkg)
     }
 }
 
-void USBDevice::close()
+void Device::close()
 {
     if (_dev_ready)
     {
@@ -143,11 +143,10 @@ void USBDevice::close()
     }
 }
 
-void USBDevice::exit()
+void Device::exit()
 {
     libusb_exit(0);
 }
 
 } // namespace usb
-
 } // namespace nxt_com

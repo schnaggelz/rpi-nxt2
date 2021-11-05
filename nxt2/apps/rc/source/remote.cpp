@@ -38,7 +38,7 @@ void Remote::run()
 
 void Remote::send(const DataArray& data)
 {
-    _usb_data_tx.id = nxt::to_underlying(USBCommand::GENERIC);
+    _usb_data_tx.command = nxt::to_underlying(nxt::protocol::Command::GENERIC);
 
     _usb_data_tx.size = data.size();
 

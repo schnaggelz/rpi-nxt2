@@ -18,7 +18,7 @@
 
 std::atomic<bool> exiting = false;
 
-nxt_com::usb::USBDevice nxt_usb_dev;
+nxt_com::usb::Device nxt_usb_dev;
 nxt_com::usb::DataPacket nxt_pkg_tx;
 nxt_com::usb::DataPacket nxt_pkg_rx;
 
@@ -43,7 +43,7 @@ void send(uint16_t id)
 {
     if (nxt_usb_dev.isReady())
     {
-        nxt_pkg_tx.id = id;
+        nxt_pkg_tx.command = id;
         nxt_pkg_tx.size = 1;
         nxt_pkg_tx.data[0] = 42;
 
@@ -69,10 +69,10 @@ void receive()
             nxt_usb_dev.read(nxt_pkg_rx);
 
             mvprintw(3, 0, "RCV    : SQ:%8d|", counter++);
-            mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", nxt_pkg_rx.id,
+            mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", nxt_pkg_rx.command,
                      nxt_pkg_rx.size);
 
-            switch (nxt_pkg_rx.id)
+            switch (nxt_pkg_rx.command)
             {
             case 0x00: // GENERIC
             {

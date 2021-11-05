@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(nxt_utils CXX)
+project(nxt_com_protocol CXX)
 
 add_library(${PROJECT_NAME} INTERFACE)
 

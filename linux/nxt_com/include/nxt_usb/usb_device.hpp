@@ -9,6 +9,8 @@
 #ifndef __NXT_COM_USB_DEVICE_HPP__
 #define __NXT_COM_USB_DEVICE_HPP__
 
+#include "protocol/protocol.hpp"
+
 #include <libusb-1.0/libusb.h>
 
 #include <cstdint>
@@ -21,12 +23,7 @@ namespace nxt_com
 {
 namespace usb
 {
-struct DataPacket
-{
-    std::uint16_t id;
-    std::uint16_t size;
-    std::int32_t data[8];
-};
+using DataPacket = nxt::protocol::Packet;
 
 static_assert(sizeof(DataPacket) == 36);
 
@@ -43,10 +40,10 @@ constexpr std::uint8_t MAX_CMD_VALUES = 4;
 
 constexpr std::uint16_t TX_RX_BYTES = MAX_CMD_VALUES * 4 + 2;
 
-class USBDevice
+class Device
 {
   public:
-    USBDevice() : _dev_handle(NULL), _dev_ready(false){};
+    Device() : _dev_handle(NULL), _dev_ready(false){};
 
     bool init();
     bool open();

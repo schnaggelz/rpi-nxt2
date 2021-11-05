@@ -9,35 +9,15 @@
 #ifndef __NXT_USB_DATA_HPP__
 #define __NXT_USB_DATA_HPP__
 
-#include <cstdint>
+#include "protocol/protocol.hpp"
+
 #include <type_traits>
 
 namespace nxt
 {
-enum class USBCommand : std::uint16_t
-{
-    GENERIC = 0x00,
-    GET_DISTANCE = 0x10,
-    GET_COLORS = 0x11,
-    START = 0xA0,
-    STOP = 0xA1,
-    MOVE_FORWARD = 0xA2,
-    MOVE_BACK = 0xA3,
-    TURN_LEFT = 0xA4,
-    TURN_RIGHT = 0xA5,
-    RUN_FASTER = 0xA6,
-    RUN_SLOWER = 0xA7,
-    UNDEFINED = 0x0F
-};
+using USBCommand = nxt::protocol::Command;
 
-struct USBData
-{
-    USBData() = default;
-
-    std::uint16_t id;
-    std::uint16_t size;
-    std::uint32_t data[8];
-};
+using USBData = nxt::protocol::Packet;
 
 static_assert(sizeof(USBData) == 36, "Invalid USBData size");
 
