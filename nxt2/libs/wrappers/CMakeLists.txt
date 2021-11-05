@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(nxt_monitor CXX)
+project(nxt_wrappers CXX)
 
 add_library(${PROJECT_NAME} STATIC
-    include/monitor/monitor.hpp
+    include/wrappers/monitor.hpp
     source/monitor.cpp
 )
 

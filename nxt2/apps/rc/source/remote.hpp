@@ -23,6 +23,10 @@ namespace apps
 {
 class Remote
 {
+  public:
+    void init();
+    void run();
+
   private:
     nxt::USBPort _usb_port;
 

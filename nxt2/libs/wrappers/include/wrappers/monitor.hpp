@@ -6,8 +6,8 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#ifndef __NXT_LIBS_MONITOR_HPP__
-#define __NXT_LIBS_MONITOR_HPP__
+#ifndef __NXT_STATMON_MONITOR_HPP__
+#define __NXT_STATMON_MONITOR_HPP__
 
 #include <array>
 #include <cstdint>
@@ -16,7 +16,7 @@
 
 namespace nxt
 {
-namespace libs
+namespace wrappers
 {
 class Monitor
 {
@@ -51,4 +51,4 @@ class Monitor
 } // namespace libs
 } // namespace nxt
 
-#endif /* __NXT_LIBS_MONITOR_HPP__ */
+#endif /* __NXT_STATMON_MONITOR_HPP__ */

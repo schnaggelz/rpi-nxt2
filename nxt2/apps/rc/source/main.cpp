@@ -10,11 +10,11 @@
 
 #include "os/os.h"
 
-#include "monitor/monitor.hpp"
+#include "wrappers/monitor.hpp"
 
 #include "remote.hpp"
 
-nxt::libs::Monitor monitor;
+nxt::wrappers::Monitor monitor;
 nxt::apps::Remote remote;
 
 //

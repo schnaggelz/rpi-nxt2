@@ -6,13 +6,13 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#include "monitor/monitor.hpp"
+#include "wrappers/monitor.hpp"
 
 #include "drivers/nxt_display.h"
 
 namespace nxt
 {
-namespace libs
+namespace wrappers
 {
 void Monitor::init()
 {
