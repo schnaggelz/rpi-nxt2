@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-include(arm-gcc-toolchain)
-
 project(nxt_sw CXX C ASM)
 
 set(LINKER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/fw/nxt.lds)
