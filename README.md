@@ -131,7 +131,7 @@ There is only the USB connection monitoring console tool available yet:
 build/linux/nxt_console/nxt_console
 ````
 
-You need to apply the USB permissions rules in the `udev/rules.d` directory to get it running.
+You need to apply the USB permissions rules in the `config/udev/rules.d` directory to get it running.
 
 # Debugging
 
