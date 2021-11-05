@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (C) 2015 T. Reich
+ *
+ * NXT communication tool.
+ *
+ * License notes see LICENSE.txt
+ ******************************************************************************/
+
+#include "simple_logger/logger.hpp"
+
+#include "nxt_usb/usb_device.hpp"
 
 #include <ncurses.h>
 
@@ -5,17 +16,11 @@
 #include <iostream>
 #include <thread>
 
-//#include "simple_logger.hpp"
-
-#include "nxt_usb/usb_device.hpp"
-
 bool exiting = false;
 
 nxt_com::usb::USBDevice nxt_usb_dev;
 nxt_com::usb::DataPacket nxt_pkg_tx;
 nxt_com::usb::DataPacket nxt_pkg_rx;
-
-using namespace std;
 
 bool connect()
 {
@@ -91,7 +96,7 @@ void receive()
             refresh();
         }
 
-        this_thread::sleep_for(chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 
@@ -102,11 +107,11 @@ void disconnect()
 
 int main()
 {
-    //LOG_INFO("Connect to NXT ...");
+    LOG_INFO("Connect to NXT ...");
 
     if (!connect())
     {
-        //LOG_ERROR("Creating NXT connection failed");
+        LOG_ERROR("Creating NXT connection failed");
         return 1;
     }
 
@@ -118,7 +123,7 @@ int main()
     mvprintw(0, 5, "< >");
     refresh();
 
-    thread rt(&receive);
+    std::thread rt(&receive);
     rt.detach();
 
     int ch;
@@ -208,7 +213,7 @@ int main()
 
     disconnect();
 
-    //LOG_INFO("Disconnected from NXT");
+    LOG_INFO("Disconnected from NXT");
 
     return 0;
 }
