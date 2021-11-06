@@ -32,10 +32,19 @@ struct Packet
 
     std::uint16_t command;
     std::uint16_t size;
-    std::uint32_t data[8];
+
+    static constexpr std::uint8_t NUM_DATA_ELEMENTS = 8U;
+
+    std::int32_t data[NUM_DATA_ELEMENTS];
+
+    static constexpr void validate()
+    {
+        static_assert(sizeof(Packet) == 2 + 2 + NUM_DATA_ELEMENTS * 4,
+                      "Invalid USBData size");
+    }
 };
 
-static_assert(sizeof(Packet) == 36, "Invalid USBData size");
+using Data = decltype(Packet::data);
 
 } // namespace protocol
 } // namespace nxt
