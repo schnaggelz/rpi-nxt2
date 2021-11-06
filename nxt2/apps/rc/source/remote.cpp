@@ -21,6 +21,9 @@ void Remote::init()
     _motor_A.init();
     _motor_B.init();
     _motor_C.init();
+
+    _sensor_1.init();
+    _sensor_2.init();
 }
 
 void Remote::run()
@@ -73,26 +76,14 @@ void Remote::process()
 
 void Remote::send()
 {
-    static std::uint8_t counter = 0;
+    _usb_data_tx.command = nxt::utils::to_underlying(
+        USBCommand::GET_DIST);
 
-    _usb_data_tx.command =
-        nxt::utils::to_underlying(nxt::protocol::Command::GENERIC);
-
-    // Send some test data
-    _usb_data_tx.data[0] = counter + 1;
-    _usb_data_tx.data[1] = counter + 2;
-    _usb_data_tx.data[2] = counter + 3;
-    _usb_data_tx.data[3] = counter + 4;
-    _usb_data_tx.data[4] = counter + 5;
-    _usb_data_tx.data[5] = counter + 6;
-    _usb_data_tx.data[6] = counter + 7;
-    _usb_data_tx.data[7] = counter + 8;
-
-    _usb_data_tx.size = _data.size();
+    // Send distance
+    _usb_data_tx.data[0] = _sensor_1.getDistance();
+    _usb_data_tx.size = 1;
 
     _usb_port.write(_usb_data_tx);
-
-    counter++;
 }
 
 void Remote::receive()
@@ -103,6 +94,13 @@ void Remote::receive()
 void Remote::exit()
 {
     _usb_port.exit();
+
+    _motor_A.exit();
+    _motor_B.exit();
+    _motor_C.exit();
+
+    _sensor_1.exit();
+    _sensor_2.exit();
 }
 
 } // namespace apps

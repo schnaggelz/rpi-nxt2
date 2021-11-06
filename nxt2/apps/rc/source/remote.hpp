@@ -15,8 +15,10 @@
 
 #include "utils/conversion.hpp"
 
-#include "api/nxt_usb_port.hpp"
+#include "api/nxt_color_sensor.hpp"
+#include "api/nxt_distance_sensor.hpp"
 #include "api/nxt_motor.hpp"
+#include "api/nxt_usb_port.hpp"
 
 #include "wrappers/monitor.hpp"
 
@@ -35,6 +37,8 @@ class Remote
         , _motor_A(nxt::Actuator::Port::PORT_A, true)
         , _motor_B(nxt::Actuator::Port::PORT_B, true)
         , _motor_C(nxt::Actuator::Port::PORT_C, true)
+        , _sensor_1(nxt::Sensor::Port::PORT_1)
+        , _sensor_2(nxt::Sensor::Port::PORT_2)
     {
     }
 
@@ -60,13 +64,16 @@ class Remote
     nxt::Motor _motor_B;
     nxt::Motor _motor_C;
 
+    nxt::DistanceSensor _sensor_1;
+    nxt::ColorSensor _sensor_2;
+
     nxt::USBPort _usb_port;
     nxt::USBData _usb_data_rx;
     nxt::USBData _usb_data_tx;
 
     DataArray _data;
 };
-} // namespace libs
+} // namespace apps
 } // namespace nxt
 
 #endif /* __NXT_APPS_REMOTE_HPP__ */
