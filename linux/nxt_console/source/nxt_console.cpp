@@ -46,7 +46,7 @@ void send(const nxt::protocol::Command command, const nxt::protocol::Data& data)
     if (nxt_usb_dev.isReady())
     {
         nxt_pkg_tx.command = nxt::utils::to_underlying(command);
-        nxt_pkg_tx.size    = 1;
+        nxt_pkg_tx.size = 1;
 
         for (auto idx = 0U; idx < nxt::protocol::Packet::NUM_DATA_ELEMENTS;
              ++idx)
@@ -79,9 +79,10 @@ void receive()
             mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", nxt_pkg_rx.command,
                      nxt_pkg_rx.size);
 
-            switch (nxt_pkg_rx.command)
+            switch (
+                nxt::utils::to_enum<nxt::protocol::Command>(nxt_pkg_rx.command))
             {
-            case 0x00: // GENERIC
+            case nxt::protocol::Command::GENERIC: // GENERIC
             {
                 mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
@@ -92,18 +93,23 @@ void receive()
                          nxt_pkg_rx.data[6], nxt_pkg_rx.data[7]);
                 break;
             }
-            case 0x10: // SONAR
+            case nxt::protocol::Command::GET_DIST: // SONAR
             {
                 mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
                          nxt_pkg_rx.data[2]);
                 break;
             }
-            case 0x11: // COLOR
+            case nxt::protocol::Command::GET_COLOR: // COLOR
             {
                 mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
                          nxt_pkg_rx.data[2]);
+                break;
+            }
+            case nxt::protocol::Command::GET_LIGHT: // LIGHT
+            {
+                mvprintw(9, 0, "COLOR  : A0=%8d|", nxt_pkg_rx.data[0]);
                 break;
             }
             }
@@ -212,7 +218,7 @@ int main()
                 continue;
             }
 
-            mvprintw(0, 5, "<!!>");
+            mvprintw(0, 5, "<!%d>", no);
             send(nxt::protocol::Command::MOTOR_STOP, {no});
         }
         break;

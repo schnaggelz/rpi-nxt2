@@ -37,8 +37,7 @@ void Remote::run()
 
 void Remote::process()
 {
-    auto command =
-        nxt::utils::to_enum<nxt::protocol::Command>(_usb_data_rx.command);
+    auto command = nxt::utils::to_enum<nxt::protocol::Command>(_usb_data_rx.command);
 
     if (command == nxt::protocol::Command::MOTOR_FWD ||
         command == nxt::protocol::Command::MOTOR_REV ||
@@ -76,19 +75,29 @@ void Remote::process()
 
 void Remote::send()
 {
-    _usb_data_tx.command = nxt::utils::to_underlying(
-        USBCommand::GET_DIST);
-
-    // Send distance
+    // Get and send distance
+    _usb_data_tx.command = nxt::utils::to_underlying(USBCommand::GET_DIST);
     _usb_data_tx.data[0] = _sensor_1.getDistance();
     _usb_data_tx.size = 1;
-
     _usb_port.write(_usb_data_tx);
+
+    _monitor.setLineValue(4, _sensor_1.getDistance());
+
+    // Get and send brightness
+    _usb_data_tx.command = nxt::utils::to_underlying(USBCommand::GET_LIGHT);
+    _usb_data_tx.data[0] = _sensor_2.getBrightness();
+    _usb_data_tx.size = 1;
+    _usb_port.write(_usb_data_tx);
+
+    _monitor.setLineValue(5, _sensor_2.getBrightness());
 }
 
 void Remote::receive()
 {
     _usb_port.read(_usb_data_rx);
+
+    _sensor_1.read();
+    _sensor_2.read();
 }
 
 void Remote::exit()

@@ -15,7 +15,7 @@
 
 #include "utils/conversion.hpp"
 
-#include "api/nxt_color_sensor.hpp"
+#include "api/nxt_light_sensor.hpp"
 #include "api/nxt_distance_sensor.hpp"
 #include "api/nxt_motor.hpp"
 #include "api/nxt_usb_port.hpp"
@@ -65,7 +65,7 @@ class Remote
     nxt::Motor _motor_C;
 
     nxt::DistanceSensor _sensor_1;
-    nxt::ColorSensor _sensor_2;
+    nxt::LightSensor _sensor_2;
 
     nxt::USBPort _usb_port;
     nxt::USBData _usb_data_rx;

@@ -19,6 +19,7 @@ enum class Command : std::uint16_t
     GENERIC    = 0x00,
     GET_DIST   = 0x10,
     GET_COLOR  = 0x11,
+    GET_LIGHT  = 0x12,
     MOTOR_FWD  = 0x20,
     MOTOR_REV  = 0x21,
     MOTOR_TGT  = 0x22,
