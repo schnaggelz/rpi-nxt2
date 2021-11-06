@@ -12,6 +12,7 @@
 #include "platform/systypes.h"
 
 void nxt_devices_init(void);
-void nxt_bg_task(void);
+void nxt_devices_background(void);
+void nxt_devices_exit(void);
 
 #endif /* __NXT_DEVICES_H__ */

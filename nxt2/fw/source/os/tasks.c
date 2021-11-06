@@ -8,20 +8,20 @@
 * License notes see LICENSE.txt
 *******************************************************************************/
 
-extern void nxt_bg_task(void);
-extern void app_bg_task(void);
+extern void nxt_devices_background(void);
+extern void os_app_background(void);
 
 #ifdef NXT_DUMMY_APP_BG_TASK
-void app_bg_task(void) {};
+void os_app_background(void) {};
 #endif
 
 /* Background processing called by the 1kHz
    timer interrupt handler. */
-void bg_task()
+void os_background()
 {
     /* System background process. */
-    nxt_bg_task();
+    nxt_devices_background();
 
     /* Application background process. */
-    app_bg_task();
+    os_app_background();
 }

@@ -37,7 +37,7 @@ extern "C" {
 // Background processing
 //
 
-void app_bg_task()
+void os_app_background()
 {
     static int counter = 0;
 

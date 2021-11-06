@@ -1,18 +1,17 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
-*
-* Provides a 1000Hz tick for the system.
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
-
+ * Copyright (C) 2021 Timon Reich
+ *
+ * This file is part of rpi-nxt2 experiment. Inspired by the Lejos project.
+ *
+ * Provides a 1000Hz tick for the system.
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "platform/systick.h"
 
-#include "platform/irqs.h"
 #include "platform/aic.h"
+#include "platform/irqs.h"
 
 #include "platform/at91/at91sam7s256.h"
 
@@ -21,11 +20,11 @@
 #define LOW_PRIORITY_IRQ 10
 
 extern void os_tick(void);
-extern void bg_task(void);
+extern void os_background(void);
 
 static volatile uint32 systick_ms = 0;
 
-void systick_isr_handler(void) 
+void systick_isr_handler(void)
 {
     uint32 status;
 
@@ -39,7 +38,7 @@ void systick_isr_handler(void)
     aic_set(LOW_PRIORITY_IRQ);
 }
 
-void systick_lp_isr_handler(void) 
+void systick_lp_isr_handler(void)
 {
     /* Clear low priority task interrupt. */
     aic_clear(LOW_PRIORITY_IRQ);
@@ -48,8 +47,8 @@ void systick_lp_isr_handler(void)
     enable_all_interrupts();
 
     /* Call background task. */
-    bg_task();
-    
+    os_background();
+
     /* Call OS base tick function. */
     os_tick();
 
@@ -57,7 +56,7 @@ void systick_lp_isr_handler(void)
     disable_all_interrupts();
 }
 
-uint32 systick_get_ms(void) 
+uint32 systick_get_ms(void)
 {
     /* We're using a 32-bitter and can assume that we
        don't need to do any locking here. */
@@ -70,15 +69,14 @@ uint64 systick_get_ns(void)
     uint32 piir;
     uint32 ns;
 
-    do 
-	{
+    do
+    {
         ms = systick_ms;
         piir = *AT91C_PITC_PIIR;
-    } 
-    while (systick_ms != ms);
+    } while (systick_ms != ms);
 
     /* Add in any missed ms. */
-    ms += (piir  >> 20);
+    ms += (piir >> 20);
 
     /* Get nanoseconds. */
     ns = ((piir & AT91C_PITC_CPIV) * PIT_FREQ) / (CLK_FREQ / 16 / 1000000);
@@ -88,7 +86,7 @@ uint64 systick_get_ns(void)
 void systick_wait_ms(uint32 ms)
 {
     volatile uint32 final = ms + systick_ms;
-    while (systick_ms < final) 
+    while (systick_ms < final)
     {
     }
 }
@@ -102,26 +100,27 @@ void systick_wait_ns(uint32 ns)
     }
 }
 
-void systick_init(void) 
+void systick_init(void)
 {
     int i_state = irqs_get_and_disable();
 
     /* Install low priority handler. */
     aic_mask_off(LOW_PRIORITY_IRQ);
-    aic_set_vector(LOW_PRIORITY_IRQ, AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED |
-            AIC_INT_LEVEL_LOW, (uint32) systick_lp_isr_handler);
+    aic_set_vector(LOW_PRIORITY_IRQ,
+                   AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED | AIC_INT_LEVEL_LOW,
+                   (uint32)systick_lp_isr_handler);
     aic_mask_on(LOW_PRIORITY_IRQ);
 
-
     /* Set up periodic interval timer. */
-    *AT91C_PITC_PIMR = AT91C_PITC_PITIEN |  /* interrupt enable */
-                       AT91C_PITC_PITEN |   /* timer enable */
+    *AT91C_PITC_PIMR = AT91C_PITC_PITIEN |               /* interrupt enable */
+                       AT91C_PITC_PITEN |                /* timer enable */
                        ((CLK_FREQ / PIT_FREQ / 16) - 1); /* interval value */
 
     /* Install main timer handler. */
     aic_mask_off(AT91C_ID_SYS);
-    aic_set_vector(AT91C_ID_SYS, AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED |
-                   AIC_INT_LEVEL_NORMAL, (uint32) systick_isr_handler);
+    aic_set_vector(AT91C_ID_SYS,
+                   AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED | AIC_INT_LEVEL_NORMAL,
+                   (uint32)systick_isr_handler);
     aic_mask_on(AT91C_ID_SYS);
 
     if (i_state)

@@ -69,7 +69,7 @@ void nxt_devices_init(void)
     nxt_sensors_init();
 }
 
-void nxt_bg_task()
+void nxt_devices_background()
 {
     /* Do AVR main processing. */
     nxt_avr_1kHz_update();
@@ -79,4 +79,9 @@ void nxt_bg_task()
 
     /* Do USB I/O processing. */
     nxt_usb_1kHz_process();
+}
+
+void nxt_devices_exit()
+{
+    /* TODO */
 }
