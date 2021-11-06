@@ -6,7 +6,6 @@
 * License notes see LICENSE.txt
 *******************************************************************************/
 
-
 #ifndef __NXT_BUTTONS_HPP__
 #define __NXT_BUTTONS_HPP__
 
