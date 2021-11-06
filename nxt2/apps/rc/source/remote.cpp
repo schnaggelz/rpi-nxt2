@@ -37,19 +37,37 @@ void Remote::process()
     auto command =
         nxt::utils::to_enum<nxt::protocol::Command>(_usb_data_rx.command);
 
-    switch (command)
+    if (command == nxt::protocol::Command::MOTOR_FWD ||
+        command == nxt::protocol::Command::MOTOR_REV ||
+        command == nxt::protocol::Command::MOTOR_STOP)
     {
-    case nxt::protocol::Command::MOTOR_FWD:
-        _monitor.setLineValue(0, _usb_data_rx.data[1]);
-        break;
-    case nxt::protocol::Command::MOTOR_REV:
-        _monitor.setLineValue(0, -_usb_data_rx.data[1]);
-        break;
-    case nxt::protocol::Command::MOTOR_STOP:
-        _monitor.setLineValue(0, 0);
-        break;
-    default:
-        break;
+        auto port = _usb_data_rx.data[0];
+        auto value = 0;
+
+        if (command == nxt::protocol::Command::MOTOR_FWD)
+        {
+            value = _usb_data_rx.data[1];
+        }
+        else if (command == nxt::protocol::Command::MOTOR_REV)
+        {
+            value = -_usb_data_rx.data[1];
+        }
+
+        switch (port)
+        {
+        case 1:
+            _monitor.setLineValue(0, value);
+            _motor_A.setSpeed(value);
+            break;
+        case 2:
+            _monitor.setLineValue(1, value);
+            _motor_B.setSpeed(value);
+            break;
+        case 3:
+            _monitor.setLineValue(2, value);
+            _motor_C.setSpeed(value);
+            break;
+        }
     }
 }
 
