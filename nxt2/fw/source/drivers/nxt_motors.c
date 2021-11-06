@@ -55,6 +55,16 @@ void nxt_motor_set_count(uint8 port, sint32 count)
     }
 }
 
+sint32 nxt_motor_get_speed(uint8 port)
+{
+    if (port < NXT_NUM_MOTOR_PORTS)
+    {
+        return motor_ports[port].speed_percent;
+    }
+
+    return 0;
+}
+
 void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
@@ -69,7 +79,7 @@ void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake)
     }
 }
 
-void nxt_motor_command(uint8 port, sint32 cmd, sint32 target_count, sint32 speed_percent)
+void nxt_motor_command(uint8 port, sint32 target_count, sint32 speed_percent)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
     {

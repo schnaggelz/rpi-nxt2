@@ -25,10 +25,11 @@ extern "C" {
 #endif
 
 sint32 nxt_motor_get_count(uint8 port);
+sint32 nxt_motor_get_speed(uint8 port);
+
 void nxt_motor_set_count(uint8 port, sint32 count);
 void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake);
-void nxt_motor_command(uint8 port, sint32 cmd, sint32 target_count,
-                       sint32 speed_percent);
+void nxt_motor_command(uint8 port, sint32 target_count, sint32 speed_percent);
 void nxt_motor_init(void);
 
 #ifdef __cplusplus

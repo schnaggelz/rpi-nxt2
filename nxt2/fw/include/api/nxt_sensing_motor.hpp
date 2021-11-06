@@ -25,19 +25,20 @@ class SensingMotor : public Sensor
 
     void setCount(std::int32_t count);
 
-    std::int32_t getCount() const;
+    void rotateTo(std::int32_t angle);
 
-    std::int32_t getSpeed() const
-    {
-        return _current_speed;
-    }
+    std::int32_t getCount();
+
+    std::int32_t getSpeed();
 
     void init() override;
     void read() override;
     void exit() override;
 
   private:
-    std::int32_t _current_speed;
+    std::int32_t _current_speed{0};
+    std::int32_t _current_count{0};
+    std::int32_t _target_count{0};
 
     bool _brake;
 };
