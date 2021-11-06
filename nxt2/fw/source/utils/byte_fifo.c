@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2021 Timon Reich
+ *
+ * This file is part of rpi-nxt2 experiment.
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
+
 #include "utils/byte_fifo.h"
 
 void byte_fifo_clear(struct byte_fifo* f)

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2015 T. Reich
+ * Copyright (C) 2021 Timon Reich
  *
  * NXT shared utilities
  *

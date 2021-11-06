@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (C) 2015 T. Reich
+* Copyright (C) 2021 Timon Reich
 *
 * This file is part of rpi-nxt2 experiment.
 *

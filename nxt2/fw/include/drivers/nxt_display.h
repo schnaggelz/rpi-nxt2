@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2012 T. Reich
+ * Copyright (C) 2012 Timon Reich
  *
  * This file is part of rpi-nxt2 experiment. Some code was inspired by the
  * Lejos project.

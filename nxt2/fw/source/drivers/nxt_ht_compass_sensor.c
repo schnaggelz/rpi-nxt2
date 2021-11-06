@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2021 Timon Reich
+*
+* NXT C driver code.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "drivers/nxt_ht_compass_sensor.h"
 
 #include "drivers/nxt_sensors.h"

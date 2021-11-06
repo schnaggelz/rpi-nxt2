@@ -1,19 +1,25 @@
-/* 
+/*******************************************************************************
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C driver code.
+ *
  * The module provides support for audio output. Two modes are supported,
- * tone generation and the playback of PCM based audio samples. Both use 
+ * tone generation and the playback of PCM based audio samples. Both use
  * pulse density modulation to actually produce the output.
- * To produce a tone a single pdm encoded cycle is created (having the 
+ * To produce a tone a single pdm encoded cycle is created (having the
  * requested amplitude), this single cycle is then played repeatedly to
  * generate the tone. The bit rate used to output the sample defines the
  * frequency of the tone and the number of repeats represents then length.
  * To play an encoded sample (only 8 bit PCM is currently supported),
  * each PCM sample is turned into a 256 bit pdm block, which is then output
- * (at the sample rate), to create the output. Again the amplitude of the 
- * samples may be controlled. 
+ * (at the sample rate), to create the output. Again the amplitude of the
+ * samples may be controlled.
  * The actual output of the bits is performed using the built in Synchronous
  * Serial Controller (SSC). This is capable of outputting a series of bits
  * to port at fixed intervals and is used to output the pdm audio.
- */
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "drivers/nxt_sound.h"
 
@@ -26,7 +32,8 @@
 
 #include <string.h>
 
-/* Buffer length must be a multiple of 8 and at most 64 (preferably as long as possible) */
+/* Buffer length must be a multiple of 8 and at most 64 (preferably as long as
+ * possible) */
 #define PDM_BUFFER_LENGTH 64
 /* Main clock frequency */
 #define OSC CLOCK_FREQUENCY
@@ -48,12 +55,13 @@ enum
 };
 
 /* Numbers with 0-32 evenly spaced bits set */
-const uint32 sample_pattern[33] = {0x00000000, 0x80000000, 0x80008000, 0x80200400,
-                                   0x80808080, 0x82081040, 0x84208420, 0x88442210, 0x88888888, 0x91224488,
-                                   0x92489248, 0xa4924924, 0xa4a4a4a4, 0xa94a5294, 0xaa54aa54, 0xaaaa5554,
-                                   0xaaaaaaaa, 0xd555aaaa, 0xd5aad5aa, 0xd6b5ad6a, 0xdadadada, 0xdb6db6da,
-                                   0xedb6edb6, 0xeeddbb76, 0xeeeeeeee, 0xf7bbddee, 0xfbdefbde, 0xfdf7efbe,
-                                   0xfefefefe, 0xffdffbfe, 0xfffefffe, 0xfffffffe, 0xffffffff};
+const uint32 sample_pattern[33] = {
+    0x00000000, 0x80000000, 0x80008000, 0x80200400, 0x80808080, 0x82081040,
+    0x84208420, 0x88442210, 0x88888888, 0x91224488, 0x92489248, 0xa4924924,
+    0xa4a4a4a4, 0xa94a5294, 0xaa54aa54, 0xaaaa5554, 0xaaaaaaaa, 0xd555aaaa,
+    0xd5aad5aa, 0xd6b5ad6a, 0xdadadada, 0xdb6db6da, 0xedb6edb6, 0xeeddbb76,
+    0xeeeeeeee, 0xf7bbddee, 0xfbdefbde, 0xfdf7efbe, 0xfefefefe, 0xffdffbfe,
+    0xfffefffe, 0xfffffffe, 0xffffffff};
 
 volatile uint8 sound_mode = SOUND_MODE_NONE;
 
@@ -61,7 +69,7 @@ volatile uint8 sound_mode = SOUND_MODE_NONE;
 struct
 {
     // pointer to the next sample
-    volatile uint8 *ptr;
+    volatile uint8* ptr;
     // The number of samples ahead
     volatile sint32 count;
     // 0 or 1, identifies the current buffer
@@ -81,7 +89,7 @@ struct
 /* The following tables provide input to the wave generation code. This
  * code takes a set of points describing one half cycle of a symmetric waveform
  * and from this creates a pdm encoded version of a single full cycle of the
- * wave. 
+ * wave.
  *
  * A number of sample wave shapes have been tried, an accurate sine wave, a
  * square wave, triangular wave and a rough approximation of a sine wave.
@@ -95,18 +103,13 @@ struct
  * result has to some extent been validated using an audio spectrum analyzer
  * which shows virtually no fundamental below 700Hz but lots of harmonics.
  *
- * The square wave also produces a higher volume than other wave shapes. 
+ * The square wave also produces a higher volume than other wave shapes.
  * Higher volumes can be achieved when using the rough sine wave by allowing
  * the volume setting to push the shape into distortion and effectively
  * becoming a square wave!
  */
-const uint8 sine[] = 
-{
-    0xc0, 0xc8, 0xd0, 0xd8, 
-    0xe0, 0xea, 0xf4, 0xff, 
-    0xff, 0xf0, 0xe5, 0xdc, 
-    0xd4, 0xcc, 0xc4, 0xbc
-};
+const uint8 sine[] = {0xc0, 0xc8, 0xd0, 0xd8, 0xe0, 0xea, 0xf4, 0xff,
+                      0xff, 0xf0, 0xe5, 0xdc, 0xd4, 0xcc, 0xc4, 0xbc};
 
 // Time required to generate the tone and volume lookup table...
 #define TONE_OVERHEAD 1
@@ -118,13 +121,10 @@ const uint8 sine[] =
  * noise.
  */
 
-const uint32 silence[16] = 
-{
-    0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa,
-    0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa,
-    0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 
-    0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa
-};
+const uint32 silence[16] = {0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa,
+                            0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa,
+                            0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa,
+                            0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa, 0xaaaaaaaa};
 #define SILENCE_CLK (OSC / (16 * 32 * 2) + 250 / 2) / 250
 #define SILENCE_CNT 50
 
@@ -155,7 +155,7 @@ void nxt_sound_init(void)
 {
     // Initialise the hardware. We make use of the SSC module.
     sound_interrupt_disable();
-    
+
     nxt_sound_disable();
 
     *AT91C_PMC_PCER = (1 << AT91C_ID_SSC);
@@ -169,20 +169,22 @@ void nxt_sound_init(void)
     *AT91C_PIOA_IDR = AT91C_PA17_TD;
 
     *AT91C_SSC_CR = AT91C_SSC_SWRST;
-    *AT91C_SSC_TCMR = AT91C_SSC_CKS_DIV + AT91C_SSC_CKO_CONTINOUS + AT91C_SSC_START_CONTINOUS;
+    *AT91C_SSC_TCMR =
+        AT91C_SSC_CKS_DIV + AT91C_SSC_CKO_CONTINOUS + AT91C_SSC_START_CONTINOUS;
     *AT91C_SSC_TFMR = 31 + (7 << 8) + AT91C_SSC_MSBF; // 8 32-bit words
     *AT91C_SSC_CR = AT91C_SSC_TXEN;
 
     aic_mask_on(AT91C_ID_SSC);
     aic_clear(AT91C_ID_SSC);
     aic_set_vector(AT91C_ID_SSC,
-                   AT91C_AIC_PRIOR_LOWEST | AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED,
+                   AT91C_AIC_PRIOR_LOWEST |
+                       AT91C_AIC_SRCTYPE_INT_EDGE_TRIGGERED,
                    (uint32)nxt_sound_isr_handler); /*PG*/
     sample.buf_id = 0;
     sample.cur_vol = -1;
 }
 
-static void create_tone(const uint8 *lookup, int lulen, uint32 *pat, int len)
+static void create_tone(const uint8* lookup, int lulen, uint32* pat, int len)
 {
     // Fill the supplied buffer with len longs representing a pdm encoded
     // wave. We use a pre-generated lookup table for the wave shape.
@@ -303,7 +305,7 @@ void nxt_sound_freq_vol(uint32 freq, uint32 ms, uint8 vol)
     else
         sample.count = (freq * ms + 1000 - 1) / 1000;
     sample.len = len;
-    sample.ptr = (uint8 *)sample.buf[buf];
+    sample.ptr = (uint8*)sample.buf[buf];
     sample.buf_id = buf;
     *AT91C_SSC_PTCR = AT91C_PDC_TXTEN;
     sound_mode = SOUND_MODE_TONE;
@@ -328,10 +330,11 @@ void nxt_sound_disable(void)
 void nxt_sound_fill_sample_buffer(void)
 {
     sample.buf_id ^= 1;
-    uint32 *sbuf = sample.buf[sample.buf_id];
+    uint32* sbuf = sample.buf[sample.buf_id];
     uint8 i;
-    /* Each 8-bit sample is turned into 8 32-bit numbers, i.e. 256 bits altogether */
-    for (i = 0; i<PDM_BUFFER_LENGTH>> 3; i++)
+    /* Each 8-bit sample is turned into 8 32-bit numbers, i.e. 256 bits
+     * altogether */
+    for (i = 0; i < PDM_BUFFER_LENGTH >> 3; i++)
     {
         uint8 smp = (sample.count > 0 ? sample.amp[*sample.ptr] : 128);
         uint8 msk = "\x00\x10\x22\x4a\x55\x6d\x77\x7f"[smp & 7];
@@ -367,9 +370,9 @@ void nxt_sound_fill_sample_buffer(void)
     }
 }
 
-void nxt_sound_play_sample(uint8 *data, uint32 length, uint32 freq, uint8 vol)
+void nxt_sound_play_sample(uint8* data, uint32 length, uint32 freq, uint8 vol)
 {
-    if (data == (uint8 *)0 || length == 0)
+    if (data == (uint8*)0 || length == 0)
         return;
 
     /* Calculate the clock divisor based upon the recorded sample frequency. */
@@ -400,8 +403,10 @@ int nxt_sound_get_time()
     // Return the amount of time still to play for the current tone/sample
     if (sound_mode > SOUND_MODE_SILENCE)
     {
-        // long long int is needed to avoid overflow (this is a bug in leJOS original code)
-        int ms = (int)(((long long int)sample.count * 1000 * sample.len * 32) / (OSC / (2 * sample.clock_div)));
+        // long long int is needed to avoid overflow (this is a bug in leJOS
+        // original code)
+        int ms = (int)(((long long int)sample.count * 1000 * sample.len * 32) /
+                       (OSC / (2 * sample.clock_div)));
         // remove the extra time we added
         if (sound_mode == SOUND_MODE_TONE && ms > 0)
             ms -= TONE_OVERHEAD;
@@ -441,8 +446,11 @@ void nxt_sound_isr_handler()
         sample.count--;
         // If this is the last sample wait for it to complete, otherwise wait
         // to switch buffers
-        sound_interrupt_enable(
-            sample.count <= 0 ? (sound_mode == SOUND_MODE_SILENCE ? AT91C_SSC_TXEMPTY : AT91C_SSC_TXBUFE) : AT91C_SSC_ENDTX);
+        sound_interrupt_enable(sample.count <= 0
+                                   ? (sound_mode == SOUND_MODE_SILENCE
+                                          ? AT91C_SSC_TXEMPTY
+                                          : AT91C_SSC_TXBUFE)
+                                   : AT91C_SSC_ENDTX);
     }
     else if (sound_mode == SOUND_MODE_SILENCE)
     {
@@ -455,7 +463,7 @@ void nxt_sound_isr_handler()
         // Add a short section of silence after the sample/tone
         sound_mode = SOUND_MODE_SILENCE;
         sample.clock_div = SILENCE_CLK;
-        sample.ptr = (uint8 *)silence;
+        sample.ptr = (uint8*)silence;
         sample.count = SILENCE_CNT;
         sample.len = 16;
         sound_isr_C();

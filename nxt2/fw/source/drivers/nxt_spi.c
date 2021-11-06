@@ -1,13 +1,24 @@
+/*******************************************************************************
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C driver code.
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
+
 #include "drivers/nxt_spi.h"
 
-#include "platform/irqs.h"
 #include "platform/aic.h"
 #include "platform/at91/at91sam7.h"
+#include "platform/irqs.h"
 
-const uint8 *display = (uint8 *) 0;
+const uint8* display = (uint8*)0;
+
 volatile uint8 dirty = 0;
 volatile uint8 page = 0;
-volatile const uint8 *data = (uint8 *) 0;
+
+volatile const uint8* data = (uint8*)0;
+
 uint8 mode = 0xff;
 
 static void spi_set_mode(uint8 m)
@@ -18,7 +29,6 @@ static void spi_set_mode(uint8 m)
     /* Wait until all bytes have been sent. */
     uint32 status;
 
-    
     if (m == mode)
     {
         /* Nothing to do if we are already in the correct mode. */
@@ -27,8 +37,7 @@ static void spi_set_mode(uint8 m)
     do
     {
         status = *AT91C_SPI_SR;
-    } 
-    while (!(status & 0x200));
+    } while (!(status & 0x200));
 
     /* Set command or data mode. */
     if (m)
@@ -40,7 +49,7 @@ static void spi_set_mode(uint8 m)
     mode = m;
 }
 
-void spi_isr_handler(void) 
+void spi_isr_handler(void)
 {
     if (page == 0)
     {
@@ -65,14 +74,14 @@ void spi_isr_handler(void)
     /* Now do the transfer. We make use of the auto-wrap function so simply
      * need to send 8*132 bytes to get back to where we started. However the
      * display buffer is structured as series of 100 byte lines, so we need to
-     * get tricky. I've made the display one line longer (9 lines) and so when we
-     * send the data we send 100 bytes from the actual line plus 32 padding bytes
-     * (that are not actually seen), from the next line. The extra line means
-     * that this is safe to do. If we can redefine the display as a 8*132 then
-     * we could just use a single DMA transfer (instead of 8, 132 byte ones).
-     * However I'm not sure if this would be safe.
+     * get tricky. I've made the display one line longer (9 lines) and so when
+     * we send the data we send 100 bytes from the actual line plus 32 padding
+     * bytes (that are not actually seen), from the next line. The extra line
+     * means that this is safe to do. If we can redefine the display as a 8*132
+     * then we could just use a single DMA transfer (instead of 8, 132 byte
+     * ones). However I'm not sure if this would be safe.
      */
-    *AT91C_SPI_TNPR = (uint32) data;
+    *AT91C_SPI_TNPR = (uint32)data;
     *AT91C_SPI_TNCR = 132;
     page = (page + 1) % 8;
     data += 100;
@@ -84,10 +93,10 @@ void nxt_spi_init(void)
 
     *AT91C_PMC_PCER = (1L << AT91C_ID_SPI); /* Enable MCK clock */
 
-    *AT91C_PIOA_PER = AT91C_PIO_PA12;       /* EnableA0onPA12 */
+    *AT91C_PIOA_PER = AT91C_PIO_PA12; /* EnableA0onPA12 */
     *AT91C_PIOA_OER = AT91C_PIO_PA12;
     *AT91C_PIOA_CODR = AT91C_PIO_PA12;
-    *AT91C_PIOA_PDR = AT91C_PA14_SPCK;      /* EnableSPCKonPA14 */
+    *AT91C_PIOA_PDR = AT91C_PA14_SPCK; /* EnableSPCKonPA14 */
     *AT91C_PIOA_ASR = AT91C_PA14_SPCK;
     *AT91C_PIOA_ODR = AT91C_PA14_SPCK;
     *AT91C_PIOA_OWER = AT91C_PA14_SPCK;
@@ -96,7 +105,7 @@ void nxt_spi_init(void)
     *AT91C_PIOA_IFDR = AT91C_PA14_SPCK;
     *AT91C_PIOA_CODR = AT91C_PA14_SPCK;
     *AT91C_PIOA_IDR = AT91C_PA14_SPCK;
-    *AT91C_PIOA_PDR = AT91C_PA13_MOSI;      /* EnablemosionPA13 */
+    *AT91C_PIOA_PDR = AT91C_PA13_MOSI; /* EnablemosionPA13 */
     *AT91C_PIOA_ASR = AT91C_PA13_MOSI;
     *AT91C_PIOA_ODR = AT91C_PA13_MOSI;
     *AT91C_PIOA_OWER = AT91C_PA13_MOSI;
@@ -105,7 +114,7 @@ void nxt_spi_init(void)
     *AT91C_PIOA_IFDR = AT91C_PA13_MOSI;
     *AT91C_PIOA_CODR = AT91C_PA13_MOSI;
     *AT91C_PIOA_IDR = AT91C_PA13_MOSI;
-    *AT91C_PIOA_PDR = AT91C_PA10_NPCS2;     /* Enablenpcs0onPA10 */
+    *AT91C_PIOA_PDR = AT91C_PA10_NPCS2; /* Enablenpcs0onPA10 */
     *AT91C_PIOA_BSR = AT91C_PA10_NPCS2;
     *AT91C_PIOA_ODR = AT91C_PA10_NPCS2;
     *AT91C_PIOA_OWER = AT91C_PA10_NPCS2;
@@ -114,8 +123,8 @@ void nxt_spi_init(void)
     *AT91C_PIOA_IFDR = AT91C_PA10_NPCS2;
     *AT91C_PIOA_CODR = AT91C_PA10_NPCS2;
     *AT91C_PIOA_IDR = AT91C_PA10_NPCS2;
-    *AT91C_SPI_CR = AT91C_SPI_SWRST;        /* Soft reset */
-    *AT91C_SPI_CR = AT91C_SPI_SPIEN;        /* Enable SPI */
+    *AT91C_SPI_CR = AT91C_SPI_SWRST; /* Soft reset */
+    *AT91C_SPI_CR = AT91C_SPI_SPIEN; /* Enable SPI */
     *AT91C_SPI_MR = AT91C_SPI_MSTR | AT91C_SPI_MODFDIS | (0xB << 16);
     AT91C_SPI_CSR[2] = ((OSC / SPI_BITRATE) << 8) | AT91C_SPI_CPOL;
 
@@ -123,7 +132,7 @@ void nxt_spi_init(void)
     mode = 0xff;
 
     /* Set up safe DMA refresh state. */
-    data = display = (uint8 *)0;
+    data = display = (uint8*)0;
     dirty = 0;
     page = 0;
 
@@ -137,7 +146,7 @@ void nxt_spi_init(void)
         irqs_enable();
 }
 
-void nxt_spi_write(uint32 CD, const uint8 *data, uint32 n_bytes)
+void nxt_spi_write(uint32 CD, const uint8* data, uint32 n_bytes)
 {
     uint32 status;
     uint32 cd_mask = (CD ? 0x100 : 0);
@@ -156,11 +165,11 @@ void nxt_spi_write(uint32 CD, const uint8 *data, uint32 n_bytes)
     }
 }
 
-void nxt_spi_set_display(const uint8 *disp)
+void nxt_spi_set_display(const uint8* disp)
 {
     /* Set the display buffer to be used for DMA refresh.
-     * It is really only safe to set the display once. 
-     * Should probably sort this out so that it is set 
+     * It is really only safe to set the display once.
+     * Should probably sort this out so that it is set
      * separately from requesting a refresh.
      */
     if (!display)

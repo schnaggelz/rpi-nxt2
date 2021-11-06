@@ -1,14 +1,20 @@
-/*
-* This module handles communications between the NXT main ARM processor and
-* the AVR processor. The AVR provides support for the motors, analogue sensors
-* keyboard and power. The two processors are linked via a TWI connection. This
-* is used to exchange a message every 1ms. The message alternates between
-* sending commands to the AVR and receiving status from it.
-* NOTES:
-* The time window for read requests is very tight. On some NXT devices it can
-* be exceeded. This code has been optimized to maximize the read window and
-* to handle the times that the window is exceeded.
-*/
+/*******************************************************************************
+ * Copyright (C) 2021 Timon Reich
+ *
+ * This file is part of rpi-nxt2 experiment.
+ *
+ * This module handles communications between the NXT main ARM processor and
+ * the AVR processor. The AVR provides support for the motors, analogue sensors
+ * keyboard and power. The two processors are linked via a TWI connection. This
+ * is used to exchange a message every 1ms. The message alternates between
+ * sending commands to the AVR and receiving status from it.
+ * NOTES:
+ * The time window for read requests is very tight. On some NXT devices it can
+ * be exceeded. This code has been optimized to maximize the read window and
+ * to handle the times that the window is exceeded.
+ * License notes see LICENSE.txt
+ *******************************************************************************/
+
 #include "drivers/nxt_avr.h"
 
 #include "drivers/nxt_motors.h"
@@ -33,7 +39,8 @@
 
 /* This string is used to establish communication with the AVR. */
 const char avr_brainwash_string[] =
-    "\xCC" "Let's samba nxt arm in arm, (c)LEGO System A/S";
+    "\xCC"
+    "Let's samba nxt arm in arm, (c)LEGO System A/S";
 
 /* The following Raw values are read/written directly to the AVR.
    So byte order, packing etc. must match. */
@@ -45,8 +52,7 @@ typedef struct
     sint8 output_percent[NXT_AVR_N_OUTPUTS];
     uint8 output_mode;
     uint8 input_power;
-}
-__attribute__((packed)) avr_output_data_t;
+} __attribute__((packed)) avr_output_data_t;
 
 static avr_output_data_t avr_output_data;
 
@@ -61,8 +67,7 @@ typedef struct
     uint16 buttons_value;
     uint16 extra;
     uint8 checksum;
-}
-__attribute__((packed)) avr_input_data_t;
+} __attribute__((packed)) avr_input_data_t;
 
 static avr_input_data_t avr_input_data[2];
 static avr_input_data_t* avr_input_buf;
@@ -81,8 +86,7 @@ static struct
     uint32 resets;
     uint32 still_busy;
     uint32 not_ok;
-}
-avr_stats;
+} avr_stats;
 
 /**
  * Start to read the status data from the AVR. The actual I/O takes place
@@ -91,8 +95,8 @@ avr_stats;
 static void nxt_avr_start_read(void)
 {
     twi_start_read(NXT_AVR_ADDRESS,
-        (uint8 *)(&avr_input_data[avr_input_buf_idx]),
-        sizeof(avr_input_data_t));
+                   (uint8*)(&avr_input_data[avr_input_buf_idx]),
+                   sizeof(avr_input_data_t));
 }
 
 /**
@@ -101,9 +105,9 @@ static void nxt_avr_start_read(void)
 static void nxt_avr_start_send(void)
 {
     uint32 check_byte = 0;
-    uint8 *a = avr_output_data_buf;
-    uint8 *b = (uint8 *)(&avr_output_data);
-    uint8 *e = b + sizeof(avr_output_data);
+    uint8* a = avr_output_data_buf;
+    uint8* b = (uint8*)(&avr_output_data);
+    uint8* e = b + sizeof(avr_output_data);
 
     /* Copy over the data and create the checksum. */
     while (b < e)
@@ -114,8 +118,8 @@ static void nxt_avr_start_send(void)
 
     *a = ~check_byte;
 
-    twi_start_write(NXT_AVR_ADDRESS,
-        avr_output_data_buf, sizeof(avr_output_data_buf));
+    twi_start_write(NXT_AVR_ADDRESS, avr_output_data_buf,
+                    sizeof(avr_output_data_buf));
 }
 
 /**
@@ -143,8 +147,8 @@ void nxt_avr_firmware_update_mode(void)
  */
 void nxt_avr_link_init(void)
 {
-    twi_start_write(NXT_AVR_ADDRESS,
-        (const uint8 *)avr_brainwash_string, strlen(avr_brainwash_string));
+    twi_start_write(NXT_AVR_ADDRESS, (const uint8*)avr_brainwash_string,
+                    strlen(avr_brainwash_string));
 }
 
 /**
@@ -154,13 +158,13 @@ void nxt_avr_link_init(void)
 static void nxt_avr_unpack(void)
 {
     uint8 checksum = 0;
-    uint8 *p;
-    uint8 *end;
+    uint8* p;
+    uint8* end;
     uint16 buttons_value;
     uint16 new_state;
 
     /* Calculate the checksum. */
-    p = (uint8 *)(&avr_input_data[avr_input_buf_idx]);
+    p = (uint8*)(&avr_input_data[avr_input_buf_idx]);
     end = p + sizeof(avr_input_data_t);
     while (p < end)
     {
@@ -253,7 +257,8 @@ void nxt_avr_init(void)
  */
 void nxt_avr_1kHz_update(void)
 {
-    if (!avr_initialized) return;
+    if (!avr_initialized)
+        return;
 
     int state;
 
@@ -390,8 +395,8 @@ void nxt_avr_set_input_power(uint8 port, uint32 power_type)
      * Having both bits set is currently not supported. */
     if (port < NXT_AVR_N_INPUTS && power_type <= 2)
     {
-        uint8 val = (power_type & 0x2 ? 0x10 << port : 0) |
-            ((power_type & 1) << port);
+        uint8 val =
+            (power_type & 0x2 ? 0x10 << port : 0) | ((power_type & 1) << port);
 
         avr_output_data.input_power &= ~(0x11 << port);
         avr_output_data.input_power |= val;

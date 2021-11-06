@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (C) 2021 Timon Reich
+*
+* NXT C driver code.
+*
+* License notes see LICENSE.txt
+*******************************************************************************/
+
 #include "drivers/nxt_devices.h"
 
 #include "platform/irqs.h"
