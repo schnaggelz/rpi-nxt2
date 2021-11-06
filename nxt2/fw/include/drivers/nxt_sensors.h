@@ -1,10 +1,18 @@
+/*******************************************************************************
+ * Copyright (C) 2015 T. Reich
+ *
+ * NXT C driver code.
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
+
 #ifndef __NXT_SENSORS_H__
 #define __NXT_SENSORS_H__
 
 #include "platform/systypes.h"
 
 #define NXT_LOWSPEED_PORT_9V 1
-#define NXT_LOWSPEED_PORT    2
+#define NXT_LOWSPEED_PORT 2
 
 #define NXT_NUM_SENSOR_PORTS 4
 

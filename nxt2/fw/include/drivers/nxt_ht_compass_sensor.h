@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (C) 2015 T. Reich
+ *
+ * NXT C driver code.
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
+
 #ifndef __NXT_HT_COMPASS_SENSOR_H__
 #define __NXT_HT_COMPASS_SENSOR_H__
 
