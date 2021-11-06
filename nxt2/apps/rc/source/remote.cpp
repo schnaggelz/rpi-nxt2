@@ -21,34 +21,55 @@ void Remote::init()
 
 void Remote::run()
 {
-    DataArray data;
+    receive();
 
-    // Send some test data
-    data[0] = 1;
-    data[1] = 2;
-    data[2] = 3;
-    data[3] = 4;
-    data[4] = 5;
-    data[5] = 6;
-    data[6] = 7;
-    data[7] = 8;
+    process();
 
-    send(data);
+    send();
 }
 
-void Remote::send(const DataArray& data)
+void Remote::process()
 {
+    auto command =
+        nxt::utils::to_enum<nxt::protocol::Command>(_usb_data_rx.command);
+
+    switch (command)
+    {
+    case nxt::protocol::Command::MOTOR_FWD:
+        _monitor.setLineValue(0, _usb_data_rx.data[1]);
+        break;
+    default:
+        break;
+    }
+}
+
+void Remote::send()
+{
+    static std::uint8_t counter = 0;
+
     _usb_data_tx.command =
         nxt::utils::to_underlying(nxt::protocol::Command::GENERIC);
 
-    _usb_data_tx.size = data.size();
+    // Send some test data
+    _usb_data_tx.data[0] = counter + 1;
+    _usb_data_tx.data[1] = counter + 2;
+    _usb_data_tx.data[2] = counter + 3;
+    _usb_data_tx.data[3] = counter + 4;
+    _usb_data_tx.data[4] = counter + 5;
+    _usb_data_tx.data[5] = counter + 6;
+    _usb_data_tx.data[6] = counter + 7;
+    _usb_data_tx.data[7] = counter + 8;
 
-    for (unsigned i = 0; i < data.size(); ++i)
-    {
-        _usb_data_tx.data[i] = data[i];
-    }
+    _usb_data_tx.size = _data.size();
 
     _usb_port.write(_usb_data_tx);
+
+    counter++;
+}
+
+void Remote::receive()
+{
+    _usb_port.read(_usb_data_rx);
 }
 
 void Remote::exit()

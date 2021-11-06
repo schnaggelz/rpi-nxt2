@@ -15,7 +15,7 @@
 #include "remote.hpp"
 
 nxt::wrappers::Monitor monitor;
-nxt::apps::Remote remote;
+nxt::apps::Remote remote(monitor);
 
 //
 // Runnable scheduling
@@ -43,6 +43,34 @@ static void addTasks()
     os_add_task(&taskCbk50ms, 2, 50);
 }
 
+void setupMonitor()
+{
+    // Set up our application display
+    monitor.setTitle("REMOTE CONTROL 1");
+
+    monitor.setLineName(0, "M1:");
+    monitor.setLineName(1, "M2:");
+    monitor.setLineName(2, "M3:");
+    monitor.setLineName(3, "S1:");
+    monitor.setLineName(4, "S2:");
+    monitor.setLineName(5, "S3:");
+    monitor.setLineName(6, "S4:");
+
+    monitor.setLineValue(0, 0);
+    monitor.setLineValue(1, 0);
+    monitor.setLineValue(2, 0);
+    monitor.setLineValue(3, 0);
+    monitor.setLineValue(4, 0);
+    monitor.setLineValue(5, 0);
+    monitor.setLineValue(6, 0);
+
+    // Set up status display
+    monitor.init();
+
+    // Update the display once
+    monitor.update();
+}
+
 extern "C" {
 
 //
@@ -55,14 +83,6 @@ void app_bg_task()
 
     if (counter % 100 == 0)
     {
-        monitor.setLineValue(0, 0);
-        monitor.setLineValue(1, 0);
-        monitor.setLineValue(2, 0);
-        monitor.setLineValue(3, 0);
-        monitor.setLineValue(4, 0);
-        monitor.setLineValue(5, 0);
-        monitor.setLineValue(6, 0);
-
         monitor.update();
     }
 
@@ -78,24 +98,11 @@ void os_app_init()
     // Setup OS tasks
     addTasks();
 
-    // Set up our application display
-    monitor.setTitle("REMOTE CONTROL 1");
-
-    monitor.setLineName(0, "0:");
-    monitor.setLineName(1, "1:");
-    monitor.setLineName(2, "2:");
-    monitor.setLineName(3, "3:");
-    monitor.setLineName(4, "4:");
-    monitor.setLineName(5, "5:");
-    monitor.setLineName(6, "6:");
-
-    // Set up status display
-    monitor.init();
-
-    // Update the display once
-    monitor.update();
+    // Setup display
+    setupMonitor();
 
     // Init RC
     remote.init();
 }
 }
+

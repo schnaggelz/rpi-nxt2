@@ -41,13 +41,18 @@ bool connect()
     return false;
 }
 
-void send(const nxt::protocol::Command command, const std::uint32_t data = 0U)
+void send(const nxt::protocol::Command command, const nxt::protocol::Data& data)
 {
     if (nxt_usb_dev.isReady())
     {
         nxt_pkg_tx.command = nxt::utils::to_underlying(command);
-        nxt_pkg_tx.size = 1;
-        nxt_pkg_tx.data[0] = data;
+        nxt_pkg_tx.size    = 1;
+
+        for (auto idx = 0U; idx < nxt::protocol::Packet::NUM_DATA_ELEMENTS;
+             ++idx)
+        {
+            nxt_pkg_tx.data[idx] = data[idx];
+        }
 
         nxt_usb_dev.write(nxt_pkg_tx);
     }
@@ -150,21 +155,21 @@ int main()
         case 'f':
         {
             mvprintw(0, 5, "<f>");
-            send(nxt::protocol::Command::MOTOR_FWD, 50);
+            send(nxt::protocol::Command::MOTOR_FWD, { 0, 50 });
         }
         break;
         case KEY_F(1):
         case 'r':
         {
             mvprintw(0, 5, "<r>");
-            send(nxt::protocol::Command::MOTOR_REV, 50);
+            send(nxt::protocol::Command::MOTOR_REV, { 0, -50 });
         }
         break;
         case KEY_BACKSPACE:
         case '!':
         {
             mvprintw(0, 5, "<!>");
-            send(nxt::protocol::Command::MOTOR_STOP);
+            send(nxt::protocol::Command::MOTOR_STOP, { 0, -50 });
         }
         break;
         }

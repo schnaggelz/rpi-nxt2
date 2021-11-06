@@ -17,6 +17,8 @@
 
 #include "api/nxt_usb_port.hpp"
 
+#include "wrappers/monitor.hpp"
+
 #include <array>
 #include <cstdint>
 
@@ -27,6 +29,13 @@ namespace apps
 class Remote
 {
   public:
+    Remote(nxt::wrappers::Monitor& monitor)
+        : _monitor(monitor)
+    {
+    }
+
+    ~Remote() = default;
+
     void init();
     void run();
     void exit();
@@ -36,12 +45,18 @@ class Remote
     using DataArray = std::array<std::uint32_t, NUM_DATA_BYTES>;
 
   private:
-    void send(const DataArray& data);
+    void process();
+    void send();
+    void receive();
 
   private:
+    nxt::wrappers::Monitor& _monitor;
+
     nxt::USBPort _usb_port;
     nxt::USBData _usb_data_rx;
     nxt::USBData _usb_data_tx;
+
+    DataArray _data;
 };
 } // namespace libs
 } // namespace nxt
