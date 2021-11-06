@@ -12,7 +12,7 @@
 
 namespace nxt
 {
-bool Buttons::isPressed(Button button)
+bool Buttons::isPressed(Button button) const
 {
     std::uint8_t state = 0;
 

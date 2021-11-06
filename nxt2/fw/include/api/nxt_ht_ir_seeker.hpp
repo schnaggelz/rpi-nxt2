@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_HT_IR_SEEKER_HPP__
 #define __NXT_HT_IR_SEEKER_HPP__
@@ -20,14 +20,15 @@ class InfraredSeeker : public Sensor
   public:
     static constexpr int NUM_VALUES = 12;
 
-    InfraredSeeker(std::uint8_t port_number) : Sensor(port_number)
+    InfraredSeeker(Port port)
+        : Sensor(port)
     {
     }
 
     std::array<std::int8_t, NUM_VALUES>& getData()
     {
         return _ir_data;
-    };
+    }
 
     void init() override;
     void read() override;

@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_HT_COMPASS_SENSOR_HPP__
 #define __NXT_HT_COMPASS_SENSOR_HPP__
@@ -18,12 +18,13 @@ namespace ht
 class CompassSensor : public Sensor
 {
   public:
-    CompassSensor(std::uint8_t port_number)
-        : Sensor(port_number), _heading(0xFFFF)
+    CompassSensor(Port port)
+        : Sensor(port)
+        , _heading(0xFFFF)
     {
     }
 
-    std::uint16_t getHeading()
+    std::uint16_t getHeading() const
     {
         return _heading;
     }

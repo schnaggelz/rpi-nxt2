@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_COLOR_SENSOR_HPP__
 #define __NXT_COLOR_SENSOR_HPP__
@@ -33,15 +33,16 @@ enum class Colors
 class ColorSensor : public Sensor
 {
   public:
-    ColorSensor(std::uint8_t port_number)
-        : Sensor(port_number), _sensor_mode(ColorSensorMode::LIGHT_SENSOR_NONE)
+    ColorSensor(Port port)
+        : Sensor(port)
+        , _sensor_mode(ColorSensorMode::LIGHT_SENSOR_NONE)
     {
     }
 
     void setMode(ColorSensorMode mode);
 
-    std::int16_t getColor(Colors col);
-    std::int16_t getLight();
+    std::int16_t getColor(Colors col) const;
+    std::int16_t getLight() const;
 
     void init() override;
     void read() override;

@@ -12,7 +12,7 @@
 
 namespace nxt
 {
-bool TouchSensor::isPressed()
+bool TouchSensor::isPressed() const
 {
     return nxt_touch_sensor_is_pressed(_port_number) > 0 ? true : false;
 }

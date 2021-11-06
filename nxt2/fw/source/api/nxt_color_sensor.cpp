@@ -64,12 +64,12 @@ void ColorSensor::setMode(ColorSensorMode mode)
     _sensor_mode = mode;
 }
 
-std::int16_t ColorSensor::getColor(Colors col)
+std::int16_t ColorSensor::getColor(Colors col) const
 {
     return _color_data[nxt::utils::to_underlying(col)];
 }
 
-std::int16_t ColorSensor::getLight()
+std::int16_t ColorSensor::getLight() const
 {
     return _light_data;
 }

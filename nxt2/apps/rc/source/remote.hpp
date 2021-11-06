@@ -16,7 +16,7 @@
 #include "utils/conversion.hpp"
 
 #include "api/nxt_usb_port.hpp"
-#include "api/nxt_sensing_motor.hpp"
+#include "api/nxt_motor.hpp"
 
 #include "wrappers/monitor.hpp"
 
@@ -32,9 +32,9 @@ class Remote
   public:
     Remote(nxt::wrappers::Monitor& monitor)
         : _monitor(monitor)
-        , _motor_A(nxt::PORT_A, true)
-        , _motor_B(nxt::PORT_B, true)
-        , _motor_C(nxt::PORT_C, true)
+        , _motor_A(nxt::Actuator::Port::PORT_A, true)
+        , _motor_B(nxt::Actuator::Port::PORT_B, true)
+        , _motor_C(nxt::Actuator::Port::PORT_C, true)
     {
     }
 
@@ -56,9 +56,9 @@ class Remote
   private:
     nxt::wrappers::Monitor& _monitor;
 
-    nxt::SensingMotor _motor_A;
-    nxt::SensingMotor _motor_B;
-    nxt::SensingMotor _motor_C;
+    nxt::Motor _motor_A;
+    nxt::Motor _motor_B;
+    nxt::Motor _motor_C;
 
     nxt::USBPort _usb_port;
     nxt::USBData _usb_data_rx;

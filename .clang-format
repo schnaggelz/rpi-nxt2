@@ -6,6 +6,7 @@ PointerAlignment: Left
 BreakBeforeBraces: Custom
 NamespaceIndentation: None
 AllowShortFunctionsOnASingleLine: Empty
+BreakConstructorInitializers: BeforeComma
 BraceWrapping:
   AfterFunction: true
   AfterControlStatement: true

@@ -18,7 +18,7 @@ class USBPort
   public:
     USBPort() = default;
 
-    bool isConnected();
+    bool isConnected() const;
 
     bool read(nxt::USBData& data);
     bool write(nxt::USBData& data);

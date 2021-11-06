@@ -9,26 +9,25 @@
 #ifndef __NXT_SENSING_MOTOR_HPP__
 #define __NXT_SENSING_MOTOR_HPP__
 
-#include "nxt_sensor.hpp"
+#include "nxt_actuator.hpp"
 
 namespace nxt
 {
-class SensingMotor : public Sensor
+class Motor : public Actuator
 {
   public:
-    SensingMotor(std::uint8_t port_number, bool brake)
-        : Sensor(port_number), _current_speed(0), _brake(brake)
+    Motor(Port port, bool brake)
+        : Actuator(port)
+        , _current_speed(0)
+        , _brake(brake)
     {
     }
 
     void setSpeed(std::int32_t speed);
-
     void setCount(std::int32_t count);
-
     void rotateTo(std::int32_t angle);
 
     std::int32_t getCount();
-
     std::int32_t getSpeed();
 
     void init() override;

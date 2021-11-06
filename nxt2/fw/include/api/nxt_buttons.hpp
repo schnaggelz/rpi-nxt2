@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_BUTTONS_HPP__
 #define __NXT_BUTTONS_HPP__
@@ -13,20 +13,21 @@
 
 namespace nxt
 {
-enum class Button : std::uint8_t
-{
-    ENTER,
-    ESC,
-    LEFT,
-    RIGHT
-};
-
 class Buttons
 {
   public:
+    enum class Button : std::uint8_t
+    {
+        ENTER,
+        ESC,
+        LEFT,
+        RIGHT
+    };
+
+  public:
     Buttons() = default;
 
-    bool isPressed(Button button);
+    bool isPressed(Button button) const;
 };
 } // namespace nxt
 

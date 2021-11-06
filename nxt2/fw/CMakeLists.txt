@@ -98,7 +98,6 @@ set(FW_DRIVERS_SOURCE_FILES
 )
 
 set(FW_CPP_API_INCLUDE_FILES
-    include/api/nxt_port_enum.hpp
     include/api/nxt_touch_sensor.hpp
     include/api/nxt_distance_sensor.hpp
     include/api/nxt_light_sensor.hpp
@@ -106,7 +105,7 @@ set(FW_CPP_API_INCLUDE_FILES
     include/api/nxt_ht_compass_sensor.hpp
     include/api/nxt_ht_ir_seeker.hpp
     include/api/nxt_buttons.hpp
-    include/api/nxt_sensing_motor.hpp
+    include/api/nxt_motor.hpp
     include/api/nxt_usb_data.hpp
     include/api/nxt_usb_port.hpp
 )
@@ -119,7 +118,7 @@ set(FW_CPP_API_SOURCE_FILES
     source/api/nxt_ht_compass_sensor.cpp
     source/api/nxt_ht_ir_seeker.cpp
     source/api/nxt_buttons.cpp
-    source/api/nxt_sensing_motor.cpp
+    source/api/nxt_motor.cpp
     source/api/nxt_usb_port.cpp
 )
 

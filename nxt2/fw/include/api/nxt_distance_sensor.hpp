@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_DISTANCE_SENSOR_HPP__
 #define __NXT_DISTANCE_SENSOR_HPP__
@@ -16,15 +16,18 @@ namespace nxt
 class DistanceSensor : public Sensor
 {
   public:
-    DistanceSensor(std::uint8_t port_number, std::int32_t max_distance)
-        : Sensor(port_number), _current_distance(0), _max_distance(max_distance)
+    DistanceSensor(Port port)
+        : Sensor(port)
+        , _current_distance(0)
     {
     }
 
-    std::int32_t getDistance()
+    std::int32_t getDistance() const
     {
         return _current_distance;
     }
+
+    static constexpr std::int16_t MAX_DISTANCE = 200;
 
     void init() override;
     void read() override;
@@ -32,7 +35,6 @@ class DistanceSensor : public Sensor
 
   private:
     std::int32_t _current_distance;
-    std::int32_t _max_distance;
 };
 }; // namespace nxt
 

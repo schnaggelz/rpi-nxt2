@@ -22,7 +22,7 @@ void USBPort::exit()
     nxt_usb_term();
 }
 
-bool USBPort::isConnected()
+bool USBPort::isConnected() const
 {
     return nxt_usb_connected() > 0 ? true : false;
 }

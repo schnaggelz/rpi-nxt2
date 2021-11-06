@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_TOUCH_SENSOR_HPP__
 #define __NXT_TOUCH_SENSOR_HPP__
@@ -16,12 +16,12 @@ namespace nxt
 class TouchSensor : public Sensor
 {
   public:
-    TouchSensor(std::uint8_t port_number)
-        : Sensor(port_number)
+    TouchSensor(Port port)
+        : Sensor(port)
     {
     }
 
-    bool isPressed();
+    bool isPressed() const;
 };
 }; // namespace nxt
 

@@ -6,8 +6,8 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#ifndef __NXT_SENSOR_HPP__
-#define __NXT_SENSOR_HPP__
+#ifndef __NXT_ACTUATOR_HPP__
+#define __NXT_ACTUATOR_HPP__
 
 #include "utils/conversion.hpp"
 
@@ -16,20 +16,21 @@
 
 namespace nxt
 {
-class Sensor
+class Actuator
 {
   public:
     enum class Port : std::uint8_t
     {
-        PORT_1 = 0,
-        PORT_2 = 1,
-        PORT_3 = 2,
-        PORT_4 = 3,
+        PORT_A = 0,
+        PORT_B = 1,
+        PORT_C = 2,
     };
 
   public:
-    Sensor(Port port)
-        : _port_number(nxt::utils::to_underlying(port)){};
+    Actuator(Port port)
+        : _port_number(nxt::utils::to_underlying(port))
+    {
+    }
 
     virtual void init(){};
     virtual void read(){};
@@ -41,4 +42,4 @@ class Sensor
 
 } // namespace nxt
 
-#endif /* __NXT_SENSOR_HPP__ */
+#endif /* __NXT_ACTUATOR_HPP__ */
