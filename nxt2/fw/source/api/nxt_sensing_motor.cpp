@@ -17,6 +17,15 @@ void SensingMotor::init()
     nxt_motor_set_speed(_port_number, 0, _brake ? 1 : 0);
 }
 
+void SensingMotor::exit()
+{
+    nxt_motor_set_speed(_port_number, 0, 0);
+}
+
+void SensingMotor::read()
+{
+}
+
 std::int32_t SensingMotor::getCount() const
 {
     return nxt_motor_get_count(_port_number);

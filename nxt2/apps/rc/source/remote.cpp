@@ -17,6 +17,10 @@ namespace apps
 void Remote::init()
 {
     _usb_port.init();
+
+    _motor_A.init();
+    _motor_B.init();
+    _motor_C.init();
 }
 
 void Remote::run()
@@ -37,6 +41,12 @@ void Remote::process()
     {
     case nxt::protocol::Command::MOTOR_FWD:
         _monitor.setLineValue(0, _usb_data_rx.data[1]);
+        break;
+    case nxt::protocol::Command::MOTOR_REV:
+        _monitor.setLineValue(0, -_usb_data_rx.data[1]);
+        break;
+    case nxt::protocol::Command::MOTOR_STOP:
+        _monitor.setLineValue(0, 0);
         break;
     default:
         break;

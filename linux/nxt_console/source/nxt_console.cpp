@@ -139,7 +139,7 @@ int main()
     noecho();
 
     mvprintw(0, 0, "CMD:");
-    mvprintw(0, 5, "< >");
+    mvprintw(0, 5, "<  >");
     refresh();
 
     std::thread rt(&receive);
@@ -152,24 +152,68 @@ int main()
         switch (ch)
         {
         case KEY_F(0):
-        case 'f':
-        {
-            mvprintw(0, 5, "<f>");
-            send(nxt::protocol::Command::MOTOR_FWD, { 0, 50 });
-        }
-        break;
         case KEY_F(1):
+        case 'f':
         case 'r':
         {
-            mvprintw(0, 5, "<r>");
-            send(nxt::protocol::Command::MOTOR_REV, { 0, -50 });
+            std::int32_t no = 0;
+
+            auto ch2 = getch();
+
+            switch (ch2)
+            {
+            case '1':
+                no = 1;
+                break;
+            case '2':
+                no = 2;
+                break;
+            case '3':
+                no = 3;
+                break;
+            default:
+                continue;
+            }
+
+            switch (ch)
+            {
+            case KEY_F(0):
+            case 'f':
+                mvprintw(0, 5, "<f%d>", no);
+                send(nxt::protocol::Command::MOTOR_FWD, {no, 50});
+                break;
+            case KEY_F(1):
+            case 'r':
+                mvprintw(0, 5, "<r%d>", no);
+                send(nxt::protocol::Command::MOTOR_REV, {no, 50});
+                break;
+            }
         }
         break;
         case KEY_BACKSPACE:
         case '!':
         {
-            mvprintw(0, 5, "<!>");
-            send(nxt::protocol::Command::MOTOR_STOP, { 0, -50 });
+            std::int32_t no = 0;
+
+            auto ch2 = getch();
+
+            switch (ch2)
+            {
+            case '1':
+                no = 1;
+                break;
+            case '2':
+                no = 2;
+                break;
+            case '3':
+                no = 3;
+                break;
+            default:
+                continue;
+            }
+
+            mvprintw(0, 5, "<!!>");
+            send(nxt::protocol::Command::MOTOR_STOP, {no});
         }
         break;
         }
