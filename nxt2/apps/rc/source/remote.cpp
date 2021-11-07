@@ -37,13 +37,15 @@ void Remote::run()
 
 void Remote::process()
 {
-    auto command = nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.command);
+    auto command =
+        nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.command);
 
     if (command == nxt::com::protocol::Command::MOTOR_FWD ||
         command == nxt::com::protocol::Command::MOTOR_REV ||
         command == nxt::com::protocol::Command::MOTOR_STP)
     {
-        auto port = _usb_data_rx.data[0];
+        auto port =
+            nxt::utils::to_enum<nxt::com::protocol::Port>(_usb_data_rx.data[0]);
         auto value = 0;
 
         if (command == nxt::com::protocol::Command::MOTOR_FWD)
@@ -57,17 +59,19 @@ void Remote::process()
 
         switch (port)
         {
-        case 1:
+        case nxt::com::protocol::Port::PORT_A:
             _monitor.setLineValue(0, value);
             _motor_A.setSpeed(value);
             break;
-        case 2:
+        case nxt::com::protocol::Port::PORT_B:
             _monitor.setLineValue(1, value);
             _motor_B.setSpeed(value);
             break;
-        case 3:
+        case nxt::com::protocol::Port::PORT_C:
             _monitor.setLineValue(2, value);
             _motor_C.setSpeed(value);
+            break;
+        default:
             break;
         }
     }
@@ -76,19 +80,13 @@ void Remote::process()
 void Remote::send()
 {
     // Get and send distance
-    _usb_data_tx.command = nxt::utils::to_underlying(USBCommand::GET_SONAR);
+    _usb_data_tx.command = nxt::utils::to_underlying(USBCommand::GENERIC_M);
     _usb_data_tx.data[0] = _sensor_1.getDistance();
-    _usb_data_tx.size = 1;
+    _usb_data_tx.data[1] = _sensor_2.getBrightness();
+    _usb_data_tx.size = 2;
     _usb_port.write(_usb_data_tx);
 
     _monitor.setLineValue(4, _sensor_1.getDistance());
-
-    // Get and send brightness
-    _usb_data_tx.command = nxt::utils::to_underlying(USBCommand::GET_LIGHT);
-    _usb_data_tx.data[0] = _sensor_2.getBrightness();
-    _usb_data_tx.size = 1;
-    _usb_port.write(_usb_data_tx);
-
     _monitor.setLineValue(5, _sensor_2.getBrightness());
 }
 
