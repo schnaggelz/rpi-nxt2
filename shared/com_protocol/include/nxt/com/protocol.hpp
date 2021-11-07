@@ -40,7 +40,8 @@ enum class Port : std::uint8_t
     PORT_1 = 0x00,
     PORT_2 = 0x01,
     PORT_3 = 0x02,
-    PORT_4 = 0x03
+    PORT_4 = 0x03,
+    NONE = 0xFF
 };
 
 struct Packet
