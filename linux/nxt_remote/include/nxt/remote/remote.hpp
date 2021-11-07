@@ -9,14 +9,27 @@
 #ifndef __NXT_REMOTE_REMOTE_HPP__
 #define __NXT_REMOTE_REMOTE_HPP__
 
-#i
+#include "nxt/usb/device.hpp"
 
-#include "protocol/protocol.hpp"
+#include "nxt/com/protocol.hpp"
 
-namespace nxt_remote
+namespace nxt
 {
 namespace remote
 {
+class Remote
+{
+  public:
+    bool connect();
+    bool disconnect();
+
+  private:
+    bool send(const nxt::com::protocol::Command command,
+              const nxt::com::protocol::Data& data);
+
+  private:
+    nxt_com::usb::Device _nxt_usb_dev;
+};
 } // namespace remote
 } // namespace nxt_remote
 
