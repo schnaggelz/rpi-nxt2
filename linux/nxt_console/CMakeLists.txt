@@ -8,7 +8,7 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        nxt_com
+        nxt_remote
         ncurses
         simple_logger
 )

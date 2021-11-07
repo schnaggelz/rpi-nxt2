@@ -10,7 +10,7 @@
 
 #include "nxt/utils/conversion.hpp"
 
-#include "nxt/usb/device.hpp"
+#include "nxt/remote/remote.hpp"
 
 #include <ncurses.h>
 
@@ -20,43 +20,7 @@
 
 std::atomic<bool> exiting = false;
 
-nxt_com::usb::Device nxt_usb_dev;
-nxt_com::usb::DataPacket nxt_pkg_tx;
-nxt_com::usb::DataPacket nxt_pkg_rx;
-
-bool connect()
-{
-    if (nxt_usb_dev.init())
-    {
-        if (nxt_usb_dev.open())
-        {
-            return true;
-        }
-        else
-        {
-            nxt_usb_dev.exit();
-        }
-    }
-
-    return false;
-}
-
-void send(const nxt::com::protocol::Command command, const nxt::com::protocol::Data& data)
-{
-    if (nxt_usb_dev.isReady())
-    {
-        nxt_pkg_tx.command = nxt::utils::to_underlying(command);
-        nxt_pkg_tx.size = 1;
-
-        for (auto idx = 0U; idx < nxt::com::protocol::Packet::NUM_DATA_ELEMENTS;
-             ++idx)
-        {
-            nxt_pkg_tx.data[idx] = data[idx];
-        }
-
-        nxt_usb_dev.write(nxt_pkg_tx);
-    }
-}
+nxt::remote::Remote remote;
 
 void receive()
 {
@@ -71,66 +35,30 @@ void receive()
 
     while (!exiting)
     {
-        if (nxt_usb_dev.isReady())
+        if (remote.isConnected())
         {
-            nxt_usb_dev.read(nxt_pkg_rx);
+            remote.poll();
 
             mvprintw(3, 0, "RCV    : SQ:%8d|", counter++);
-            mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", nxt_pkg_rx.command,
-                     nxt_pkg_rx.size);
 
-            switch (
-                nxt::utils::to_enum<nxt::com::protocol::Command>(nxt_pkg_rx.command))
-            {
-            case nxt::com::protocol::Command::GENERIC_M: // GENERIC
-            {
-                mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
-                         nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
-                         nxt_pkg_rx.data[2], nxt_pkg_rx.data[3]);
+            mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4));
 
-                mvprintw(7, 0, "GENERIC: V4=%8d| V5=%8d| V6=%8d| V7=%8d|",
-                         nxt_pkg_rx.data[4], nxt_pkg_rx.data[5],
-                         nxt_pkg_rx.data[6], nxt_pkg_rx.data[7]);
-                break;
-            }
-            case nxt::com::protocol::Command::GET_SONAR: // SONAR
-            {
-                mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|",
-                         nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
-                         nxt_pkg_rx.data[2]);
-                break;
-            }
-            case nxt::com::protocol::Command::GET_COLOR: // COLOR
-            {
-                mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|",
-                         nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
-                         nxt_pkg_rx.data[2]);
-                break;
-            }
-            case nxt::com::protocol::Command::GET_LIGHT: // LIGHT
-            {
-                mvprintw(9, 0, "COLOR  : A0=%8d|", nxt_pkg_rx.data[0]);
-                break;
-            }
-            }
-
-            refresh();
+            counter++;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 
-void disconnect()
-{
-    nxt_usb_dev.close();
-}
-
 int main()
 {
     LOG_INFO("Connect to NXT ...");
 
-    if (!connect())
+    if (!remote.connect())
     {
         LOG_ERROR("Creating NXT connection failed");
         return 1;
@@ -162,20 +90,20 @@ int main()
         case 'f':
         case 'r':
         {
-            std::int32_t no = 0;
+            auto port = nxt::com::protocol::Port::NONE;
 
             auto ch2 = getch();
 
             switch (ch2)
             {
             case '1':
-                no = 1;
+                port = nxt::com::protocol::Port::PORT_A;
                 break;
             case '2':
-                no = 2;
+                port = nxt::com::protocol::Port::PORT_B;
                 break;
             case '3':
-                no = 3;
+                port = nxt::com::protocol::Port::PORT_C;
                 break;
             default:
                 continue;
@@ -185,13 +113,13 @@ int main()
             {
             case KEY_F(0):
             case 'f':
-                mvprintw(0, 5, "<f%d>", no);
-                send(nxt::com::protocol::Command::MOTOR_FWD, {no, 50});
+                mvprintw(0, 5, "<f%d>", nxt::utils::to_underlying(port));
+                remote.motorFwd(port, 50);
                 break;
             case KEY_F(1):
             case 'r':
-                mvprintw(0, 5, "<r%d>", no);
-                send(nxt::com::protocol::Command::MOTOR_REV, {no, 50});
+                mvprintw(0, 5, "<r%d>", nxt::utils::to_underlying(port));
+                remote.motorRev(port, 50);
                 break;
             }
         }
@@ -199,27 +127,27 @@ int main()
         case KEY_BACKSPACE:
         case '!':
         {
-            std::int32_t no = 0;
+            auto port = nxt::com::protocol::Port::NONE;
 
             auto ch2 = getch();
 
             switch (ch2)
             {
             case '1':
-                no = 1;
+                port = nxt::com::protocol::Port::PORT_A;
                 break;
             case '2':
-                no = 2;
+                port = nxt::com::protocol::Port::PORT_B;
                 break;
             case '3':
-                no = 3;
+                port = nxt::com::protocol::Port::PORT_C;
                 break;
             default:
                 continue;
             }
 
-            mvprintw(0, 5, "<!%d>", no);
-            send(nxt::com::protocol::Command::MOTOR_STP, {no});
+            mvprintw(0, 5, "<!%d>", nxt::utils::to_underlying(port));
+            remote.motorStop(port);
         }
         break;
         }
@@ -231,7 +159,7 @@ int main()
 
     endwin();
 
-    disconnect();
+    remote.disconnect();
 
     LOG_INFO("Disconnected from NXT");
 
