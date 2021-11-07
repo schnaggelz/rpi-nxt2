@@ -19,17 +19,28 @@ namespace com
 {
 namespace protocol
 {
-enum class Command : std::uint16_t
+enum class Command : std::uint8_t
 {
-    GENERIC = 0x00,
-    GET_DIST = 0x10,
+    GENERIC_M = 0x00,
+    GET_SONAR = 0x10,
     GET_COLOR = 0x11,
     GET_LIGHT = 0x12,
     MOTOR_FWD = 0x20,
     MOTOR_REV = 0x21,
     MOTOR_TGT = 0x22,
-    MOTOR_STOP = 0x2F,
+    MOTOR_STP = 0x2F,
     UNDEFINED = 0xFF
+};
+
+enum class Port : std::uint8_t
+{
+    PORT_A = 0x00,
+    PORT_B = 0x01,
+    PORT_C = 0x02,
+    PORT_1 = 0x00,
+    PORT_2 = 0x01,
+    PORT_3 = 0x02,
+    PORT_4 = 0x03
 };
 
 struct Packet

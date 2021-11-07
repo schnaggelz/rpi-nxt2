@@ -82,7 +82,7 @@ void receive()
             switch (
                 nxt::utils::to_enum<nxt::com::protocol::Command>(nxt_pkg_rx.command))
             {
-            case nxt::com::protocol::Command::GENERIC: // GENERIC
+            case nxt::com::protocol::Command::GENERIC_M: // GENERIC
             {
                 mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
@@ -93,7 +93,7 @@ void receive()
                          nxt_pkg_rx.data[6], nxt_pkg_rx.data[7]);
                 break;
             }
-            case nxt::com::protocol::Command::GET_DIST: // SONAR
+            case nxt::com::protocol::Command::GET_SONAR: // SONAR
             {
                 mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
@@ -219,7 +219,7 @@ int main()
             }
 
             mvprintw(0, 5, "<!%d>", no);
-            send(nxt::com::protocol::Command::MOTOR_STOP, {no});
+            send(nxt::com::protocol::Command::MOTOR_STP, {no});
         }
         break;
         }
