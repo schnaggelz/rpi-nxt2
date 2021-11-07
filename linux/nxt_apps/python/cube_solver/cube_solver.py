@@ -16,3 +16,9 @@ class CubeSolver(object):
     def __init__(self, debug=False):
         self.debug = debug
 
+    def setup(self):
+        if not nxt.connect():
+            return False #TODO
+
+
+
