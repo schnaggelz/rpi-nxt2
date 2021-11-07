@@ -10,7 +10,7 @@
 
 #include "utils/conversion.hpp"
 
-#include "nxt_usb/usb_device.hpp"
+#include "nxt/usb/usb_device.hpp"
 
 #include <ncurses.h>
 

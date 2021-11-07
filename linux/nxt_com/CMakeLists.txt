@@ -5,7 +5,7 @@ project(nxt_com CXX)
 find_package(Threads REQUIRED)
 
 add_library(${PROJECT_NAME}
-    include/nxt_usb/usb_device.hpp
+    include/nxt/usb/usb_device.hpp
     source/usb_device.cpp
 )
 
