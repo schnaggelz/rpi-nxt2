@@ -20,12 +20,20 @@ namespace remote
 class Remote
 {
   public:
+    using Port = nxt::com::protocol::Port;
+
     bool connect();
     bool disconnect();
+
+    bool motorFwd(const Port port, const std::uint8_t speed);
+    bool motorRev(const Port port, const std::uint8_t speed);
 
   private:
     bool send(const nxt::com::protocol::Command command,
               const nxt::com::protocol::Data& data);
+
+    bool receive(nxt::com::protocol::Command& command,
+                 nxt::com::protocol::Data& data);
 
   private:
     nxt_com::usb::Device _nxt_usb_dev;
