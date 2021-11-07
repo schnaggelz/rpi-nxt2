@@ -8,8 +8,6 @@
 
 #include "nxt/remote/remote.hpp"
 
-#include "simple_logger/logger.hpp"
-
 #include "nxt/utils/conversion.hpp"
 
 #include "nxt/usb/device.hpp"
@@ -18,6 +16,7 @@ namespace nxt
 {
 namespace remote
 {
+nxt::com::protocol::Data _data = {};
 
 bool Remote::connect()
 {
@@ -41,6 +40,26 @@ bool Remote::disconnect()
     _nxt_usb_dev.close();
 
     return true;
+}
+
+bool Remote::isConnected()
+{
+    return _nxt_usb_dev.isReady();
+}
+
+bool Remote::poll()
+{
+    nxt::com::protocol::Command command;
+
+    if (receive(command, _data))
+    {
+        if (command == nxt::com::protocol::Command::GENERIC_M)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool Remote::send(const nxt::com::protocol::Command command,
@@ -103,6 +122,16 @@ bool Remote::motorRev(const Port port, const std::uint8_t speed)
                 {nxt::utils::to_underlying(port), speed});
 }
 
+bool Remote::motorStop(const Port port)
+{
+    return send(nxt::com::protocol::Command::MOTOR_STP,
+                {nxt::utils::to_underlying(port)});
+}
+
+std::int32_t Remote::sensorRcv(const Remote::Port port)
+{
+    return _data[nxt::utils::to_underlying(port)];
+}
 
 } // namespace remote
 } // namespace nxt

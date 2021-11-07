@@ -24,9 +24,14 @@ class Remote
 
     bool connect();
     bool disconnect();
+    bool isConnected();
+    bool poll();
 
     bool motorFwd(const Port port, const std::uint8_t speed);
     bool motorRev(const Port port, const std::uint8_t speed);
+    bool motorStop(const Port port);
+
+    std::int32_t sensorRcv(const Port port);
 
   private:
     bool send(const nxt::com::protocol::Command command,
@@ -36,7 +41,7 @@ class Remote
                  nxt::com::protocol::Data& data);
 
   private:
-    nxt_com::usb::Device _nxt_usb_dev;
+    nxt::com::usb::Device _nxt_usb_dev;
 };
 } // namespace remote
 } // namespace nxt_remote

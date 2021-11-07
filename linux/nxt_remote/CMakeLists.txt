@@ -4,7 +4,7 @@ project(nxt_remote CXX)
 
 find_package(pybind11 REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} STATIC
     include/nxt/remote/remote.hpp
     source/remote.cpp
 )
@@ -21,6 +21,8 @@ target_link_libraries(${PROJECT_NAME}
         simple_logger
 )
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 pybind11_add_module(${PROJECT_NAME}_py
     source/remote_py.cpp
 )
@@ -29,5 +31,3 @@ target_link_libraries(${PROJECT_NAME}_py
     PRIVATE
         ${PROJECT_NAME}
 )
-
-

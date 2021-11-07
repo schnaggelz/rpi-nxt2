@@ -20,8 +20,12 @@ PYBIND11_MODULE(nxt_remote_py, m)
         .def(py::init<>())
         .def("connect", &nxt::remote::Remote::connect)
         .def("disconnect", &nxt::remote::Remote::disconnect)
+        .def("connected", &nxt::remote::Remote::isConnected)
+        .def("poll", &nxt::remote::Remote::poll)
+        .def("sensor_rcv", &nxt::remote::Remote::sensorRcv)
         .def("motor_fwd", &nxt::remote::Remote::motorFwd)
-        .def("motor_rev", &nxt::remote::Remote::motorRev);
+        .def("motor_rev", &nxt::remote::Remote::motorRev)
+        .def("motor_stop", &nxt::remote::Remote::motorStop);
 
     py::enum_<nxt::remote::Remote::Port>(m, "Port")
         .value("PORT_1", nxt::remote::Remote::Port::PORT_1)
