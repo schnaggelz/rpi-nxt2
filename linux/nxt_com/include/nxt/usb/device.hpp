@@ -19,7 +19,9 @@
 #define NULL ((void*)0)
 #endif
 
-namespace nxt_com
+namespace nxt
+{
+namespace com
 {
 namespace usb
 {
@@ -43,7 +45,9 @@ constexpr std::uint16_t TX_RX_BYTES = MAX_CMD_VALUES * 4 + 2;
 class Device
 {
   public:
-    Device() : _dev_handle(NULL), _dev_ready(false){};
+    Device()
+        : _dev_handle(NULL)
+        , _dev_ready(false){};
 
     bool init();
     bool open();
@@ -63,6 +67,7 @@ class Device
     bool _dev_ready{false};
 };
 } // namespace usb
-} // namespace nxt_com
+} // namespace com
+} // namespace nxt
 
 #endif /* __NXT_COM_USB_DEVICE_HPP__ */

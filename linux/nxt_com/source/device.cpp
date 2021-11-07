@@ -8,7 +8,9 @@
 
 #include "nxt/usb/device.hpp"
 
-namespace nxt_com
+namespace nxt
+{
+namespace com
 {
 namespace usb
 {
@@ -149,4 +151,5 @@ void Device::exit()
 }
 
 } // namespace usb
-} // namespace nxt_com
+} // namespace com
+} // namespace nxt
