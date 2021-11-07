@@ -9,7 +9,7 @@
 #ifndef __NXT_COM_USB_DEVICE_HPP__
 #define __NXT_COM_USB_DEVICE_HPP__
 
-#include "protocol/protocol.hpp"
+#include "nxt/com/protocol.hpp"
 
 #include <libusb-1.0/libusb.h>
 
@@ -23,7 +23,7 @@ namespace nxt_com
 {
 namespace usb
 {
-using DataPacket = nxt::protocol::Packet;
+using DataPacket = nxt::com::protocol::Packet;
 
 static_assert(sizeof(DataPacket) == 36);
 

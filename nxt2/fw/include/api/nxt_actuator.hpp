@@ -9,7 +9,7 @@
 #ifndef __NXT_ACTUATOR_HPP__
 #define __NXT_ACTUATOR_HPP__
 
-#include "utils/conversion.hpp"
+#include "nxt/utils/conversion.hpp"
 
 #include <array>
 #include <cstdint>

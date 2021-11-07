@@ -13,7 +13,7 @@
 
 #include "base/runnable_base.hpp"
 
-#include "utils/conversion.hpp"
+#include "nxt/utils/conversion.hpp"
 
 #include "api/nxt_light_sensor.hpp"
 #include "api/nxt_distance_sensor.hpp"

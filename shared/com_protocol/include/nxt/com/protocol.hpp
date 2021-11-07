@@ -8,23 +8,28 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
+#ifndef __NXT_COM_PROTOCOL_HPP__
+#define __NXT_COM_PROTOCOL_HPP__
+
 #include <cstdint>
 
 namespace nxt
+{
+namespace com
 {
 namespace protocol
 {
 enum class Command : std::uint16_t
 {
-    GENERIC    = 0x00,
-    GET_DIST   = 0x10,
-    GET_COLOR  = 0x11,
-    GET_LIGHT  = 0x12,
-    MOTOR_FWD  = 0x20,
-    MOTOR_REV  = 0x21,
-    MOTOR_TGT  = 0x22,
+    GENERIC = 0x00,
+    GET_DIST = 0x10,
+    GET_COLOR = 0x11,
+    GET_LIGHT = 0x12,
+    MOTOR_FWD = 0x20,
+    MOTOR_REV = 0x21,
+    MOTOR_TGT = 0x22,
     MOTOR_STOP = 0x2F,
-    UNDEFINED  = 0xFF
+    UNDEFINED = 0xFF
 };
 
 struct Packet
@@ -48,4 +53,7 @@ struct Packet
 using Data = decltype(Packet::data);
 
 } // namespace protocol
+} // namespace com
 } // namespace nxt
+
+#endif /* __NXT_COM_PROTOCOL_HPP__ */

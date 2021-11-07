@@ -8,9 +8,9 @@
 
 #include "simple_logger/logger.hpp"
 
-#include "utils/conversion.hpp"
+#include "nxt/utils/conversion.hpp"
 
-#include "nxt/usb/usb_device.hpp"
+#include "nxt/usb/device.hpp"
 
 #include <ncurses.h>
 
@@ -41,14 +41,14 @@ bool connect()
     return false;
 }
 
-void send(const nxt::protocol::Command command, const nxt::protocol::Data& data)
+void send(const nxt::com::protocol::Command command, const nxt::com::protocol::Data& data)
 {
     if (nxt_usb_dev.isReady())
     {
         nxt_pkg_tx.command = nxt::utils::to_underlying(command);
         nxt_pkg_tx.size = 1;
 
-        for (auto idx = 0U; idx < nxt::protocol::Packet::NUM_DATA_ELEMENTS;
+        for (auto idx = 0U; idx < nxt::com::protocol::Packet::NUM_DATA_ELEMENTS;
              ++idx)
         {
             nxt_pkg_tx.data[idx] = data[idx];
@@ -80,9 +80,9 @@ void receive()
                      nxt_pkg_rx.size);
 
             switch (
-                nxt::utils::to_enum<nxt::protocol::Command>(nxt_pkg_rx.command))
+                nxt::utils::to_enum<nxt::com::protocol::Command>(nxt_pkg_rx.command))
             {
-            case nxt::protocol::Command::GENERIC: // GENERIC
+            case nxt::com::protocol::Command::GENERIC: // GENERIC
             {
                 mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
@@ -93,21 +93,21 @@ void receive()
                          nxt_pkg_rx.data[6], nxt_pkg_rx.data[7]);
                 break;
             }
-            case nxt::protocol::Command::GET_DIST: // SONAR
+            case nxt::com::protocol::Command::GET_DIST: // SONAR
             {
                 mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
                          nxt_pkg_rx.data[2]);
                 break;
             }
-            case nxt::protocol::Command::GET_COLOR: // COLOR
+            case nxt::com::protocol::Command::GET_COLOR: // COLOR
             {
                 mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|",
                          nxt_pkg_rx.data[0], nxt_pkg_rx.data[1],
                          nxt_pkg_rx.data[2]);
                 break;
             }
-            case nxt::protocol::Command::GET_LIGHT: // LIGHT
+            case nxt::com::protocol::Command::GET_LIGHT: // LIGHT
             {
                 mvprintw(9, 0, "COLOR  : A0=%8d|", nxt_pkg_rx.data[0]);
                 break;
@@ -186,12 +186,12 @@ int main()
             case KEY_F(0):
             case 'f':
                 mvprintw(0, 5, "<f%d>", no);
-                send(nxt::protocol::Command::MOTOR_FWD, {no, 50});
+                send(nxt::com::protocol::Command::MOTOR_FWD, {no, 50});
                 break;
             case KEY_F(1):
             case 'r':
                 mvprintw(0, 5, "<r%d>", no);
-                send(nxt::protocol::Command::MOTOR_REV, {no, 50});
+                send(nxt::com::protocol::Command::MOTOR_REV, {no, 50});
                 break;
             }
         }
@@ -219,7 +219,7 @@ int main()
             }
 
             mvprintw(0, 5, "<!%d>", no);
-            send(nxt::protocol::Command::MOTOR_STOP, {no});
+            send(nxt::com::protocol::Command::MOTOR_STOP, {no});
         }
         break;
         }

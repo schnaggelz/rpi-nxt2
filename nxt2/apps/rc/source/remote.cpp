@@ -37,20 +37,20 @@ void Remote::run()
 
 void Remote::process()
 {
-    auto command = nxt::utils::to_enum<nxt::protocol::Command>(_usb_data_rx.command);
+    auto command = nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.command);
 
-    if (command == nxt::protocol::Command::MOTOR_FWD ||
-        command == nxt::protocol::Command::MOTOR_REV ||
-        command == nxt::protocol::Command::MOTOR_STOP)
+    if (command == nxt::com::protocol::Command::MOTOR_FWD ||
+        command == nxt::com::protocol::Command::MOTOR_REV ||
+        command == nxt::com::protocol::Command::MOTOR_STOP)
     {
         auto port = _usb_data_rx.data[0];
         auto value = 0;
 
-        if (command == nxt::protocol::Command::MOTOR_FWD)
+        if (command == nxt::com::protocol::Command::MOTOR_FWD)
         {
             value = _usb_data_rx.data[1];
         }
-        else if (command == nxt::protocol::Command::MOTOR_REV)
+        else if (command == nxt::com::protocol::Command::MOTOR_REV)
         {
             value = -_usb_data_rx.data[1];
         }

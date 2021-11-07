@@ -9,7 +9,7 @@
 #ifndef __NXT_SENSOR_HPP__
 #define __NXT_SENSOR_HPP__
 
-#include "utils/conversion.hpp"
+#include "nxt/utils/conversion.hpp"
 
 #include <array>
 #include <cstdint>

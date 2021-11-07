@@ -10,8 +10,6 @@
 
 #include "drivers/nxt_color_sensor.h"
 
-#include "utils/conversion.hpp"
-
 namespace nxt
 {
 void ColorSensor::init()

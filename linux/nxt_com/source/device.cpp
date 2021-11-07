@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#include "nxt/usb/usb_device.hpp"
+#include "nxt/usb/device.hpp"
 
 namespace nxt_com
 {
