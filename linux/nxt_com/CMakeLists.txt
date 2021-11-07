@@ -22,5 +22,3 @@ target_link_libraries(${PROJECT_NAME}
         pthread
         usb-1.0
 )
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
