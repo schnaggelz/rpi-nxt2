@@ -134,7 +134,7 @@ void nxt_avr_power_down(void)
 /**
  * Tell the AVR to enter SAMBA mode.
  */
-void nxt_avr_firmware_update_mode(void)
+void nxt_avr_firmware_update(void)
 {
     avr_output_data.power = 0xA5;
     avr_output_data.pwm_frequency = 0x5A;

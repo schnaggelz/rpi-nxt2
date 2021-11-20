@@ -24,6 +24,6 @@ void System::shutdown()
 
 void System::update()
 {
-    nxt_avr_update();
+    nxt_avr_firmware_update();
 }
 } // namespace nxt
