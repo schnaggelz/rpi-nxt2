@@ -72,9 +72,8 @@ bool Remote::send(const nxt::com::protocol::Command command,
     if (_nxt_usb_dev.isReady())
     {
         packet.type = nxt::utils::to_underlying(command);
-        packet.size = 1;
 
-        for (auto idx = 0U; idx < nxt::com::protocol::Packet::NUM_DATA_ELEMENTS;
+        for (auto idx = 0U; idx < packet.size;
              ++idx)
         {
             packet.data[idx] = data[idx];
@@ -97,7 +96,7 @@ bool Remote::receive(nxt::com::protocol::Command& command,
     {
         _nxt_usb_dev.read(packet);
 
-        for (auto idx = 0U; idx < nxt::com::protocol::Packet::NUM_DATA_ELEMENTS;
+        for (auto idx = 0U; idx < packet.size;
              ++idx)
         {
             data[idx] = packet.data[idx];
@@ -129,6 +128,11 @@ bool Remote::motorStop(const Port port)
                 {nxt::utils::to_underlying(port)});
 }
 
+bool Remote::shutdown()
+{
+    return send(nxt::com::protocol::Command::POWER_OFF, {});
+}
+
 std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
 {
     if (idx >= nxt::com::protocol::NUM_VALUES_PER_DATA_PORT)
@@ -141,6 +145,16 @@ std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
                           nxt::com::protocol::NUM_VALUES_GENERIC;
 
     return _data[base_idx + idx];
+}
+
+std::int32_t Remote::systemRcv(std::uint8_t idx)
+{
+    if (idx >= nxt::com::protocol::NUM_VALUES_GENERIC)
+    {
+        return std::numeric_limits<std::int32_t>::max();
+    }
+
+    return _data[idx];
 }
 
 } // namespace remote

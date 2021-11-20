@@ -22,7 +22,9 @@ PYBIND11_MODULE(nxt_remote_py, m)
         .def("disconnect", &nxt::remote::Remote::disconnect)
         .def("connected", &nxt::remote::Remote::isConnected)
         .def("poll", &nxt::remote::Remote::poll)
+        .def("shutdown", &nxt::remote::Remote::shutdown)
         .def("sensor_rcv", &nxt::remote::Remote::sensorRcv)
+        .def("system_rcv", &nxt::remote::Remote::systemRcv)
         .def("motor_fwd", &nxt::remote::Remote::motorFwd)
         .def("motor_rev", &nxt::remote::Remote::motorRev)
         .def("motor_stop", &nxt::remote::Remote::motorStop);
@@ -35,5 +37,9 @@ PYBIND11_MODULE(nxt_remote_py, m)
         .value("PORT_A", nxt::remote::Remote::Port::PORT_A)
         .value("PORT_B", nxt::remote::Remote::Port::PORT_B)
         .value("PORT_C", nxt::remote::Remote::Port::PORT_C)
+        .export_values();
+
+    py::enum_<nxt::remote::Remote::Info>(m, "Info")
+        .value("BATTERY_VOLTAGE", nxt::remote::Remote::Info::BATTERY_VOLTAGE)
         .export_values();
 }

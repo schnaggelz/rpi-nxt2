@@ -21,17 +21,20 @@ class Remote
 {
   public:
     using Port = nxt::com::protocol::Port;
+    using Info = nxt::com::protocol::Info;
 
     bool connect();
     bool disconnect();
     bool isConnected();
     bool poll();
+    bool shutdown();
 
     bool motorFwd(const Port port, const std::uint8_t speed);
     bool motorRev(const Port port, const std::uint8_t speed);
     bool motorStop(const Port port);
 
     std::int32_t sensorRcv(const Port port, std::uint8_t idx);
+    std::int32_t systemRcv(std::uint8_t idx);
 
   private:
     bool send(const nxt::com::protocol::Command command,
