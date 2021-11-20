@@ -14,9 +14,11 @@ the NXT to physically solve it.
 
 # Prerequisites
 
-I'm using Ubuntu 20 as development platform. The embedded cross-build environment can be caught via Docker image below.
+I'm using Ubuntu 20 as development platform and a RaspPi Zero 2 W as the computer controlling the NXT2. 
 
-## General requirements
+The embedded cross-build environment can be caught via Docker image below.
+
+## Build requirements (e.g. on Ubuntu 20)
 
 Install host build environment
 
@@ -27,13 +29,24 @@ sudo apt install git cmake gcc g++ gdb-multiarch
 Install required libraries
 
 ````
-sudo apt install libusb-1.0-0-dev
+sudo apt install python3-dev
 sudo apt install python3-pybind11
+sudo apt install libncurses5-dev
+sudo apt install libusb-1.0-0-dev
+````
+
+## Runtime requirements (e.g. on Raspberry OS)
+
+Install required libraries
+
+````
+sudo apt install python3
+sudo apt install libusb-1.0-0
 ````
 
 # Build
 
-## Docker
+## Docker for Cross-Building
 
 ### Install Docker
 
