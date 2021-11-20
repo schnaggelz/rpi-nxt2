@@ -17,11 +17,15 @@ namespace nxt
 {
 namespace com
 {
+static constexpr std::uint8_t NUM_DATA_PORTS = 4U;
+
 namespace protocol
 {
+static constexpr std::uint8_t NUM_VALUES_PER_DATA_PORT = 4U;
+
 enum class Command : std::uint8_t
 {
-    GENERIC_M = 0x00,
+    FULL_DATA = 0x00,
     GET_SONAR = 0x10,
     GET_COLOR = 0x11,
     GET_LIGHT = 0x12,
@@ -44,6 +48,11 @@ enum class Port : std::uint8_t
     NONE = 0xFF
 };
 
+enum Info : std::uint8_t
+{
+    BATTERY_VOLTAGE = 0
+};
+
 struct Packet
 {
     Packet() = default;
@@ -51,7 +60,10 @@ struct Packet
     std::uint16_t type;
     std::uint16_t size;
 
-    static constexpr std::uint8_t NUM_DATA_ELEMENTS = 8U;
+    static constexpr std::uint8_t NUM_VALUES_GENERIC = 4U;
+
+    static constexpr std::uint8_t NUM_DATA_ELEMENTS =
+        NUM_VALUES_GENERIC + NUM_DATA_PORTS * NUM_VALUES_PER_DATA_PORT;
 
     std::int32_t data[NUM_DATA_ELEMENTS];
 

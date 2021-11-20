@@ -28,10 +28,10 @@ void receive()
 
     mvprintw(3, 0, "RCV    : SQ:%8d|", 0);
     mvprintw(4, 0, "PACKET : ID=%8d| SZ=%8d", 0, 0);
-    mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
-    mvprintw(7, 0, "GENERIC: V4=%8d| V5=%8d| V6=%5d| V7=%8d|", 0, 0, 0, 0);
-    mvprintw(8, 0, "SONAR  : L0=%8d| C0=%8d| R0=%8d|", 0, 0, 0);
-    mvprintw(9, 0, "COLOR  : R0=%8d| G0=%8d| B0=%8d|", 0, 0, 0);
+    mvprintw(6, 0, "PORT_1 : V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
+    mvprintw(7, 0, "PORT_2 : V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
+    mvprintw(8, 0, "PORT_3 : V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
+    mvprintw(9, 0, "PORT_4 : V0=%8d| V1=%8d| V2=%5d| V3=%8d|", 0, 0, 0, 0);
 
     while (!exiting)
     {
@@ -41,11 +41,26 @@ void receive()
 
             mvprintw(3, 0, "RCV    : SQ:%8d|", counter++);
 
-            mvprintw(6, 0, "GENERIC: V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
-                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1),
-                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2),
-                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3),
-                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4));
+            mvprintw(6, 0, "PORT_1 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 0),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 1),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 2),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 3));
+            mvprintw(6, 0, "PORT_2 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 0),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 1),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 2),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 3));
+            mvprintw(6, 0, "PORT_3 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 0),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 1),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 2),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 3));
+            mvprintw(6, 0, "PORT_4 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 0),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 1),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 2),
+                     remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 3));
 
             counter++;
         }

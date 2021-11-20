@@ -12,6 +12,8 @@
 
 #include "nxt/usb/device.hpp"
 
+#include <limits>
+
 namespace nxt
 {
 namespace remote
@@ -101,8 +103,7 @@ bool Remote::receive(nxt::com::protocol::Command& command,
             data[idx] = packet.data[idx];
         }
 
-        command =
-            nxt::utils::to_enum<nxt::com::protocol::Command>(packet.type);
+        command = nxt::utils::to_enum<nxt::com::protocol::Command>(packet.type);
 
         return true;
     }
@@ -128,9 +129,17 @@ bool Remote::motorStop(const Port port)
                 {nxt::utils::to_underlying(port)});
 }
 
-std::int32_t Remote::sensorRcv(const Remote::Port port)
+std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
 {
-    return _data[nxt::utils::to_underlying(port)];
+    if (idx >= nxt::com::protocol::NUM_VALUES_PER_DATA_PORT)
+    {
+        return std::numeric_limits<std::int32_t>::max();
+    }
+
+    auto base_idx = nxt::utils::to_underlying(port) *
+                    nxt::com::protocol::NUM_VALUES_PER_DATA_PORT;
+
+    return _data[base_idx + idx];
 }
 
 } // namespace remote

@@ -31,7 +31,7 @@ class Remote
     bool motorRev(const Port port, const std::uint8_t speed);
     bool motorStop(const Port port);
 
-    std::int32_t sensorRcv(const Port port);
+    std::int32_t sensorRcv(const Port port, std::uint8_t idx);
 
   private:
     bool send(const nxt::com::protocol::Command command,
