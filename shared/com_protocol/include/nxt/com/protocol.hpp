@@ -21,8 +21,8 @@ static constexpr std::uint8_t NUM_DATA_PORTS = 4U;
 
 namespace protocol
 {
-static constexpr std::uint8_t NUM_VALUES_GENERIC = 4U;
-static constexpr std::uint8_t NUM_VALUES_PER_DATA_PORT = 4U;
+static constexpr std::uint8_t NUM_VALUES_GENERIC = 2U;
+static constexpr std::uint8_t NUM_VALUES_PER_DATA_PORT = 1U;
 static constexpr std::uint8_t UNDEFINED_TYPE = 0xFF;
 
 enum class Command : std::uint8_t

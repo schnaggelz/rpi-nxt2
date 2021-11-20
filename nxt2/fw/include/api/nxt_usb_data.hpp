@@ -17,7 +17,7 @@ namespace nxt
 {
 using USBData = nxt::com::protocol::Packet;
 
-static_assert(sizeof(USBData) == 4 * 4 * 4 + 4 * 4 + 4,
+static_assert(sizeof(USBData) == 4 * 1 * 4 + 2 * 4 + 4,
               "Invalid USBData size");
 } // namespace nxt
 
