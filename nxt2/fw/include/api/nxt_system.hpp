@@ -6,8 +6,8 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#ifndef __NXT_DISTANCE_SENSOR_HPP__
-#define __NXT_DISTANCE_SENSOR_HPP__
+#ifndef __NXT_SYSTEM_HPP__
+#define __NXT_SYSTEM_HPP__
 
 #include "nxt_sensor.hpp"
 
@@ -25,4 +25,4 @@ class System
 };
 } // namespace nxt
 
-#endif /* __NXT_DISTANCE_SENSOR_HPP__ */
+#endif /* __NXT_SYSTEM_HPP__ */

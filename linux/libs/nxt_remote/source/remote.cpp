@@ -136,8 +136,9 @@ std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
         return std::numeric_limits<std::int32_t>::max();
     }
 
-    auto base_idx = nxt::utils::to_underlying(port) *
-                    nxt::com::protocol::NUM_VALUES_PER_DATA_PORT;
+    const auto base_idx = nxt::utils::to_underlying(port) *
+                              nxt::com::protocol::NUM_VALUES_PER_DATA_PORT +
+                          nxt::com::protocol::NUM_VALUES_GENERIC;
 
     return _data[base_idx + idx];
 }
