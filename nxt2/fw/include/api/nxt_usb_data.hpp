@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_USB_DATA_HPP__
 #define __NXT_USB_DATA_HPP__
@@ -15,11 +15,10 @@
 
 namespace nxt
 {
-using USBCommand = nxt::com::protocol::Command;
 using USBData = nxt::com::protocol::Packet;
 
-static_assert(sizeof(USBData) == 4*4*4+4*4+4, "Invalid USBData size");
-
+static_assert(sizeof(USBData) == 4 * 4 * 4 + 4 * 4 + 4,
+              "Invalid USBData size");
 } // namespace nxt
 
 #endif /* __NXT_USB_DATA_HPP__ */

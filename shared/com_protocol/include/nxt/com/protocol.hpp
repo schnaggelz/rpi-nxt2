@@ -21,7 +21,9 @@ static constexpr std::uint8_t NUM_DATA_PORTS = 4U;
 
 namespace protocol
 {
+static constexpr std::uint8_t NUM_VALUES_GENERIC = 4U;
 static constexpr std::uint8_t NUM_VALUES_PER_DATA_PORT = 4U;
+static constexpr std::uint8_t UNDEFINED_TYPE = 0xFF;
 
 enum class Command : std::uint8_t
 {
@@ -33,7 +35,9 @@ enum class Command : std::uint8_t
     MOTOR_REV = 0x21,
     MOTOR_TGT = 0x22,
     MOTOR_STP = 0x2F,
-    UNDEFINED = 0xFF
+    FW_UPDATE = 0xF0,
+    POWER_OFF = 0xFA,
+    UNDEFINED = UNDEFINED_TYPE
 };
 
 enum class Port : std::uint8_t
@@ -45,7 +49,7 @@ enum class Port : std::uint8_t
     PORT_2 = 0x01,
     PORT_3 = 0x02,
     PORT_4 = 0x03,
-    NONE = 0xFF
+    NONE = UNDEFINED_TYPE
 };
 
 enum Info : std::uint8_t
@@ -57,15 +61,13 @@ struct Packet
 {
     Packet() = default;
 
-    std::uint16_t type;
-    std::uint16_t size;
-
-    static constexpr std::uint8_t NUM_VALUES_GENERIC = 4U;
+    std::uint16_t type = UNDEFINED_TYPE;
+    std::uint16_t size = NUM_DATA_ELEMENTS;
 
     static constexpr std::uint8_t NUM_DATA_ELEMENTS =
         NUM_VALUES_GENERIC + NUM_DATA_PORTS * NUM_VALUES_PER_DATA_PORT;
 
-    std::int32_t data[NUM_DATA_ELEMENTS];
+    std::int32_t data[NUM_DATA_ELEMENTS] = {0};
 
     static constexpr void validate()
     {
