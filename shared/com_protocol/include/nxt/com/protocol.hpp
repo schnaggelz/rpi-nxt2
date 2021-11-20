@@ -48,7 +48,7 @@ struct Packet
 {
     Packet() = default;
 
-    std::uint16_t command;
+    std::uint16_t type;
     std::uint16_t size;
 
     static constexpr std::uint8_t NUM_DATA_ELEMENTS = 8U;

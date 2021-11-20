@@ -87,7 +87,7 @@ void Device::read(DataPacket& pkg)
 
         if (rc == 0 && nbytes >= 4)
         {
-            pkg.command = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
+            pkg.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
             pkg.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
 
             size_t ndata = (nbytes - 4) / 4;
@@ -115,8 +115,8 @@ void Device::write(const DataPacket& pkg)
 
     if (_dev_ready)
     {
-        buf[0] = (pkg.command >> 0) & 0xFF;
-        buf[1] = (pkg.command >> 8) & 0xFF;
+        buf[0] = (pkg.type >> 0) & 0xFF;
+        buf[1] = (pkg.type >> 8) & 0xFF;
         buf[2] = (pkg.size >> 0) & 0xFF;
         buf[3] = (pkg.size >> 8) & 0xFF;
 

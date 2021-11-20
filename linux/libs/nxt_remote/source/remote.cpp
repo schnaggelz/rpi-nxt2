@@ -53,7 +53,7 @@ bool Remote::poll()
 
     if (receive(command, _data))
     {
-        if (command == nxt::com::protocol::Command::GENERIC_M)
+        if (command == nxt::com::protocol::Command::FULL_DATA)
         {
             return true;
         }
@@ -69,7 +69,7 @@ bool Remote::send(const nxt::com::protocol::Command command,
 
     if (_nxt_usb_dev.isReady())
     {
-        packet.command = nxt::utils::to_underlying(command);
+        packet.type = nxt::utils::to_underlying(command);
         packet.size = 1;
 
         for (auto idx = 0U; idx < nxt::com::protocol::Packet::NUM_DATA_ELEMENTS;
@@ -102,7 +102,7 @@ bool Remote::receive(nxt::com::protocol::Command& command,
         }
 
         command =
-            nxt::utils::to_enum<nxt::com::protocol::Command>(packet.command);
+            nxt::utils::to_enum<nxt::com::protocol::Command>(packet.type);
 
         return true;
     }

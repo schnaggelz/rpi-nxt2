@@ -27,8 +27,6 @@ namespace usb
 {
 using DataPacket = nxt::com::protocol::Packet;
 
-static_assert(sizeof(DataPacket) == 36);
-
 constexpr std::uint16_t VENDOR_ID = 0x0694;
 constexpr std::uint16_t PRODUCT_ID = 0x0002;
 
