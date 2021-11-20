@@ -120,7 +120,7 @@ void Device::write(const DataPacket& pkg)
         buf[2] = (pkg.size >> 0) & 0xFF;
         buf[3] = (pkg.size >> 8) & 0xFF;
 
-        for (int i = 0; i < 2; ++i)
+        for (int i = 0; i < pkg.size; ++i)
         {
             unsigned char* ptr = &(buf[4 * i + 4]);
             ptr[0] = (pkg.data[i] >> 0) & 0xFF;
