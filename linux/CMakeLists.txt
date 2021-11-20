@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 17 CACHE STRING "")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_subdirectory(simple_logger)
-add_subdirectory(nxt_com)
-add_subdirectory(nxt_remote)
-add_subdirectory(nxt_console)
+add_subdirectory(libs/simple_logger)
+add_subdirectory(libs/nxt_com)
+add_subdirectory(libs/nxt_remote)
+
+add_subdirectory(apps/nxt_console)

@@ -166,3 +166,17 @@ This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB 
 ## Debugging the Linux SW
 
 This is a trivial process and well-documented for your IDE.
+
+# Examples
+
+## Linux Examples
+
+### Python API Demo
+
+See [nxt_apps](linux/examples/python/nxt_remote)
+
+### Cube Solver
+
+LOCATION FOR LATER FUN PROJECT ;-)
+
+See [cube_solver](linux/examples/python/cube_solver)
