@@ -44,20 +44,22 @@ void Remote::process()
         command == nxt::com::protocol::Command::MOTOR_REV ||
         command == nxt::com::protocol::Command::MOTOR_STP)
     {
-        auto port =
+        auto port_idx =
             nxt::utils::to_enum<nxt::com::protocol::Port>(_usb_data_rx.data[0]);
+
         auto value = 0;
 
         if (command == nxt::com::protocol::Command::MOTOR_FWD)
         {
             value = _usb_data_rx.data[1];
         }
+
         else if (command == nxt::com::protocol::Command::MOTOR_REV)
         {
             value = -_usb_data_rx.data[1];
         }
 
-        switch (port)
+        switch (port_idx)
         {
         case nxt::com::protocol::Port::PORT_A:
             _monitor.setLineValue(0, value);
@@ -75,15 +77,33 @@ void Remote::process()
             break;
         }
     }
+    else if (command == nxt::com::protocol::Command::FW_UPDATE)
+    {
+        nxt::System::update();
+    }
+    else if (command == nxt::com::protocol::Command::POWER_OFF)
+    {
+        nxt::System::shutdown();
+    }
 }
 
 void Remote::send()
 {
     // Get and send distance
-    _usb_data_tx.type = nxt::utils::to_underlying(USBCommand::FULL_DATA);
-    _usb_data_tx.data[0] = _sensor_1.getDistance();
-    _usb_data_tx.data[1] = _sensor_2.getBrightness();
-    _usb_data_tx.size = 2;
+    _usb_data_tx.type =
+        nxt::utils::to_underlying(nxt::com::protocol::Command::FULL_DATA);
+
+    _usb_data_tx.data[nxt::com::protocol::BATTERY_VOLTAGE] =
+        nxt::System::getBatteryVoltage();
+
+    auto base_idx = nxt::com::protocol::NUM_VALUES_GENERIC;
+
+    _usb_data_tx.data[base_idx] = _sensor_1.getDistance();
+
+    base_idx += nxt::com::protocol::NUM_VALUES_PER_DATA_PORT;
+
+    _usb_data_tx.data[base_idx] = _sensor_2.getBrightness();
+
     _usb_port.write(_usb_data_tx);
 
     _monitor.setLineValue(4, _sensor_1.getDistance());

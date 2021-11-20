@@ -19,6 +19,7 @@
 #include "api/nxt_distance_sensor.hpp"
 #include "api/nxt_motor.hpp"
 #include "api/nxt_usb_port.hpp"
+#include "api/nxt_system.hpp"
 
 #include "wrappers/monitor.hpp"
 
@@ -68,6 +69,7 @@ class Remote
     nxt::LightSensor _sensor_2;
 
     nxt::USBPort _usb_port;
+
     nxt::USBData _usb_data_rx;
     nxt::USBData _usb_data_tx;
 
