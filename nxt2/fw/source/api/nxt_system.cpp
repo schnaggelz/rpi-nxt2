@@ -12,17 +12,17 @@
 
 namespace nxt
 {
-std::int32_t System::getBatteryVoltage() const
+std::int32_t System::getBatteryVoltage()
 {
     return nxt_avr_get_battery_voltage();
 }
 
-void System::shutdown() const
+void System::shutdown()
 {
     nxt_avr_power_down();
 }
 
-void System::update() const
+void System::update()
 {
     nxt_avr_update();
 }
