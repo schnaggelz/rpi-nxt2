@@ -69,10 +69,12 @@ struct Packet
 
     std::int32_t data[NUM_DATA_ELEMENTS] = {0};
 
+    static constexpr std::uint8_t NUM_BYTES =
+        sizeof(data) + sizeof(type) + sizeof(size);
+
     static constexpr void validate()
     {
-        static_assert(sizeof(Packet) == 2 + 2 + NUM_DATA_ELEMENTS * 4,
-                      "Invalid USBData size");
+        static_assert(sizeof(Packet) == NUM_BYTES, "Invalid packet size");
     }
 };
 
