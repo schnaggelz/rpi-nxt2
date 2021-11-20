@@ -29,6 +29,7 @@ class Buttons
 
     bool isPressed(Button button) const;
 };
+
 } // namespace nxt
 
 #endif /* __NXT_BUTTONS_HPP__ */

@@ -36,6 +36,7 @@ class DistanceSensor : public Sensor
   private:
     std::int32_t _current_distance;
 };
-}; // namespace nxt
+
+} // namespace nxt
 
 #endif /* __NXT_DISTANCE_SENSOR_HPP__ */

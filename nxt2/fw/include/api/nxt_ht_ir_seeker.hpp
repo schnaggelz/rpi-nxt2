@@ -37,6 +37,7 @@ class InfraredSeeker : public Sensor
   private:
     std::array<std::int8_t, NUM_VALUES> _ir_data;
 };
+
 } // namespace ht
 } // namespace nxt
 
