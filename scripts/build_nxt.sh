@@ -8,14 +8,16 @@ if not [ $# -eq 2 ]
     exit 1
 fi
 
-BUILD_TYPE="${1,,}"
-BUILD_DIR=${ROOT_DIR}/build/nxt_${BUILD_TYPE}
+BUILD_TYPE=$1
+APP_NAME=$2
+
+BUILD_DIR=${ROOT_DIR}/build/nxt_${APP_NAME}_${BUILD_TYPE,,}
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
-cmake -DCMAKE_BUILD_TYPE=$1 -DAPP_NAME=$2 -DBUILD_NXT_ARM=True \
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} -DBUILD_NXT_ARM=True \
   -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}
 make clean
 make -j 16 VERBOSE=1
