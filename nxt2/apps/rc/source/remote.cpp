@@ -118,8 +118,11 @@ void Remote::send()
 
     _usb_port.write(_usb_data_tx);
 
-    _monitor.setLineValue(4, _sensor_1.getDistance());
-    _monitor.setLineValue(5, _sensor_2.getBrightness());
+    _monitor.setLineValue(0, _motors[0].getCurrentCount());
+    _monitor.setLineValue(1, _motors[1].getCurrentCount());
+    _monitor.setLineValue(2, _motors[2].getCurrentCount());
+    _monitor.setLineValue(3, _sensor_1.getDistance());
+    _monitor.setLineValue(4, _sensor_2.getBrightness());
 }
 
 void Remote::receive()
