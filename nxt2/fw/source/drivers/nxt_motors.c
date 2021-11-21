@@ -41,7 +41,17 @@ static nxt_motor_port motor_ports[NXT_NUM_MOTOR_PORTS];
 static uint32 nxt_motors_initialised;
 static uint32 interrupts_this_period;
 
-sint32 nxt_motor_get_count(uint8 port)
+sint32 nxt_motor_get_speed(uint8 port)
+{
+    if (port < NXT_NUM_MOTOR_PORTS)
+    {
+        return motor_ports[port].speed_percent;
+    }
+
+    return 0;
+}
+
+sint32 nxt_motor_get_current_count(uint8 port)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
     {
@@ -51,19 +61,11 @@ sint32 nxt_motor_get_count(uint8 port)
     return 0;
 }
 
-void nxt_motor_set_count(uint8 port, sint32 count)
+sint32 nxt_motor_get_target_count(uint8 port)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
     {
-        motor_ports[port].current_count = count;
-    }
-}
-
-sint32 nxt_motor_get_speed(uint8 port)
-{
-    if (port < NXT_NUM_MOTOR_PORTS)
-    {
-        return motor_ports[port].speed_percent;
+        return motor_ports[port].target_count;
     }
 
     return 0;
@@ -83,12 +85,19 @@ void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake)
     }
 }
 
-void nxt_motor_command(uint8 port, sint32 target_count, sint32 speed_percent)
+void nxt_motor_set_current_count(uint8 port, sint32 count)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
     {
-        motor_ports[port].target_count = target_count;
-        motor_ports[port].speed_percent = speed_percent;
+        motor_ports[port].current_count = count;
+    }
+}
+
+void nxt_motor_set_target_count(uint8 port, sint32 count)
+{
+    if (port < NXT_NUM_MOTOR_PORTS)
+    {
+        motor_ports[port].target_count = count;
     }
 }
 

@@ -24,43 +24,41 @@ void Motor::exit()
 
 void Motor::read()
 {
-    _current_count = nxt_motor_get_count(_port_number);
-    _current_speed = nxt_motor_get_speed(_port_number);
+    // value cached in C
 }
 
-std::int32_t Motor::getCount()
+std::int32_t Motor::getCurrentCount()
 {
-    _current_count = nxt_motor_get_count(_port_number);
-
-    return _current_count;
+    return nxt_motor_get_current_count(_port_number);
 }
 
 std::int32_t Motor::getSpeed()
 {
-    _current_speed = nxt_motor_get_speed(_port_number);
-
-    return _current_count;
+    return nxt_motor_get_speed(_port_number);
 }
 
-void Motor::setCount(std::int32_t count)
+std::int32_t Motor::getTargetCount()
 {
-    _current_count = count;
+    return nxt_motor_get_current_count(_port_number);
+}
 
-    nxt_motor_set_count(_port_number, _current_count);
+void Motor::setCurrentCount(std::int32_t count)
+{
+    nxt_motor_set_current_count(_port_number, count);
+}
+
+void Motor::setTargetCount(std::int32_t count)
+{
+    nxt_motor_set_target_count(_port_number, count);
 }
 
 void Motor::setSpeed(std::int32_t speed)
 {
-    _current_speed = speed;
-
-    nxt_motor_set_speed(_port_number, _current_speed, _brake ? 1 : 0);
+    nxt_motor_set_speed(_port_number, speed, _brake ? 1 : 0);
 }
 
 void Motor::rotateTo(std::int32_t angle)
 {
     // TODO: Calculate target count from angle
-    _target_count = angle;
-
-    nxt_motor_command(_port_number, _target_count, _current_speed);
 }
 } // namespace nxt
