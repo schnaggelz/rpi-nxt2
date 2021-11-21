@@ -8,7 +8,8 @@ if not [ $# -eq 2 ]
     exit 1
 fi
 
-BUILD_DIR=${ROOT_DIR}/build/nxt
+BUILD_TYPE="${1,,}"
+BUILD_DIR=${ROOT_DIR}/build/nxt_${BUILD_TYPE}
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"

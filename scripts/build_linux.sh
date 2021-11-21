@@ -8,7 +8,8 @@ if not [ $# -eq 1 ]
     exit 1
 fi
 
-BUILD_DIR=${ROOT_DIR}/build/linux
+BUILD_TYPE="${1,,}"
+BUILD_DIR=${ROOT_DIR}/build/linux_${BUILD_TYPE}
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
