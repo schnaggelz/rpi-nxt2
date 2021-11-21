@@ -73,11 +73,11 @@ bool Device::open()
     return false;
 }
 
-void Device::read(DataPacket& pkg)
+void Device::read(GenericPacket& packet)
 {
     int rc = 0;
 
-    unsigned char buf[sizeof(pkg)];
+    unsigned char buf[sizeof(packet)];
     int nbytes;
 
     if (_dev_ready)
@@ -87,8 +87,8 @@ void Device::read(DataPacket& pkg)
 
         if (rc == 0 && nbytes >= 4)
         {
-            pkg.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
-            pkg.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
+            packet.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
+            packet.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
 
             size_t ndata = (nbytes - 4) / 4;
 
@@ -100,33 +100,33 @@ void Device::read(DataPacket& pkg)
                                  (((std::int32_t)ptr[1]) << 8) |
                                  (((std::int32_t)ptr[0]) << 0);
 
-                pkg.data[i] = v;
+                packet.data[i] = v;
             }
         }
     }
 }
 
-void Device::write(const DataPacket& pkg)
+void Device::write(const GenericPacket& packet)
 {
     int rc = 0;
 
-    unsigned char buf[sizeof(pkg)];
+    unsigned char buf[sizeof(packet)];
     int nbytes;
 
     if (_dev_ready)
     {
-        buf[0] = (pkg.type >> 0) & 0xFF;
-        buf[1] = (pkg.type >> 8) & 0xFF;
-        buf[2] = (pkg.size >> 0) & 0xFF;
-        buf[3] = (pkg.size >> 8) & 0xFF;
+        buf[0] = (packet.type >> 0) & 0xFF;
+        buf[1] = (packet.type >> 8) & 0xFF;
+        buf[2] = (packet.size >> 0) & 0xFF;
+        buf[3] = (packet.size >> 8) & 0xFF;
 
-        for (int i = 0; i < pkg.size; ++i)
+        for (int i = 0; i < packet.size; ++i)
         {
             unsigned char* ptr = &(buf[4 * i + 4]);
-            ptr[0] = (pkg.data[i] >> 0) & 0xFF;
-            ptr[1] = (pkg.data[i] >> 16) & 0xFF;
-            ptr[2] = (pkg.data[i] >> 16) & 0xFF;
-            ptr[3] = (pkg.data[i] >> 24) & 0xFF;
+            ptr[0] = (packet.data[i] >> 0) & 0xFF;
+            ptr[1] = (packet.data[i] >> 16) & 0xFF;
+            ptr[2] = (packet.data[i] >> 16) & 0xFF;
+            ptr[3] = (packet.data[i] >> 24) & 0xFF;
         }
 
         rc = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,

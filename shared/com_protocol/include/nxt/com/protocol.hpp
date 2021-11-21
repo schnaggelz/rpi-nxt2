@@ -15,16 +15,15 @@
 
 namespace nxt
 {
+static constexpr std::uint8_t NUM_SENSOR_PORTS = 4U;
+static constexpr std::uint8_t NUM_MOTOR_PORTS = 3U;
+
 namespace com
 {
-static constexpr std::uint8_t NUM_DATA_PORTS = 4U;
+static constexpr std::uint8_t UNDEFINED_TYPE = 0xFF;
 
 namespace protocol
 {
-static constexpr std::uint8_t NUM_VALUES_GENERIC = 2U;
-static constexpr std::uint8_t NUM_VALUES_PER_DATA_PORT = 1U;
-static constexpr std::uint8_t UNDEFINED_TYPE = 0xFF;
-
 enum class Command : std::uint8_t
 {
     FULL_DATA = 0x00,
@@ -61,24 +60,9 @@ struct Packet
 {
     Packet() = default;
 
-    std::uint16_t type = UNDEFINED_TYPE;
-    std::uint16_t size = NUM_DATA_ELEMENTS;
-
-    static constexpr std::uint8_t NUM_DATA_ELEMENTS =
-        NUM_VALUES_GENERIC + NUM_DATA_PORTS * NUM_VALUES_PER_DATA_PORT;
-
-    std::int32_t data[NUM_DATA_ELEMENTS] = {0};
-
-    static constexpr std::uint8_t NUM_BYTES =
-        sizeof(data) + sizeof(type) + sizeof(size);
-
-    static constexpr void validate()
-    {
-        static_assert(sizeof(Packet) == NUM_BYTES, "Invalid packet size");
-    }
+    std::uint16_t type {UNDEFINED_TYPE};
+    std::uint16_t size {0};
 };
-
-using Data = decltype(Packet::data);
 
 } // namespace protocol
 } // namespace com

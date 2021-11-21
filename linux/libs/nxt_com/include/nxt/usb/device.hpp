@@ -10,6 +10,7 @@
 #define __NXT_COM_USB_DEVICE_HPP__
 
 #include "nxt/com/protocol.hpp"
+#include "nxt/com/protocol/generic_packet.hpp"
 
 #include <libusb-1.0/libusb.h>
 
@@ -25,7 +26,7 @@ namespace com
 {
 namespace usb
 {
-using DataPacket = nxt::com::protocol::Packet;
+using GenericPacket = nxt::com::protocol::generic::Packet;
 
 constexpr std::uint16_t VENDOR_ID = 0x0694;
 constexpr std::uint16_t PRODUCT_ID = 0x0002;
@@ -57,8 +58,8 @@ class Device
         return _dev_ready;
     };
 
-    void read(DataPacket&);
-    void write(const DataPacket&);
+    void read(GenericPacket&);
+    void write(const GenericPacket&);
 
   private:
     struct libusb_device_handle* _dev_handle{NULL};

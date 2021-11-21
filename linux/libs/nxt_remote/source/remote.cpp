@@ -18,7 +18,7 @@ namespace nxt
 {
 namespace remote
 {
-nxt::com::protocol::Data _data = {};
+nxt::com::protocol::generic::Data _data = {};
 
 bool Remote::connect()
 {
@@ -65,9 +65,9 @@ bool Remote::poll()
 }
 
 bool Remote::send(const nxt::com::protocol::Command command,
-                  const nxt::com::protocol::Data& data)
+                  const nxt::com::protocol::generic::Data& data)
 {
-    nxt::com::protocol::Packet packet;
+    nxt::com::protocol::generic::Packet packet;
 
     if (_nxt_usb_dev.isReady())
     {
@@ -87,9 +87,9 @@ bool Remote::send(const nxt::com::protocol::Command command,
 }
 
 bool Remote::receive(nxt::com::protocol::Command& command,
-                     nxt::com::protocol::Data& data)
+                     nxt::com::protocol::generic::Data& data)
 {
-    nxt::com::protocol::Packet packet;
+    nxt::com::protocol::generic::Packet packet;
 
     if (_nxt_usb_dev.isReady())
     {
@@ -140,26 +140,14 @@ bool Remote::shutdown()
 
 std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
 {
-    if (idx >= nxt::com::protocol::NUM_VALUES_PER_DATA_PORT)
-    {
-        return std::numeric_limits<std::int32_t>::max();
-    }
+    const auto port_idx = nxt::utils::to_underlying(port);
 
-    const auto base_idx = nxt::utils::to_underlying(port) *
-                              nxt::com::protocol::NUM_VALUES_PER_DATA_PORT +
-                          nxt::com::protocol::NUM_VALUES_GENERIC;
-
-    return _data[base_idx + idx];
+    return nxt::com::protocol::generic::getSensorData(_data, port_idx, idx);
 }
 
 std::int32_t Remote::systemRcv(std::uint8_t idx)
 {
-    if (idx >= nxt::com::protocol::NUM_VALUES_GENERIC)
-    {
-        return std::numeric_limits<std::int32_t>::max();
-    }
-
-    return _data[idx];
+    return nxt::com::protocol::generic::getCommonData(_data, idx);
 }
 
 } // namespace remote

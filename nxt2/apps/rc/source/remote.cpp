@@ -10,6 +10,8 @@
 
 #include "remote.hpp"
 
+#include "nxt/com/protocol/generic_packet.hpp"
+
 namespace nxt
 {
 namespace apps
@@ -96,16 +98,14 @@ void Remote::send()
     _usb_data_tx.type =
         nxt::utils::to_underlying(nxt::com::protocol::Command::FULL_DATA);
 
-    _usb_data_tx.data[nxt::com::protocol::BATTERY_VOLTAGE] =
-        nxt::System::getBatteryVoltage();
+    nxt::com::protocol::generic::setCommonData(
+        _usb_data_tx.data, 0, nxt::System::getBatteryVoltage());
 
-    auto base_idx = nxt::com::protocol::NUM_VALUES_GENERIC;
+    nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 0, 0,
+                                               _sensor_1.getDistance());
 
-    _usb_data_tx.data[base_idx] = _sensor_1.getDistance();
-
-    base_idx += nxt::com::protocol::NUM_VALUES_PER_DATA_PORT;
-
-    _usb_data_tx.data[base_idx] = _sensor_2.getBrightness();
+    nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 1, 0,
+                                               _sensor_2.getBrightness());
 
     _usb_port.write(_usb_data_tx);
 

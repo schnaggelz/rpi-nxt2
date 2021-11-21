@@ -10,14 +10,15 @@
 #define __NXT_USB_DATA_HPP__
 
 #include "nxt/com/protocol.hpp"
+#include "nxt/com/protocol/generic_packet.hpp"
 
 #include <type_traits>
 
 namespace nxt
 {
-using USBData = nxt::com::protocol::Packet;
+using USBData = nxt::com::protocol::generic::Packet;
 
-static_assert(sizeof(USBData) == 4 * 1 * 4 + 2 * 4 + 4,
+static_assert(sizeof(USBData) == 3 * 1 * 4 + 4 * 1 * 4 + 2 * 4 + 4,
               "Invalid USBData size");
 } // namespace nxt
 
