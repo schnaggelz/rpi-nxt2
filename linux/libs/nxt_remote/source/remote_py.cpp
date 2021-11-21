@@ -27,6 +27,7 @@ PYBIND11_MODULE(nxt_remote_py, m)
         .def("system_rcv", &nxt::remote::Remote::systemRcv)
         .def("motor_fwd", &nxt::remote::Remote::motorFwd)
         .def("motor_rev", &nxt::remote::Remote::motorRev)
+        .def("motor_cmd", &nxt::remote::Remote::motorCmd)
         .def("motor_stop", &nxt::remote::Remote::motorStop);
 
     py::enum_<nxt::remote::Remote::Port>(m, "Port")
