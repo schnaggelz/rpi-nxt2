@@ -69,8 +69,8 @@ void Remote::process()
             _motors[port].setSpeed(0);
             break;
         case nxt::com::protocol::Command::MOTOR_CMD:
-            _motors[port].setSpeed(speed);
             _motors[port].setTargetCount(count);
+            _motors[port].setSpeed(speed);
             break;
         default:
             break;
