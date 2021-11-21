@@ -2,8 +2,8 @@
 
 HIGHLY WORK-IN-PROGRESS, CODE NOT COMPLETELY WORKING YET AND MAY NOT BUILD.
 
-Lego Mindstorms NXT2 (ARM7-TDMI, AT91SAM7S, 64 kB RAM, bare-metal FW) C/C++ FW communicating with Raspberry Pi Zero 2
-W (ARM Cortex-A53, 512 MB RAM, Cortex-A53, Debian Linux 8) C++/Python SW.
+Lego Mindstorms NXT2 (ARM7-TDMI, AT91SAM7S, 64 kB RAM, bare-metal) C/C++ FW communicating with Raspberry Pi Zero 2 W
+(ARM Cortex-A53, 512 MB RAM, Cortex-A53, Debian Linux 8) C++/Python SW.
 
 Unfortunately I only have Lego NXTs and don't want to buy a new Mindstorms set. However, ARM low-level programming is
 more fun for me. So I experiment with own bare-metal firmware on the NXT (for sensor/actuator servicing) and control
