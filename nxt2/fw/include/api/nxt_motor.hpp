@@ -22,6 +22,8 @@ class Motor : public Actuator
     {
     }
 
+    ~Motor() = default;
+
     void setSpeed(std::int32_t speed);
     void setCurrentCount(std::int32_t count);
     void setTargetCount(std::int32_t count);

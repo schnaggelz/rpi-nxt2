@@ -33,7 +33,7 @@ enum class Command : std::uint8_t
     GET_LIGHT = 0x12,
     MOTOR_FWD = 0x20,
     MOTOR_REV = 0x21,
-    MOTOR_TGT = 0x22,
+    MOTOR_CMD = 0x22,
     MOTOR_STP = 0x2F,
     FW_UPDATE = 0xF0,
     POWER_OFF = 0xFA,
