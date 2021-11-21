@@ -73,8 +73,7 @@ bool Remote::send(const nxt::com::protocol::Command command,
     {
         packet.type = nxt::utils::to_underlying(command);
 
-        for (auto idx = 0U; idx < packet.size;
-             ++idx)
+        for (auto idx = 0U; idx < packet.size; ++idx)
         {
             packet.data[idx] = data[idx];
         }
@@ -96,8 +95,7 @@ bool Remote::receive(nxt::com::protocol::Command& command,
     {
         _nxt_usb_dev.read(packet);
 
-        for (auto idx = 0U; idx < packet.size;
-             ++idx)
+        for (auto idx = 0U; idx < packet.size; ++idx)
         {
             data[idx] = packet.data[idx];
         }
@@ -120,6 +118,13 @@ bool Remote::motorRev(const Port port, const std::uint8_t speed)
 {
     return send(nxt::com::protocol::Command::MOTOR_REV,
                 {nxt::utils::to_underlying(port), speed});
+}
+
+bool Remote::motorCmd(const Port port, const std::uint8_t speed,
+                      const std::int32_t count)
+{
+    return send(nxt::com::protocol::Command::MOTOR_CMD,
+                {nxt::utils::to_underlying(port), speed, count});
 }
 
 bool Remote::motorStop(const Port port)

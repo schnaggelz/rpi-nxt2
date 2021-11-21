@@ -32,6 +32,7 @@ class Remote
     bool motorFwd(const Port port, const std::uint8_t speed);
     bool motorRev(const Port port, const std::uint8_t speed);
     bool motorStop(const Port port);
+    bool motorCmd(const Port port, const std::uint8_t speed, const std::int32_t count);
 
     std::int32_t sensorRcv(const Port port, std::uint8_t idx);
     std::int32_t systemRcv(std::uint8_t idx);
