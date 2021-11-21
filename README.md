@@ -14,8 +14,8 @@ the NXT to physically solve it.
 
 ## Credits
 
-The FW is partly inspired by the LeJos project (especially the USB and I2C drivers initially based on the code from
-there).
+The FW is partly inspired by the LeJos project (especially the AVR support code and the I2C driver code initially 
+based on the code from there).
 
 *TODO* License?
 
