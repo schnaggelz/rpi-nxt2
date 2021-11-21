@@ -107,6 +107,15 @@ void Remote::send()
     nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 1, 0,
                                                _sensor_2.getBrightness());
 
+    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 0, 0,
+                                              _motors[0].getCurrentCount());
+
+    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 1, 0,
+                                              _motors[1].getCurrentCount());
+
+    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 2, 0,
+                                              _motors[2].getCurrentCount());
+
     _usb_port.write(_usb_data_tx);
 
     _monitor.setLineValue(4, _sensor_1.getDistance());

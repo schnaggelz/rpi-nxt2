@@ -145,6 +145,13 @@ std::int32_t Remote::sensorRcv(const Remote::Port port, std::uint8_t idx)
     return nxt::com::protocol::generic::getSensorData(_data, port_idx, idx);
 }
 
+std::int32_t Remote::motorRcv(const Remote::Port port, std::uint8_t idx)
+{
+    const auto port_idx = nxt::utils::to_underlying(port);
+
+    return nxt::com::protocol::generic::getMotorData(_data, port_idx, idx);
+}
+
 std::int32_t Remote::systemRcv(std::uint8_t idx)
 {
     return nxt::com::protocol::generic::getCommonData(_data, idx);
