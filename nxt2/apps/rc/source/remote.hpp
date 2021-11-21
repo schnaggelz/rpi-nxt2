@@ -15,11 +15,11 @@
 
 #include "nxt/utils/conversion.hpp"
 
-#include "api/nxt_light_sensor.hpp"
 #include "api/nxt_distance_sensor.hpp"
+#include "api/nxt_light_sensor.hpp"
 #include "api/nxt_motor.hpp"
-#include "api/nxt_usb_port.hpp"
 #include "api/nxt_system.hpp"
+#include "api/nxt_usb_port.hpp"
 
 #include "wrappers/monitor.hpp"
 
@@ -35,9 +35,9 @@ class Remote
   public:
     Remote(nxt::wrappers::Monitor& monitor)
         : _monitor(monitor)
-        , _motor_A(nxt::Actuator::Port::PORT_A, true)
-        , _motor_B(nxt::Actuator::Port::PORT_B, true)
-        , _motor_C(nxt::Actuator::Port::PORT_C, true)
+        , _motors({nxt::Motor(nxt::Actuator::Port::PORT_A, true),
+                   nxt::Motor(nxt::Actuator::Port::PORT_B, true),
+                   nxt::Motor(nxt::Actuator::Port::PORT_C, true)})
         , _sensor_1(nxt::Sensor::Port::PORT_1)
         , _sensor_2(nxt::Sensor::Port::PORT_2)
     {
@@ -61,9 +61,7 @@ class Remote
   private:
     nxt::wrappers::Monitor& _monitor;
 
-    nxt::Motor _motor_A;
-    nxt::Motor _motor_B;
-    nxt::Motor _motor_C;
+    std::array<nxt::Motor, 3> _motors;
 
     nxt::DistanceSensor _sensor_1;
     nxt::LightSensor _sensor_2;

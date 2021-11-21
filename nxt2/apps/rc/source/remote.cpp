@@ -18,9 +18,10 @@ void Remote::init()
 {
     _usb_port.init();
 
-    _motor_A.init();
-    _motor_B.init();
-    _motor_C.init();
+    for (auto& motor : _motors)
+    {
+        motor.init();
+    }
 
     _sensor_1.init();
     _sensor_2.init();
@@ -40,50 +41,52 @@ void Remote::process()
     auto command =
         nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.type);
 
-    if (command == nxt::com::protocol::Command::MOTOR_FWD ||
-        command == nxt::com::protocol::Command::MOTOR_REV ||
-        command == nxt::com::protocol::Command::MOTOR_STP)
+    switch (command)
     {
-        auto port_idx =
-            nxt::utils::to_enum<nxt::com::protocol::Port>(_usb_data_rx.data[0]);
-
-        auto value = 0;
-
-        if (command == nxt::com::protocol::Command::MOTOR_FWD)
-        {
-            value = _usb_data_rx.data[1];
-        }
-
-        else if (command == nxt::com::protocol::Command::MOTOR_REV)
-        {
-            value = -_usb_data_rx.data[1];
-        }
-
-        switch (port_idx)
-        {
-        case nxt::com::protocol::Port::PORT_A:
-            _monitor.setLineValue(0, value);
-            _motor_A.setSpeed(value);
+    case nxt::com::protocol::Command::MOTOR_FWD:
+    case nxt::com::protocol::Command::MOTOR_REV:
+    case nxt::com::protocol::Command::MOTOR_STP:
+    case nxt::com::protocol::Command::MOTOR_CMD:
+    {
+        const auto port = static_cast<std::uint8_t>(_usb_data_rx.data[0]);
+        if (port >= _motors.size())
             break;
-        case nxt::com::protocol::Port::PORT_B:
-            _monitor.setLineValue(1, value);
-            _motor_B.setSpeed(value);
+
+        auto speed = _usb_data_rx.data[1];
+        auto count = _usb_data_rx.data[2];
+
+        switch (command)
+        {
+        case nxt::com::protocol::Command::MOTOR_FWD:
+            _motors[port].setSpeed(std::abs(speed));
             break;
-        case nxt::com::protocol::Port::PORT_C:
-            _monitor.setLineValue(2, value);
-            _motor_C.setSpeed(value);
+        case nxt::com::protocol::Command::MOTOR_REV:
+            _motors[port].setSpeed(-std::abs(speed));
+            break;
+        case nxt::com::protocol::Command::MOTOR_STP:
+            _motors[port].setSpeed(0);
+            break;
+        case nxt::com::protocol::Command::MOTOR_CMD:
+            _motors[port].setSpeed(speed);
+            _motors[port].setTargetCount(count);
             break;
         default:
             break;
         }
+        break;
     }
-    else if (command == nxt::com::protocol::Command::FW_UPDATE)
+    case nxt::com::protocol::Command::FW_UPDATE:
     {
         nxt::System::update();
+        break;
     }
-    else if (command == nxt::com::protocol::Command::POWER_OFF)
+    case nxt::com::protocol::Command::POWER_OFF:
     {
         nxt::System::shutdown();
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -122,9 +125,10 @@ void Remote::exit()
 {
     _usb_port.exit();
 
-    _motor_A.exit();
-    _motor_B.exit();
-    _motor_C.exit();
+    for (auto& motor : _motors)
+    {
+        motor.exit();
+    }
 
     _sensor_1.exit();
     _sensor_2.exit();
