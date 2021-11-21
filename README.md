@@ -9,7 +9,7 @@ Unfortunately I only have Lego NXT2s and don't want to buy a new EV3 set (the NX
 However, ARM low-level programming is more fun for me. So I experiment with own bare-metal firmware on the NXT (for
 sensor/actuator servicing) and control software on the Raspberry Pi (for the algorithms).
 
-Long-term goal: Raspberry Pi4 (or: Pi3, Pi Zero2, ...) solving a Rubik's cube via Python/OpenCV and then controlling 
+Long-term goal: Raspberry Pi4 (or: Pi 3, Pi Zero 2 W) solving a Rubik's cube via Python/OpenCV and then controlling 
 the NXT to physically solve it.
 
 ## Credits
