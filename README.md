@@ -5,12 +5,19 @@ HIGHLY WORK-IN-PROGRESS, CODE NOT COMPLETELY WORKING YET AND MAY NOT BUILD.
 Lego Mindstorms NXT2 (ARM7-TDMI, AT91SAM7S, 64 kB RAM, bare-metal) C/C++ FW communicating with Raspberry Pi Zero 2 W
 (ARM Cortex-A53, 512 MB RAM, Cortex-A53, Debian Linux 10/11) C++/Python SW.
 
-Unfortunately I have several Lego NXT2s were phased out several years ago and don't want to buy a new Mindstorms set. 
+Unfortunately I only have Lego NXT2s and don't want to buy a new EV3 set (the NXT2 was phased out several years ago). 
 However, ARM low-level programming is more fun for me. So I experiment with own bare-metal firmware on the NXT (for
 sensor/actuator servicing) and control software on the Raspberry Pi (for the algorithms).
 
 Long-term goal: Raspberry Pi4 (or: Pi3, Pi Zero2, ...) solving a Rubik's cube via Python/OpenCV and then controlling 
 the NXT to physically solve it.
+
+## Credits
+
+The FW is partly inspired by the LeJos project (especially the USB and I2C drivers initially based on the code from
+there).
+
+*TODO* License?
 
 # Prerequisites
 
