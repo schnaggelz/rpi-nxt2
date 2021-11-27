@@ -1,7 +1,7 @@
 ---
 # We'll use defaults from the LLVM style, but with 4 columns indentation.
 BasedOnStyle: LLVM
-ColumnLimit: 100
+ColumnLimit: 80
 IndentWidth: 4
 PointerAlignment: Left
 BreakBeforeBraces: Custom
