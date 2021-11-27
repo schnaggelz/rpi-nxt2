@@ -33,9 +33,9 @@ class Sensor
     Sensor(Port port)
         : _port_number(nxt::utils::to_underlying(port)){};
 
-    virtual void init(){};
-    virtual void read(){};
-    virtual void exit(){};
+    virtual void init() noexcept{};
+    virtual void read() noexcept{};
+    virtual void exit() noexcept{};
 
   protected:
     std::uint8_t _port_number;

@@ -20,13 +20,13 @@ class USBPort
   public:
     USBPort() = default;
 
-    bool isConnected() const;
+    bool isConnected() const noexcept;
 
-    bool read(USBData& data);
-    bool write(USBData& data);
+    bool read(USBData& data) noexcept;
+    bool write(USBData& data) noexcept;
 
-    void init();
-    void exit();
+    void init() noexcept;
+    void exit() noexcept;
 };
 
 } // namespace fw

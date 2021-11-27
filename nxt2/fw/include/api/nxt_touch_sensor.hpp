@@ -23,7 +23,7 @@ class TouchSensor : public Sensor
     {
     }
 
-    bool isPressed() const;
+    bool isPressed() const noexcept;
 };
 
 } // namespace fw

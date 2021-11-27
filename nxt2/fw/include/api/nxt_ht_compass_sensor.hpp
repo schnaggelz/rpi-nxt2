@@ -26,16 +26,16 @@ class CompassSensor : public Sensor
     {
     }
 
-    std::uint16_t getHeading() const
+    std::uint16_t getHeading() const noexcept
     {
         return _heading;
     }
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
-    bool calibrate();
+    bool calibrate() noexcept;
 
   private:
     std::int16_t _heading;

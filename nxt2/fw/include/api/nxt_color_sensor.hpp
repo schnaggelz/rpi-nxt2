@@ -43,12 +43,12 @@ class ColorSensor : public Sensor
 
     void setMode(ColorSensorMode mode);
 
-    std::int16_t getColor(Colors col) const;
-    std::int16_t getLight() const;
+    std::int16_t getColor(Colors col) const noexcept;
+    std::int16_t getLight() const noexcept;
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
   private:
     std::uint16_t _light_data;

@@ -24,11 +24,11 @@ class LightSensor : public Sensor
     {
     }
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
-    std::int16_t getBrightness() const
+    std::int16_t getBrightness() const noexcept
     {
         return _brightness;
     }

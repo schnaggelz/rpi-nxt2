@@ -29,7 +29,7 @@ class Buttons
   public:
     Buttons() = default;
 
-    bool isPressed(Button button) const;
+    bool isPressed(Button button) const noexcept;
 };
 
 } // namespace fw

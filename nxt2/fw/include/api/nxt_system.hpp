@@ -20,10 +20,10 @@ class System
   public:
     System() = delete;
 
-    static std::int32_t getBatteryVoltage();
+    static std::int32_t getBatteryVoltage() noexcept;
 
-    static void update();
-    static void shutdown();
+    static void update() noexcept;
+    static void shutdown() noexcept;
 };
 
 } // namespace fw

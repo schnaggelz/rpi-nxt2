@@ -27,14 +27,14 @@ class InfraredSeeker : public Sensor
     {
     }
 
-    std::array<std::int8_t, NUM_VALUES>& getData()
+    std::array<std::int8_t, NUM_VALUES>& getData() noexcept
     {
         return _ir_data;
     }
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
   private:
     std::array<std::int8_t, NUM_VALUES> _ir_data;

@@ -26,17 +26,17 @@ class Motor : public Actuator
 
     ~Motor() = default;
 
-    void setSpeed(std::int32_t speed);
-    void setCurrentCount(std::int32_t count);
-    void setTargetCount(std::int32_t count);
+    void setSpeed(std::int32_t speed) noexcept;
+    void setCurrentCount(std::int32_t count) noexcept;
+    void setTargetCount(std::int32_t count) noexcept;
 
-    std::int32_t getSpeed();
-    std::int32_t getCurrentCount();
-    std::int32_t getTargetCount();
+    std::int32_t getSpeed() const noexcept;
+    std::int32_t getCurrentCount() const noexcept;
+    std::int32_t getTargetCount() const noexcept;
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
   private:
     bool _brake{false};

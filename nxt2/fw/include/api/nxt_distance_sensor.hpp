@@ -24,16 +24,16 @@ class DistanceSensor : public Sensor
     {
     }
 
-    std::int32_t getDistance() const
+    std::int32_t getDistance() const noexcept
     {
         return _current_distance;
     }
 
     static constexpr std::int16_t MAX_DISTANCE = 200;
 
-    void init() override;
-    void read() override;
-    void exit() override;
+    void init() noexcept override;
+    void read() noexcept override;
+    void exit() noexcept override;
 
   private:
     std::int32_t _current_distance;

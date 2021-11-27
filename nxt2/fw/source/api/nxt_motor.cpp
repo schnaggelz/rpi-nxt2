@@ -47,17 +47,17 @@ void Motor::read()
     }
 }
 
-std::int32_t Motor::getCurrentCount()
+std::int32_t Motor::getCurrentCount() const
 {
     return nxt_motor_get_current_count(_port_number);
 }
 
-std::int32_t Motor::getSpeed()
+std::int32_t Motor::getSpeed() const
 {
     return nxt_motor_get_speed(_port_number);
 }
 
-std::int32_t Motor::getTargetCount()
+std::int32_t Motor::getTargetCount() const
 {
     return nxt_motor_get_current_count(_port_number);
 }
