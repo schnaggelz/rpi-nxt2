@@ -10,6 +10,8 @@
 
 #include "drivers/nxt_motors.h"
 
+#include <limits>
+
 namespace nxt
 {
 namespace fw
@@ -71,6 +73,12 @@ void Motor::setTargetCount(std::int32_t count)
 {
     _target_count = count;
     _target_reached = false;
+}
+
+void Motor::resetTarget()
+{
+    _target_count = std::numeric_limits<decltype(_target_count)>::max();
+    _target_reached = true;
 }
 
 void Motor::setSpeed(std::int32_t speed)
