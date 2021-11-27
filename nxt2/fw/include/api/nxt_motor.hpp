@@ -41,7 +41,7 @@ class Motor : public Actuator
 
   private:
     bool _brake{false};
-    bool _target_reached{false};
+    bool _target_reached{true};
 };
 
 } // namespace fw

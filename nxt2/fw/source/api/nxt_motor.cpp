@@ -20,6 +20,8 @@ void Motor::init()
 {
     nxt_motor_set_current_count(_port_number, 0);
     nxt_motor_set_speed(_port_number, 0, _brake ? 1 : 0);
+
+    _target_reached = true;
 }
 
 void Motor::exit()

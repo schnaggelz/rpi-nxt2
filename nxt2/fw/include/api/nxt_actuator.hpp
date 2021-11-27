@@ -39,7 +39,7 @@ class Actuator
     virtual void exit() noexcept{};
 
   protected:
-    std::uint8_t _port_number;
+    std::uint8_t _port_number{0};
 };
 
 } // namespace fw
