@@ -14,7 +14,7 @@
 
 namespace nxt
 {
-namespace apps
+namespace rc
 {
 void Remote::init()
 {
@@ -128,6 +128,11 @@ void Remote::send()
 void Remote::receive()
 {
     _usb_port.read(_usb_data_rx);
+
+    for (auto& motor : _motors)
+    {
+        motor.read();
+    }
 
     _sensor_1.read();
     _sensor_2.read();

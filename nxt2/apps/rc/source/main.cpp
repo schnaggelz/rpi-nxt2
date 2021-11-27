@@ -15,7 +15,7 @@
 #include "remote.hpp"
 
 nxt::wrappers::Monitor monitor;
-nxt::apps::Remote remote(monitor);
+nxt::rc::Remote remote(monitor);
 
 //
 // Runnable scheduling

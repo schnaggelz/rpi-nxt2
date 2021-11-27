@@ -28,7 +28,7 @@
 
 namespace nxt
 {
-namespace apps
+namespace rc
 {
 class Remote
 {
