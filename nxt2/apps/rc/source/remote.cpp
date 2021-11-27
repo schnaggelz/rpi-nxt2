@@ -106,23 +106,25 @@ void Remote::send()
     _usb_data_tx.type =
         nxt::utils::to_underlying(nxt::com::protocol::Command::FULL_DATA);
 
-    nxt::com::protocol::generic::setCommonData(
-        _usb_data_tx.data, 0, nxt::fw::System::getBatteryVoltage());
+    namespace generic_protocol = nxt::com::protocol::generic;
 
-    nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 0, 0,
-                                               _sensor_1.getDistance());
+    generic_protocol::setCommonData(_usb_data_tx.data, 0,
+                                    nxt::fw::System::getBatteryVoltage());
 
-    nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 1, 0,
-                                               _sensor_2.getBrightness());
+    generic_protocol::setSensorData(_usb_data_tx.data, 0, 0,
+                                    _sensor_1.getDistance());
 
-    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 0, 0,
-                                              _motors[0].getCurrentCount());
+    generic_protocol::setSensorData(_usb_data_tx.data, 1, 0,
+                                    _sensor_2.getBrightness());
 
-    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 1, 0,
-                                              _motors[1].getCurrentCount());
+    generic_protocol::setMotorData(_usb_data_tx.data, 0, 0,
+                                   _motors[0].getCurrentCount());
 
-    nxt::com::protocol::generic::setMotorData(_usb_data_tx.data, 2, 0,
-                                              _motors[2].getCurrentCount());
+    generic_protocol::setMotorData(_usb_data_tx.data, 1, 0,
+                                   _motors[1].getCurrentCount());
+
+    generic_protocol::setMotorData(_usb_data_tx.data, 2, 0,
+                                   _motors[2].getCurrentCount());
 
     _usb_port.write(_usb_data_tx);
 }
@@ -165,5 +167,5 @@ void Remote::exit()
     _sensor_2.exit();
 }
 
-} // namespace apps
+} // namespace rc
 } // namespace nxt
