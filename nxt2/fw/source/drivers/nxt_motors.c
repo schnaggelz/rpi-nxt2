@@ -14,8 +14,6 @@
 #include "platform/at91/at91sam7.h"
 #include "platform/irqs.h"
 
-#include <stdlib.h>
-
 #define MA0 15
 #define MA1 1
 #define MB0 26
@@ -31,7 +29,6 @@
 typedef struct
 {
     sint32 current_count;
-    sint32 target_count;
     sint32 speed_percent;
     uint32 last_edge;
 } nxt_motor_port;
@@ -61,16 +58,6 @@ sint32 nxt_motor_get_current_count(uint8 port)
     return 0;
 }
 
-sint32 nxt_motor_get_target_count(uint8 port)
-{
-    if (port < NXT_NUM_MOTOR_PORTS)
-    {
-        return motor_ports[port].target_count;
-    }
-
-    return 0;
-}
-
 void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
@@ -93,26 +80,6 @@ void nxt_motor_set_current_count(uint8 port, sint32 count)
     }
 }
 
-void nxt_motor_set_target_count(uint8 port, sint32 count)
-{
-    if (port < NXT_NUM_MOTOR_PORTS)
-    {
-        motor_ports[port].target_count = count;
-    }
-}
-
-void nxt_motor_check_target_condition(uint8 port)
-{
-    if (motor_ports[port].speed_percent && motor_ports[port].target_count)
-    {
-        if (abs(motor_ports[port].current_count) >=
-            abs(motor_ports[port].target_count))
-        {
-            nxt_motor_set_speed(port, 0, 1);
-        }
-    }
-}
-
 void nxt_motor_1kHz_process(void)
 {
     if (nxt_motors_initialised)
@@ -120,11 +87,6 @@ void nxt_motor_1kHz_process(void)
         interrupts_this_period = 0;
 
         *AT91C_PIOA_IER = MOTOR_INTERRUPT_PINS;
-
-        for (unsigned port = 0; port < NXT_NUM_MOTOR_PORTS; port++)
-        {
-            nxt_motor_check_target_condition(port);
-        }
     }
 }
 
@@ -198,7 +160,6 @@ void nxt_motor_init(void)
     for (unsigned port = 0; port < NXT_NUM_MOTOR_PORTS; port++)
     {
         motor_ports[port].speed_percent = 0;
-        motor_ports[port].target_count = 0;
         motor_ports[port].current_count = 0;
         motor_ports[port].last_edge = 0;
     }

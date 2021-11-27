@@ -39,7 +39,9 @@ class Motor : public Actuator
     void exit() override;
 
   private:
-    bool _brake;
+    bool _brake{false};
+    bool _target_reached{false};
+    std::int32_t _target_count{0};
 };
 
 } // namespace fw
