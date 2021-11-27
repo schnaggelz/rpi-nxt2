@@ -37,17 +37,20 @@ void Motor::read()
 
         if (speed != 0)
         {
-            const auto current_count = nxt_motor_get_current_count(_port_number);
+            const auto current_count =
+                nxt_motor_get_current_count(_port_number);
             const auto target_count = nxt_motor_get_target_count(_port_number);
 
-            if (speed < 0 && current_count >= target_count)
+            if (speed > 0 && current_count >= target_count)
             {
                 nxt_motor_set_speed(_port_number, 0, 1);
+
                 _target_reached = true;
             }
-            else if (speed > 0 && current_count <= target_count)
+            else if (speed < 0 && current_count <= target_count)
             {
                 nxt_motor_set_speed(_port_number, 0, 1);
+
                 _target_reached = true;
             }
         }
@@ -83,7 +86,7 @@ void Motor::setTargetCount(std::int32_t count)
 
 void Motor::resetTarget()
 {
-    nxt_motor_set_target_count(_port_number, std::numeric_limits<sint32>::max());
+    nxt_motor_set_target_count(_port_number, -1);
 
     _target_reached = true;
 }
