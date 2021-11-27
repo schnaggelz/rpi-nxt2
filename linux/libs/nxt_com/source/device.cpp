@@ -124,7 +124,7 @@ void Device::write(const GenericPacket& packet)
         {
             unsigned char* ptr = &(buf[4 * i + 4]);
             ptr[0] = (packet.data[i] >> 0) & 0xFF;
-            ptr[1] = (packet.data[i] >> 16) & 0xFF;
+            ptr[1] = (packet.data[i] >> 8) & 0xFF;
             ptr[2] = (packet.data[i] >> 16) & 0xFF;
             ptr[3] = (packet.data[i] >> 24) & 0xFF;
         }
