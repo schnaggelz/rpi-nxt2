@@ -49,10 +49,6 @@ class Remote
     void run();
     void exit();
 
-  protected:
-    static constexpr uint8_t NUM_DATA_BYTES = 8;
-    using DataArray = std::array<std::uint32_t, NUM_DATA_BYTES>;
-
   private:
     void process();
     void send();
@@ -71,8 +67,6 @@ class Remote
 
     nxt::fw::USBData _usb_data_rx;
     nxt::fw::USBData _usb_data_tx;
-
-    DataArray _data;
 };
 } // namespace apps
 } // namespace nxt
