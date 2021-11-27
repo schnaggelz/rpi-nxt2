@@ -33,12 +33,18 @@ void Monitor::init()
 
 void Monitor::update()
 {
-    for (auto i = 0U; i < _values.size(); ++i)
+    for (auto i = 0U; i < _lines.size(); ++i)
     {
         nxt_display_goto_xy(0, i + 1);
-        nxt_display_string(_values[i].name);
+        nxt_display_string(_lines[i].name);
         nxt_display_goto_xy(4, i + 1);
-        nxt_display_signed(_values[i].value, 6);
+
+        const auto& values = _lines[i].values;
+
+        for (auto j = 0U; j < values.size(); ++j)
+        {
+            nxt_display_signed(values[j], NUM_CHARS_PER_VALUE);
+        }
     }
 
     nxt_display_update();
@@ -46,15 +52,20 @@ void Monitor::update()
 
 void Monitor::setLineName(std::uint8_t line, char* name)
 {
-    if (line < _values.size())
-        _values[line].name = name;
+    if (line < _lines.size())
+    {
+        _lines[line].name = name;
+    }
 }
 
-void Monitor::setLineValue(std::uint8_t line, std::int32_t value)
+void Monitor::setLineValue(std::uint8_t line, std::uint8_t idx,
+                           std::int32_t value)
 {
-    if (line < _values.size())
-        _values[line].value = value;
+    if (line < _lines.size() && idx < _lines[line].values.size())
+    {
+        _lines[line].values[idx] = value;
+    }
 }
 
-} // namespace libs
+} // namespace wrappers
 } // namespace nxt

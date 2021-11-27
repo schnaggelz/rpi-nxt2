@@ -6,8 +6,8 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#ifndef __NXT_STATMON_MONITOR_HPP__
-#define __NXT_STATMON_MONITOR_HPP__
+#ifndef __NXT_WRAPPERS_MONITOR_HPP__
+#define __NXT_WRAPPERS_MONITOR_HPP__
 
 #include <array>
 #include <cstdint>
@@ -20,10 +20,17 @@ namespace wrappers
 {
 class Monitor
 {
-    static constexpr std::uint8_t NUM_VALUE_LINES = 7;
+  public:
+    static constexpr std::uint8_t NUM_LINES = 7;
+    static constexpr std::uint8_t NUM_VALUES_PER_LINE = 2;
+    static constexpr std::uint8_t NUM_CHARS_PER_VALUE = 6;
 
   public:
-    Monitor() : _values(), _title(nullptr) {}
+    Monitor()
+        : _lines()
+        , _title(nullptr)
+    {
+    }
 
     void setTitle(const char* title)
     {
@@ -31,24 +38,26 @@ class Monitor
     }
 
     void setLineName(std::uint8_t line, char* name);
-    void setLineValue(std::uint8_t line, std::int32_t value);
+    void setLineValue(std::uint8_t line, std::uint8_t idx, std::int32_t value);
 
     void init();
     void update();
 
   private:
-    struct Value
+    struct Line
     {
         char* name = nullptr;
-        std::int32_t value = 0;
+
+        using Values = std::array<std::int32_t, NUM_VALUES_PER_LINE>;
+        Values values = {0, 0};
     };
 
-    std::array<Value, NUM_VALUE_LINES> _values;
+    std::array<Line, NUM_LINES> _lines;
 
     const char* _title;
 };
 
-} // namespace libs
+} // namespace wrappers
 } // namespace nxt
 
-#endif /* __NXT_STATMON_MONITOR_HPP__ */
+#endif /* __NXT_WRAPPERS_MONITOR_HPP__ */
