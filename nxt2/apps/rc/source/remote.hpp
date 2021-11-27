@@ -8,8 +8,8 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#ifndef __NXT_APPS_REMOTE_HPP__
-#define __NXT_APPS_REMOTE_HPP__
+#ifndef __NXT_RC_REMOTE_HPP__
+#define __NXT_RC_REMOTE_HPP__
 
 #include "base/runnable_base.hpp"
 
@@ -57,6 +57,7 @@ class Remote
     void process();
     void send();
     void receive();
+    void display();
 
   private:
     nxt::wrappers::Monitor& _monitor;
@@ -76,4 +77,4 @@ class Remote
 } // namespace apps
 } // namespace nxt
 
-#endif /* __NXT_APPS_REMOTE_HPP__ */
+#endif /* __NXT_RC_REMOTE_HPP__ */
