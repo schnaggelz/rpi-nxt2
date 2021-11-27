@@ -56,14 +56,6 @@ void setupMonitor()
     monitor.setLineName(5, "S3:");
     monitor.setLineName(6, "S4:");
 
-    monitor.setLineValue(0, 0);
-    monitor.setLineValue(1, 0);
-    monitor.setLineValue(2, 0);
-    monitor.setLineValue(3, 0);
-    monitor.setLineValue(4, 0);
-    monitor.setLineValue(5, 0);
-    monitor.setLineValue(6, 0);
-
     // Set up status display
     monitor.init();
 
