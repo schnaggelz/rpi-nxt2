@@ -36,12 +36,19 @@ void Remote::run()
     process();
 
     send();
+
+    display();
 }
 
 void Remote::process()
 {
     auto command =
         nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.type);
+
+    _monitor.setLineValue(3, 1, _usb_data_rx.data[0]);
+    _monitor.setLineValue(4, 1, _usb_data_rx.data[1]);
+    _monitor.setLineValue(5, 1, _usb_data_rx.data[2]);
+    _monitor.setLineValue(6, 1, _usb_data_rx.data[3]);
 
     switch (command)
     {
@@ -67,6 +74,7 @@ void Remote::process()
             break;
         case nxt::com::protocol::Command::MOTOR_STP:
             _motors[port].setSpeed(0);
+            _motors[port].resetTarget();
             break;
         case nxt::com::protocol::Command::MOTOR_CMD:
             _motors[port].setTargetCount(count);
@@ -117,12 +125,18 @@ void Remote::send()
                                               _motors[2].getCurrentCount());
 
     _usb_port.write(_usb_data_tx);
+}
 
-    _monitor.setLineValue(0, _motors[0].getCurrentCount());
-    _monitor.setLineValue(1, _motors[1].getCurrentCount());
-    _monitor.setLineValue(2, _motors[2].getCurrentCount());
-    _monitor.setLineValue(3, _sensor_1.getDistance());
-    _monitor.setLineValue(4, _sensor_2.getBrightness());
+void Remote::display()
+{
+    for (auto idx = 0U; idx < _motors.size(); ++idx)
+    {
+        _monitor.setLineValue(idx, 0, _motors[idx].getCurrentCount());
+        _monitor.setLineValue(idx, 1, _motors[idx].getTargetCount());
+    }
+
+    _monitor.setLineValue(3, 0, _sensor_1.getDistance());
+    _monitor.setLineValue(4, 0, _sensor_2.getBrightness());
 }
 
 void Remote::receive()
