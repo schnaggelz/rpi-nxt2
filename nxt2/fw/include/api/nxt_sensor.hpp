@@ -16,6 +16,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class Sensor
 {
   public:
@@ -39,6 +41,7 @@ class Sensor
     std::uint8_t _port_number;
 };
 
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_SENSOR_HPP__ */

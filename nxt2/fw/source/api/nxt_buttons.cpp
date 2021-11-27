@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_buttons.hpp"
 
 #include "drivers/nxt_buttons.h"
 
 namespace nxt
+{
+namespace fw
 {
 bool Buttons::isPressed(Button button) const
 {
@@ -37,4 +39,6 @@ bool Buttons::isPressed(Button button) const
 
     return state != 0;
 }
+
+} // namespace fw
 } // namespace nxt

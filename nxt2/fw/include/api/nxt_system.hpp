@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class System
 {
   public:
@@ -23,6 +25,8 @@ class System
     static void update();
     static void shutdown();
 };
+
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_SYSTEM_HPP__ */

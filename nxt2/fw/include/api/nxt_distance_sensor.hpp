@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class DistanceSensor : public Sensor
 {
   public:
@@ -37,6 +39,7 @@ class DistanceSensor : public Sensor
     std::int32_t _current_distance;
 };
 
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_DISTANCE_SENSOR_HPP__ */

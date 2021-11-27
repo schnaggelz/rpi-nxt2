@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_system.hpp"
 
 #include "drivers/nxt_avr.h"
 
 namespace nxt
+{
+namespace fw
 {
 std::int32_t System::getBatteryVoltage()
 {
@@ -26,4 +28,6 @@ void System::update()
 {
     nxt_avr_firmware_update();
 }
+
+} // namespace fw
 } // namespace nxt

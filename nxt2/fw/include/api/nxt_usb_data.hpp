@@ -16,10 +16,14 @@
 
 namespace nxt
 {
+namespace fw
+{
 using USBData = nxt::com::protocol::generic::Packet;
 
 static_assert(sizeof(USBData) == 3 * 1 * 4 + 4 * 1 * 4 + 2 * 4 + 4,
               "Invalid USBData size");
+
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_USB_DATA_HPP__ */

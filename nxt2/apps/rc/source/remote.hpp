@@ -35,11 +35,11 @@ class Remote
   public:
     Remote(nxt::wrappers::Monitor& monitor)
         : _monitor(monitor)
-        , _motors({nxt::Motor(nxt::Actuator::Port::PORT_A, true),
-                   nxt::Motor(nxt::Actuator::Port::PORT_B, true),
-                   nxt::Motor(nxt::Actuator::Port::PORT_C, true)})
-        , _sensor_1(nxt::Sensor::Port::PORT_1)
-        , _sensor_2(nxt::Sensor::Port::PORT_2)
+        , _motors({nxt::fw::Motor(nxt::fw::Actuator::Port::PORT_A, true),
+                   nxt::fw::Motor(nxt::fw::Actuator::Port::PORT_B, true),
+                   nxt::fw::Motor(nxt::fw::Actuator::Port::PORT_C, true)})
+        , _sensor_1(nxt::fw::Sensor::Port::PORT_1)
+        , _sensor_2(nxt::fw::Sensor::Port::PORT_2)
     {
     }
 
@@ -61,15 +61,15 @@ class Remote
   private:
     nxt::wrappers::Monitor& _monitor;
 
-    std::array<nxt::Motor, 3> _motors;
+    std::array<nxt::fw::Motor, 3> _motors;
 
-    nxt::DistanceSensor _sensor_1;
-    nxt::LightSensor _sensor_2;
+    nxt::fw::DistanceSensor _sensor_1;
+    nxt::fw::LightSensor _sensor_2;
 
-    nxt::USBPort _usb_port;
+    nxt::fw::USBPort _usb_port;
 
-    nxt::USBData _usb_data_rx;
-    nxt::USBData _usb_data_tx;
+    nxt::fw::USBData _usb_data_rx;
+    nxt::fw::USBData _usb_data_tx;
 
     DataArray _data;
 };

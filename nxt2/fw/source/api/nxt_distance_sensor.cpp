@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_distance_sensor.hpp"
 
 #include "drivers/nxt_sonar_sensor.h"
 
 namespace nxt
+{
+namespace fw
 {
 void DistanceSensor::init()
 {
@@ -27,4 +29,5 @@ void DistanceSensor::read()
     _current_distance = nxt_sonar_sensor_get_distance(_port_number);
 }
 
+} // namespace fw
 } // namespace nxt

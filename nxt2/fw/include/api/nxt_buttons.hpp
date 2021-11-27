@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class Buttons
 {
   public:
@@ -30,6 +32,7 @@ class Buttons
     bool isPressed(Button button) const;
 };
 
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_BUTTONS_HPP__ */

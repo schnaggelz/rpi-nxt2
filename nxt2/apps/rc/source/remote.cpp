@@ -79,12 +79,12 @@ void Remote::process()
     }
     case nxt::com::protocol::Command::FW_UPDATE:
     {
-        nxt::System::update();
+        nxt::fw::System::update();
         break;
     }
     case nxt::com::protocol::Command::POWER_OFF:
     {
-        nxt::System::shutdown();
+        nxt::fw::System::shutdown();
         break;
     }
     default:
@@ -99,7 +99,7 @@ void Remote::send()
         nxt::utils::to_underlying(nxt::com::protocol::Command::FULL_DATA);
 
     nxt::com::protocol::generic::setCommonData(
-        _usb_data_tx.data, 0, nxt::System::getBatteryVoltage());
+        _usb_data_tx.data, 0, nxt::fw::System::getBatteryVoltage());
 
     nxt::com::protocol::generic::setSensorData(_usb_data_tx.data, 0, 0,
                                                _sensor_1.getDistance());

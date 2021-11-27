@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_ht_compass_sensor.hpp"
 
 #include "drivers/nxt_ht_compass_sensor.h"
 
 namespace nxt
+{
+namespace fw
 {
 namespace ht
 {
@@ -35,4 +37,5 @@ void CompassSensor::read()
 }
 
 } // namespace ht
+} // namespace fw
 } // namespace nxt

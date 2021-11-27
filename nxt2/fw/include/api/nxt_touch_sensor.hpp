@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class TouchSensor : public Sensor
 {
   public:
@@ -23,6 +25,8 @@ class TouchSensor : public Sensor
 
     bool isPressed() const;
 };
-}; // namespace nxt
+
+} // namespace fw
+} // namespace nxt
 
 #endif /* __NXT_TOUCH_SENSOR_HPP__ */

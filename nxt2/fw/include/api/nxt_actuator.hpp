@@ -16,6 +16,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class Actuator
 {
   public:
@@ -40,6 +42,7 @@ class Actuator
     std::uint8_t _port_number;
 };
 
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_ACTUATOR_HPP__ */

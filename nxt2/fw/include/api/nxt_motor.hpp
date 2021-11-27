@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #ifndef __NXT_SENSING_MOTOR_HPP__
 #define __NXT_SENSING_MOTOR_HPP__
@@ -12,6 +12,8 @@
 #include "nxt_actuator.hpp"
 
 namespace nxt
+{
+namespace fw
 {
 class Motor : public Actuator
 {
@@ -27,7 +29,6 @@ class Motor : public Actuator
     void setSpeed(std::int32_t speed);
     void setCurrentCount(std::int32_t count);
     void setTargetCount(std::int32_t count);
-    void rotateTo(std::int32_t angle);
 
     std::int32_t getSpeed();
     std::int32_t getCurrentCount();
@@ -40,6 +41,8 @@ class Motor : public Actuator
   private:
     bool _brake;
 };
+
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_SENSING_MOTOR_HPP__ */

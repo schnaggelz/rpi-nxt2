@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_color_sensor.hpp"
 
 #include "drivers/nxt_color_sensor.h"
 
 namespace nxt
+{
+namespace fw
 {
 void ColorSensor::init()
 {
@@ -72,4 +74,5 @@ std::int16_t ColorSensor::getLight() const
     return _light_data;
 }
 
+} // namespace fw
 } // namespace nxt

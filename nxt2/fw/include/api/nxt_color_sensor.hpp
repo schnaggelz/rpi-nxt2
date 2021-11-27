@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 enum class ColorSensorMode
 {
     COLOR_SENSOR,
@@ -54,6 +56,8 @@ class ColorSensor : public Sensor
 
     ColorSensorMode _sensor_mode;
 };
+
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_COLOR_SENSOR_HPP__ */

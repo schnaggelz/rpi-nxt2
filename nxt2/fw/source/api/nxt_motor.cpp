@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_motor.hpp"
 
 #include "drivers/nxt_motors.h"
 
 namespace nxt
+{
+namespace fw
 {
 void Motor::init()
 {
@@ -57,8 +59,5 @@ void Motor::setSpeed(std::int32_t speed)
     nxt_motor_set_speed(_port_number, speed, _brake ? 1 : 0);
 }
 
-void Motor::rotateTo(std::int32_t angle)
-{
-    // TODO: Calculate target count from angle
-}
+} // namespace fw
 } // namespace nxt

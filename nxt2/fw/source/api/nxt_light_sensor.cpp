@@ -1,16 +1,18 @@
 /*******************************************************************************
-* Copyright (C) 2021 Timon Reich
-*
-* NXT C++ driver API
-*
-* License notes see LICENSE.txt
-*******************************************************************************/
+ * Copyright (C) 2021 Timon Reich
+ *
+ * NXT C++ driver API
+ *
+ * License notes see LICENSE.txt
+ *******************************************************************************/
 
 #include "api/nxt_light_sensor.hpp"
 
 #include "drivers/nxt_light_sensor.h"
 
 namespace nxt
+{
+namespace fw
 {
 void LightSensor::init()
 {
@@ -26,4 +28,6 @@ void LightSensor::read()
 {
     _brightness = nxt_light_sensor_get_brightness(_port_number);
 }
+
+} // namespace fw
 } // namespace nxt

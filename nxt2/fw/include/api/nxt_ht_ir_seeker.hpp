@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 namespace ht
 {
 class InfraredSeeker : public Sensor
@@ -39,6 +41,7 @@ class InfraredSeeker : public Sensor
 };
 
 } // namespace ht
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_HT_IR_SEEKER_HPP__ */

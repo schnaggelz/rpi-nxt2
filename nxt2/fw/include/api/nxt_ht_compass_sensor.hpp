@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 namespace ht
 {
 class CompassSensor : public Sensor
@@ -40,6 +42,7 @@ class CompassSensor : public Sensor
 };
 
 } // namespace ht
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_HT_COMPASS_SENSOR_HPP__ */

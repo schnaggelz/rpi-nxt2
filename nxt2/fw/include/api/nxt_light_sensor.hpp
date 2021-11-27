@@ -13,6 +13,8 @@
 
 namespace nxt
 {
+namespace fw
+{
 class LightSensor : public Sensor
 {
   public:
@@ -34,6 +36,8 @@ class LightSensor : public Sensor
   private:
     std::int16_t _brightness;
 };
+
+} // namespace fw
 } // namespace nxt
 
 #endif /* __NXT_LIGHT_SENSOR_HPP__ */
