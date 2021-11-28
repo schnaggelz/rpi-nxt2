@@ -199,4 +199,6 @@ See [nxt_apps](linux/examples/python/nxt_remote)
 
 LOCATION FOR LATER FUN PROJECT ;-)
 
+![Cuber](cuber.jpg)
+
 See [cube_solver](linux/examples/python/cube_solver)
