@@ -54,11 +54,6 @@ void Remote::process()
     auto command =
         nxt::utils::to_enum<nxt::com::protocol::Command>(_usb_data_rx.type);
 
-    _monitor.setLineValue(3, 1, _usb_data_rx.data[0]);
-    _monitor.setLineValue(4, 1, _usb_data_rx.data[1]);
-    _monitor.setLineValue(5, 1, _usb_data_rx.data[2]);
-    _monitor.setLineValue(6, 1, _usb_data_rx.data[3]);
-
     switch (command)
     {
     case nxt::com::protocol::Command::MOTOR_FWD:
@@ -166,7 +161,15 @@ void Remote::display()
 
 void Remote::receive()
 {
-    _usb_port.read(_usb_data_rx);
+    const auto success = _usb_port.read(_usb_data_rx);
+
+    if (success)
+    {
+        _monitor.setLineValue(3, 1, _usb_data_rx.data[0]);
+        _monitor.setLineValue(4, 1, _usb_data_rx.data[1]);
+        _monitor.setLineValue(5, 1, _usb_data_rx.data[2]);
+        _monitor.setLineValue(6, 1, _usb_data_rx.data[3]);
+    }
 
     for (auto& motor : _motors)
     {
