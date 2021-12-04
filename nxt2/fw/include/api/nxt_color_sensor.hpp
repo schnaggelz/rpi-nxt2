@@ -15,20 +15,33 @@ namespace nxt
 {
 namespace fw
 {
-enum class ColorSensorMode
+enum class ColorSensorMode : std::uint8_t
 {
-    COLOR_SENSOR,
+    COLOR_SENSOR = 0,
     LIGHT_SENSOR_RED,
     LIGHT_SENSOR_GREEN,
     LIGHT_SENSOR_BLUE,
     LIGHT_SENSOR_NONE
 };
 
-enum class Colors
+enum class BasicColor : std::uint8_t
 {
-    RED,
-    GREEN,
-    BLUE,
+    RED = 0,
+    GREEN = 1,
+    BLUE = 2,
+    NONE
+};
+
+enum class DetectedColor : std::uint8_t
+{
+    BLACK = 0,
+    BLUE = 1,
+    GREEN = 2,
+    YELLOW = 3,
+    ORANGE = 4,
+    RED = 5,
+    WHITE = 6,
+    UNKNOWN = 99,
     NONE
 };
 
@@ -43,17 +56,16 @@ class ColorSensor : public Sensor
 
     void setMode(ColorSensorMode mode);
 
-    std::int16_t getColor(Colors col) const noexcept;
     std::int16_t getLight() const noexcept;
+    std::int16_t getColor(BasicColor col) const noexcept;
+
+    DetectedColor getColor() const noexcept;
 
     void init() noexcept override;
     void read() noexcept override;
     void exit() noexcept override;
 
   private:
-    std::uint16_t _light_data;
-    std::array<std::int16_t, 3> _color_data;
-
     ColorSensorMode _sensor_mode;
 };
 

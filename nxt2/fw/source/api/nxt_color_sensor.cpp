@@ -27,13 +27,6 @@ void ColorSensor::exit()
 void ColorSensor::read()
 {
     nxt_color_sensor_update(_port_number);
-
-    _light_data = nxt_color_sensor_get_light(_port_number);
-
-    if (_sensor_mode == ColorSensorMode::COLOR_SENSOR)
-    {
-        nxt_color_sensor_get_rgb_data(_port_number, &_color_data[0]);
-    }
 }
 
 void ColorSensor::setMode(ColorSensorMode mode)
@@ -64,14 +57,59 @@ void ColorSensor::setMode(ColorSensorMode mode)
     _sensor_mode = mode;
 }
 
-std::int16_t ColorSensor::getColor(Colors col) const
-{
-    return _color_data[nxt::utils::to_underlying(col)];
-}
-
 std::int16_t ColorSensor::getLight() const
 {
-    return _light_data;
+    return nxt_color_sensor_get_light(_port_number);
+}
+
+std::int16_t ColorSensor::getColor(BasicColor col) const
+{
+    if (_sensor_mode == ColorSensorMode::COLOR_SENSOR)
+    {
+        sint16 rgb_data[3];
+        nxt_color_sensor_get_rgb_data(_port_number, &rgb_data[0]);
+
+        return rgb_data[nxt::utils::to_underlying(col)];
+    }
+
+    return 0;
+}
+
+DetectedColor ColorSensor::getColor() const noexcept
+{
+    if (_sensor_mode == ColorSensorMode::COLOR_SENSOR)
+    {
+        const auto color = nxt_color_sensor_get_color(_port_number);
+
+        switch (color)
+        {
+        case NXT_COLOR_BLACK:
+            return DetectedColor::BLACK;
+
+        case NXT_COLOR_WHITE:
+            return DetectedColor::WHITE;
+
+        case NXT_COLOR_RED:
+            return DetectedColor::RED;
+
+        case NXT_COLOR_GREEN:
+            return DetectedColor::GREEN;
+
+        case NXT_COLOR_BLUE:
+            return DetectedColor::BLUE;
+
+        case NXT_COLOR_ORANGE:
+            return DetectedColor::ORANGE;
+
+        case NXT_COLOR_YELLOW:
+            return DetectedColor::YELLOW;
+
+        default:
+            return DetectedColor::UNKNOWN;
+        }
+    }
+
+    return DetectedColor::NONE;
 }
 
 } // namespace fw
