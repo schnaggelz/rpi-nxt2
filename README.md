@@ -159,6 +159,8 @@ You need to apply the USB permissions rules in the `config/udev/rules.d` directo
 For debugging on the NXT I use the SEGGER J-Link ICE (EDU version). For that I soldered pins of the NXT board to expose
 the JTAG interface. Via adapter, I then connect the ICE to the NXT.
 
+![My Cuber](doc/jlink.jpg)
+
 ## Debugging the NXT FW
 
 ### Install J-Link
@@ -207,7 +209,7 @@ The model was modifies to hold the Camera and the Raspberry Pi Zero 2 and the Ra
 computer and the camera module I've built cases out of classic logo building blocks. The camera stand is sitting on
 top of the color sensor which I still kept for a simple program later-on.
 
-![My Cuber](cuber.jpg)
+![My Cuber](doc/cuber.jpg)
 
 #### The Python Example
 
