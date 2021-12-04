@@ -82,7 +82,7 @@ bool Device::read(GenericPacket& packet)
         _return_code = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
                                   sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
 
-        if (_return_code == LIBUSB_SUCCESS && nbytes >= 4)
+        if (_return_code >= 0 == LIBUSB_SUCCESS && nbytes >= 4)
         {
             packet.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
             packet.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
@@ -100,9 +100,9 @@ bool Device::read(GenericPacket& packet)
                 packet.data[i] = v;
             }
         }
-
-        return _return_code >= 0;
     }
+
+    return false;
 }
 
 bool Device::write(const GenericPacket& packet)
