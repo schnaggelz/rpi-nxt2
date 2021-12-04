@@ -201,14 +201,14 @@ LOCATION FOR LATER FUN PROJECT ;-)
 
 #### Build Instructions
 
-See [build instructions](http://mindcuber.com/mindcuber/MindCuber.pdf)
+See [MindCuber Build Instructions](http://mindcuber.com/mindcuber/MindCuber.pdf).
 
 The model was modifies to hold the Camera and the Raspberry Pi Zero 2 and the Raspberry Pi Camera V2. For the mini
 computer and the camera module I've built cases out of classic logo building blocks. The camera stand is sitting on
 top of the color sensor which I still kept for a simple program later-on.
 
-![Cuber](cuber.jpg)
+![My Cuber](cuber.jpg)
 
 #### The Python Example
 
-See [cube_solver](linux/examples/python/cube_solver)
+See [linux/examples/python/cube_solver](linux/examples/python/cube_solver)
