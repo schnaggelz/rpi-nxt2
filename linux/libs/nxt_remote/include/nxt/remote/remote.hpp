@@ -37,6 +37,7 @@ class Remote
     std::int32_t sensorRcv(const Port port, std::uint8_t idx);
     std::int32_t motorRcv(const Port port, std::uint8_t idx);
     std::int32_t systemRcv(std::uint8_t idx);
+    std::int32_t getStatus();
 
   private:
     bool send(const nxt::com::protocol::Command command,

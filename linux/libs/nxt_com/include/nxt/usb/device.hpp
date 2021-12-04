@@ -53,17 +53,24 @@ class Device
     void close();
     void exit();
 
-    inline bool isReady()
+    bool isReady()
     {
         return _dev_ready;
-    };
+    }
 
-    void read(GenericPacket&);
-    void write(const GenericPacket&);
+    bool read(GenericPacket&);
+    bool write(const GenericPacket&);
+
+    std::int32_t getLastReturnCode()
+    {
+        return _return_code;
+    }
 
   private:
     struct libusb_device_handle* _dev_handle{NULL};
     bool _dev_ready{false};
+
+    std::int32_t _return_code{0};
 };
 } // namespace usb
 } // namespace com

@@ -78,9 +78,7 @@ bool Remote::send(const nxt::com::protocol::Command command,
             packet.data[idx] = data[idx];
         }
 
-        _nxt_usb_dev.write(packet);
-
-        return true;
+        return _nxt_usb_dev.write(packet);
     }
 
     return false;
@@ -93,16 +91,18 @@ bool Remote::receive(nxt::com::protocol::Command& command,
 
     if (_nxt_usb_dev.isReady())
     {
-        _nxt_usb_dev.read(packet);
-
-        for (auto idx = 0U; idx < packet.size; ++idx)
+        if (_nxt_usb_dev.read(packet))
         {
-            data[idx] = packet.data[idx];
+            for (auto idx = 0U; idx < packet.size; ++idx)
+            {
+                data[idx] = packet.data[idx];
+            }
+
+            command =
+                nxt::utils::to_enum<nxt::com::protocol::Command>(packet.type);
+
+            return true;
         }
-
-        command = nxt::utils::to_enum<nxt::com::protocol::Command>(packet.type);
-
-        return true;
     }
 
     return false;
@@ -155,6 +155,11 @@ std::int32_t Remote::motorRcv(const Remote::Port port, std::uint8_t idx)
 std::int32_t Remote::systemRcv(std::uint8_t idx)
 {
     return nxt::com::protocol::generic::getCommonData(_data, idx);
+}
+
+std::int32_t Remote::getStatus()
+{
+    return _nxt_usb_dev.getLastReturnCode();
 }
 
 } // namespace remote

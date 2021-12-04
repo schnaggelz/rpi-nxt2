@@ -21,8 +21,6 @@ bool Device::init()
 
 bool Device::open()
 {
-    int rc = 0;
-
     libusb_device** dev_list;
     libusb_device* nxt_dev = NULL;
 
@@ -33,8 +31,8 @@ bool Device::open()
         libusb_device* dev = dev_list[dev_idx];
         libusb_device_descriptor dev_desc = {0};
 
-        rc = libusb_get_device_descriptor(dev, &dev_desc);
-        if (rc >= 0)
+        _return_code = libusb_get_device_descriptor(dev, &dev_desc);
+        if (_return_code >= 0)
         {
             if (dev_desc.idVendor == VENDOR_ID &&
                 dev_desc.idProduct == PRODUCT_ID)
@@ -48,18 +46,19 @@ bool Device::open()
 
     if (nxt_dev)
     {
-        rc = libusb_open(nxt_dev, &_dev_handle);
-        if (rc >= 0 && _dev_handle != 0)
+        _return_code = libusb_open(nxt_dev, &_dev_handle);
+        if (_return_code >= 0 && _dev_handle != 0)
         {
             libusb_detach_kernel_driver(_dev_handle, 0);
 
-            rc = libusb_set_configuration(_dev_handle, 1);
-            if (rc >= 0)
+            _return_code = libusb_set_configuration(_dev_handle, 1);
+            if (_return_code >= 0)
             {
-                rc = libusb_claim_interface(_dev_handle, 0);
-                if (rc >= 0)
+                _return_code = libusb_claim_interface(_dev_handle, 0);
+                if (_return_code >= 0)
                 {
                     _dev_ready = true;
+
                     return true;
                 }
             }
@@ -73,19 +72,17 @@ bool Device::open()
     return false;
 }
 
-void Device::read(GenericPacket& packet)
+bool Device::read(GenericPacket& packet)
 {
-    int rc = 0;
-
     unsigned char buf[sizeof(packet)];
     int nbytes;
 
     if (_dev_ready)
     {
-        rc = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
+        _return_code = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
                                   sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
 
-        if (rc == 0 && nbytes >= 4)
+        if (_return_code == LIBUSB_SUCCESS && nbytes >= 4)
         {
             packet.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
             packet.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
@@ -103,13 +100,13 @@ void Device::read(GenericPacket& packet)
                 packet.data[i] = v;
             }
         }
+
+        return _return_code >= 0;
     }
 }
 
-void Device::write(const GenericPacket& packet)
+bool Device::write(const GenericPacket& packet)
 {
-    int rc = 0;
-
     unsigned char buf[sizeof(packet)];
     int nbytes;
 
@@ -129,9 +126,13 @@ void Device::write(const GenericPacket& packet)
             ptr[3] = (packet.data[i] >> 24) & 0xFF;
         }
 
-        rc = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
+        _return_code = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
                                   sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
+
+        return _return_code >= 0;
     }
+
+    return false;
 }
 
 void Device::close()
