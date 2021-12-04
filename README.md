@@ -92,7 +92,7 @@ To re-run after exit:
 docker start rpi-nxt2 -i
 ````
 
-### Build ARM7 Firmware 
+### Build ARM7-TDMI Firmware 
 
 Run (in container):
 
