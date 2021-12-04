@@ -193,7 +193,7 @@ This is a trivial process and well-documented for your IDE.
 
 ### Python API Demo
 
-See [nxt_apps](linux/examples/python/nxt_remote)
+See [linux/examples/python/nxt_remote](linux/examples/python/nxt_remote).
 
 ### Cube Solver
 
@@ -211,4 +211,4 @@ top of the color sensor which I still kept for a simple program later-on.
 
 #### The Python Example
 
-See [linux/examples/python/cube_solver](linux/examples/python/cube_solver)
+See [linux/examples/python/cube_solver](linux/examples/python/cube_solver).
