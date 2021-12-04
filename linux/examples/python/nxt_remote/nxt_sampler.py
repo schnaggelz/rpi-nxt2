@@ -30,11 +30,15 @@ signal.signal(signal.SIGINT, handler)
 p = printer.TextPrinter(sys.stdout)
 
 
-def poll(r):
+def cycle_100ms(r):
     r.poll()
-    p.print_at(10, 2, "M_A: {}".format(str(rc.motor_rcv(nxt.PORT_A, 0))))
-    p.print_at(11, 2, "M_B: {}".format(str(rc.motor_rcv(nxt.PORT_B, 0))))
-    p.print_at(12, 2, "M_C: {}".format(str(rc.motor_rcv(nxt.PORT_C, 0))))
+    p.print_at(10, 2, "M_A: {:6d}".format(rc.motor_rcv(nxt.PORT_A, 0)))
+    p.print_at(11, 2, "M_B: {:6d}".format(rc.motor_rcv(nxt.PORT_B, 0)))
+    p.print_at(12, 2, "M_C: {:6d}".format(rc.motor_rcv(nxt.PORT_C, 0)))
+    p.print_at(13, 2, "S_1: {:6d}".format(rc.sensor_rcv(nxt.PORT_1, 0)))
+    p.print_at(14, 2, "S_2: {:6d}".format(rc.sensor_rcv(nxt.PORT_2, 0)))
+    p.print_at(15, 2, "S_3: {:6d}".format(rc.sensor_rcv(nxt.PORT_3, 0)))
+    p.print_at(16, 2, "S_4: {:6d}".format(rc.sensor_rcv(nxt.PORT_4, 0)))
 
 
 logging.basicConfig(level=logging.INFO)
@@ -46,7 +50,7 @@ if not rc.connect():
     logging.error('Could not connect!')
     sys.exit(1)
 
-rt = timer.PeriodicTimer(1, poll, rc)
+rt = timer.PeriodicTimer(0.1, cycle_100ms, rc)
 
 if not rc.motor_fwd(nxt.PORT_A, 20):
     logging.error('Could not control motor A!')
@@ -56,7 +60,6 @@ try:
         time.sleep(0.1)
 finally:
     rt.stop()
-
 
 if not rc.motor_stop(nxt.PORT_A):
     logging.error('Could not control motor A!')
