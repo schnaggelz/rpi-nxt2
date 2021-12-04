@@ -34,7 +34,14 @@ bool USBPort::read(USBData& data)
     std::int32_t bytes_read =
         nxt_usb_read(reinterpret_cast<std::uint8_t*>(&data), 0, sizeof(data));
 
-    return bytes_read > 0 ? true : false;
+    const auto success = bytes_read > 0 ? true : false;
+
+    if (!success)
+    {
+        data.type = nxt::com::UNDEFINED_TYPE;
+    }
+
+    return success;
 }
 
 bool USBPort::write(USBData& data)
@@ -42,7 +49,9 @@ bool USBPort::write(USBData& data)
     std::int32_t bytes_written =
         nxt_usb_write(reinterpret_cast<std::uint8_t*>(&data), 0, sizeof(data));
 
-    return bytes_written > 0 ? true : false;
+    const auto success = bytes_written > 0 ? true : false;
+
+    return success;
 }
 
 } // namespace fw
