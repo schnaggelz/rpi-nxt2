@@ -19,6 +19,8 @@ namespace remote
 {
 class Remote
 {
+    static constexpr std::uint16_t VERSION = 1;
+
   public:
     using Port = nxt::com::protocol::Port;
     using Info = nxt::com::protocol::Info;
@@ -32,12 +34,14 @@ class Remote
     bool motorFwd(const Port port, const std::uint8_t speed);
     bool motorRev(const Port port, const std::uint8_t speed);
     bool motorStop(const Port port);
-    bool motorCmd(const Port port, const std::int8_t speed, const std::int32_t count);
+    bool motorCmd(const Port port, const std::int8_t speed,
+                  const std::int32_t count);
 
     std::int32_t sensorRcv(const Port port, std::uint8_t idx);
     std::int32_t motorRcv(const Port port, std::uint8_t idx);
     std::int32_t systemRcv(std::uint8_t idx);
     std::int32_t getStatus();
+    std::uint16_t getVersion() const {return VERSION;};
 
   private:
     bool send(const nxt::com::protocol::Command command,
@@ -50,6 +54,6 @@ class Remote
     nxt::com::usb::Device _nxt_usb_dev;
 };
 } // namespace remote
-} // namespace nxt_remote
+} // namespace nxt
 
 #endif /* __NXT_REMOTE_REMOTE_HPP__ */
