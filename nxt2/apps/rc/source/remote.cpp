@@ -25,8 +25,17 @@ void Remote::init()
         motor.init();
     }
 
-    _sensor_1.init();
-    _sensor_2.init();
+    for (auto& sensor : _distance_sensors)
+    {
+        sensor.init();
+    }
+
+    for (auto& sensor : _color_sensors)
+    {
+        sensor.init();
+
+        sensor.setMode(fw::ColorSensorMode::COLOR_SENSOR);
+    }
 }
 
 void Remote::run()
@@ -111,12 +120,6 @@ void Remote::send()
     generic_protocol::setCommonData(_usb_data_tx.data, 0,
                                     nxt::fw::System::getBatteryVoltage());
 
-    generic_protocol::setSensorData(_usb_data_tx.data, 0, 0,
-                                    _sensor_1.getDistance());
-
-    generic_protocol::setSensorData(_usb_data_tx.data, 1, 0,
-                                    _sensor_2.getBrightness());
-
     generic_protocol::setMotorData(_usb_data_tx.data, 0, 0,
                                    _motors[0].getCurrentCount());
 
@@ -126,19 +129,39 @@ void Remote::send()
     generic_protocol::setMotorData(_usb_data_tx.data, 2, 0,
                                    _motors[2].getCurrentCount());
 
+    generic_protocol::setSensorData(_usb_data_tx.data, 0, 0,
+                                    _distance_sensors[0].getDistance());
+
+    generic_protocol::setSensorData(_usb_data_tx.data, 1, 0,
+                                    _distance_sensors[1].getDistance());
+
+    generic_protocol::setSensorData(
+        _usb_data_tx.data, 2, 0,
+        nxt::utils::to_underlying(_color_sensors[0].getColor()));
+
+    generic_protocol::setSensorData(
+        _usb_data_tx.data, 3, 0,
+        nxt::utils::to_underlying(_color_sensors[1].getColor()));
+
     _usb_port.write(_usb_data_tx);
 }
 
 void Remote::display()
 {
-    for (auto idx = 0U; idx < _motors.size(); ++idx)
-    {
-        _monitor.setLineValue(idx, 0, _motors[idx].getCurrentCount());
-        _monitor.setLineValue(idx, 1, _motors[idx].getTargetCount());
-    }
+    _monitor.setLineValue(0, 0, _motors[0].getCurrentCount());
+    _monitor.setLineValue(0, 1, _motors[0].getTargetCount());
 
-    _monitor.setLineValue(3, 0, _sensor_1.getDistance());
-    _monitor.setLineValue(4, 0, _sensor_2.getBrightness());
+    _monitor.setLineValue(1, 0, _motors[1].getCurrentCount());
+    _monitor.setLineValue(1, 1, _motors[1].getTargetCount());
+
+    _monitor.setLineValue(2, 0, _motors[2].getCurrentCount());
+    _monitor.setLineValue(2, 1, _motors[2].getTargetCount());
+
+    _monitor.setLineValue(3, 0, _distance_sensors[0].getDistance());
+    _monitor.setLineValue(4, 0, _distance_sensors[1].getDistance());
+
+    _monitor.setLineValue(5, 0, _color_sensors[0].getLight());
+    _monitor.setLineValue(6, 0, _color_sensors[1].getLight());
 }
 
 void Remote::receive()
@@ -150,8 +173,15 @@ void Remote::receive()
         motor.read();
     }
 
-    _sensor_1.read();
-    _sensor_2.read();
+    for (auto& sensor : _distance_sensors)
+    {
+        sensor.read();
+    }
+
+    for (auto& sensor : _color_sensors)
+    {
+        sensor.read();
+    }
 }
 
 void Remote::exit()
@@ -163,8 +193,15 @@ void Remote::exit()
         motor.exit();
     }
 
-    _sensor_1.exit();
-    _sensor_2.exit();
+    for (auto& sensor : _distance_sensors)
+    {
+        sensor.exit();
+    }
+
+    for (auto& sensor : _color_sensors)
+    {
+        sensor.exit();
+    }
 }
 
 } // namespace rc
