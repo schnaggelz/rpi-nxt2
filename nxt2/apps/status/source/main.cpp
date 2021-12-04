@@ -43,13 +43,13 @@ void os_app_background()
 
     if (counter % 100 == 0)
     {
-        monitor.setLineValue(0, 0);
-        monitor.setLineValue(1, 0);
-        monitor.setLineValue(2, 0);
-        monitor.setLineValue(3, 0);
-        monitor.setLineValue(4, 0);
-        monitor.setLineValue(5, 0);
-        monitor.setLineValue(6, 0);
+        monitor.setLineValue(0, 0, 0);
+        monitor.setLineValue(1, 0, 0);
+        monitor.setLineValue(2, 0, 0);
+        monitor.setLineValue(3, 0, 0);
+        monitor.setLineValue(4, 0, 0);
+        monitor.setLineValue(5, 0, 0);
+        monitor.setLineValue(6, 0, 0);
 
         monitor.update();
     }
