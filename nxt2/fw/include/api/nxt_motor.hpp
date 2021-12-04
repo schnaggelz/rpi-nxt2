@@ -18,7 +18,7 @@ namespace fw
 class Motor : public Actuator
 {
   public:
-    Motor(Port port, bool brake)
+    Motor(Port port, bool brake = true)
         : Actuator(port)
         , _brake(brake)
     {
