@@ -31,3 +31,7 @@ target_link_libraries(${PROJECT_NAME}_py
     PRIVATE
         ${PROJECT_NAME}
 )
+
+install(TARGETS ${PROJECT_NAME}_py
+    LIBRARY DESTINATION lib
+)
