@@ -113,9 +113,3 @@ rc.stop()
 rc.disconnect()
 
 time.sleep(1)
-
-# if not rc.motor_fwd(nxt.PORT_A, 20):
-#     logging.error('Could not control motor A!')
-
-# if not rc.motor_stop(nxt.PORT_A):
-#     logging.error('Could not control motor A!')
