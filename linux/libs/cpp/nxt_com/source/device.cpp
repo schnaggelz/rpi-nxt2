@@ -125,6 +125,11 @@ bool Device::write(const GenericPacket& packet)
     return false;
 }
 
+bool Device::callback(const GenericPacket&)
+{
+    return false;
+}
+
 void Device::close()
 {
     if (_dev_ready)
