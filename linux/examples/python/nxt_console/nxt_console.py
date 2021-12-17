@@ -24,6 +24,7 @@ class RemoteConsole:
         self._control = None
         self._stop = False
         self._counter = 0
+        self._motor_port = nxt.PORT_A
         self._window.print_at(1, 1, "Remote console V{:d}".format(RemoteConsole.VERSION))
 
     def periodic(self):
@@ -52,10 +53,22 @@ class RemoteConsole:
 
             if ch == ord('q'):
                 break  # Exit the while loop
-            elif ch == ord('f'):
+            elif ch == ord('p'):
                 ch = self._window.get_char()
                 if ch == ord('a'):
-                    break
+                    self._motor_port = nxt.PORT_A
+                elif ch == ord('b'):
+                    self._motor_port = nxt.PORT_B
+                elif ch == ord('c'):
+                    self._motor_port = nxt.PORT_C
+            elif ch == ord('r'):
+                ch = self._window.get_char()
+                if ch == ord('a'):
+                    self._control.motor_rev(nxt.PORT_A, 50)
+            elif ch == ord('s'):
+                ch = self._window.get_char()
+                if ch == ord('a'):
+                    self._control.motor_stop(nxt.PORT_A)
 
     def stop(self):
         self._stop = True
@@ -72,6 +85,8 @@ class RemoteConsole:
         self._window.print_at(14, 1, "S_2(0): {:5d}".format(self._control.sensor_rcv(nxt.PORT_2, 0)))
         self._window.print_at(15, 1, "S_3(0): {:5d}".format(self._control.sensor_rcv(nxt.PORT_3, 0)))
         self._window.print_at(16, 1, "S_4(0): {:5d}".format(self._control.sensor_rcv(nxt.PORT_4, 0)))
+
+        self._window.print_at(15, 21, "M_P: {:5s}".format(self._motor_port.name))
 
 
 rc = RemoteConsole()
