@@ -25,6 +25,7 @@ class RemoteConsole:
         self._stop = False
         self._counter = 0
         self._motor_port = nxt.PORT_A
+        self._motor_speed = 0
         self._window.print_at(1, 1, "Remote console V{:d}".format(RemoteConsole.VERSION))
 
     def periodic(self):
@@ -55,20 +56,22 @@ class RemoteConsole:
                 break  # Exit the while loop
             elif ch == ord('p'):
                 ch = self._window.get_char()
-                if ch == ord('a'):
+                if ch == ord('1'):
                     self._motor_port = nxt.PORT_A
-                elif ch == ord('b'):
+                elif ch == ord('2'):
                     self._motor_port = nxt.PORT_B
-                elif ch == ord('c'):
+                elif ch == ord('3'):
                     self._motor_port = nxt.PORT_C
+            elif ch == ord('v'):
+                ch = self._window.get_char()
+                level = int(chr(ch))
+                self._motor_speed = level * 10
+            elif ch == ord('f'):
+                self._control.motor_fwd(self._motor_port, self._motor_speed)
             elif ch == ord('r'):
-                ch = self._window.get_char()
-                if ch == ord('a'):
-                    self._control.motor_rev(nxt.PORT_A, 50)
+                self._control.motor_rev(self._motor_port, self._motor_speed)
             elif ch == ord('s'):
-                ch = self._window.get_char()
-                if ch == ord('a'):
-                    self._control.motor_stop(nxt.PORT_A)
+                self._control.motor_stop(self._motor_port)
 
     def stop(self):
         self._stop = True
@@ -86,7 +89,8 @@ class RemoteConsole:
         self._window.print_at(15, 1, "S_3(0): {:5d}".format(self._control.sensor_rcv(nxt.PORT_3, 0)))
         self._window.print_at(16, 1, "S_4(0): {:5d}".format(self._control.sensor_rcv(nxt.PORT_4, 0)))
 
-        self._window.print_at(15, 21, "M_P: {:5s}".format(self._motor_port.name))
+        self._window.print_at(15, 21, "M_PRT: {:5s}".format(self._motor_port.name))
+        self._window.print_at(16, 21, "M_VEL: {:d}".format(self._motor_speed))
 
 
 rc = RemoteConsole()
