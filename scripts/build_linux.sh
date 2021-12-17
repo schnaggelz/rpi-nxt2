@@ -1,8 +1,9 @@
 #!/bin/bash
 
-ROOT_DIR=$(git rev-parse --show-toplevel)
+SCRIPT_DIR=$(dirname $(readlink -f "$0"))
+ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
 
-if not [ $# -eq 1 ]
+if [ $# -ne 1 ]
   then
     echo "No parameters specified! Need <build_type>"
     exit 1
