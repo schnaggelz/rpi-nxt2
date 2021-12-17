@@ -7,18 +7,71 @@
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
 
-import nxt_remote_py
+import time
+import signal
+
+from nxt_utils import console_window as console, periodic_timer as timer
+
+import nxt_remote_py as nxt
 
 
-class CubeSolver(object):
-    nxt = nxt_remote_py.Remote()
+class Cuber:
+    VERSION = 1
 
-    def __init__(self, debug=False):
-        self.debug = debug
+    def __init__(self):
+        self._window = console.ConsoleWindow()
+        self._timer = None
+        self._control = None
+        self._stop = False
+        self._counter = 0
+        self._window.print_at(1, 1, "Remote console V{:d}".format(Cuber.VERSION))
 
-    def setup(self):
-        if not nxt.connect():
-            return False #TODO
+    def periodic(self):
+        self._window.print_at(8, 1, "Cycle {:5d}".format(self._counter))
+        self._control.poll()
+        self._counter += 1
+
+    def connect(self):
+        self._window.print_status_at(4, 1, "Connecting to NXT...")
+        self._control = nxt.Remote()
+        if not self._control.connect():
+            self._window.print_error_at(5, 1, "Could not connect!")
+        return self._control.connected()
+
+    def disconnect(self):
+        if not self._control.disconnect():
+            self._window.print_error_at(5, 1, "Could not disconnect!")
+
+    def start(self):
+        self._timer = timer.PeriodicTimer(0.1, self.periodic)
+        self._stop = False
+        while not self._stop:
+            ch = self._window.get_char()
+            if ch == ord('q'):
+                break  # Exit the while loop
+
+    def stop(self):
+        self._stop = True
+        self._timer.stop()
 
 
+cbr = Cuber()
 
+
+def handler(signum, frame):
+    cbr.stop()
+
+
+signal.signal(signal.SIGINT, handler)
+
+cbr.connect()
+
+cbr.start()
+
+# Application runs
+
+cbr.stop()
+
+cbr.disconnect()
+
+time.sleep(1)
