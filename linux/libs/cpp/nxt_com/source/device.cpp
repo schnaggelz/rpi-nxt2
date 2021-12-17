@@ -79,26 +79,15 @@ bool Device::read(GenericPacket& packet)
 
     if (_dev_ready)
     {
-        _return_code = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
-                                  sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
+        _return_code =
+            libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_IN, buf,
+                                 sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
 
-        if (_return_code >= 0 == LIBUSB_SUCCESS && nbytes >= 4)
+        if (_return_code >= 0 && nbytes == TX_RX_BYTES)
         {
-            packet.type = ((std::uint16_t)buf[1] << 8) | (std::uint8_t)buf[0];
-            packet.size = ((std::uint16_t)buf[3] << 8) | (std::uint8_t)buf[2];
+            unpack(packet, buf, nbytes);
 
-            size_t ndata = (nbytes - 4) / 4;
-
-            for (int i = 0; i < ndata; ++i)
-            {
-                unsigned char* ptr = &(buf[4 * i + 4]);
-                std::int32_t v = (((std::int32_t)ptr[3]) << 24) |
-                                 (((std::int32_t)ptr[2]) << 16) |
-                                 (((std::int32_t)ptr[1]) << 8) |
-                                 (((std::int32_t)ptr[0]) << 0);
-
-                packet.data[i] = v;
-            }
+            return true;
         }
     }
 
@@ -126,8 +115,9 @@ bool Device::write(const GenericPacket& packet)
             ptr[3] = (packet.data[i] >> 24) & 0xFF;
         }
 
-        _return_code = libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
-                                  sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
+        _return_code =
+            libusb_bulk_transfer(_dev_handle, LIBUSB_ENDPOINT_OUT, buf,
+                                 sizeof(buf), &nbytes, LIBUSB_RX_TIMEOUT);
 
         return _return_code >= 0;
     }
@@ -149,6 +139,39 @@ void Device::close()
 void Device::exit()
 {
     libusb_exit(0);
+}
+
+void Device::unpack(GenericPacket& packet, BufferPtr buf, std::uint32_t nbytes)
+{
+    packet.type = ((uint16_t)buf[1] << 8) | (uint8_t)buf[0];
+    packet.size = ((uint16_t)buf[3] << 8) | (uint8_t)buf[2];
+
+    size_t ndata = (nbytes - 4) / 4;
+
+    for (int i = 0; i < ndata; ++i)
+    {
+        auto ptr = &(buf[4 * i + 4]);
+
+        std::int32_t v =
+            (((std::int32_t)ptr[3]) << 24) | (((std::int32_t)ptr[2]) << 16) |
+            (((std::int32_t)ptr[1]) << 8) | (((std::int32_t)ptr[0]) << 0);
+
+        packet.data[i] = v;
+    }
+}
+
+void LIBUSB_CALL Device::callbackWrapper(struct libusb_transfer* transfer)
+{
+    GenericPacket packet;
+
+    Device* device = reinterpret_cast<Device*>(transfer->user_data);
+
+    if (transfer->actual_length == TX_RX_BYTES)
+    {
+        Device::unpack(packet, transfer->buffer, transfer->actual_length);
+
+        device->callback(packet);
+    }
 }
 
 } // namespace usb

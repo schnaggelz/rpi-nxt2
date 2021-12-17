@@ -36,13 +36,12 @@ constexpr std::uint8_t LIBUSB_ENDPOINT_IN = 0x82;
 
 constexpr std::uint16_t LIBUSB_RX_TIMEOUT = 1000;
 
-constexpr std::uint8_t DEFAULT_CMD_ID = 42;
-constexpr std::uint8_t MAX_CMD_VALUES = 4;
-
-constexpr std::uint16_t TX_RX_BYTES = MAX_CMD_VALUES * 4 + 2;
+constexpr std::uint16_t TX_RX_BYTES = GenericPacket::NUM_BYTES;
 
 class Device
 {
+    using BufferPtr = const unsigned char*;
+
   public:
     Device()
         : _dev_handle(NULL)
@@ -60,6 +59,7 @@ class Device
 
     bool read(GenericPacket&);
     bool write(const GenericPacket&);
+    bool callback(const GenericPacket&);
 
     std::int32_t getLastReturnCode()
     {
@@ -67,11 +67,17 @@ class Device
     }
 
   private:
+    static void LIBUSB_CALL callbackWrapper(struct libusb_transfer* transfer);
+    static void unpack(GenericPacket& packet, BufferPtr buf,
+                       std::uint32_t nbytes);
+
+  private:
     struct libusb_device_handle* _dev_handle{NULL};
     bool _dev_ready{false};
 
     std::int32_t _return_code{0};
 };
+
 } // namespace usb
 } // namespace com
 } // namespace nxt
