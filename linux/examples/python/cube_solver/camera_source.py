@@ -17,6 +17,9 @@ class CameraSource:
         self.image_height = image_height
         self.capture = None
 
+    def __del__(self):
+        self.capture.release()
+
     def open(self):
         self.capture = cv2.VideoCapture(self.source_path)
 
@@ -34,18 +37,29 @@ class CameraSource:
 
         print("Target image size: {}x{}".format(self.image_width, self.image_height))
 
+    def is_open(self):
+        self.capture.isOpened()
+
     def read(self):
         ret, frame = self.capture.read()
         # frame = cv2.resize(frame, (self.image_width, self.image_height))
-        return frame
+        if ret:
+            return frame
+        return None
 
-    def __del__(self):
-        self.capture.release()
+    @staticmethod
+    def exited():
+        return cv2.waitKey(1) & 0xFF == ord('q')
 
 
 if __name__ == '__main__':
     address = "http://192.168.242.105:4747/video"
     cs = CameraSource(address, 1280, 720)
     cs.open()
-    cv2.imshow('original', cs.read())
-    cv2.waitKey()
+
+    while True:
+        image = cs.read()
+        if image is not None:
+            cv2.imshow('original', image)
+        if cs.exited():
+            break
