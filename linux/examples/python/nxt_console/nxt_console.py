@@ -93,23 +93,16 @@ class RemoteConsole:
         self._window.print_at(16, 21, "M_VEL: {:d}".format(self._motor_speed))
 
 
-rc = RemoteConsole()
+if __name__ == '__main__':
+    rc = RemoteConsole()
 
+    def handler(signum, frame):
+        rc.stop()
 
-def handler(signum, frame):
+    signal.signal(signal.SIGINT, handler)
+
+    rc.connect()
+    rc.start()
     rc.stop()
-
-
-signal.signal(signal.SIGINT, handler)
-
-rc.connect()
-
-rc.start()
-
-# Application runs
-
-rc.stop()
-
-rc.disconnect()
-
-time.sleep(1)
+    rc.disconnect()
+    time.sleep(1)
