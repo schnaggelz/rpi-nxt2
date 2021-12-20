@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2021 Timon Reich
-#
 # Released under the MIT license (http://choosealicense.com/licenses/mit/).
 #
-# This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
-# to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
+# Utility code
+#
 
 import cv2
+import numpy as np
 
 
 class CameraSource:
@@ -53,7 +52,7 @@ class CameraSource:
 
 
 if __name__ == '__main__':
-    address = "http://192.168.242.105:4747/video"
+    address = "/dev/video0"
     cs = CameraSource(address, 1280, 720)
     cs.open()
 
