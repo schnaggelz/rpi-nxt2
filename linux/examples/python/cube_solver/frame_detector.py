@@ -16,14 +16,15 @@ import cv2
 
 
 class FrameDetector:
-    def __init__(self, source_path):
+    def __init__(self, source_path, profile):
+        self.profile = profile
+        self.threshold_area = 5000
         self.camera = cs.CameraSource(source_path, 640, 480)
         self.camera.open()
 
-    @staticmethod
-    def contours(hsv_frame):
+    def contours(self, hsv_frame):
         color_ctrs = defaultdict(list)
-        for color, ranges in cc.CubeColors.ranges().items():
+        for color, ranges in cc.CubeColors.ranges(self.profile).items():
             mask = None
             for range in ranges:
                 r_min = np.array(range[0], np.uint8)
@@ -34,10 +35,12 @@ class FrameDetector:
                     mask |= cv2.inRange(hsv_frame, r_min, r_max)
 
             canny = cv2.Canny(mask, 50, 100)
-            ctrs, h = cv2.findContours(canny, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+            ctrs, h = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             for ctr in ctrs:
-                _, _, w, h = cv2.boundingRect(ctr)
-                if w > 100 and h > 100:
+                rect = cv2.minAreaRect(ctr)
+                width = rect[1][0]
+                height = rect[1][1]
+                if width > 100 and height > 100:
                     color_ctrs[color].append(ctr)
 
         return color_ctrs
@@ -57,7 +60,7 @@ class FrameDetector:
                 x, y, w, h = cv2.boundingRect(cntr)
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 frame = cv2.putText(frame, color, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
-                                    0.5, (0, 0, 0), 1, cv2.LINE_AA)
+                                    0.5, (255, 255, 255), 1, cv2.LINE_AA)
 
         cv2.imshow("solver", frame)
 
@@ -65,9 +68,12 @@ class FrameDetector:
 
 
 if __name__ == '__main__':
-    address = "/dev/video0"
-    # address = "/home/timon/Pictures/vlcsnap.png"
-    fd = FrameDetector(address)
+
+    # TODO cmd line args
+    src = '/dev/video0'
+    prf = 'niko'
+
+    fd = FrameDetector(src, prf)
 
     while True:
         res = fd.detect()
