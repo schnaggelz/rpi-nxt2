@@ -37,9 +37,6 @@ if __name__ == '__main__':
         if frame is None:
             break
 
-        # Flip the frame horizontally (Not required)
-        frame = cv2.flip(frame, 1)
-
         # Convert the BGR image to HSV image.
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
