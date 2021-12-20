@@ -47,6 +47,11 @@ class CameraSource:
         return None
 
     @staticmethod
+    def to_hsv(frame):
+        tmp_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        return np.array(tmp_frame)
+
+    @staticmethod
     def exited():
         return cv2.waitKey(1) & 0xFF == ord('q')
 
