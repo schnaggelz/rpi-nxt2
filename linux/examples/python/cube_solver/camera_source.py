@@ -36,7 +36,7 @@ class CameraSource:
 
         print("Target image size: {}x{}".format(self.image_width, self.image_height))
 
-    def is_open(self):
+    def isOpen(self):
         self.capture.isOpened()
 
     def read(self):
@@ -45,11 +45,6 @@ class CameraSource:
         if ret:
             return frame
         return None
-
-    @staticmethod
-    def to_hsv(frame):
-        tmp_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        return np.array(tmp_frame)
 
     @staticmethod
     def exited():

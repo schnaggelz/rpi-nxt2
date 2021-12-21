@@ -1,6 +1,0 @@
-red: ae1928 b82235
-green: 52c026 50bf24
-blue: 1988b2 1887b1
-white: aaaab3 a8a8b1
-yellow: c3c911 c0c611
-orange: ce4b1c cf4c1d
