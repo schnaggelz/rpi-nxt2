@@ -6,8 +6,6 @@
 #
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
-import time
-from collections import defaultdict
 
 import camera_source as cs
 import cube_colors as cc
@@ -16,53 +14,73 @@ import cv2
 
 
 class FrameDetector:
+    class Box:
+        __slots__ = ['color', 'contour']
+
+        def __init__(self, color, contour):
+            self.color = color
+            self.contour = contour
+
     def __init__(self, source_path, profile):
         self.profile = profile
         self.threshold_area = 5000
         self.camera = cs.CameraSource(source_path, 640, 480)
         self.camera.open()
 
-    def contours(self, hsv_frame):
-        color_ctrs = defaultdict(list)
+    @staticmethod
+    def contourPrecedence(box, cols):
+        tolerance = 10
+        origin = cv2.boundingRect(box.contour)
+        return ((origin[1] // tolerance) * tolerance) * cols + origin[0]
+
+    def getBoxes(self, img):
+        min_size = 100
+        boxes = []
         for color, ranges in cc.CubeColors.ranges(self.profile).items():
+
             mask = None
-            for range in ranges:
-                r_min = np.array(range[0], np.uint8)
-                r_max = np.array(range[1], np.uint8)
+            for r in ranges:
+                r_min = np.array(r[0], np.uint8)
+                r_max = np.array(r[1], np.uint8)
                 if mask is None:
-                    mask = cv2.inRange(hsv_frame, r_min, r_max)
+                    mask = cv2.inRange(img, r_min, r_max)
                 else:
-                    mask |= cv2.inRange(hsv_frame, r_min, r_max)
+                    mask |= cv2.inRange(img, r_min, r_max)
 
             canny = cv2.Canny(mask, 50, 100)
-            ctrs, h = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-            for ctr in ctrs:
-                rect = cv2.minAreaRect(ctr)
+            cntrs, h = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            for cntr in cntrs:
+                rect = cv2.minAreaRect(cntr)
                 width = rect[1][0]
                 height = rect[1][1]
-                if width > 100 and height > 100:
-                    color_ctrs[color].append(ctr)
+                if width > min_size and height > min_size:
+                    boxes.append(FrameDetector.Box(color, cntr))
 
-        return color_ctrs
+        return boxes
 
     def detect(self):
-        frame = self.camera.read()
-        if frame is None or self.camera.exited():
+        img = self.camera.read()
+        if img is None or self.camera.exited():
             return False
 
-        bf_frame = cv2.bilateralFilter(frame, 9, 75, 75)
-        hsv_frame = cv2.cvtColor(bf_frame, cv2.COLOR_BGR2HSV)
+        bf_img = cv2.bilateralFilter(img, 1, 100, 200)
+        hsv_img = cv2.cvtColor(bf_img, cv2.COLOR_BGR2HSV)
 
-        cntrs = self.contours(hsv_frame)
+        boxes = self.getBoxes(hsv_img)
+        if len(boxes) != 9:
+            return True
 
-        for color, cntrs in cntrs.items():
-            for cntr in cntrs:
-                x, y, w, h = cv2.boundingRect(cntr)
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                frame = cv2.putText(frame, color, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
-                                    0.5, (255, 255, 255), 1, cv2.LINE_AA)
+        boxes.sort(key=lambda box: self.contourPrecedence(box, hsv_img.shape[1]))
 
-        cv2.imshow("solver", frame)
+        for idx, box in enumerate(boxes):
+            x, y, w, h = cv2.boundingRect(box.contour)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            text = "#{}:{}".format(idx, box.color)
+            img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+                              0.5, (255, 255, 255), 1, cv2.LINE_AA)
+
+        cv2.imshow("source", bf_img)
+        cv2.imshow("solver", img)
 
         return True
 
@@ -71,7 +89,7 @@ if __name__ == '__main__':
 
     # TODO cmd line args
     src = '/dev/video0'
-    prf = 'niko'
+    prf = 'original'
 
     fd = FrameDetector(src, prf)
 
