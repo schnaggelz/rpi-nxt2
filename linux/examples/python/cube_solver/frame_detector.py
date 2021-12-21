@@ -33,6 +33,16 @@ class FrameDetector:
         origin = cv2.boundingRect(box.contour)
         return ((origin[1] // tolerance) * tolerance) * cols + origin[0]
 
+    @staticmethod
+    def displayBoxes(img, boxes):
+        for idx, box in enumerate(boxes):
+            x, y, w, h = cv2.boundingRect(box.contour)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            text = "#{}:{}".format(idx, box.color)
+            img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+                              0.5, (255, 255, 255), 1, cv2.LINE_AA)
+        cv2.imshow("solver", img)
+
     def getBoxes(self, img):
         min_size = 100
         boxes = []
@@ -58,7 +68,7 @@ class FrameDetector:
 
         return boxes
 
-    def detect(self):
+    def detect(self, show=False):
         img = self.camera.read()
         if img is None or self.camera.exited():
             return False
@@ -70,17 +80,10 @@ class FrameDetector:
         if len(boxes) != 9:
             return True
 
-        boxes.sort(key=lambda box: self.contourPrecedence(box, hsv_img.shape[1]))
+        boxes.sort(key=lambda b: self.contourPrecedence(b, hsv_img.shape[1]))
 
-        for idx, box in enumerate(boxes):
-            x, y, w, h = cv2.boundingRect(box.contour)
-            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            text = "#{}:{}".format(idx, box.color)
-            img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
-                              0.5, (255, 255, 255), 1, cv2.LINE_AA)
-
-        cv2.imshow("source", bf_img)
-        cv2.imshow("solver", img)
+        if show:
+            self.displayBoxes(img, boxes)
 
         return True
 
@@ -94,7 +97,7 @@ if __name__ == '__main__':
     fd = FrameDetector(src, prf)
 
     while True:
-        res = fd.detect()
+        res = fd.detect(True)
         if not res:
             break
 
