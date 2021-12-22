@@ -15,31 +15,47 @@ from nxt_utils import console_window as console, periodic_timer as timer
 import nxt_remote_py as nxt
 
 
-class Cuber:
+class CubeSolver:
     VERSION = 1
+    NXT = nxt.Remote()
+
+    # Define motor ports
+    MOTOR_TURN = NXT.PORT_A
+    MOTOR_SCAN = NXT.PORT_B
+    MOTOR_GRAB = NXT.PORT_C
+
+    # Motor position constants
+    MOTOR_GRAB_POSITION_HOME = 0
+    MOTOR_GRAB_POSITION_REST = -35
+    MOTOR_GRAB_POSITION_FLIP_PUSH = -90
+    MOTOR_GRAB_POSITION_GRAB = -130
+    MOTOR_GRAB_POSITION_FLIP = -240
+
+    # Motor speed constants
+    MOTOR_GRAB_SPEED_GRAB = 400
+    MOTOR_GRAB_SPEED_FLIP = 600
+    MOTOR_GRAB_SPEED_REST = 400
 
     def __init__(self):
         self._window = console.ConsoleWindow()
         self._timer = None
-        self._control = None
         self._stop = False
         self._counter = 0
-        self._window.print_at(1, 1, "Remote console V{:d}".format(Cuber.VERSION))
+        self._window.print_at(1, 1, "Remote console V{:d}".format(self.VERSION))
 
     def periodic(self):
         self._window.print_at(8, 1, "Cycle {:5d}".format(self._counter))
-        self._control.poll()
+        self.NXT.poll()
         self._counter += 1
 
     def connect(self):
         self._window.print_status_at(4, 1, "Connecting to NXT...")
-        self._control = nxt.Remote()
-        if not self._control.connect():
+        if not self.NXT.connect():
             self._window.print_error_at(5, 1, "Could not connect!")
-        return self._control.connected()
+        return self.NXT.connected()
 
     def disconnect(self):
-        if not self._control.disconnect():
+        if not self.NXT.disconnect():
             self._window.print_error_at(5, 1, "Could not disconnect!")
 
     def start(self):
@@ -55,7 +71,7 @@ class Cuber:
         self._timer.stop()
 
 
-cbr = Cuber()
+cbr = CubeSolver()
 
 
 def handler(signum, frame):
