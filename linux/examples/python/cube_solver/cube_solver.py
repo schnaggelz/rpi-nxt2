@@ -12,29 +12,9 @@ import signal
 
 from nxt_utils import console_window as console, periodic_timer as timer
 
-import nxt_remote_py as nxt
-
 
 class CubeSolver:
     VERSION = 1
-    NXT = nxt.Remote()
-
-    # Define motor ports
-    MOTOR_TURN = NXT.PORT_A
-    MOTOR_SCAN = NXT.PORT_B
-    MOTOR_GRAB = NXT.PORT_C
-
-    # Motor position constants
-    MOTOR_GRAB_POSITION_HOME = 0
-    MOTOR_GRAB_POSITION_REST = -35
-    MOTOR_GRAB_POSITION_FLIP_PUSH = -90
-    MOTOR_GRAB_POSITION_GRAB = -130
-    MOTOR_GRAB_POSITION_FLIP = -240
-
-    # Motor speed constants
-    MOTOR_GRAB_SPEED_GRAB = 400
-    MOTOR_GRAB_SPEED_FLIP = 600
-    MOTOR_GRAB_SPEED_REST = 400
 
     def __init__(self):
         self._window = console.ConsoleWindow()
