@@ -55,7 +55,7 @@ class FrameDetector:
                 if mask is None:
                     mask = cv2.inRange(img, r_min, r_max)
                 else:
-                    mask |= cv2.inRange(img, r_min, r_max)
+                    mask += cv2.inRange(img, r_min, r_max)
 
             canny = cv2.Canny(mask, 50, 100)
             cntrs, h = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
