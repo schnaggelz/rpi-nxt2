@@ -18,16 +18,17 @@ class ConsoleWindow(object):
     def __del__(self):
         curses.endwin()
 
+    def refresh(self):
+        self._window.refresh()
+
     def get_char(self):
         return self._window.getch()
 
     def put_char_at(self, x, y, ch):
         self._window.addch(x, y, ch)
-        self._window.refresh()
 
     def print_at(self, x, y, text):
         self._window.addstr(x, y, text)
-        self._window.refresh()
 
     def print_status_at(self, x, y, text):
         self.print_at(x, y, "STATUS: {:20s}".format(text))
