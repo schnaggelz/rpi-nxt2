@@ -7,6 +7,7 @@
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
 import time
+from enum import Enum
 
 import nxt_remote_py as nxt_api
 from nxt_utils import periodic_timer as timer
@@ -33,6 +34,11 @@ class SolverMachine:
     MOTOR_GRAB_SPEED_REST = 40
 
     MOTOR_TURN_SPEED = 50
+
+    class Direction(Enum):
+        HOME = 0
+        CW = -270
+        CCW = 270
 
     def __init__(self):
         self._timer = None
@@ -79,25 +85,22 @@ class SolverMachine:
         self._sensor_values[3] = self._nxt_rc.sensor_rcv(nxt_api.PORT_4, 0)
         self._counter += 1
 
-    def run_to_pos(self, port, position, tolerance=3):
+    def run_to_pos(self, port, position, tolerance=10):
         cur_pos = self._nxt_rc.motor_rcv(port, 0)
         if cur_pos < position - tolerance:
             self._nxt_rc.motor_cmd(port, +self.MOTOR_TURN_SPEED, position)
-            # while cur_pos < position - tolerance:
-            #     time.sleep(0.001)
-            #     cur_pos = self._nxt_rc.motor_rcv(port, 0)
+            while cur_pos < position - tolerance:
+                time.sleep(0.001)
+                cur_pos = self._nxt_rc.motor_rcv(port, 0)
         elif cur_pos > position + tolerance:
             self._nxt_rc.motor_cmd(port, self.MOTOR_TURN_SPEED, position)
-            # while cur_pos > position + tolerance:
-            #     time.sleep(0.001)
-            #     cur_pos = self._nxt_rc.motor_rcv(port, 0)
-        # self._nxt_rc.motor_stop(port)
+            while cur_pos > position + tolerance:
+                time.sleep(0.001)
+                cur_pos = self._nxt_rc.motor_rcv(port, 0)
+        self._nxt_rc.motor_stop(port)
 
-    def turntable_forward(self):
-        self.run_to_pos(self.MOTOR_TURN, 250)
-
-    def turntable_reverse(self):
-        self.run_to_pos(self.MOTOR_TURN, -250)
+    def turntable_turn(self, direction):
+        self.run_to_pos(self.MOTOR_TURN, direction.value)
 
 
 if __name__ == '__main__':

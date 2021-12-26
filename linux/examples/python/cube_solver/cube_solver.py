@@ -45,10 +45,13 @@ class CubeSolver:
         while not self._stop:
             time.sleep(0.5)
             ch = self._window.get_char()
-            if ch == ord('f'):
-                self._machine.turntable_forward()
-            if ch == ord('r'):
-                self._machine.turntable_reverse()
+            if ch == ord('h'):
+                self._machine.turntable_turn(self._machine.Direction.HOME)
+            if ch == ord('e'):
+                self._machine.turntable_turn(self._machine.Direction.CCW)
+            if ch == ord('w'):
+                self._machine.turntable_turn(self._machine.Direction.CW)
+
             elif ch == ord('q'):
                 break  # Exit the while loop
 
