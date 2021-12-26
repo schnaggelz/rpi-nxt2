@@ -23,7 +23,7 @@ nxt::rc::Remote remote(monitor);
 
 void taskCbk10ms()
 {
-    // TODO
+    remote.run();
 }
 
 void taskCbk20ms()
@@ -33,7 +33,7 @@ void taskCbk20ms()
 
 void taskCbk50ms()
 {
-    remote.run();
+    // TODO
 }
 
 static void addTasks()
