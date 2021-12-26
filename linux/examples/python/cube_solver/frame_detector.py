@@ -7,10 +7,11 @@
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
 
+import time
+import cv2
+import numpy as np
 import camera_source as cs
 import cube_colors as cc
-import numpy as np
-import cv2
 
 
 class FrameDetector:
@@ -22,10 +23,10 @@ class FrameDetector:
             self.contour = contour
 
     def __init__(self, source_path, profile):
-        self.profile = profile
-        self.threshold_area = 5000
-        self.camera = cs.CameraSource(source_path, 640, 480)
-        self.camera.open()
+        self._profile = profile
+        self._size_threshold = 100
+        self._camera = cs.CameraSource(source_path, 640, 480)
+        self._camera.open()
 
     @staticmethod
     def contourPrecedence(box, cols):
@@ -41,12 +42,21 @@ class FrameDetector:
             text = "#{}:{}".format(idx, box.color)
             img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
                               0.5, (255, 255, 255), 1, cv2.LINE_AA)
-        cv2.imshow("solver", img)
+        return img
+
+    @staticmethod
+    def displayFrameRate(img, start_time):
+        elapsed_time = time.time() - start_time
+        secs_elapsed = elapsed_time % 60
+        fps = 1 / secs_elapsed
+        img = cv2.putText(img, "FPS:{}".format(fps), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
+                          0.5, (255, 255, 255), 1, cv2.LINE_AA)
+        return img
 
     def getBoxes(self, img):
-        min_size = 100
+        min_size = self._size_threshold
         boxes = []
-        for color, ranges in cc.CubeColors.ranges(self.profile).items():
+        for color, ranges in cc.CubeColors.ranges(self._profile).items():
 
             mask = None
             for r in ranges:
@@ -69,21 +79,26 @@ class FrameDetector:
         return boxes
 
     def detect(self, show=False):
-        img = self.camera.read()
-        if img is None or self.camera.exited():
+        start_time = time.time()
+
+        img = self._camera.read()
+        if img is None or self._camera.exited():
             return False
 
         bf_img = cv2.bilateralFilter(img, 1, 100, 200)
         hsv_img = cv2.cvtColor(bf_img, cv2.COLOR_BGR2HSV)
 
         boxes = self.getBoxes(hsv_img)
-        if len(boxes) != 9:
-            return True
 
-        boxes.sort(key=lambda b: self.contourPrecedence(b, hsv_img.shape[1]))
+        if len(boxes) == 9:
+            boxes.sort(key=lambda b: self.contourPrecedence(b, hsv_img.shape[1]))
+
+            if show:
+                img = self.displayBoxes(img, boxes)
 
         if show:
-            self.displayBoxes(img, boxes)
+            img = self.displayFrameRate(img, start_time)
+            cv2.imshow("solver", img)
 
         return True
 
