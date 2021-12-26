@@ -18,6 +18,9 @@ namespace fw
 class Motor : public Actuator
 {
   public:
+    static constexpr std::uint8_t TOLERANCE = 10;
+
+  public:
     Motor(Port port, bool brake = true)
         : Actuator(port)
         , _brake(brake)
