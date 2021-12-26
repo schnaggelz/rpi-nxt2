@@ -6,19 +6,19 @@
 #
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
-import nxt_remote_py as nxt
+import time
 
+import nxt_remote_py as nxt_api
 from nxt_utils import periodic_timer as timer
 
 
 class SolverMachine:
     VERSION = 1
-    NXT = nxt.Remote()
 
     # Define motor ports
-    MOTOR_TURN = NXT.PORT_A
-    MOTOR_SCAN = NXT.PORT_B
-    MOTOR_GRAB = NXT.PORT_C
+    MOTOR_TURN = nxt_api.PORT_A
+    MOTOR_SCAN = nxt_api.PORT_B
+    MOTOR_GRAB = nxt_api.PORT_C
 
     # Motor position constants
     MOTOR_GRAB_POSITION_HOME = 0
@@ -28,34 +28,77 @@ class SolverMachine:
     MOTOR_GRAB_POSITION_FLIP = -240
 
     # Motor speed constants
-    MOTOR_GRAB_SPEED_GRAB = 400
-    MOTOR_GRAB_SPEED_FLIP = 600
-    MOTOR_GRAB_SPEED_REST = 400
+    MOTOR_GRAB_SPEED_GRAB = 40
+    MOTOR_GRAB_SPEED_FLIP = 60
+    MOTOR_GRAB_SPEED_REST = 40
+
+    MOTOR_TURN_SPEED = 50
 
     def __init__(self):
         self._timer = None
-        self._stop = True
         self._counter = 0
+        self._decoder_values = [0, 0, 0]
+        self._sensor_values = [0, 0, 0, 0]
+        self._nxt_rc = nxt_api.Remote()
+
+    @property
+    def decoder_values(self):
+        return self._decoder_values
+
+    @property
+    def sensor_values(self):
+        return self._sensor_values
+
+    @property
+    def counter(self):
+        return self._counter
 
     def connect(self):
-        return self.NXT.connect()
+        return self._nxt_rc.connect()
 
     def disconnect(self):
-        return self.NXT.disconnect()
+        return self._nxt_rc.disconnect()
 
     def start(self):
-        self._stop = False
-        self._timer = timer.PeriodicTimer(0.01, self.periodic)
+        self._timer = timer.PeriodicTimer(0.001, self.periodic)
 
     def stop(self):
-        self._stop = True
         self._timer.stop()
+        self._nxt_rc.motor_stop(self.MOTOR_TURN)
+        self._nxt_rc.motor_stop(self.MOTOR_GRAB)
+        self._nxt_rc.motor_stop(self.MOTOR_SCAN)
 
     def periodic(self):
-        self.NXT.poll()
+        self._nxt_rc.poll()
+        self._decoder_values[0] = self._nxt_rc.motor_rcv(nxt_api.PORT_A, 0)
+        self._decoder_values[1] = self._nxt_rc.motor_rcv(nxt_api.PORT_B, 0)
+        self._decoder_values[2] = self._nxt_rc.motor_rcv(nxt_api.PORT_C, 0)
+        self._sensor_values[0] = self._nxt_rc.sensor_rcv(nxt_api.PORT_1, 0)
+        self._sensor_values[1] = self._nxt_rc.sensor_rcv(nxt_api.PORT_2, 0)
+        self._sensor_values[2] = self._nxt_rc.sensor_rcv(nxt_api.PORT_3, 0)
+        self._sensor_values[3] = self._nxt_rc.sensor_rcv(nxt_api.PORT_4, 0)
         self._counter += 1
 
     def run_to_pos(self, port, position, tolerance=3):
-        pass
-        # while ((encoder > (position + tolerance)) or (encoder < (position - tolerance))):
-        #     time.sleep(0.01)
+        cur_pos = self._nxt_rc.motor_rcv(port, 0)
+        if cur_pos < position - tolerance:
+            self._nxt_rc.motor_cmd(port, +self.MOTOR_TURN_SPEED, position)
+            # while cur_pos < position - tolerance:
+            #     time.sleep(0.001)
+            #     cur_pos = self._nxt_rc.motor_rcv(port, 0)
+        elif cur_pos > position + tolerance:
+            self._nxt_rc.motor_cmd(port, self.MOTOR_TURN_SPEED, position)
+            # while cur_pos > position + tolerance:
+            #     time.sleep(0.001)
+            #     cur_pos = self._nxt_rc.motor_rcv(port, 0)
+        # self._nxt_rc.motor_stop(port)
+
+    def turntable_forward(self):
+        self.run_to_pos(self.MOTOR_TURN, 250)
+
+    def turntable_reverse(self):
+        self.run_to_pos(self.MOTOR_TURN, -250)
+
+
+if __name__ == '__main__':
+    sm = SolverMachine()
