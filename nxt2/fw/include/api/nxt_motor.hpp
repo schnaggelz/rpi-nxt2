@@ -29,10 +29,10 @@ class Motor : public Actuator
 
     ~Motor() = default;
 
+    void stop() noexcept;
     void setSpeed(std::int32_t speed) noexcept;
     void setCurrentCount(std::int32_t count) noexcept;
     void setTargetCount(std::int32_t count) noexcept;
-    void resetTarget() noexcept;
 
     std::int32_t getSpeed() const noexcept;
     std::int32_t getCurrentCount() const noexcept;
