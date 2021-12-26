@@ -11,6 +11,7 @@ import time
 import signal
 
 from nxt_utils import console_window as console, periodic_timer as timer
+import solver_machine as sm
 
 
 class CubeSolver:
@@ -18,37 +19,55 @@ class CubeSolver:
 
     def __init__(self):
         self._window = console.ConsoleWindow()
-        self._timer = None
+        self._machine = sm.SolverMachine()
+        self._timer = timer.PeriodicTimer(0.1, self.display)
         self._stop = False
-        self._counter = 0
         self._window.print_at(1, 1, "Remote console V{:d}".format(self.VERSION))
 
-    def periodic(self):
-        self._window.print_at(8, 1, "Cycle {:5d}".format(self._counter))
-        self.NXT.poll()
-        self._counter += 1
+    def __del__(self):
+        self.stop()
 
-    def connect(self):
-        self._window.print_status_at(4, 1, "Connecting to NXT...")
-        if not self.NXT.connect():
+    def init(self):
+        if self._machine.connect():
+            self._window.print_status_at(5, 1, "Connected to NXT")
+        else:
             self._window.print_error_at(5, 1, "Could not connect!")
-        return self.NXT.connected()
 
-    def disconnect(self):
-        if not self.NXT.disconnect():
+    def exit(self):
+        if self._machine.disconnect():
+            self._window.print_status_at(5, 1, "Disconnected from NXT")
+        else:
             self._window.print_error_at(5, 1, "Could not disconnect!")
 
     def start(self):
-        self._timer = timer.PeriodicTimer(0.1, self.periodic)
+        self._machine.start()
         self._stop = False
         while not self._stop:
+            time.sleep(0.5)
             ch = self._window.get_char()
-            if ch == ord('q'):
+            if ch == ord('f'):
+                self._machine.turntable_forward()
+            if ch == ord('r'):
+                self._machine.turntable_reverse()
+            elif ch == ord('q'):
                 break  # Exit the while loop
 
     def stop(self):
-        self._stop = True
+        self._window.print_status_at(5, 1, "STOP!")
+        self._machine.stop()
         self._timer.stop()
+        self._stop = True
+
+    def display(self):
+        self._window.print_at(10, 1, "MA: {:5d}".format(self._machine.decoder_values[0]))
+        self._window.print_at(11, 1, "MB: {:5d}".format(self._machine.decoder_values[1]))
+        self._window.print_at(12, 1, "MC: {:5d}".format(self._machine.decoder_values[2]))
+        self._window.print_at(13, 1, "S1: {:5d}".format(self._machine.sensor_values[0]))
+        self._window.print_at(14, 1, "S1: {:5d}".format(self._machine.sensor_values[1]))
+        self._window.print_at(15, 1, "S1: {:5d}".format(self._machine.sensor_values[2]))
+        self._window.print_at(16, 1, "S1: {:5d}".format(self._machine.sensor_values[3]))
+        self._window.print_status_at(5, 1, "PC:{:6d}".format(self._machine.counter))
+        self._window.refresh()
 
 
 cbr = CubeSolver()
@@ -60,14 +79,12 @@ def handler(signum, frame):
 
 signal.signal(signal.SIGINT, handler)
 
-cbr.connect()
+cbr.init()
 
 cbr.start()
 
-# Application runs
+time.sleep(1)
 
 cbr.stop()
 
-cbr.disconnect()
-
-time.sleep(1)
+cbr.exit()
