@@ -121,10 +121,10 @@ bool Remote::motorRev(const Port port, const std::uint8_t speed)
 }
 
 bool Remote::motorCmd(const Port port, const std::int8_t speed,
-                      const std::int32_t count)
+                      const std::int32_t count, const std::int32_t tolerance)
 {
     return send(nxt::com::protocol::Command::MOTOR_CMD,
-                {nxt::utils::to_underlying(port), speed, count});
+                {nxt::utils::to_underlying(port), speed, count, tolerance});
 }
 
 bool Remote::motorStop(const Port port)

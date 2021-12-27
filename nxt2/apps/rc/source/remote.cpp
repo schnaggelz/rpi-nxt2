@@ -65,23 +65,33 @@ void Remote::process()
         if (port >= _motors.size())
             break;
 
-        auto speed = _usb_data_rx.data[1];
-        auto count = _usb_data_rx.data[2];
-
         switch (command)
         {
         case nxt::com::protocol::Command::MOTOR_FWD:
-            _motors[port].setSpeed(std::abs(speed));
-            break;
+        {
+            auto speed = std::abs(_usb_data_rx.data[1]);
+            _motors[port].setSpeed(speed);
+        }
+
+        break;
         case nxt::com::protocol::Command::MOTOR_REV:
-            _motors[port].setSpeed(-std::abs(speed));
-            break;
+        {
+            auto speed = -std::abs(_usb_data_rx.data[1]);
+            _motors[port].setSpeed(speed);
+        }
+        break;
+        case nxt::com::protocol::Command::MOTOR_CMD:
+        {
+            auto speed = _usb_data_rx.data[1];
+            auto count = _usb_data_rx.data[2];
+            auto tolerance = _usb_data_rx.data[3];
+
+            _motors[port].setSpeed(speed);
+            _motors[port].setTargetCount(count, tolerance);
+        }
+        break;
         case nxt::com::protocol::Command::MOTOR_STP:
             _motors[port].stop();
-            break;
-        case nxt::com::protocol::Command::MOTOR_CMD:
-            _motors[port].setSpeed(speed);
-            _motors[port].setTargetCount(count);
             break;
         default:
             break;
