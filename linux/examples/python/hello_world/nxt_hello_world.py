@@ -40,17 +40,17 @@ if not r.motor_stop(nxt.PORT_A):
 
 time.sleep(1)
 if not r.motor_fwd(nxt.PORT_B, 50):
-    logging.error('Could not control motor A!')
+    logging.error('Could not control motor B!')
     sys.exit(1)
 
 time.sleep(1)
 if not r.motor_rev(nxt.PORT_B, 50):
-    logging.error('Could not control motor A!')
+    logging.error('Could not control motor B!')
     sys.exit(1)
 
 time.sleep(1)
 if not r.motor_stop(nxt.PORT_B):
-    logging.error('Could not control motor A!')
+    logging.error('Could not control motor B!')
     sys.exit(1)
 
 time.sleep(1)

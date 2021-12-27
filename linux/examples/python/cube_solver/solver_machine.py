@@ -6,6 +6,7 @@
 #
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
+
 import time
 from enum import Enum
 
