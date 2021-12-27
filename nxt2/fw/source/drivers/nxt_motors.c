@@ -14,6 +14,9 @@
 #include "platform/at91/at91sam7.h"
 #include "platform/irqs.h"
 
+#include <stdlib.h>
+#include <limits.h>
+
 #define MA0 15
 #define MA1 1
 #define MB0 26
@@ -28,6 +31,7 @@
 
 typedef struct
 {
+    sint32 tolerance;
     sint32 current_count;
     sint32 target_count;
     sint32 speed_percent;
@@ -91,22 +95,71 @@ void nxt_motor_set_current_count(uint8 port, sint32 count)
     }
 }
 
-void nxt_motor_set_target_count(uint8 port, sint32 count)
+static void nxt_motor_check_target(uint8 port)
+{
+    if (port >= NXT_NUM_MOTOR_PORTS)
+    {
+        return;
+    }
+
+    sint32 tolerance = motor_ports[port].tolerance;
+    sint32 speed = motor_ports[port].speed_percent;
+    sint32 current_count = motor_ports[port].current_count;
+    sint32 target_count = motor_ports[port].target_count;
+
+    if (target_count != UINT_MAX && speed != 0)
+    {
+        if (target_count < current_count - tolerance)
+        {
+            sint32 expected_speed = -abs(speed);
+
+            if (speed != expected_speed)
+            {
+                nxt_motor_set_speed(port, expected_speed, 1);
+            }
+        }
+        else if (target_count > current_count + tolerance)
+        {
+            sint32 expected_speed = abs(speed);
+
+            if (speed != expected_speed)
+            {
+                nxt_motor_set_speed(port, expected_speed, 1);
+            }
+        }
+        else
+        {
+            nxt_motor_set_speed(port, 0, 1);
+
+            nxt_motor_set_target_count(port, UINT_MAX, 0);
+        }
+    }
+}
+
+void nxt_motor_set_target_count(uint8 port, sint32 count, sint32 tolerance)
 {
     if (port < NXT_NUM_MOTOR_PORTS)
     {
         motor_ports[port].target_count = count;
+        motor_ports[port].tolerance = tolerance;
     }
 }
 
 void nxt_motor_1kHz_process(void)
 {
-    if (nxt_motors_initialised)
+    if (!nxt_motors_initialised)
     {
-        interrupts_this_period = 0;
-
-        *AT91C_PIOA_IER = MOTOR_INTERRUPT_PINS;
+        return;
     }
+
+    for (unsigned port = 0; port < NXT_NUM_MOTOR_PORTS; port++)
+    {
+        nxt_motor_check_target(port);
+    }
+
+    interrupts_this_period = 0;
+
+    *AT91C_PIOA_IER = MOTOR_INTERRUPT_PINS;
 }
 
 void nxt_motor_quad_decode(nxt_motor_port* port, uint32 value)
@@ -117,13 +170,21 @@ void nxt_motor_quad_decode(nxt_motor_port* port, uint32 value)
     if (edge != port->last_edge)
     {
         if (edge && !dir)
+        {
             port->current_count++;
+        }
         else if (edge && dir)
+        {
             port->current_count--;
+        }
         else if (!edge && dir)
+        {
             port->current_count++;
+        }
         else if (!edge && !dir)
+        {
             port->current_count--;
+        }
 
         port->last_edge = edge;
     }
@@ -170,16 +231,19 @@ void nxt_motor_init(void)
 
     /* Enable ISR. */
     aic_mask_off(AT91C_PERIPHERAL_ID_PIOA);
+
     aic_set_vector(AT91C_PERIPHERAL_ID_PIOA, AIC_INT_LEVEL_NORMAL,
                    (uint32)nxt_motor_isr_handler);
+
     aic_mask_on(AT91C_PERIPHERAL_ID_PIOA);
 
     *AT91C_PIOA_IER = MOTOR_INTERRUPT_PINS;
 
     for (unsigned port = 0; port < NXT_NUM_MOTOR_PORTS; port++)
     {
+        motor_ports[port].tolerance = 0;
         motor_ports[port].speed_percent = 0;
-        motor_ports[port].target_count = 0;
+        motor_ports[port].target_count = UINT_MAX;
         motor_ports[port].current_count = 0;
         motor_ports[port].last_edge = 0;
     }

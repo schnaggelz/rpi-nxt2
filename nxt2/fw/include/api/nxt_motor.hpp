@@ -18,9 +18,6 @@ namespace fw
 class Motor : public Actuator
 {
   public:
-    static constexpr std::uint8_t TOLERANCE = 10;
-
-  public:
     Motor(Port port, bool brake = true)
         : Actuator(port)
         , _brake(brake)
@@ -32,7 +29,7 @@ class Motor : public Actuator
     void stop() noexcept;
     void setSpeed(std::int32_t speed) noexcept;
     void setCurrentCount(std::int32_t count) noexcept;
-    void setTargetCount(std::int32_t count) noexcept;
+    void setTargetCount(std::int32_t count, std::int32_t tolerance) noexcept;
 
     std::int32_t getSpeed() const noexcept;
     std::int32_t getCurrentCount() const noexcept;
@@ -44,7 +41,6 @@ class Motor : public Actuator
 
   private:
     bool _brake{false};
-    bool _target_reached{true};
 };
 
 } // namespace fw

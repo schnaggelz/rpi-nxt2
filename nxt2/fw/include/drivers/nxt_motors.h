@@ -29,8 +29,8 @@ sint32 nxt_motor_get_current_count(uint8 port);
 sint32 nxt_motor_get_target_count(uint8 port);
 
 void nxt_motor_set_speed(uint8 port, sint32 speed_percent, sint32 brake);
+void nxt_motor_set_target_count(uint8 port, sint32 count, sint32 tolerance);
 void nxt_motor_set_current_count(uint8 port, sint32 count);
-void nxt_motor_set_target_count(uint8 port, sint32 count);
 
 void nxt_motor_init(void);
 
