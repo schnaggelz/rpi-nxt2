@@ -51,6 +51,12 @@ class CubeSolver:
                 self._machine.turntable_turn_ccw()
             if ch == ord('w'):
                 self._machine.turntable_turn_cw()
+            if ch == ord('z'):
+                self._machine.turntable_home(True)
+            if ch == ord('x'):
+                self._machine.turntable_turn_ccw(True)
+            if ch == ord('y'):
+                self._machine.turntable_turn_cw(True)
             if ch == ord('o'):
                 self._machine.grabber_home()
             if ch == ord('r'):

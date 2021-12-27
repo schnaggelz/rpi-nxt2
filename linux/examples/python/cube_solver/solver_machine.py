@@ -17,9 +17,7 @@ class SolverMachine:
     VERSION = 1
 
     # Motor speed constants
-    MOTOR_GRAB_SPEED_GRAB = 40
-    MOTOR_GRAB_SPEED_FLIP = 60
-    MOTOR_GRAB_SPEED_REST = 40
+    MOTOR_GRAB_SPEED = 50
     MOTOR_TURN_SPEED = 100
     MOTOR_SCAN_SPEED = 50
 
@@ -87,7 +85,7 @@ class SolverMachine:
         self._sensor_values[3] = self._nxt_rc.sensor_rcv(nxt_api.PORT_4, 0)
         self._counter += 1
 
-    def run_to_pos(self, port, speed, position, tolerance=10):
+    def run_to_pos(self, port, speed, position, tolerance):
         cur_pos = self._nxt_rc.motor_rcv(port, 0)
         if cur_pos < position - tolerance:
             self._nxt_rc.motor_cmd(port, speed, position, tolerance)
@@ -101,32 +99,41 @@ class SolverMachine:
                 cur_pos = self._nxt_rc.motor_rcv(port, 0)
         # self._nxt_rc.motor_stop(port)
 
-    def turntable_turn_ccw(self):
-        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CCW.value)
+    def turntable_turn_ccw(self, load=False):
+        tolerance = 10 if load else 50
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CCW.value, tolerance)
 
-    def turntable_turn_cw(self):
-        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CW.value)
+    def turntable_turn_cw(self, load=False):
+        tolerance = 10 if load else 50
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CW.value, tolerance)
 
-    def turntable_home(self):
-        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.HOME.value)
+    def turntable_home(self, load=False):
+        tolerance = 10 if load else 50
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.HOME.value, tolerance)
 
     def grabber_grab(self):
-        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_GRAB, self.GrabberPosition.GRAB.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED, self.GrabberPosition.GRAB.value, tolerance)
 
     def grabber_flip(self):
-        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_GRAB, self.GrabberPosition.FLIP.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED, self.GrabberPosition.FLIP.value, tolerance)
 
     def grabber_rest(self):
-        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_REST, self.GrabberPosition.REST.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED, self.GrabberPosition.REST.value, tolerance)
 
     def grabber_home(self):
-        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_REST, self.GrabberPosition.HOME.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED, self.GrabberPosition.HOME.value, tolerance)
 
     def scanner_scan(self):
-        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.SCAN.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.SCAN.value, tolerance)
 
     def scanner_home(self):
-        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.HOME.value)
+        tolerance = 10
+        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.HOME.value, tolerance)
 
 
 if __name__ == '__main__':
