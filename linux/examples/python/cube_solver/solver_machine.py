@@ -16,29 +16,31 @@ from nxt_utils import periodic_timer as timer
 class SolverMachine:
     VERSION = 1
 
-    # Define motor ports
-    MOTOR_TURN = nxt_api.PORT_A
-    MOTOR_SCAN = nxt_api.PORT_B
-    MOTOR_GRAB = nxt_api.PORT_C
-
-    # Motor position constants
-    MOTOR_GRAB_POSITION_HOME = 0
-    MOTOR_GRAB_POSITION_REST = -35
-    MOTOR_GRAB_POSITION_FLIP_PUSH = -90
-    MOTOR_GRAB_POSITION_GRAB = -130
-    MOTOR_GRAB_POSITION_FLIP = -240
-
     # Motor speed constants
     MOTOR_GRAB_SPEED_GRAB = 40
     MOTOR_GRAB_SPEED_FLIP = 60
     MOTOR_GRAB_SPEED_REST = 40
+    MOTOR_TURN_SPEED = 100
+    MOTOR_SCAN_SPEED = 50
 
-    MOTOR_TURN_SPEED = 50
+    MOTOR_TURN = nxt_api.PORT_A
+    MOTOR_SCAN = nxt_api.PORT_B
+    MOTOR_GRAB = nxt_api.PORT_C
 
-    class Direction(Enum):
-        HOME = 0
+    class TurntablePosition(Enum):
+        HOME = 1
         CW = -270
         CCW = 270
+
+    class GrabberPosition(Enum):
+        HOME = 1
+        GRAB = 170
+        FLIP = 60
+        REST = 220
+
+    class ScannerPosition(Enum):
+        HOME = 1
+        SCAN = 30
 
     def __init__(self):
         self._timer = None
@@ -85,22 +87,46 @@ class SolverMachine:
         self._sensor_values[3] = self._nxt_rc.sensor_rcv(nxt_api.PORT_4, 0)
         self._counter += 1
 
-    def run_to_pos(self, port, position, tolerance=10):
+    def run_to_pos(self, port, speed, position, tolerance=10):
         cur_pos = self._nxt_rc.motor_rcv(port, 0)
         if cur_pos < position - tolerance:
-            self._nxt_rc.motor_cmd(port, +self.MOTOR_TURN_SPEED, position)
+            self._nxt_rc.motor_cmd(port, speed, position, tolerance)
             while cur_pos < position - tolerance:
                 time.sleep(0.001)
                 cur_pos = self._nxt_rc.motor_rcv(port, 0)
         elif cur_pos > position + tolerance:
-            self._nxt_rc.motor_cmd(port, self.MOTOR_TURN_SPEED, position)
+            self._nxt_rc.motor_cmd(port, -speed, position, tolerance)
             while cur_pos > position + tolerance:
                 time.sleep(0.001)
                 cur_pos = self._nxt_rc.motor_rcv(port, 0)
-        self._nxt_rc.motor_stop(port)
+        # self._nxt_rc.motor_stop(port)
 
-    def turntable_turn(self, direction):
-        self.run_to_pos(self.MOTOR_TURN, direction.value)
+    def turntable_turn_ccw(self):
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CCW.value)
+
+    def turntable_turn_cw(self):
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.CW.value)
+
+    def turntable_home(self):
+        self.run_to_pos(self.MOTOR_TURN, self.MOTOR_TURN_SPEED, self.TurntablePosition.HOME.value)
+
+    def grabber_grab(self):
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_GRAB, self.GrabberPosition.GRAB.value)
+
+    def grabber_flip(self):
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_GRAB, self.GrabberPosition.FLIP.value)
+
+    def grabber_rest(self):
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_REST, self.GrabberPosition.REST.value)
+
+    def grabber_home(self):
+        self.run_to_pos(self.MOTOR_GRAB, self.MOTOR_GRAB_SPEED_REST, self.GrabberPosition.HOME.value)
+
+    def scanner_scan(self):
+        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.SCAN.value)
+
+    def scanner_home(self):
+        self.run_to_pos(self.MOTOR_SCAN, self.MOTOR_SCAN_SPEED, self.ScannerPosition.HOME.value)
 
 
 if __name__ == '__main__':

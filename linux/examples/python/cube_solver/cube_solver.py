@@ -46,12 +46,23 @@ class CubeSolver:
             time.sleep(0.5)
             ch = self._window.get_char()
             if ch == ord('h'):
-                self._machine.turntable_turn(self._machine.Direction.HOME)
+                self._machine.turntable_home()
             if ch == ord('e'):
-                self._machine.turntable_turn(self._machine.Direction.CCW)
+                self._machine.turntable_turn_ccw()
             if ch == ord('w'):
-                self._machine.turntable_turn(self._machine.Direction.CW)
-
+                self._machine.turntable_turn_cw()
+            if ch == ord('o'):
+                self._machine.grabber_home()
+            if ch == ord('r'):
+                self._machine.grabber_rest()
+            if ch == ord('g'):
+                self._machine.grabber_grab()
+            if ch == ord('f'):
+                self._machine.grabber_flip()
+            if ch == ord('s'):
+                self._machine.scanner_scan()
+            if ch == ord('m'):
+                self._machine.scanner_home()
             elif ch == ord('q'):
                 break  # Exit the while loop
 
