@@ -5,55 +5,41 @@
 # Utility code
 #
 
+import zmq
+import base64
+import numpy as np
 import cv2
-import socket
-import pickle
-import struct
-
 
 class VideoReceiver(object):
-    PCK_RCV_SIZE = 4096
-    PCK_HDR_SIZE = struct.calcsize('Q')
 
-    def __init__(self, host, port):
-        self._host = host
+    def __init__(self, port):
+        context = zmq.Context()
         self._port = port
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._socket.bind((self._host, self._port))
-        self._socket.listen(10)
-        self._file = None
+        self._socket = context.socket(zmq.SUB)
 
     def connect(self):
-        connection, _ = self._socket.accept()
-        if connection:
-            self._file = connection.makefile('rb')
+        self._socket.bind("tcp://*:{}".format(self._port))
+        self._socket.setsockopt_string(zmq.SUBSCRIBE, np.unicode(''))
 
     def receive(self):
-        if self._file is None:
-            return None
+        buffer = self._socket.recv_string()
+        data = base64.b64decode(buffer)
 
-        header = self._file.read(4)
-        if not header:
-            return None
+        npimg = np.fromstring(data, dtype=np.uint8)
+        img = cv2.imdecode(npimg, 1)
 
-        data_size = int.from_bytes(header, 'big')
-        data = self._file.read(data_size)
+        return img
 
-        return pickle.loads(data)
-
-    def close(self):
-        self._socket.close()
 
 if __name__ == '__main__':
 
-    host = 'localhost'
-    port = 1234
-    sr = VideoReceiver(host, port)
-    sr.connect()
+    receiver = VideoReceiver(1234)
+    receiver.connect()
 
     while True:
-        img = sr.receive()
+        img = receiver.receive()
         cv2.imshow('received', img)
+
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break

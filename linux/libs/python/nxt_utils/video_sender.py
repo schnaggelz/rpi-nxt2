@@ -5,56 +5,42 @@
 # Utility code
 #
 
+import base64
 import cv2
-import socket
-import pickle
-import struct
-
-import camera_source as camera
+import zmq
 
 
 class VideoSender(object):
 
     def __init__(self, host, port):
+        context = zmq.Context()
         self._host = host
         self._port = port
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._file = self._socket.makefile('wb')
+        self._socket = context.socket(zmq.PUB)
 
     def connect(self):
-        self._socket.connect((self._host, self._port))
+        self._socket.connect("tcp://{}:{}".format(self._host, self._port))
 
     def send(self, img):
-        if self._file is None:
-            return None
-
-        data = pickle.dumps(img)
-        header = len(data).to_bytes(4,'big')
-
-        self._file.write(header)
-        self._file.write(data)
-        self._file.flush()
-
-    def close(self):
-        self._socket.close()
+        encoded, data = cv2.imencode('.jpg', img)
+        buffer = base64.b64encode(data)
+        self._socket.send(buffer)
 
 
 if __name__ == '__main__':
 
-    host = 'localhost'
-    port = 1234
-    ss = VideoSender(host, port)
-    ss.connect()
+    import camera_source as cam
 
-    address = '/dev/video0'
-    cs = camera.CameraSource(address, 1280, 720)
-    cs.open()
+    sender = VideoSender('treich-dt-1', 1234)
+    sender.connect()
+
+    source = cam.CameraSource(640, 480)
+    source.open(0)
 
     while True:
-        img = cs.read()
+        img = source.read()
         if img is not None:
-            ss.send(img)
+            sender.send(img)
             # cv2.imshow('original', img)
-        if cs.exited():
-            ss.close()
+        if source.exited():
             break
