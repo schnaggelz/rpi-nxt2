@@ -1,9 +1,6 @@
 from collections import defaultdict
 
-import cv2
 import numpy as np
-
-import camera_source as cam
 
 
 class CubeColors:

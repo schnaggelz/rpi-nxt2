@@ -10,7 +10,7 @@
 import time
 import cv2
 import numpy as np
-import camera_source as cs
+from nxt_utils import camera_source as cs
 import cube_colors as cc
 import itertools
 

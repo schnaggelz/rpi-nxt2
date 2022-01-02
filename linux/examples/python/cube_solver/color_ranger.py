@@ -8,7 +8,7 @@
 import cv2
 import numpy as np
 
-import camera_source as cam
+from nxt_utils import camera_source as cam
 
 if __name__ == '__main__':
     address = "/dev/video0"
