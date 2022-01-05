@@ -10,9 +10,10 @@
 import time
 import cv2
 import numpy as np
-from nxt_utils import camera_source as cs
-import cube_colors as cc
 import itertools
+
+from cube_colors import CubeColors
+from cam_utils.pi_camera import Camera
 
 
 class ColorDetector:
@@ -23,10 +24,11 @@ class ColorDetector:
             self.color = color
             self.contour = contour
 
-    def __init__(self, source_path, profile):
+    def __init__(self, profile='original', sink=None):
+        self._sink = sink
         self._profile = profile
-        self._size_threshold = 100
-        self._camera = cs.CameraSource(source_path, 640, 480)
+        self._size_threshold = 50
+        self._camera = Camera(640, 480)
         self._camera.open()
 
     @staticmethod

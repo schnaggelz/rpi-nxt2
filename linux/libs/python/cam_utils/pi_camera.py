@@ -8,7 +8,7 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 
-class CameraSource:
+class Camera:
     def __init__(self, image_width, image_height, read_callback=None):
         self._image_width = image_width
         self._image_height = image_height
@@ -55,6 +55,6 @@ if __name__ == '__main__':
         #print('Captured %dx%d image' % (
         #    image.shape[1], image.shape[0]))
 
-    camera = CameraSource(640, 480, receive)
+    camera = Camera(640, 480, receive)
     camera.open()
     camera.run()
