@@ -49,7 +49,7 @@ class ColorDetector:
                 mask += cv2.inRange(img_hsv, lower, upper)
 
         canny = cv2.Canny(mask, 50, 100)
-        cntrs, h = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        _, cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         return cntrs
 
@@ -126,8 +126,8 @@ class ColorDetector:
         img_filtered = cv2.bilateralFilter(img, 1, 100, 200)
         img_hsv = cv2.cvtColor(img_filtered, cv2.COLOR_BGR2HSV)
         boxes = []
-        for color, ranges in cc.CubeColors.ranges(self._profile).items():
-            cntrs = self.get_contours_2(img_hsv, ranges)
+        for color, ranges in CubeColors.ranges(self._profile).items():
+            cntrs = self.get_contours(img_hsv, ranges)
             cntrs = self.filter_contours(cntrs, self._size_threshold)
             for cntr in cntrs:
                 boxes.append(self.Box(color, cntr))
@@ -176,5 +176,3 @@ if __name__ == '__main__':
         res = fd.detect(True)
         if not res:
             break
-
-    # cv2.waitKey()
