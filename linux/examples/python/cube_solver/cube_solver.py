@@ -10,17 +10,19 @@
 import time
 import signal
 
-from nxt_utils import console_window as console, periodic_timer as timer
-import solver_machine as sm
+from common_utils.console_window import ConsoleWindow
+from common_utils.periodic_timer import PeriodicTimer
+
+from solver_machine import SolverMachine
 
 
 class CubeSolver:
     VERSION = 1
 
     def __init__(self):
-        self._window = console.ConsoleWindow()
-        self._machine = sm.SolverMachine()
-        self._timer = timer.PeriodicTimer(0.1, self.display)
+        self._window = ConsoleWindow()
+        self._machine = SolverMachine()
+        self._timer = PeriodicTimer(0.1, self.display)
         self._stop = False
         self._window.print_at(1, 1, "Remote console V{:d}".format(self.VERSION))
 
@@ -90,21 +92,16 @@ class CubeSolver:
         self._window.refresh()
 
 
-cbr = CubeSolver()
+if __name__ == '__main__':
+    cbr = CubeSolver()
 
+    def handler(signum, frame):
+        cbr.stop()
 
-def handler(signum, frame):
+    signal.signal(signal.SIGINT, handler)
+
+    cbr.init()
+    cbr.start()
+    time.sleep(1)
     cbr.stop()
-
-
-signal.signal(signal.SIGINT, handler)
-
-cbr.init()
-
-cbr.start()
-
-time.sleep(1)
-
-cbr.stop()
-
-cbr.exit()
+    cbr.exit()

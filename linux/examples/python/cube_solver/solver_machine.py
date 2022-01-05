@@ -8,10 +8,11 @@
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
 
 import time
+import nxt_remote_py as nxt
+
 from enum import Enum
 
-import nxt_remote_py as nxt_api
-from nxt_utils import periodic_timer as timer
+from common_utils.periodic_timer import PeriodicTimer
 
 
 class SolverMachine:
@@ -22,9 +23,9 @@ class SolverMachine:
     MOTOR_TURN_SPEED = 100
     MOTOR_SCAN_SPEED = 50
 
-    MOTOR_TURN = nxt_api.PORT_A
-    MOTOR_SCAN = nxt_api.PORT_B
-    MOTOR_GRAB = nxt_api.PORT_C
+    MOTOR_TURN = nxt.PORT_A
+    MOTOR_SCAN = nxt.PORT_B
+    MOTOR_GRAB = nxt.PORT_C
 
     class TurntablePosition(Enum):
         HOME = 1
@@ -46,7 +47,7 @@ class SolverMachine:
         self._counter = 0
         self._decoder_values = [0, 0, 0]
         self._sensor_values = [0, 0, 0, 0]
-        self._nxt_rc = nxt_api.Remote()
+        self._nxt = nxt.Remote()
 
     @property
     def decoder_values(self):
@@ -61,44 +62,44 @@ class SolverMachine:
         return self._counter
 
     def connect(self):
-        return self._nxt_rc.connect()
+        return self._nxt.connect()
 
     def disconnect(self):
-        return self._nxt_rc.disconnect()
+        return self._nxt.disconnect()
 
     def start(self):
-        self._timer = timer.PeriodicTimer(0.001, self.periodic)
+        self._timer = PeriodicTimer(0.001, self.periodic)
 
     def stop(self):
         self._timer.stop()
-        self._nxt_rc.motor_stop(self.MOTOR_TURN)
-        self._nxt_rc.motor_stop(self.MOTOR_GRAB)
-        self._nxt_rc.motor_stop(self.MOTOR_SCAN)
+        self._nxt.motor_stop(self.MOTOR_TURN)
+        self._nxt.motor_stop(self.MOTOR_GRAB)
+        self._nxt.motor_stop(self.MOTOR_SCAN)
 
     def periodic(self):
-        self._nxt_rc.poll()
-        self._decoder_values[0] = self._nxt_rc.motor_rcv(nxt_api.PORT_A, 0)
-        self._decoder_values[1] = self._nxt_rc.motor_rcv(nxt_api.PORT_B, 0)
-        self._decoder_values[2] = self._nxt_rc.motor_rcv(nxt_api.PORT_C, 0)
-        self._sensor_values[0] = self._nxt_rc.sensor_rcv(nxt_api.PORT_1, 0)
-        self._sensor_values[1] = self._nxt_rc.sensor_rcv(nxt_api.PORT_2, 0)
-        self._sensor_values[2] = self._nxt_rc.sensor_rcv(nxt_api.PORT_3, 0)
-        self._sensor_values[3] = self._nxt_rc.sensor_rcv(nxt_api.PORT_4, 0)
+        self._nxt.poll()
+        self._decoder_values[0] = self._nxt.motor_rcv(nxt.PORT_A, 0)
+        self._decoder_values[1] = self._nxt.motor_rcv(nxt.PORT_B, 0)
+        self._decoder_values[2] = self._nxt.motor_rcv(nxt.PORT_C, 0)
+        self._sensor_values[0] = self._nxt.sensor_rcv(nxt.PORT_1, 0)
+        self._sensor_values[1] = self._nxt.sensor_rcv(nxt.PORT_2, 0)
+        self._sensor_values[2] = self._nxt.sensor_rcv(nxt.PORT_3, 0)
+        self._sensor_values[3] = self._nxt.sensor_rcv(nxt.PORT_4, 0)
         self._counter += 1
 
     def run_to_pos(self, port, speed, position, tolerance):
-        cur_pos = self._nxt_rc.motor_rcv(port, 0)
+        cur_pos = self._nxt.motor_rcv(port, 0)
         if cur_pos < position - tolerance:
-            self._nxt_rc.motor_cmd(port, speed, position, tolerance)
+            self._nxt.motor_cmd(port, speed, position, tolerance)
             while cur_pos < position - tolerance:
                 time.sleep(0.001)
-                cur_pos = self._nxt_rc.motor_rcv(port, 0)
+                cur_pos = self._nxt.motor_rcv(port, 0)
         elif cur_pos > position + tolerance:
-            self._nxt_rc.motor_cmd(port, -speed, position, tolerance)
+            self._nxt.motor_cmd(port, -speed, position, tolerance)
             while cur_pos > position + tolerance:
                 time.sleep(0.001)
-                cur_pos = self._nxt_rc.motor_rcv(port, 0)
-        # self._nxt_rc.motor_stop(port)
+                cur_pos = self._nxt.motor_rcv(port, 0)
+        # self._nxt.motor_stop(port)
 
     def turntable_turn_ccw(self, load=False):
         tolerance = 10 if load else 50
