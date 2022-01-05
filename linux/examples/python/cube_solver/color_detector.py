@@ -28,7 +28,9 @@ class ColorDetector:
         self._sink = sink
         self._profile = profile
         self._size_threshold = 50
-        self._camera = Camera(640, 480)
+        self._camera = Camera(image_width=640,
+                              image_height=480,
+                              framerate=10)
         self._camera.open()
 
     @staticmethod
