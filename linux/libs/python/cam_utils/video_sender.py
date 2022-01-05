@@ -29,18 +29,14 @@ class VideoSender(object):
 
 if __name__ == '__main__':
 
-    import camera_source as cam
+    import pi_camera as cam
 
     sender = VideoSender('treich-dt-1', 1234)
     sender.connect()
 
-    source = cam.CameraSource(640, 480)
-    source.open(0)
+    def receive(img):
+        sender.send(img)
 
-    while True:
-        img = source.read()
-        if img is not None:
-            sender.send(img)
-            # cv2.imshow('original', img)
-        if source.exited():
-            break
+    camera = Camera(640, 480, receive)
+    camera.open()
+    camera.run()
