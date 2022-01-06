@@ -27,10 +27,12 @@ class ColorDetector:
     def __init__(self, profile='original', sink=None):
         self._sink = sink
         self._profile = profile
-        self._size_threshold = 50
-        self._camera = Camera(image_width=640,
-                              image_height=480,
-                              framerate=10)
+        self._size_threshold = 25
+        self._time = time.time()
+        self._camera = Camera(width=240,
+                              height=240,
+                              framerate=20,
+                              callback=self.analyze)
         self._camera.open()
 
     @staticmethod
@@ -52,33 +54,6 @@ class ColorDetector:
 
         canny = cv2.Canny(mask, 50, 100)
         _, cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
-        return cntrs
-
-    @staticmethod
-    def get_contours_2(img_hsv, ranges):
-        mask = np.zeros(img_hsv.shape, dtype=np.uint8)
-
-        morph_size = 3
-        elem_o = cv2.getStructuringElement(cv2.MORPH_RECT, (morph_size + 1, morph_size + 1))
-        elem_c = cv2.getStructuringElement(cv2.MORPH_RECT, (morph_size - 1, morph_size - 1))
-
-        cntrs = []
-
-        for r in ranges:
-            lower = np.array(r[0], np.uint8)
-            upper = np.array(r[1], np.uint8)
-            color_mask = cv2.inRange(img_hsv, lower, upper)
-            color_mask = cv2.morphologyEx(color_mask, cv2.MORPH_OPEN, elem_o, iterations=1)
-            color_mask = cv2.morphologyEx(color_mask, cv2.MORPH_CLOSE, elem_c, iterations=5)
-
-            color_mask = cv2.merge([color_mask, color_mask, color_mask])
-            mask |= color_mask
-
-            gray = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
-            c, h = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-            cntrs.extend(c)
 
         return cntrs
 
@@ -106,7 +81,7 @@ class ColorDetector:
         return boxes, rects
 
     @staticmethod
-    def display_boxes(img, boxes):
+    def overlay_boxes(img, boxes):
         for idx, box in enumerate(boxes):
             x, y, w, h = cv2.boundingRect(box.contour)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -125,8 +100,8 @@ class ColorDetector:
         return img
 
     def get_boxes(self, img):
-        img_filtered = cv2.bilateralFilter(img, 1, 100, 200)
-        img_hsv = cv2.cvtColor(img_filtered, cv2.COLOR_BGR2HSV)
+        # img_filtered = cv2.bilateralFilter(img, 1, 100, 200)
+        img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
         boxes = []
         for color, ranges in CubeColors.ranges(self._profile).items():
             cntrs = self.get_contours(img_hsv, ranges)
@@ -136,11 +111,9 @@ class ColorDetector:
 
         return boxes
 
-    def detect(self, show=False):
-        start_time = time.time()
+    def analyze(self, img):
 
-        img = self._camera.read()
-        if img is None or self._camera.exited():
+        if img is None:
             return False
 
         boxes = self.get_boxes(img)
@@ -155,26 +128,27 @@ class ColorDetector:
                     (boxes, _) = self.sort_boxes(row, False)
                     rows.append(boxes)
                     row = []
+            img = self.overlay_boxes(img, list(itertools.chain(*rows)))
 
-            if show:
-                img = self.display_boxes(img, list(itertools.chain(*rows)))
+        if self._sink is not None:
+            self.display_rate(img, self._time)
 
-        if show:
-            img = self.display_rate(img, start_time)
-            cv2.imshow("detector", img)
+        if self._sink is not None:
+            self._sink.send(img)
 
-        return True
+        self._time = time.time()
+
+    def start(self):
+        self._camera.run()
 
 
 if __name__ == '__main__':
 
-    # TODO cmd line args
-    src = '/dev/video0'
-    prf = 'original'
+    from cam_utils.video_sender import VideoSender
 
-    fd = ColorDetector(src, prf)
+    sender = VideoSender('treich-dt-1', 1234)
+    sender.connect()
 
-    while True:
-        res = fd.detect(True)
-        if not res:
-            break
+    detector = ColorDetector(sink=sender)
+    detector.start()
+
