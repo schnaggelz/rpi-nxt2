@@ -34,6 +34,7 @@ class Camera:
         self._framerate = framerate
         self._callback = callback
         self._processor = None
+        self._stop = True
 
     def open(self):
         time.sleep(0.5)
@@ -55,14 +56,19 @@ class Camera:
         if not self.is_open():
             return
 
-        self._camera.start_recording(self._processor, 'rgb')
+        self._stop = False
+
+        self._camera.start_recording(self._processor, 'bgr')
         try:
-            while True:
+            while not self._stop:
                 self._camera.wait_recording(1)
         except KeyboardInterrupt:
             pass
         finally:
             self._camera.stop_recording()
+
+    def stop(self):
+        self._stop = True
 
     def is_open(self):
         if self._camera is not None and self._processor is not None:
@@ -73,8 +79,8 @@ class Camera:
         if not self.is_open():
             return
 
-        array = np.empty(self._height, self._width, dtype=np.uint8)
-        self._camera.capture(array, 'rgb')
+        array = np.empty((self._height, self._width), dtype=np.uint8)
+        self._camera.capture(array, 'bgr')
 
         return array
 
