@@ -6,26 +6,44 @@
 #
 
 import time
+import numpy as np
 
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-
+from picamera.array import PiRGBAnalysis
 
 class Camera:
-    def __init__(self, image_width, image_height, framerate=30, read_callback=None):
-        self._image_width = image_width
-        self._image_height = image_height
+
+    class FrameProcessor(PiRGBAnalysis):
+        def __init__(self, camera, callback):
+            super(Camera.FrameProcessor, self).__init__(camera)
+            self._callback = callback
+            self._counter = 0
+
+        @property
+        def counter(self):
+            return self._counter
+
+        def analyze(self, array):
+            if self._callback:
+                self._callback(array)
+
+    def __init__(self, width=1640, height=1232, framerate=30, callback=None):
+        self._width = width
+        self._height = height
         self._framerate = framerate
-        self._callback = read_callback
+        self._callback = callback
+        self._processor = None
 
     def open(self):
         time.sleep(0.5)
 
-        self._camera = PiCamera(resolution=(self._image_width, self._image_height),
+        self._camera = PiCamera(resolution=(self._width, self._height),
                                 framerate=self._framerate)
-        #self._camera.exposure_mode = 'night'
-        self._buffer = PiRGBArray(self._camera,
-                                  size=(self._image_width, self._image_height))
+        # camera.awb_mode = 'off'
+        # camera.awb_gains = (1.4, 1.5)
+
+        self._processor = self.FrameProcessor(self._camera, self._callback)
 
     def close(self):
         if not self.is_open():
@@ -37,16 +55,17 @@ class Camera:
         if not self.is_open():
             return
 
-        for frame in self._camera.capture_continuous(self._buffer,
-                                                     format='bgr',
-                                                     use_video_port=True):
-            if self._callback:
-                self._callback(frame.array)
-
-            self._buffer.truncate(0)
+        self._camera.start_recording(self._processor, 'rgb')
+        try:
+            while True:
+                self._camera.wait_recording(1)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self._camera.stop_recording()
 
     def is_open(self):
-        if self._camera is not None:
+        if self._camera is not None and self._processor is not None:
             return not self._camera.closed
         return False
 
@@ -54,25 +73,33 @@ class Camera:
         if not self.is_open():
             return
 
-        self._buffer.truncate(0)
-        self._camera.capture(self._buffer, 'bgr')
+        array = np.empty(self._height, self._width, dtype=np.uint8)
+        self._camera.capture(array, 'rgb')
 
-        frame = self._buffer.array
-
-        return frame
+        return array
 
 
 if __name__ == '__main__':
+    last_time = time.time()
+    counter = 0
+
     def receive(image):
-        pass
+        global last_time
+        global counter
 
-        # print('Captured %dx%d image' % (
-        #    image.shape[1], image.shape[0]))
+        elapsed_time = time.time() - last_time
+        secs_elapsed = elapsed_time % 60
+        fps = 1 / secs_elapsed
 
+        if counter % 50 == 0:
+            print("{}: {} fps".format(str(image.shape), fps))
 
-    camera = Camera(image_width=640,
-                    image_height=480,
+        counter += 1
+        last_time = time.time()
+
+    camera = Camera(width=640,
+                    height=480,
                     framerate=10,
-                    read_callback=receive)
+                    callback=receive)
     camera.open()
     camera.run()
