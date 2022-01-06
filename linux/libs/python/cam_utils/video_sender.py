@@ -24,8 +24,10 @@ class VideoSender(object):
     def send(self, img):
         encoded, data = cv2.imencode('.jpg', img)
         buffer = base64.b64encode(data)
-        self._socket.send(buffer)
-
+        try:
+            self._socket.send(buffer, zmq.NOBLOCK)
+        except zmq.ZMQError:
+            pass
 
 if __name__ == '__main__':
 
