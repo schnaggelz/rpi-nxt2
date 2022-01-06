@@ -37,9 +37,14 @@ if __name__ == '__main__':
     receiver.connect()
 
     while True:
-        img = receiver.receive()
-        cv2.imshow('received', img)
+        try:
+            img = receiver.receive()
+            cv2.imshow('received', img)
 
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord('q'):
-            break
+            key = cv2.waitKey(1) & 0xFF
+            if key == ord('q'):
+                break
+        except KeyboardInterrupt:
+            pass
+        finally:
+            pass #TODO
