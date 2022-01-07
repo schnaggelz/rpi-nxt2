@@ -21,7 +21,7 @@ based on the code from there).
 
 # Prerequisites
 
-I'm using Ubuntu 20 as development platform and a RaspPi Zero 2 W as the computer controlling the NXT2. 
+I'm using Ubuntu 20 as development platform and a RasPi Zero 2 W (or RasPi 3B) as the computer controlling the NXT2. 
 
 The embedded cross-build environment can be caught via Docker image below.
 
