@@ -11,7 +11,9 @@ import numpy as np
 import itertools
 
 from cube_colors import CubeColors
+
 from vision_utils.pi_camera import Camera
+from vision_utils.fps_calcularor import FpsCalculator
 
 
 class ColorDetector:
@@ -25,8 +27,8 @@ class ColorDetector:
     def __init__(self, profile='original', sink=None):
         self._sink = sink
         self._profile = profile
-        self._size_threshold = 30
-        self._time = time.time()
+        self._size_threshold = 25
+        self._fps = FpsCalculator()
         self._camera = Camera(width=320,
                               height=320,
                               framerate=20,
@@ -100,12 +102,8 @@ class ColorDetector:
                               0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
 
-    @staticmethod
-    def display_rate(img, start_time):
-        elapsed_time = time.time() - start_time
-        secs_elapsed = elapsed_time % 60
-        fps = 1 / secs_elapsed
-        img = cv2.putText(img, "FPS:{:2.1f}".format(fps), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
+    def display_rate(self, img):
+        img = cv2.putText(img, "FPS:{:2.1f}".format(self._fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
                           0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
 
@@ -140,12 +138,8 @@ class ColorDetector:
             img = self.overlay_boxes(img, list(itertools.chain(*rows)))
 
         if self._sink is not None:
-            self.display_rate(img, self._time)
-
-        if self._sink is not None:
+            self.display_rate(img)
             self._sink.send(img)
-
-        self._time = time.time()
 
     def start(self):
         self._camera.run()
