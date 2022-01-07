@@ -43,6 +43,8 @@ class Camera:
                                 framerate=self._framerate)
         # self._camera.awb_mode = 'off'
         # self._camera.awb_gains = (1.2, 1.3)
+        self._camera.video_denoise = True
+        self._camera.image_effect = 'denoise'
 
         self._processor = self.FrameProcessor(self._camera, self._callback)
 
