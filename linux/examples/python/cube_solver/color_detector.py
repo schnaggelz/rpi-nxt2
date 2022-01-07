@@ -25,17 +25,17 @@ class ColorDetector:
     def __init__(self, profile='original', sink=None):
         self._sink = sink
         self._profile = profile
-        self._size_threshold = 25
+        self._size_threshold = 30
         self._time = time.time()
-        self._camera = Camera(width=240,
-                              height=240,
+        self._camera = Camera(width=320,
+                              height=320,
                               framerate=20,
                               callback=self.analyze)
         self._camera.open()
 
     @staticmethod
     def contour_precedence(box, cols):
-        tolerance = 10
+        tolerance = 5
         origin = cv2.boundingRect(box.contour)
         return (((origin[1] + origin[3]) / 2 // tolerance) * tolerance) * cols + (origin[0] + origin[2]) / 2
 
@@ -50,7 +50,7 @@ class ColorDetector:
             else:
                 mask += cv2.inRange(img_hsv, lower, upper)
 
-        canny = cv2.Canny(mask, 50, 100)
+        canny = cv2.Canny(mask, 50, 50)
         _, cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         return cntrs
@@ -63,7 +63,7 @@ class ColorDetector:
             width = rect[1][0]
             height = rect[1][1]
             if width > min_size and height > min_size:
-                if 0.8 <= (width / height) <= 1.2:
+                if 0.9 <= (width / height) <= 1.1:
                     filtered_cntrs.append(cntr)
         return filtered_cntrs
 
@@ -93,7 +93,7 @@ class ColorDetector:
         elapsed_time = time.time() - start_time
         secs_elapsed = elapsed_time % 60
         fps = 1 / secs_elapsed
-        img = cv2.putText(img, "FPS:{}".format(fps), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
+        img = cv2.putText(img, "FPS:{:2.1f}".format(fps), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
                           0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
 
