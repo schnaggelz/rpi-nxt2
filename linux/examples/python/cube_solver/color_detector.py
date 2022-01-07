@@ -13,7 +13,7 @@ import numpy as np
 import itertools
 
 from cube_colors import CubeColors
-from cam_utils.pi_camera import Camera
+from vision_utils.pi_camera import Camera
 
 
 class ColorDetector:

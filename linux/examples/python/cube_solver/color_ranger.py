@@ -8,7 +8,7 @@
 import cv2
 import numpy as np
 
-from cam_utils.video_receiver import VideoReceiver
+from vision_utils.video_receiver import VideoReceiver
 
 
 class ColorRanger:
