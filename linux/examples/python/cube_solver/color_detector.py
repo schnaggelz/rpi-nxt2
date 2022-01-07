@@ -34,6 +34,18 @@ class ColorDetector:
         self._camera.open()
 
     @staticmethod
+    def get_hsv(img):
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+        # set all hue values >160 to 0 (red color)
+        h, s, v = cv2.split(hsv)
+        h_mask = cv2.inRange(h, 0, 160)
+        h = cv2.bitwise_and(h, h, mask=h_mask)
+        hsv = cv2.merge((h, s, v)).astype(float)
+
+        return hsv
+
+    @staticmethod
     def contour_precedence(box, cols):
         tolerance = 5
         origin = cv2.boundingRect(box.contour)
@@ -98,8 +110,7 @@ class ColorDetector:
         return img
 
     def get_boxes(self, img):
-        # img_filtered = cv2.bilateralFilter(img, 1, 100, 200)
-        img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        img_hsv = self.get_hsv(img)
         boxes = []
         for color, ranges in CubeColors.ranges(self._profile).items():
             cntrs = self.get_contours(img_hsv, ranges)
