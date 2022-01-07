@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2021 Timon Reich
-#
 # Released under the MIT license (http://choosealicense.com/licenses/mit/).
 #
-# This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
-# to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
+# Utility code
+#
 
 import time
 import cv2
@@ -144,7 +142,7 @@ class ColorDetector:
 
 if __name__ == '__main__':
 
-    from cam_utils.video_sender import VideoSender
+    from vision_utils.video_sender import VideoSender
 
     sender = VideoSender('treich-dt-1', 1234)
     sender.connect()
