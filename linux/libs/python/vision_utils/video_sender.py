@@ -31,7 +31,7 @@ class VideoSender(object):
 
 if __name__ == '__main__':
 
-    from cam_utils.pi_camera import Camera
+    from vision_utils.pi_camera import Camera
 
     sender = VideoSender('treich-dt-1', 1234)
     sender.connect()
@@ -39,9 +39,9 @@ if __name__ == '__main__':
     def receive(img):
         sender.send(img)
 
-    camera = Camera(image_width=640,
-                    image_height=480,
+    camera = Camera(width=320,
+                    height=320,
                     framerate=10,
-                    read_callback=receive)
+                    callback=receive)
     camera.open()
     camera.run()

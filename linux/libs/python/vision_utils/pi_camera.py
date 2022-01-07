@@ -41,8 +41,8 @@ class Camera:
 
         self._camera = PiCamera(resolution=(self._width, self._height),
                                 framerate=self._framerate)
-        # camera.awb_mode = 'off'
-        # camera.awb_gains = (1.4, 1.5)
+        # self._camera.awb_mode = 'off'
+        # self._camera.awb_gains = (1.2, 1.3)
 
         self._processor = self.FrameProcessor(self._camera, self._callback)
 
