@@ -10,8 +10,9 @@ fi
 
 BUILD_TYPE=$1
 APP_NAME=$2
+TARGET_NAME=nxt
 
-BUILD_DIR=${ROOT_DIR}/build/nxt_${APP_NAME}_${BUILD_TYPE,,}
+BUILD_DIR=${ROOT_DIR}/build/${TARGET_NAME}-${APP_NAME}-${BUILD_TYPE,,}
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"

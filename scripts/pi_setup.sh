@@ -5,4 +5,4 @@ SOURCE_DIR=$(realpath "${SCRIPT_DIR}/..")
 
 echo "$SOURCE_DIR"
 
-export PYTHONPATH=$SOURCE_DIR/linux/libs/python
+export PYTHONPATH=$SOURCE_DIR/linux/libs/python:$HOME/.local/lib

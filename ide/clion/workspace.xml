@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="rpi-nxt2" targetName="simple_logger" />
+      <config projectName="rpi-nxt2" targetName="nxt_remote" />
+      <config projectName="rpi-nxt2" targetName="nxt_remote_py" />
+      <config projectName="rpi-nxt2" targetName="nxt_wrappers" />
+      <config projectName="rpi-nxt2" targetName="nxt_bios" />
+      <config projectName="rpi-nxt2" targetName="nxt_status" />
+      <config projectName="rpi-nxt2" targetName="nxt_com" />
+      <config projectName="rpi-nxt2" targetName="nxt_console" />
+      <config projectName="rpi-nxt2" targetName="nxt_rc" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="nxt-status-debug" ENABLED="true" GENERATION_DIR="build/nxt-status-debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DBUILD_NXT_ARM=True -DCMAKE_TOOLCHAIN_FILE=/home/timon/Develop/rpi-nxt2/cmake/toolchains/arm-gcc-toolchain.cmake -DAPP_NAME=status -DCMAKE_BUILD_TYPE=Debug" BUILD_OPTIONS="-- -j16 VERBOSE=1" />
+      <configuration PROFILE_NAME="local-linux-debug" ENABLED="true" GENERATION_DIR="build/local-linux-debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DBUILD_LINUX=True -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MODULE_PATH=/home/timon/Develop/rpi-nxt2/cmake" BUILD_OPTIONS="-- -j16 VERBOSE=1" />
+      <configuration PROFILE_NAME="nxt-rc-debug" ENABLED="true" GENERATION_DIR="build/nxt-rc-debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DBUILD_NXT_ARM=True -DCMAKE_TOOLCHAIN_FILE=/home/timon/Develop/rpi-nxt2/cmake/toolchains/arm-gcc-toolchain.cmake -DAPP_NAME=rc -DCMAKE_BUILD_TYPE=Debug" BUILD_OPTIONS="-- -j16 VERBOSE=1" />
+      <configuration PROFILE_NAME="rpi-linux-debug" ENABLED="true" GENERATION_DIR="build/rpi-linux-debug" CONFIG_NAME="Debug" TOOLCHAIN_NAME="raspide" GENERATION_OPTIONS="-DBUILD_LINUX=True -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=~/.local" BUILD_OPTIONS="-- -j16 VERBOSE=1" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="050d728d-86dc-4963-aa50-ee3217fe8dc6" name="Changes" comment="Use HW accelerated denoise">
+      <change afterPath="$PROJECT_DIR$/linux/examples/python/cube_solver/color_detector2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/examples/python/cube_solver/vision_params.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/examples/python/cube_solver/color_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/linux/examples/python/cube_solver/color_detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_linux.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_linux.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_nxt.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_nxt.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/pi_setup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/pi_setup.sh" afterDir="false" />
+    </list>
+    <list id="27482486-67d1-4b1e-a4f6-004cdc5ac385" name="Temp" comment="">
+      <change afterPath="$PROJECT_DIR$/linux/examples/python/cube_solver/dexter_DO_NOT_COMMIT.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:rpi-linux-debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/linux/examples/python/cube_solver/cube_solver.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/venv/lib/python3.8/site-packages/imutils/contours.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/linux/examples/python/cube_solver/color_detector.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/linux/examples/python/cube_solver/solver_machine.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="20MICwgBRK1dUEknQ0TwQkhayvH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="cf.advertisement.text.overridden" value="true" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/linux/examples/python/cube_solver/camera_source.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="settings.editor.splitter.proportion" value="0.25630915" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="rpi-nxt2">
+        <option name="myModuleName" value="rpi-nxt2" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/linux/examples/python/cube_solver" />
+      <recent name="$PROJECT_DIR$/linux/apps/cpp" />
+      <recent name="$PROJECT_DIR$/shared/com_protocol/include/nxt/com" />
+      <recent name="$PROJECT_DIR$/nxt2/fw/source/api" />
+      <recent name="$PROJECT_DIR$/nxt2/fw/include/api" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/linux/examples/python/cube_solver" />
+      <recent name="$PROJECT_DIR$/linux/libs/python/nxt_utils" />
+      <recent name="$PROJECT_DIR$/linux/libs/python/cam_utils" />
+      <recent name="$PROJECT_DIR$/linux/libs/python/common_utils" />
+      <recent name="$PROJECT_DIR$/linux/examples/python" />
+    </key>
+  </component>
+  <component name="RunManager" selected="CMake Application.nxt_remote_py">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_rc_gdb" type="CLion_Remote" version="1" remoteCommand=":2331" symbolFile="$PROJECT_DIR$/build/nxt_rc_debug/nxt2/apps/rc/nxt_rc" sysroot="">
+      <debugger kind="GDB" isBundled="true" />
+      <method v="2" />
+    </configuration>
+    <configuration name="raspina_gdb" type="CLion_Remote" version="1" remoteCommand="raspina:2332" symbolFile="$PROJECT_DIR$/build/clion/rpi_linux_debug/linux/libs/nxt_remote/nxt_remote_py.cpython-39-arm-linux-gnueabihf.so" sysroot="">
+      <debugger kind="GDB" isBundled="true" />
+      <pathMapping remote=":$PROJECT_DIR$/../../../pi/rpi-nxt2-1" local="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="nxt_bios" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_bios" CONFIG_NAME="nxt-status-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_com" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_com" CONFIG_NAME="local-linux-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_console" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_console" CONFIG_NAME="local-linux-debug" RUN_TARGET_PROJECT_NAME="rpi-nxt2" RUN_TARGET_NAME="nxt_console">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_rc" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_rc" CONFIG_NAME="nxt-rc-debug" RUN_TARGET_PROJECT_NAME="rpi-nxt2" RUN_TARGET_NAME="nxt_rc">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_remote" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_remote" CONFIG_NAME="local-linux-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_remote_py" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_remote_py" CONFIG_NAME="local-linux-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CMake.Install" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_status" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_status" CONFIG_NAME="nxt-status-debug" RUN_TARGET_PROJECT_NAME="rpi-nxt2" RUN_TARGET_NAME="nxt_status">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="nxt_wrappers" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="nxt_wrappers" CONFIG_NAME="nxt-status-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="simple_logger" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="rpi-nxt2" TARGET_NAME="simple_logger" CONFIG_NAME="local-linux-debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="camera_source.py" type="PythonConfigurationType" factoryName="Python">
+      <module name="rpi-nxt2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/linux/examples/python/cube_solver" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/linux/libs/python/nxt_utils/camera_source.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="color_detector" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rpi-nxt2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/linux/examples/python/cube_solver" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/linux/examples/python/cube_solver/color_detector.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="nxt_console" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="rpi-nxt2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/linux/examples/python/nxt_console" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/linux/examples/python/nxt_console/nxt_console.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="J-Link" type="com.jetbrains.cidr.remote.gdbserver.type" factoryName="com.jetbrains.cidr.remote.gdbserver.factory" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="nxt_sw" TARGET_NAME="nxt_status" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="nxt_sw" RUN_TARGET_NAME="nxt_status">
+      <custom-gdb-server version="1" gdb-connect="localhost:2af3231" executable="" warmup-ms="0" download-type="NONE" uploadFile="/tmp/CLion/debug/nxt_status" defaultGdbServerArgs=":1234 /tmp/CLion/debug/nxt_status">
+        <debugger kind="GDB">/usr/bin/gdb</debugger>
+      </custom-gdb-server>
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.nxt_bios" />
+      <item itemvalue="CMake Application.nxt_com" />
+      <item itemvalue="CMake Application.nxt_console" />
+      <item itemvalue="CMake Application.nxt_rc" />
+      <item itemvalue="CMake Application.nxt_remote" />
+      <item itemvalue="CMake Application.nxt_remote_py" />
+      <item itemvalue="CMake Application.nxt_status" />
+      <item itemvalue="CMake Application.nxt_wrappers" />
+      <item itemvalue="CMake Application.simple_logger" />
+      <item itemvalue="Python.nxt_console" />
+      <item itemvalue="Python.camera_source.py" />
+      <item itemvalue="Python.color_detector" />
+      <item itemvalue="Remote Debug.nxt_rc_gdb" />
+      <item itemvalue="Remote Debug.raspina_gdb" />
+      <item itemvalue="Remote GDB Server.J-Link" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.color_detector" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="050d728d-86dc-4963-aa50-ee3217fe8dc6" name="Changes" comment="" />
+      <changelist id="27482486-67d1-4b1e-a4f6-004cdc5ac385" name="Temp" comment="" />
+      <created>1635847905478</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1635847905478</updated>
+      <workItem from="1635847906720" duration="17472000" />
+      <workItem from="1636028036163" duration="15967000" />
+      <workItem from="1636106209031" duration="14543000" />
+      <workItem from="1636122892397" duration="22000" />
+      <workItem from="1636122980166" duration="1000" />
+      <workItem from="1636123111557" duration="10590000" />
+      <workItem from="1636196387406" duration="18790000" />
+      <workItem from="1636290981417" duration="12423000" />
+      <workItem from="1637418356807" duration="1088000" />
+      <workItem from="1637419590518" duration="10407000" />
+      <workItem from="1637430008849" duration="5551000" />
+      <workItem from="1637495677897" duration="19957000" />
+      <workItem from="1638017089194" duration="12467000" />
+      <workItem from="1638036390004" duration="5540000" />
+      <workItem from="1638097741166" duration="12962000" />
+      <workItem from="1638618277880" duration="13000000" />
+      <workItem from="1638716709032" duration="11000" />
+      <workItem from="1638716878657" duration="6707000" />
+      <workItem from="1639221056590" duration="2209000" />
+      <workItem from="1639240362613" duration="16000" />
+      <workItem from="1639240457668" duration="831000" />
+      <workItem from="1639241538329" duration="2010000" />
+      <workItem from="1639243611901" duration="1000" />
+      <workItem from="1639243737803" duration="2108000" />
+      <workItem from="1639757715023" duration="11000" />
+      <workItem from="1639757740741" duration="748000" />
+      <workItem from="1639758676591" duration="7368000" />
+      <workItem from="1639910114325" duration="8320000" />
+      <workItem from="1639923938303" duration="16710000" />
+      <workItem from="1639995448175" duration="14287000" />
+      <workItem from="1640019385949" duration="7781000" />
+      <workItem from="1640086022301" duration="5220000" />
+      <workItem from="1640110018073" duration="5906000" />
+      <workItem from="1640170295246" duration="4667000" />
+      <workItem from="1640261626536" duration="6111000" />
+      <workItem from="1640276377204" duration="4850000" />
+      <workItem from="1640532970694" duration="13696000" />
+      <workItem from="1640606791014" duration="10665000" />
+      <workItem from="1640619832810" duration="677000" />
+      <workItem from="1640782588756" duration="3460000" />
+      <workItem from="1640871362035" duration="9034000" />
+      <workItem from="1640882073246" duration="26000" />
+      <workItem from="1640882111702" duration="97000" />
+      <workItem from="1640882221222" duration="6000" />
+      <workItem from="1640882317358" duration="42000" />
+      <workItem from="1640950322158" duration="4090000" />
+      <workItem from="1641029602489" duration="8590000" />
+      <workItem from="1641122746753" duration="13272000" />
+      <workItem from="1641219311831" duration="1851000" />
+      <workItem from="1641309547206" duration="4943000" />
+      <workItem from="1641385206740" duration="13202000" />
+      <workItem from="1641467560230" duration="7069000" />
+      <workItem from="1641476977229" duration="3359000" />
+      <workItem from="1641555575610" duration="10375000" />
+      <workItem from="1641643174608" duration="3442000" />
+    </task>
+    <task id="LOCAL-00220" summary="Separate class for machine">
+      <created>1640200616568</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1640200616568</updated>
+    </task>
+    <task id="LOCAL-00221" summary="Add the masks together for two ranges">
+      <created>1640277914906</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1640277914907</updated>
+    </task>
+    <task id="LOCAL-00222" summary="Some more iterations, hope for calibration ;-)">
+      <created>1640277939593</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1640277939593</updated>
+    </task>
+    <task id="LOCAL-00223" summary="Separate class for machine">
+      <created>1640277949425</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1640277949425</updated>
+    </task>
+    <task id="LOCAL-00224" summary="Implement target positioning">
+      <created>1640544150852</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544150853</updated>
+    </task>
+    <task id="LOCAL-00225" summary="First steps on machine">
+      <created>1640544170364</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544170364</updated>
+    </task>
+    <task id="LOCAL-00226" summary="Separate refresh to avoid too many updates">
+      <created>1640544190249</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544190249</updated>
+    </task>
+    <task id="LOCAL-00227" summary="FPS displaying">
+      <created>1640544211632</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544211633</updated>
+    </task>
+    <task id="LOCAL-00228" summary="Wrapper class, first steps">
+      <created>1640544230564</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544230564</updated>
+    </task>
+    <task id="LOCAL-00229" summary="Convenience and abstraction">
+      <created>1640544720286</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544720287</updated>
+    </task>
+    <task id="LOCAL-00230" summary="Increase worker periodicity">
+      <created>1640544750363</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1640544750363</updated>
+    </task>
+    <task id="LOCAL-00231" summary="Turntable controlling">
+      <created>1640546637879</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1640546637880</updated>
+    </task>
+    <task id="LOCAL-00232" summary="Need for speed">
+      <created>1640546653423</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1640546653423</updated>
+    </task>
+    <task id="LOCAL-00233" summary="Move motor target count check into 1kHz BG process and add tolerance as a parameter">
+      <created>1640616773512</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1640616773513</updated>
+    </task>
+    <task id="LOCAL-00234" summary="Add motor target count tolerance as a parameter">
+      <created>1640616820302</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1640616820303</updated>
+    </task>
+    <task id="LOCAL-00235" summary="Add/test move functions">
+      <created>1640616841428</created>
+      <option name="number" value="00235" />
+      <option name="presentableId" value="LOCAL-00235" />
+      <option name="project" value="LOCAL" />
+      <updated>1640616841428</updated>
+    </task>
+    <task id="LOCAL-00236" summary="Different tolerance on load">
+      <created>1640618347673</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1640618347673</updated>
+    </task>
+    <task id="LOCAL-00237" summary="Cleanup">
+      <created>1640620330638</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1640620330643</updated>
+    </task>
+    <task id="LOCAL-00238" summary="Experiment with a second contour extraction algo">
+      <created>1640881809310</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1640881809311</updated>
+    </task>
+    <task id="LOCAL-00239" summary="Video helpers">
+      <created>1641041189366</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1641041189366</updated>
+    </task>
+    <task id="LOCAL-00240" summary="Use RPi 3b">
+      <created>1641041635020</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1641041635020</updated>
+    </task>
+    <task id="LOCAL-00241" summary="Video helpers">
+      <created>1641147026416</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1641147026417</updated>
+    </task>
+    <task id="LOCAL-00242" summary="Follow-up fixes after move">
+      <created>1641147078672</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1641147078672</updated>
+    </task>
+    <task id="LOCAL-00243" summary="New lib">
+      <created>1641385708530</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1641385708531</updated>
+    </task>
+    <task id="LOCAL-00244" summary="Re-implement using PiCamera">
+      <created>1641385736918</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1641385736918</updated>
+    </task>
+    <task id="LOCAL-00245" summary="New lib">
+      <created>1641385877623</created>
+      <option name="number" value="00245" />
+      <option name="presentableId" value="LOCAL-00245" />
+      <option name="project" value="LOCAL" />
+      <updated>1641385877623</updated>
+    </task>
+    <task id="LOCAL-00246" summary="Restore OpenCV camera">
+      <created>1641386737586</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1641386737586</updated>
+    </task>
+    <task id="LOCAL-00247" summary="Use PiCamera for testing">
+      <created>1641386753373</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1641386753373</updated>
+    </task>
+    <task id="LOCAL-00248" summary="Follow-up fix imports">
+      <created>1641386871469</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1641386871470</updated>
+    </task>
+    <task id="LOCAL-00249" summary="Bit more wrapping">
+      <created>1641408641473</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1641408641473</updated>
+    </task>
+    <task id="LOCAL-00250" summary="Bit more wrapping">
+      <created>1641408754322</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1641408754322</updated>
+    </task>
+    <task id="LOCAL-00251" summary="Setup script">
+      <created>1641408819290</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1641408819290</updated>
+    </task>
+    <task id="LOCAL-00252" summary="CV fixes">
+      <created>1641409772128</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1641409772128</updated>
+    </task>
+    <task id="LOCAL-00253" summary="Set framerate">
+      <created>1641409797485</created>
+      <option name="number" value="00253" />
+      <option name="presentableId" value="LOCAL-00253" />
+      <option name="project" value="LOCAL" />
+      <updated>1641409797485</updated>
+    </task>
+    <task id="LOCAL-00254" summary="Performance improvement">
+      <created>1641470969171</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1641470969171</updated>
+    </task>
+    <task id="LOCAL-00255" summary="Color ranger based on RPi source">
+      <created>1641485622856</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1641485622857</updated>
+    </task>
+    <task id="LOCAL-00256" summary="Use camera callback for performance">
+      <created>1641485687633</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1641485687634</updated>
+    </task>
+    <task id="LOCAL-00257" summary="Allow stopping the cam">
+      <created>1641485708045</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1641485708045</updated>
+    </task>
+    <task id="LOCAL-00258" summary="Allow aborting">
+      <created>1641485810069</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1641485810069</updated>
+    </task>
+    <task id="LOCAL-00259" summary="Allow aborting">
+      <created>1641485823278</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1641485823279</updated>
+    </task>
+    <task id="LOCAL-00260" summary="New utility class">
+      <created>1641562305987</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562305987</updated>
+    </task>
+    <task id="LOCAL-00261" summary="New utility class">
+      <created>1641562316619</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562316619</updated>
+    </task>
+    <task id="LOCAL-00262" summary="New lib">
+      <created>1641562369607</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562369607</updated>
+    </task>
+    <task id="LOCAL-00263" summary="New lib">
+      <created>1641562397648</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562397648</updated>
+    </task>
+    <task id="LOCAL-00264" summary="Cam parameter fixes">
+      <created>1641562432037</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562432037</updated>
+    </task>
+    <task id="LOCAL-00265" summary="Can handle red better">
+      <created>1641562455823</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1641562455823</updated>
+    </task>
+    <task id="LOCAL-00266" summary="FPS calc">
+      <created>1641566287004</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1641566287004</updated>
+    </task>
+    <task id="LOCAL-00267" summary="Color ranges :-(">
+      <created>1641566300989</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1641566300989</updated>
+    </task>
+    <task id="LOCAL-00268" summary="Use HW accelerated denoise">
+      <created>1641566335301</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1641566335301</updated>
+    </task>
+    <option name="localTasksCounter" value="269" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cleanup" />
+    <MESSAGE value="Experiment with a second contour extraction algo" />
+    <MESSAGE value="Use RPi 3b" />
+    <MESSAGE value="Video helpers" />
+    <MESSAGE value="Follow-up fixes after move" />
+    <MESSAGE value="Re-implement using PiCamera" />
+    <MESSAGE value="Restore OpenCV camera" />
+    <MESSAGE value="Use PiCamera for testing" />
+    <MESSAGE value="Follow-up fix imports" />
+    <MESSAGE value="Bit more wrapping" />
+    <MESSAGE value="Setup script" />
+    <MESSAGE value="CV fixes" />
+    <MESSAGE value="Set framerate" />
+    <MESSAGE value="Performance improvement" />
+    <MESSAGE value="Color ranger based on RPi source" />
+    <MESSAGE value="Use camera callback for performance" />
+    <MESSAGE value="Allow stopping the cam" />
+    <MESSAGE value="Allow aborting" />
+    <MESSAGE value="New utility class" />
+    <MESSAGE value="New lib" />
+    <MESSAGE value="Cam parameter fixes" />
+    <MESSAGE value="Can handle red better" />
+    <MESSAGE value="FPS calc" />
+    <MESSAGE value="Color ranges :-(" />
+    <MESSAGE value="Use HW accelerated denoise" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use HW accelerated denoise" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/linux/libs/cpp/nxt_remote/source/remote.cpp</url>
+          <line>53</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
