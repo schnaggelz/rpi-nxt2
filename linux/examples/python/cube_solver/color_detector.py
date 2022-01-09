@@ -14,6 +14,7 @@ from cube_colors import CubeColors
 
 from vision_utils.pi_camera import Camera
 from vision_utils.fps_calcularor import FpsCalculator
+from vision_utils.video_sender import VideoSender
 
 
 class ColorDetector:
@@ -142,7 +143,10 @@ class ColorDetector:
             self._sink.send(img)
 
     def start(self):
-        self._camera.run()
+        self._camera.start()
+
+    def stop(self):
+        self._camera.stop()
 
 
 if __name__ == '__main__':
