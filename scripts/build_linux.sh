@@ -3,18 +3,17 @@
 SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 ROOT_DIR=$(realpath "$SCRIPT_DIR/..")
 
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
   then
-    echo "No parameters specified! Need <build_type>"
+    echo "No parameters specified! Need <target_name> <build_type>"
     exit 1
 fi
 
-BUILD_TYPE=$1
-APP_NAME=$2
-TARGET_NAME=$3
+TARGET_NAME=$1
+BUILD_TYPE=$2
 
 BUILD_DIR=${ROOT_DIR}/build/${TARGET_NAME}-linux-${BUILD_TYPE,,}
-INSTALL_DIR=${HOME}/.local/lib
+INSTALL_DIR=${HOME}/.local
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
