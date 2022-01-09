@@ -35,12 +35,12 @@ class SolverMachine:
     class GrabberPosition(Enum):
         HOME = 1
         GRAB = 170
-        FLIP = 60
-        REST = 220
+        FLIP = 40
+        REST = 15
 
     class ScannerPosition(Enum):
         HOME = 1
-        SCAN = 30
+        SCAN = 20
 
     def __init__(self):
         self._timer = None
@@ -71,7 +71,9 @@ class SolverMachine:
         self._timer = PeriodicTimer(0.001, self.periodic)
 
     def stop(self):
-        self._timer.stop()
+        if self._timer is not None:
+            self._timer.stop()
+
         self._nxt.motor_stop(self.MOTOR_TURN)
         self._nxt.motor_stop(self.MOTOR_GRAB)
         self._nxt.motor_stop(self.MOTOR_SCAN)
