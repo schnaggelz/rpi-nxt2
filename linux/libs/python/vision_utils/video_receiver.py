@@ -33,7 +33,7 @@ class VideoReceiver(object):
 
 if __name__ == '__main__':
 
-    receiver = VideoReceiver(1234)
+    receiver = VideoReceiver(4243)
     receiver.connect()
 
     while True:

@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     ranger = ColorRanger()
 
-    receiver = VideoReceiver(1234)
+    receiver = VideoReceiver(4243)
     receiver.connect()
 
     while True:
