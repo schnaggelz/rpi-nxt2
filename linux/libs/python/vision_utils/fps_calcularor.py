@@ -3,6 +3,8 @@
 # Utility code
 #
 
+import time
+
 class FpsCalculator:
     def __init__(self, alpha=0.1):
         self.t = time.time()
