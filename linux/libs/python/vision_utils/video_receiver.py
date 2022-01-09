@@ -45,6 +45,6 @@ if __name__ == '__main__':
             if key == ord('q'):
                 break
         except KeyboardInterrupt:
-            pass
+            break
         finally:
             pass #TODO
