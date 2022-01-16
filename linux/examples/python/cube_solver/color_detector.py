@@ -8,6 +8,7 @@
 import cv2
 import numpy as np
 import itertools
+import signal
 
 from cube_colors import CubeColors
 
@@ -17,25 +18,34 @@ from vision_utils.video_sender import VideoSender
 
 
 class ColorDetector:
-    class Box:
+    class __Box:
         __slots__ = ['color', 'contour']
 
         def __init__(self, color, contour):
             self.color = color
             self.contour = contour
 
-    def __init__(self, profile='original'):
-        self._colors = CubeColors(profile).colors
-        self._sink = VideoSender('treich-dt-1', 4243)
-        self._profile = profile
-        self._size_threshold = 25
-        self._fps = FpsCalculator()
-        self._camera = Camera(width=320,
-                              height=320,
-                              framerate=20,
-                              callback=self.analyze)
-        self._camera.open()
-        self._sink.connect()
+    def __init__(self, output, profile='original'):
+        self.__colors = CubeColors(profile).colors
+        self.__video_sink = None
+
+        self.__output = output
+        self.__profile = profile
+        self.__size_threshold = 25
+        self.__fps = FpsCalculator()
+        self.__camera = Camera(width=320,
+                               height=320,
+                               framerate=20,
+                               callback=self.analyze)
+        self.__camera.open()
+
+    @property
+    def video_sink(self):
+        return self.__video_sink
+
+    @video_sink.setter
+    def video_sink(self, sink):
+        self.__video_sink = sink
 
     @staticmethod
     def get_hsv(img):
@@ -99,18 +109,18 @@ class ColorDetector:
         return img
 
     def display_rate(self, img):
-        img = cv2.putText(img, "FPS:{:2.1f}".format(self._fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
+        img = cv2.putText(img, "FPS:{:2.1f}".format(self.__fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
                           0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
 
     def get_boxes(self, img):
         img_hsv = self.get_hsv(img)
         boxes = []
-        for color in self._colors:
+        for color in self.__colors:
             cntrs = self.get_contours(img_hsv, color.ranges)
-            cntrs = self.filter_contours(cntrs, self._size_threshold)
+            cntrs = self.filter_contours(cntrs, self.__size_threshold)
             for cntr in cntrs:
-                boxes.append(self.Box(color, cntr))
+                boxes.append(self.__Box(color, cntr))
 
         return boxes
 
@@ -120,8 +130,10 @@ class ColorDetector:
             return False
 
         boxes = self.get_boxes(img)
+
         if len(boxes) == 9:
             (boxes, _) = self.sort_boxes(boxes, True)
+            pattern = ''
             rows = []
             row = []
             for (i, box) in enumerate(boxes, 1):
@@ -130,17 +142,22 @@ class ColorDetector:
                     (boxes, _) = self.sort_boxes(row, False)
                     rows.append(boxes)
                     row = []
+                    pattern += box.color.location
+
+            if not self.__output.full():
+                self.__output.put(pattern)
+
             img = self.display_boxes(img, list(itertools.chain(*rows)))
 
-        if self._sink is not None:
+        if self.__video_sink is not None:
             self.display_rate(img)
-            self._sink.send(img)
+            self.__video_sink.send(img)
 
     def start(self):
-        self._camera.start()
+        self.__camera.start()
 
     def stop(self):
-        self._camera.stop()
+        self.__camera.stop()
 
 
 if __name__ == '__main__':
@@ -148,6 +165,11 @@ if __name__ == '__main__':
     sender = VideoSender('treich-dt-1', 4243)
     sender.connect()
 
-    detector = ColorDetector(sink=sender)
+    detector = ColorDetector()
+    detector.video_sink = sender
     detector.start()
 
+    def handler(signum, frame):
+        detector.stop()
+
+    signal.signal(signal.SIGINT, handler)
