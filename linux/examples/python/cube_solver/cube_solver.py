@@ -11,6 +11,9 @@ import time
 import signal
 import queue
 
+from collections import Counter
+from collections import deque as RingBuffer
+
 from multiprocessing import Process, Queue
 from threading import Thread
 
@@ -45,12 +48,22 @@ class CubeSolver:
         def stop(self):
             self.__stop = True
 
+    @staticmethod
+    def run_detector(output):
+        video_sink = VideoSender('192.168.242.137', 4243)  # configurable?
+        video_sink.connect()
+
+        detector = ColorDetector(output=output)
+        detector.video_sink = video_sink
+        detector.start()
+
     def __init__(self):
         self.__console_window = ConsoleWindow()
         self.__solver_machine = SolverMachine()
 
         self.__received_patterns = 0
-        self.__current_pattern = ''
+        self.__detected_pattern = ''
+        self.__current_patterns = RingBuffer(maxlen=10)
         self.__patterns = Queue(maxsize=10)
 
         self.__detector_process = Process(target=CubeSolver.run_detector,
@@ -126,10 +139,9 @@ class CubeSolver:
     def display(self):
         self.__console_window.print_at(1, 1, "CUBER V{:d}".format(self.VERSION))
 
-        self.__console_window.print_at(5, 1, "CONTROL:  {:5d}".format(self.__solver_machine.counter))
-        self.__console_window.print_at(7, 1, "RECEIVED: {:5d}".format(self.__received_patterns))
-
-        self.__console_window.print_at(8, 1, "CURRENT PATTERN: '{}'".format(self.__current_pattern))
+        self.__console_window.print_at(5, 1, "CTL_CTR: {:5d}".format(self.__solver_machine.counter))
+        self.__console_window.print_at(7, 1, "RCV_CTR: {:5d}".format(self.__received_patterns))
+        self.__console_window.print_at(8, 1, "DETECTED: '{}'".format(self.__detected_pattern))
 
         self.__console_window.print_at(10, 1, "MA: {:5d}".format(self.__solver_machine.decoder_values[0]))
         self.__console_window.print_at(11, 1, "MB: {:5d}".format(self.__solver_machine.decoder_values[1]))
@@ -161,16 +173,6 @@ class CubeSolver:
 
         time.sleep(1)
 
-        # patterns = self.__detector.patterns
-        # if len(patterns) > 0:
-        #     self.__current_pattern = self.__detector.patterns[0]
-
-        # if countdown > 0:
-        #     occurrences = collections.Counter(self.__detector.patterns)
-        #     self.__current_pattern = occurrences.most_common(1)[0][0]
-        # else:
-        #     self.__current_pattern = 'NONE'
-
         self.__solver_machine.scanner_home()
 
     def scan_all_colors(self):
@@ -190,16 +192,12 @@ class CubeSolver:
         self.home()
 
     def check_pattern(self, pattern):
-        self.__current_pattern = pattern
+        self.__current_patterns.append(pattern)
         self.__received_patterns += 1
 
-    def run_detector(queue):
-        video_sink = VideoSender('192.168.242.137', 4243)  # configurable?
-        video_sink.connect()
-
-        detector = ColorDetector(output=queue)
-        detector.video_sink = video_sink
-        detector.start()
+        if len(self.__current_patterns) > 0:
+            occurrences = Counter(list(self.__current_patterns))
+            self.__detected_pattern = occurrences.most_common(1)[0][0]
 
 
 if __name__ == '__main__':
