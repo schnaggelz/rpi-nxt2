@@ -47,7 +47,7 @@ class ColorRanger:
         mask_3 = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
         stacked = np.hstack((mask_3, img, res))
 
-        cv2.imshow('Trackbars', cv2.resize(stacked, None, fx=0.4, fy=0.4))
+        cv2.imshow('Trackbars', stacked)
 
 
 if __name__ == '__main__':
