@@ -70,8 +70,23 @@ class ColorDetector:
             else:
                 mask += cv2.inRange(img_hsv, lower, upper)
 
-        canny = cv2.Canny(mask, 50, 100)
+        canny = cv2.Canny(mask, 0, 50)
         cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+
+        return cntrs
+
+    @staticmethod
+    def get_white_contours(img_hsv):
+        sensitivity = 15
+        lower_white = np.array([0, 0, 255 - sensitivity])
+        upper_white = np.array([255, sensitivity, 255])
+
+        mask = cv2.inRange(img_hsv, lower_white, upper_white)
+        #res = cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
+
+        _, bin = cv2.threshold(mask, 50, 255, cv2.THRESH_BINARY)
+
+        cntrs, _ = cv2.findContours(bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         return cntrs
 
@@ -122,6 +137,11 @@ class ColorDetector:
             for cntr in cntrs:
                 boxes.append(self.__Box(color, cntr))
 
+        white_cntrs = self.get_white_contours(img_hsv)
+        white_cntrs = self.filter_contours(white_cntrs, self.__size_threshold)
+        for white_cntr in white_cntrs:
+            boxes.append(self.__Box(CubeColors.WHITE, white_cntr))
+
         return boxes
 
     def analyze(self, img):
@@ -142,7 +162,8 @@ class ColorDetector:
                     (boxes, _) = self.sort_boxes(row, False)
                     rows.append(boxes)
                     row = []
-                    pattern += box.color.location
+
+                pattern += box.color.location
 
             if not self.__output.full():
                 self.__output.put(pattern)
@@ -161,15 +182,16 @@ class ColorDetector:
 
 
 if __name__ == '__main__':
-
-    sender = VideoSender('treich-dt-1', 4243)
+    sender = VideoSender('192.168.242.137', 4243)
     sender.connect()
 
     detector = ColorDetector()
     detector.video_sink = sender
     detector.start()
 
+
     def handler(signum, frame):
         detector.stop()
+
 
     signal.signal(signal.SIGINT, handler)
