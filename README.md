@@ -214,3 +214,13 @@ on top of the color sensor which I still kept for a simple program later-on.
 #### The Python Example
 
 See [linux/examples/python/cube_solver](linux/examples/python/cube_solver).
+
+#### Runtime requirements (e.g. on Raspberry OS)
+
+Install required libraries
+
+````
+sudo apt install python3-opencv
+sudo apt install python3-zmq
+````
+
