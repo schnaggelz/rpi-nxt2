@@ -25,8 +25,9 @@ class ColorDetector:
             self.color = color
             self.contour = contour
 
-    def __init__(self, profile='original', sink=None):
-        self._sink = sink
+    def __init__(self, profile='original'):
+        self._colors = CubeColors(profile).colors
+        self._sink = VideoSender('treich-dt-1', 4243)
         self._profile = profile
         self._size_threshold = 25
         self._fps = FpsCalculator()
@@ -94,11 +95,11 @@ class ColorDetector:
         return boxes, rects
 
     @staticmethod
-    def overlay_boxes(img, boxes):
+    def display_boxes(img, boxes):
         for idx, box in enumerate(boxes):
             x, y, w, h = cv2.boundingRect(box.contour)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            text = "#{}:{}".format(idx, box.color)
+            text = "#{}:{}".format(idx, box.color.name)
             img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
                               0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
@@ -111,8 +112,8 @@ class ColorDetector:
     def get_boxes(self, img):
         img_hsv = self.get_hsv(img)
         boxes = []
-        for color, ranges in CubeColors.ranges(self._profile).items():
-            cntrs = self.get_contours(img_hsv, ranges)
+        for color in self._colors:
+            cntrs = self.get_contours(img_hsv, color.ranges)
             cntrs = self.filter_contours(cntrs, self._size_threshold)
             for cntr in cntrs:
                 boxes.append(self.Box(color, cntr))
@@ -125,7 +126,6 @@ class ColorDetector:
             return False
 
         boxes = self.get_boxes(img)
-
         if len(boxes) == 9:
             (boxes, _) = self.sort_boxes(boxes, True)
             rows = []
@@ -136,7 +136,7 @@ class ColorDetector:
                     (boxes, _) = self.sort_boxes(row, False)
                     rows.append(boxes)
                     row = []
-            img = self.overlay_boxes(img, list(itertools.chain(*rows)))
+            img = self.display_boxes(img, list(itertools.chain(*rows)))
 
         if self._sink is not None:
             self.display_rate(img)
