@@ -4,7 +4,7 @@
 #
 # Released under the MIT license (http://choosealicense.com/licenses/mit/).
 #
-# Utiluty code
+# Utility code
 #
 
 import curses
