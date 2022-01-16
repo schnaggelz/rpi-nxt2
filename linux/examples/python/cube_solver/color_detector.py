@@ -41,12 +41,6 @@ class ColorDetector:
     def get_hsv(img):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-        # set all hue values >160 to 0 (red color)
-        h, s, v = cv2.split(hsv)
-        h_mask = cv2.inRange(h, 0, 160)
-        h = cv2.bitwise_and(h, h, mask=h_mask)
-        hsv = cv2.merge((h, s, v)).astype(float)
-
         return hsv
 
     @staticmethod
@@ -66,8 +60,8 @@ class ColorDetector:
             else:
                 mask += cv2.inRange(img_hsv, lower, upper)
 
-        canny = cv2.Canny(mask, 50, 50)
-        _, cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        canny = cv2.Canny(mask, 50, 100)
+        cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         return cntrs
 
@@ -151,9 +145,7 @@ class ColorDetector:
 
 if __name__ == '__main__':
 
-    from vision_utils.video_sender import VideoSender
-
-    sender = VideoSender('treich-dt-1', 1234)
+    sender = VideoSender('treich-dt-1', 4243)
     sender.connect()
 
     detector = ColorDetector(sink=sender)
