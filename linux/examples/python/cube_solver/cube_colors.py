@@ -1,24 +1,30 @@
-from collections import defaultdict
+from typing import NamedTuple
 
 import numpy as np
 
 
 class CubeColors:
-    PROFILE_COLORS = (
-        ('red', [1], ([0, 100, 100], [4, 255, 255])),
-        ('orange', [1], ([5, 100, 100], [23, 255, 255])),
-        ('yellow', [1], ([24, 50, 100], [40, 255, 255])),
-        # ('citron', [], ([31, 50, 100], [50, 255, 255])),
-        ('green', [1], ([41, 50, 50], [70, 255, 255])),
-        # ('turquoise', [], ([71, 50, 50], [75, 255, 255])),
-        ('cyan', [], ([71, 50, 100], [85, 255, 255])),
-        # ('ocean', [], ([86, 50, 50], [100, 255, 255])),
-        ('blue', [1], ([86, 100, 150], [120, 255, 255])),
-        # ('violet', [], ([121, 10, 50], [135, 255, 255])),
-        ('magenta', [], ([136, 10, 50], [170, 255, 255])),
-        # ('raspberry', [], ([151, 50, 50], [170, 255, 255])),
-        ('white', [1], ([0, 100, 0], [179, 255, 255]))
-    )
+    class Color(NamedTuple):
+        name: str
+        location: str
+        profile_id: int
+        ranges: tuple
+
+    PROFILE_COLORS = [
+        Color('red', 'U', 1, [[[0, 100, 100], [4, 255, 255]], [[160, 100, 100], [179, 255, 255]]]),
+        Color('orange', 'D', 1, [[[5, 100, 100], [23, 255, 255]]]),
+        Color('yellow', 'B', 1, [[[24, 50, 100], [40, 255, 255]]]),
+        Color('citron', '?', 0, [[[31, 50, 100], [50, 255, 255]]]),
+        Color('green', 'R', 1, [[[41, 50, 50], [70, 255, 255]]]),
+        Color('turquoise', '?', 0, [[[71, 50, 50], [75, 255, 255]]]),
+        Color('cyan', '?', 0, [[[71, 50, 100], [85, 255, 255]]]),
+        Color('ocean', '?', 0, [[[86, 50, 50], [100, 255, 255]]]),
+        Color('blue', 'L', 1, [[[86, 100, 150], [120, 255, 255]]]),
+        Color('violet', '?', 0, [[[121, 10, 50], [135, 255, 255]]]),
+        Color('magenta', 'L', 0, [[[136, 10, 50], [170, 255, 255]]]),
+        Color('raspberry', '?', 0, [[[151, 50, 50], [170, 255, 255]]]),
+        Color('white', 'F', 1, [[[0, 100, 0], [179, 255, 255]]])
+    ]
 
     PROFILES = {
         'original': 1,
@@ -26,41 +32,44 @@ class CubeColors:
     }
 
     def __init__(self, profile):
-        self.colors = CubeColors.ranges(profile)
+        self.__colors = CubeColors.colors_of_profile(profile)
+
+    @property
+    def colors(self):
+        return self.__colors
 
     def calibrate(self):
         # TODO ;-)
         pass
 
-    @staticmethod
-    def range(color):
-        r = []
-        for entry in CubeColors.PROFILE_COLORS:
-            if entry[0] == color:
-                r.append(entry[1])
-        return r
+    def ranges(self, color_name):
+        colors = []
+        for color in self.__colors:
+            if color.name == color_name:
+                colors.append(color)
+        return colors
 
     @staticmethod
-    def ranges(profile):
-        pix = CubeColors.PROFILES[profile]
-        results = defaultdict(list)
-        for entry in CubeColors.PROFILE_COLORS:
-            color = entry[0]
-            switch = entry[1]
-            if pix in switch:
-                results[color].append(entry[2])
-        return results
+    def colors_of_profile(profile):
+        profile_id = CubeColors.PROFILES[profile]
+        colors = []
+        for color in CubeColors.PROFILE_COLORS:
+            if color.profile_id == profile_id:
+                colors.append(color)
+        return colors
 
-    @staticmethod
-    def print():
-        for color, ranges in CubeColors.ranges().items():
-            for range in ranges:
-                r_min = np.array(range[0], np.uint8)
-                r_max = np.array(range[1], np.uint8)
-                print("{}:{}.{}.{}:{}.{}.{}".format(color,
-                                                    r_min[0], r_min[1], r_min[2],
-                                                    r_max[0], r_max[1], r_max[2]))
+    def print(self):
+        for color in self.__colors:
+            for rng in color.ranges:
+                r_min = np.array(rng[0], np.uint8)
+                r_max = np.array(rng[1], np.uint8)
+                print("color:{}; location:{}; profile:{}; "
+                      "range:{},{},{}:{},{},{}".format(color.name,
+                                                       color.location, color.profile_id,
+                                                       r_min[0], r_min[1], r_min[2],
+                                                       r_max[0], r_max[1], r_max[2]))
 
 
 if __name__ == '__main__':
-    CubeColors.print()
+    cc = CubeColors('original')
+    cc.print()
