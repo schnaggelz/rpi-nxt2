@@ -5,7 +5,6 @@
 # Utility code
 #
 
-import time
 import cv2
 import numpy as np
 import itertools
@@ -36,6 +35,7 @@ class ColorDetector:
                               framerate=20,
                               callback=self.analyze)
         self._camera.open()
+        self._sink.connect()
 
     @staticmethod
     def get_hsv(img):
