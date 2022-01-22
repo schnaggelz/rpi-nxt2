@@ -77,16 +77,14 @@ class ColorDetector:
 
     @staticmethod
     def get_white_contours(img_hsv):
-        sensitivity = 15
+        sensitivity = 75
         lower_white = np.array([0, 0, 255 - sensitivity])
         upper_white = np.array([255, sensitivity, 255])
 
         mask = cv2.inRange(img_hsv, lower_white, upper_white)
-        #res = cv2.bitwise_and(img_hsv, img_hsv, mask=mask)
 
-        _, bin = cv2.threshold(mask, 50, 255, cv2.THRESH_BINARY)
-
-        cntrs, _ = cv2.findContours(bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        canny = cv2.Canny(mask, 0, 50)
+        cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         return cntrs
 
