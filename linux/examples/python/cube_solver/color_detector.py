@@ -153,22 +153,25 @@ class ColorDetector:
 
         if len(boxes) == 9:
             (boxes, _) = self.sort_boxes(boxes, True)
-            pattern = ''
-            rows = []
-            row = []
+            pattern = np.full(9, '?')
+            sorted_rows = []
+            unsorted_row = []
+            row_counter = 0
             for (i, box) in enumerate(boxes, 1):
-                row.append(box)
+                unsorted_row.append(box)
                 if i % 3 == 0:
-                    (boxes, _) = self.sort_boxes(row, False)
-                    rows.append(boxes)
-                    row = []
+                    (sorted_row, _) = self.sort_boxes(unsorted_row, False)
+                    sorted_rows.append(sorted_row)
+                    for (j, sorted_box) in enumerate(sorted_row):
+                        pattern[3 * row_counter + j] = sorted_box.color.location
 
-                pattern += box.color.location
+                    unsorted_row = []
+                    row_counter += 1
 
             if not self.__output.full():
                 self.__output.put(pattern)
 
-            img = self.display_boxes(img, list(itertools.chain(*rows)))
+            img = self.display_boxes(img, list(itertools.chain(*sorted_rows)))
 
         if self.__video_sink is not None:
             self.display_rate(img)

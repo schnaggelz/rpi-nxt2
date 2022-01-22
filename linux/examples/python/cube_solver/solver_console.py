@@ -37,7 +37,7 @@ class SolverConsole:
             self.__console_window.print_at(row_offset + index, col_offset,
                                            "V{}: {:5d}".format(index, value))
 
-    def print_cube_notation(self, side, matrix):
+    def print_cube_notation(self, side, pattern):
 
         if side == 'U':
             row_offset = 1 + self.__notation_offset[0]
@@ -63,6 +63,10 @@ class SolverConsole:
             row_offset = 15 + self.__notation_offset[0]
             col_offset = 13 + self.__notation_offset[1]
             trailer = '|'
+        elif side == '?':
+            row_offset = 1 + self.__notation_offset[0]
+            col_offset = 39 + self.__notation_offset[1]
+            trailer = '|'
         else:
             return None
 
@@ -70,17 +74,17 @@ class SolverConsole:
                                        "|************{}".format(trailer))
         self.__console_window.print_at(row_offset + 1, col_offset,
                                        "|*{}1**{}2**{}3*{}".format(
-                                           matrix[0][0], matrix[0][1], matrix[0][2], trailer))
+                                           pattern[0], pattern[1], pattern[2], trailer))
         self.__console_window.print_at(row_offset + 2, col_offset,
                                        "|************{}".format(trailer))
         self.__console_window.print_at(row_offset + 3, col_offset,
                                        "|*{}4**{}5**{}6*{}".format(
-                                           matrix[1][0], matrix[1][1], matrix[1][2], trailer))
+                                           pattern[3], pattern[4], pattern[5], trailer))
         self.__console_window.print_at(row_offset + 4, col_offset,
                                        "|************{}".format(trailer))
         self.__console_window.print_at(row_offset + 5, col_offset,
                                        "|*{}7**{}8**{}9*{}".format(
-                                           matrix[2][0], matrix[2][1], matrix[2][2], trailer))
+                                           pattern[6], pattern[7], pattern[8], trailer))
         self.__console_window.print_at(row_offset + 6, col_offset,
                                        "|************{}".format(trailer))
 
@@ -97,23 +101,28 @@ if __name__ == '__main__':
     display.print_version("CUBER", 1)
     display.print_status("READY!")
 
-    m = np.full((3, 5), 'U')
-    display.print_cube_notation('U', m)
+    pattern = np.full(9, '?')
 
-    m = np.full((3, 5), 'L')
-    display.print_cube_notation('L', m)
+    pattern.fill('U')
+    display.print_cube_notation('U', pattern)
 
-    m = np.full((3, 5), 'F')
-    display.print_cube_notation('F', m)
+    pattern.fill('L')
+    display.print_cube_notation('L', pattern)
 
-    m = np.full((3, 5), 'R')
-    display.print_cube_notation('R', m)
+    pattern.fill('F')
+    display.print_cube_notation('F', pattern)
 
-    m = np.full((3, 5), 'B')
-    display.print_cube_notation('B', m)
+    pattern.fill('R')
+    display.print_cube_notation('R', pattern)
 
-    m = np.full((3, 5), 'D')
-    display.print_cube_notation('D', m)
+    pattern.fill('B')
+    display.print_cube_notation('B', pattern)
+
+    pattern.fill('D')
+    display.print_cube_notation('D', pattern)
+
+    pattern.fill('?')
+    display.print_cube_notation('?', pattern)
 
     counter = 0
     display.print_counter(counter)

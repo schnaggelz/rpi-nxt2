@@ -10,6 +10,7 @@
 import time
 import signal
 import queue
+import numpy as np
 
 from collections import Counter
 from collections import deque as RingBuffer
@@ -61,7 +62,7 @@ class CubeSolver:
         self.__solver_machine = SolverMachine()
 
         self.__received_patterns = 0
-        self.__detected_pattern = ''
+        self.__detected_pattern = None
         self.__current_patterns = RingBuffer(maxlen=10)
         self.__patterns = Queue(maxsize=10)
 
@@ -159,26 +160,31 @@ class CubeSolver:
             self.__solver_machine.turntable_turn_cw()
 
     def scan_colors(self, side):
+        self.__detected_pattern = None
+
         self.__solver_machine.scanner_scan()
 
-        time.sleep(1)
+        time.sleep(1)  # give scanner some time - TODO!
+
+        if self.__detected_pattern is not None:
+            self.__console.print_cube_notation(side, self.__detected_pattern)
 
         self.__solver_machine.scanner_home()
 
     def scan_all_colors(self):
         self.home()
-        self.scan_colors('top')
+        self.scan_colors('U')
         self.flip_cube()
-        self.scan_colors('front')
+        self.scan_colors('F')
         self.flip_cube()
-        self.scan_colors('bottom')
+        self.scan_colors('B')
         self.flip_cube()
         self.turn_cube()
-        self.scan_colors('right')
+        self.scan_colors('R')
         self.flip_cube()
-        self.scan_colors('back')
+        self.scan_colors('B')
         self.flip_cube()
-        self.scan_colors('left')
+        self.scan_colors('L')
         self.home()
 
     def check_pattern(self, pattern):
@@ -186,8 +192,10 @@ class CubeSolver:
         self.__received_patterns += 1
 
         if len(self.__current_patterns) > 0:
-            occurrences = Counter(list(self.__current_patterns))
-            self.__detected_pattern = occurrences.most_common(1)[0][0]
+            unique_patterns, counts = np.unique(self.__current_patterns, axis=0, return_counts=True)
+            max_count = np.max(counts)
+            self.__detected_pattern = unique_patterns[0]
+            self.__console.print_cube_notation('?', self.__detected_pattern)
 
 
 if __name__ == '__main__':
