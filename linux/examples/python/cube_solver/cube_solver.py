@@ -17,13 +17,12 @@ from collections import deque as RingBuffer
 from multiprocessing import Process, Queue
 from threading import Thread
 
-from common_utils.console_window import ConsoleWindow
 from common_utils.periodic_timer import PeriodicTimer
-
 from vision_utils.video_sender import VideoSender
 
 from solver_machine import SolverMachine
 from color_detector import ColorDetector
+from solver_console import SolverConsole
 
 
 class CubeSolver:
@@ -58,7 +57,7 @@ class CubeSolver:
         detector.start()
 
     def __init__(self):
-        self.__console_window = ConsoleWindow()
+        self.__console = SolverConsole()
         self.__solver_machine = SolverMachine()
 
         self.__received_patterns = 0
@@ -77,9 +76,9 @@ class CubeSolver:
 
     def init(self):
         if self.__solver_machine.connect():
-            self.__console_window.print_status_at(3, 1, "Connected to NXT")
+            self.__console.print_status("CONNECTED")
         else:
-            self.__console_window.print_error_at(3, 1, "Could not connect!")
+            self.__console.print_status("NOT CONNECTED!")
 
     def exit(self):
         self.__solver_machine.disconnect()
@@ -88,11 +87,11 @@ class CubeSolver:
         self.__detector_process.start()
         self.__detector_receiver.start()
         self.__solver_machine.start()
-        self.__console_window.print_status_at(4, 1, "RUNNING!")
+        self.__console.print_status("RUNNING!")
 
         while True:
             time.sleep(0.5)
-            ch = self.__console_window.get_char()
+            ch = self.__console.get_char()
             if ch == ord('h'):
                 self.__solver_machine.turntable_home()
             if ch == ord('e'):
@@ -122,7 +121,7 @@ class CubeSolver:
             elif ch == ord('q'):
                 break
 
-        self.__console_window.print_status_at(4, 1, "STOP!")
+        self.__console.print_status("STOPPED!")
 
         self.stop()
 
@@ -137,21 +136,12 @@ class CubeSolver:
         self.__timer.stop()
 
     def display(self):
-        self.__console_window.print_at(1, 1, "CUBER V{:d}".format(self.VERSION))
+        self.__console.print_version("CUBER", self.VERSION)
 
-        self.__console_window.print_at(5, 1, "CTL_CTR: {:5d}".format(self.__solver_machine.counter))
-        self.__console_window.print_at(7, 1, "RCV_CTR: {:5d}".format(self.__received_patterns))
-        self.__console_window.print_at(8, 1, "DETECTED: '{}'".format(self.__detected_pattern))
+        self.__console.print_counter(self.__solver_machine.counter)
+        self.__console.print_values(self.__solver_machine.decoder_values + self.__solver_machine.sensor_values)
 
-        self.__console_window.print_at(10, 1, "MA: {:5d}".format(self.__solver_machine.decoder_values[0]))
-        self.__console_window.print_at(11, 1, "MB: {:5d}".format(self.__solver_machine.decoder_values[1]))
-        self.__console_window.print_at(12, 1, "MC: {:5d}".format(self.__solver_machine.decoder_values[2]))
-        self.__console_window.print_at(13, 1, "S1: {:5d}".format(self.__solver_machine.sensor_values[0]))
-        self.__console_window.print_at(14, 1, "S1: {:5d}".format(self.__solver_machine.sensor_values[1]))
-        self.__console_window.print_at(15, 1, "S1: {:5d}".format(self.__solver_machine.sensor_values[2]))
-        self.__console_window.print_at(16, 1, "S1: {:5d}".format(self.__solver_machine.sensor_values[3]))
-
-        self.__console_window.refresh()
+        self.__console.update()
 
     def home(self):
         self.__solver_machine.scanner_home()
