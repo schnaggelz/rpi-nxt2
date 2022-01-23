@@ -12,7 +12,6 @@ import signal
 import queue
 import numpy as np
 
-from collections import Counter
 from collections import deque as RingBuffer
 
 from multiprocessing import Process, Queue
@@ -20,6 +19,7 @@ from threading import Thread
 
 from common_utils.periodic_timer import PeriodicTimer
 from vision_utils.video_sender import VideoSender
+from vision_utils.fps_calcularor import FpsCalculator
 
 from solver_machine import SolverMachine
 from color_detector import ColorDetector
@@ -60,6 +60,7 @@ class CubeSolver:
     def __init__(self):
         self.__console = SolverConsole()
         self.__solver_machine = SolverMachine()
+        self.__fps = FpsCalculator()
 
         self.__received_patterns = 0
         self.__detected_pattern = None
@@ -198,6 +199,8 @@ class CubeSolver:
                 max_index = max_indexes[0]
                 self.__detected_pattern = unique_patterns[max_index]
                 self.__console.print_cube_notation('?', self.__detected_pattern)
+
+        self.__console.print_fps(self.__fps())
 
 
 if __name__ == '__main__':
