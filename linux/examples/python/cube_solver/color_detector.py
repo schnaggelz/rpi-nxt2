@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 import itertools
 import signal
+import dataclasses
 
 from cube_colors import CubeColors
 
@@ -18,6 +19,17 @@ from vision_utils.video_sender import VideoSender
 
 
 class ColorDetector:
+    @dataclasses.dataclass
+    class Parameters:
+        size_threshold: int = 25
+        precedence_tolerance: int = 5
+        white_sensitivity: int = 75
+        num_boxes: int = 9
+        square_tolerance: float = 0.2
+        font_color: tuple = (255, 255, 255)
+
+    PARAMS = Parameters()
+
     class __Box:
         __slots__ = ['color', 'contour']
 
@@ -31,7 +43,6 @@ class ColorDetector:
 
         self.__output = output
         self.__profile = profile
-        self.__size_threshold = 25
         self.__fps = FpsCalculator()
         self.__camera = Camera(width=320,
                                height=320,
@@ -76,7 +87,7 @@ class ColorDetector:
 
     @staticmethod
     def get_white_contours(img_hsv):
-        sensitivity = 75
+        sensitivity = ColorDetector.PARAMS.white_sensitivity
         lower_white = np.array([0, 0, 255 - sensitivity])
         upper_white = np.array([255, sensitivity, 255])
 
@@ -94,8 +105,10 @@ class ColorDetector:
             rect = cv2.minAreaRect(cntr)
             width = rect[1][0]
             height = rect[1][1]
+            lower_tolerance = 1 - ColorDetector.PARAMS.square_tolerance
+            upper_tolerance = 1 + ColorDetector.PARAMS.square_tolerance
             if width > min_size and height > min_size:
-                if 0.9 <= (width / height) <= 1.1:
+                if lower_tolerance <= (width / height) <= upper_tolerance:
                     filtered_cntrs.append(cntr)
         return filtered_cntrs
 
@@ -117,12 +130,12 @@ class ColorDetector:
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
             text = "#{}:{}".format(idx, box.color.location)
             img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
-                              0.5, (255, 255, 255), 1, cv2.LINE_AA)
+                              0.5, ColorDetector.PARAMS.font_color, 1, cv2.LINE_AA)
         return img
 
     def display_rate(self, img):
         img = cv2.putText(img, "FPS:{:2.1f}".format(self.__fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
-                          0.5, (255, 255, 255), 1, cv2.LINE_AA)
+                          0.5, ColorDetector.PARAMS.font_color, 1, cv2.LINE_AA)
         return img
 
     def get_boxes(self, img):
@@ -130,12 +143,12 @@ class ColorDetector:
         boxes = []
         for color in self.__colors:
             cntrs = self.get_color_contours(img_hsv, color.ranges)
-            cntrs = self.filter_contours(cntrs, self.__size_threshold)
+            cntrs = self.filter_contours(cntrs, self.PARAMS.size_threshold)
             for cntr in cntrs:
                 boxes.append(self.__Box(color, cntr))
 
         white_cntrs = self.get_white_contours(img_hsv)
-        white_cntrs = self.filter_contours(white_cntrs, self.__size_threshold)
+        white_cntrs = self.filter_contours(white_cntrs, self.PARAMS.size_threshold)
         for white_cntr in white_cntrs:
             boxes.append(self.__Box(CubeColors.WHITE, white_cntr))
 
