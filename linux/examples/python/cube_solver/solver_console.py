@@ -27,7 +27,7 @@ class SolverConsole:
         self.__console_window.print_at(2, 1, "COUNTER: {:5d}".format(value))
 
     def print_fps(self, value):
-        self.__console_window.print_at(2, 1, "FPS: {:2d}".format(value))
+        self.__console_window.print_at(2, 20, "FPS: {:2.1f}".format(value))
 
     def print_status(self, status):
         self.__console_window.print_status_at(3, 1, "STATUS: {}".format(status.ljust(30)))
