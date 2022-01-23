@@ -195,40 +195,15 @@ This is a trivial process and well-documented for your IDE.
 
 ### Python API Demo
 
-See [linux/examples/python/nxt_remote](linux/examples/python/nxt_remote).
+See [linux/examples/python/hello_world](linux/examples/python/hello_world).
+
+### Minimal NXT Remote Console
+
+See [linux/examples/python/nxt_console](linux/examples/python/nxt_console).
 
 ### Cube Solver
 
-LOCATION FOR LATER FUN PROJECT ;-)
-
-#### Build Instructions
-
-See [MindCuber Build Instructions](http://mindcuber.com/mindcuber/MindCuber.pdf).
-
-The model was modified to hold the Camera and the Raspberry Pi 3B and the Raspberry Pi Camera V2. For the mini
-computer and the camera module I've built cases out of classic logo building blocks. The camera stand is sitting
-on top of the color sensor which I still kept for a simple program later-on.
+See [linux/examples/python/cube_solver](linux/examples/python/cube_solver).
 
 ![My Cuber](doc/cuber.jpg)
 
-#### The Python Example
-
-See [linux/examples/python/cube_solver](linux/examples/python/cube_solver).
-
-The example uses the Python package `kociemba` to solve the cube.
-
-#### Runtime requirements (e.g. on Raspberry OS)
-
-Install required libraries
-
-````
-sudo apt install python3
-sudo apt install python3-pip
-sudo apt install python3-opencv
-sudo apt install python3-zmq
-sudo apt-get install libffi-dev
-pip install kociemba
-````
-
-To speed up OpenCV and generate a minimal deployment, have a look at 
-[opencv-lite-on-raspberry-pi](https://qengineering.eu/install-opencv-lite-on-raspberry-pi.html).
