@@ -88,7 +88,6 @@ class CubeSolver:
         self.__detector_process.start()
         self.__detector_receiver.start()
         self.__solver_machine.start()
-        self.__console.print_status("RUNNING!")
 
         while True:
             time.sleep(0.5)
@@ -121,8 +120,6 @@ class CubeSolver:
                 self.scan_all_colors()
             elif ch == ord('q'):
                 break
-
-        self.__console.print_status("STOPPED!")
 
         self.stop()
 
@@ -164,7 +161,7 @@ class CubeSolver:
 
         self.__solver_machine.scanner_scan()
 
-        time.sleep(1)  # give scanner some time - TODO!
+        time.sleep(0.5)  # give scanner some time - TODO!
 
         if self.__detected_pattern is not None:
             self.__console.print_cube_notation(side, self.__detected_pattern)
@@ -173,18 +170,21 @@ class CubeSolver:
 
     def scan_all_colors(self):
         self.home()
-        self.scan_colors('U')
+        self.scan_colors('U') #red (top)
         self.flip_cube()
-        self.scan_colors('F')
+        self.scan_colors('F') #green (front)
         self.flip_cube()
-        self.scan_colors('B')
+        self.scan_colors('D') #orange (bottom)
+        self.turn_cube(ccw=True)
         self.flip_cube()
         self.turn_cube()
-        self.scan_colors('R')
+        self.scan_colors('L') #white (left)
         self.flip_cube()
-        self.scan_colors('B')
+        self.scan_colors('B') #blue (back)
         self.flip_cube()
-        self.scan_colors('L')
+        self.scan_colors('R') #yellow (right)
+        self.flip_cube()
+
         self.home()
 
     def check_pattern(self, pattern):
@@ -193,9 +193,11 @@ class CubeSolver:
 
         if len(self.__current_patterns) > 0:
             unique_patterns, counts = np.unique(self.__current_patterns, axis=0, return_counts=True)
-            max_count = np.max(counts)
-            self.__detected_pattern = unique_patterns[0]
-            self.__console.print_cube_notation('?', self.__detected_pattern)
+            max_indexes = np.where(counts == np.amax(counts))[0]
+            if len(max_indexes) == 1:
+                max_index = max_indexes[0]
+                self.__detected_pattern = unique_patterns[max_index]
+                self.__console.print_cube_notation('?', self.__detected_pattern)
 
 
 if __name__ == '__main__':
