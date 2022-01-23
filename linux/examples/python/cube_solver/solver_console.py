@@ -29,6 +29,9 @@ class SolverConsole:
     def print_max_detect(self, value):
         self.__console_window.print_at(2, 20, "MAX: {:2d}".format(value))
 
+    def print_command(self, value):
+        self.__console_window.print_at(2, 30, "CMD: {}".format(value))
+
     def print_status(self, status):
         self.__console_window.print_status_at(3, 1, "STATUS: {}".format(status.ljust(30)))
 
