@@ -153,10 +153,14 @@ class SolverMachine:
     def release_cube(self):
         self.grabber_rest()
 
-    def turn_cube(self, num_quarters):
-        pass
+    def turn_cube(self, num_quarters, with_load=False):
+        for i in range(abs(num_quarters)):
+            if num_quarters < 0:
+                self.turntable_turn_ccw(load=with_load)
+            else:
+                self.turntable_turn_cw(load=with_load)
 
-    def process_command(self, cmd):
+    def execute_command(self, cmd):
         face_to_turn = None
         num_quarter_turns = 1
         if cmd.find("2") != -1:
@@ -226,7 +230,7 @@ class SolverMachine:
             self.__cube_orientation[1] = self.opposite_face(tmp)
 
         self.grab()
-        self.turn_cube(num_quarter_turns)
+        self.turn_cube(num_quarter_turns, True)
 
 
 if __name__ == '__main__':
