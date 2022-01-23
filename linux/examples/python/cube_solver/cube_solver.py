@@ -146,21 +146,6 @@ class CubeSolver:
 
         self.__console.update()
 
-    def home(self):
-        self.__solver_machine.scanner_home()
-        self.__solver_machine.turntable_home()
-        self.__solver_machine.grabber_home()
-
-    def flip_cube(self):
-        self.__solver_machine.grabber_grab()
-        self.__solver_machine.grabber_flip()
-
-    def turn_cube(self, ccw=False):
-        if ccw:
-            self.__solver_machine.turntable_turn_ccw()
-        else:
-            self.__solver_machine.turntable_turn_cw()
-
     def scan_colors(self, side):
         scan_success = False
 
@@ -191,30 +176,30 @@ class CubeSolver:
         if not self.scan_colors('U'):  # red (top)
             scan_success = False
 
-        self.flip_cube()
+        self.__solver_machine.flip_cube()
         if not self.scan_colors('F'):  # green (front)
             scan_success = False
 
-        self.flip_cube()
+        self.__solver_machine.flip_cube()
         if not self.scan_colors('D'):  # orange (bottom)
             scan_success = False
 
-        self.turn_cube(ccw=True)
-        self.flip_cube()
-        self.turn_cube()
+        self.__solver_machine.turn_cube(-1)
+        self.__solver_machine.flip_cube()
+        self.__solver_machine.turn_cube(1)
         if not self.scan_colors('L'):  # white (left)
             scan_success = False
 
-        self.flip_cube()
+        self.__solver_machine.flip_cube()
         if not self.scan_colors('B'):  # blue (back)
             scan_success = False
 
-        self.flip_cube()
+        self.__solver_machine.flip_cube()
         if not self.scan_colors('R'):  # yellow (right)
             scan_success = False
 
-        self.flip_cube()
-        self.home()
+        self.__solver_machine.flip_cube()
+        self.__solver_machine.all_home()
 
         if scan_success:
             self.__console.print_status("SCAN SUCCESS")
