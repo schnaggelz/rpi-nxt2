@@ -26,8 +26,8 @@ class SolverConsole:
     def print_counter(self, value):
         self.__console_window.print_at(2, 1, "COUNTER: {:5d}".format(value))
 
-    def print_fps(self, value):
-        self.__console_window.print_at(2, 20, "FPS: {:2.1f}".format(value))
+    def print_max_detect(self, value):
+        self.__console_window.print_at(2, 20, "MAX: {:2d}".format(value))
 
     def print_status(self, status):
         self.__console_window.print_status_at(3, 1, "STATUS: {}".format(status.ljust(30)))
@@ -104,28 +104,28 @@ if __name__ == '__main__':
     display.print_version("CUBER", 1)
     display.print_status("READY!")
 
-    pattern = np.full(9, '?')
+    p = np.full(9, '?')
 
-    pattern.fill('U')
-    display.print_cube_notation('U', pattern)
+    p.fill('U')
+    display.print_cube_notation('U', p)
 
-    pattern.fill('L')
-    display.print_cube_notation('L', pattern)
+    p.fill('L')
+    display.print_cube_notation('L', p)
 
-    pattern.fill('F')
-    display.print_cube_notation('F', pattern)
+    p.fill('F')
+    display.print_cube_notation('F', p)
 
-    pattern.fill('R')
-    display.print_cube_notation('R', pattern)
+    p.fill('R')
+    display.print_cube_notation('R', p)
 
-    pattern.fill('B')
-    display.print_cube_notation('B', pattern)
+    p.fill('B')
+    display.print_cube_notation('B', p)
 
-    pattern.fill('D')
-    display.print_cube_notation('D', pattern)
+    p.fill('D')
+    display.print_cube_notation('D', p)
 
-    pattern.fill('?')
-    display.print_cube_notation('?', pattern)
+    p.fill('?')
+    display.print_cube_notation('?', p)
 
     counter = 0
     display.print_counter(counter)

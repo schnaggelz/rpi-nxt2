@@ -16,10 +16,10 @@ from collections import deque as RingBuffer
 
 from multiprocessing import Process, Queue
 from threading import Thread
+from threading import Event
 
 from common_utils.periodic_timer import PeriodicTimer
 from vision_utils.video_sender import VideoSender
-from vision_utils.fps_calcularor import FpsCalculator
 
 from solver_machine import SolverMachine
 from color_detector import ColorDetector
@@ -60,9 +60,8 @@ class CubeSolver:
     def __init__(self):
         self.__console = SolverConsole()
         self.__solver_machine = SolverMachine()
-        self.__fps = FpsCalculator()
 
-        self.__received_patterns = 0
+        self.__detected_event = Event()
         self.__detected_pattern = None
         self.__current_patterns = RingBuffer(maxlen=10)
         self.__patterns = Queue(maxsize=10)
@@ -138,7 +137,8 @@ class CubeSolver:
         self.__console.print_version("CUBER", self.VERSION)
 
         self.__console.print_counter(self.__solver_machine.counter)
-        self.__console.print_values(self.__solver_machine.decoder_values + self.__solver_machine.sensor_values)
+        self.__console.print_values(self.__solver_machine.decoder_values +
+                                    self.__solver_machine.sensor_values)
 
         self.__console.update()
 
@@ -158,49 +158,85 @@ class CubeSolver:
             self.__solver_machine.turntable_turn_cw()
 
     def scan_colors(self, side):
+        scan_success = False
+
         self.__detected_pattern = None
+        self.__current_patterns.clear()
+        self.__detected_event.clear()
 
         self.__solver_machine.scanner_scan()
 
-        time.sleep(0.5)  # give scanner some time - TODO!
+        counter = 0
+        while counter < 50:  # max 5 seconds
+            self.__detected_event.wait(0.1)
+            counter += 1
 
-        if self.__detected_pattern is not None:
+        if self.__detected_event.is_set():
+            scan_success = True
             self.__console.print_cube_notation(side, self.__detected_pattern)
 
         self.__solver_machine.scanner_home()
 
+        return scan_success
+
     def scan_all_colors(self):
+        scan_success = True
+
         self.home()
-        self.scan_colors('U') #red (top)
+        if not self.scan_colors('U'):  # red (top)
+            scan_success = False
+
         self.flip_cube()
-        self.scan_colors('F') #green (front)
+        if not self.scan_colors('F'):  # green (front)
+            scan_success = False
+
         self.flip_cube()
-        self.scan_colors('D') #orange (bottom)
+        if not self.scan_colors('D'):  # orange (bottom)
+            scan_success = False
+
         self.turn_cube(ccw=True)
         self.flip_cube()
         self.turn_cube()
-        self.scan_colors('L') #white (left)
-        self.flip_cube()
-        self.scan_colors('B') #blue (back)
-        self.flip_cube()
-        self.scan_colors('R') #yellow (right)
-        self.flip_cube()
+        if not self.scan_colors('L'):  # white (left)
+            scan_success = False
 
+        self.flip_cube()
+        if not self.scan_colors('B'):  # blue (back)
+            scan_success = False
+
+        self.flip_cube()
+        if not self.scan_colors('R'):  # yellow (right)
+            scan_success = False
+
+        self.flip_cube()
         self.home()
+
+        if scan_success:
+            self.__console.print_status("SCAN SUCCESS")
+        else:
+            self.__console.print_status("SCAN FAILURE!")
+
+        return scan_success
 
     def check_pattern(self, pattern):
         self.__current_patterns.append(pattern)
-        self.__received_patterns += 1
 
-        if len(self.__current_patterns) > 0:
-            unique_patterns, counts = np.unique(self.__current_patterns, axis=0, return_counts=True)
+        max_detect = 0
+        if len(self.__current_patterns) == self.__current_patterns.maxlen:
+            unique_patterns, counts = np.unique(
+                self.__current_patterns, axis=0, return_counts=True)
             max_indexes = np.where(counts == np.amax(counts))[0]
+
             if len(max_indexes) == 1:
                 max_index = max_indexes[0]
-                self.__detected_pattern = unique_patterns[max_index]
-                self.__console.print_cube_notation('?', self.__detected_pattern)
 
-        self.__console.print_fps(self.__fps())
+                if counts[max_index] > 8:
+                    max_detect = counts[max_index]
+                    self.__detected_pattern = unique_patterns[max_index]
+                    self.__console.print_cube_notation('?', self.__detected_pattern)
+                    self.__detected_event.set()
+
+        self.__console.print_max_detect(max_detect)
 
 
 if __name__ == '__main__':
