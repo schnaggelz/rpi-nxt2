@@ -26,8 +26,11 @@ class SolverConsole:
     def print_counter(self, value):
         self.__console_window.print_at(2, 1, "COUNTER: {:5d}".format(value))
 
+    def print_fps(self, value):
+        self.__console_window.print_at(2, 1, "FPS: {:2d}".format(value))
+
     def print_status(self, status):
-        self.__console_window.print_status_at(3, 1, "STATUS: {}".format(status))
+        self.__console_window.print_status_at(3, 1, "STATUS: {}".format(status.ljust(30)))
 
     def print_values(self, values):
         row_offset = 1 + self.__values_offset[0]
@@ -41,7 +44,7 @@ class SolverConsole:
 
         if side == 'U':
             row_offset = 1 + self.__notation_offset[0]
-            col_offset = 13 + self.__notation_offset[1]
+            col_offset = 14 + self.__notation_offset[1]
             trailer = '|'
         elif side == 'L':
             row_offset = 8 + self.__notation_offset[0]
@@ -49,23 +52,23 @@ class SolverConsole:
             trailer = ''
         elif side == 'F':
             row_offset = 8 + self.__notation_offset[0]
-            col_offset = 13 + self.__notation_offset[1]
+            col_offset = 14 + self.__notation_offset[1]
             trailer = ''
         elif side == 'R':
             row_offset = 8 + self.__notation_offset[0]
-            col_offset = 26 + self.__notation_offset[1]
+            col_offset = 27 + self.__notation_offset[1]
             trailer = ''
         elif side == 'B':
             row_offset = 8 + self.__notation_offset[0]
-            col_offset = 39 + self.__notation_offset[1]
+            col_offset = 40 + self.__notation_offset[1]
             trailer = '|'
         elif side == 'D':
             row_offset = 15 + self.__notation_offset[0]
-            col_offset = 13 + self.__notation_offset[1]
+            col_offset = 14 + self.__notation_offset[1]
             trailer = '|'
         elif side == '?':
             row_offset = 1 + self.__notation_offset[0]
-            col_offset = 39 + self.__notation_offset[1]
+            col_offset = 50 + self.__notation_offset[1]
             trailer = '|'
         else:
             return None
