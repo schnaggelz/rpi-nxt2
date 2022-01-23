@@ -21,7 +21,8 @@ from vision_utils.video_sender import VideoSender
 class ColorDetector:
     @dataclasses.dataclass
     class Parameters:
-        size_threshold: int = 25
+        size_threshold_min: int = 50
+        size_threshold_max: int = 80
         precedence_tolerance: int = 5
         white_sensitivity: int = 75
         num_boxes: int = 9
@@ -99,7 +100,7 @@ class ColorDetector:
         return cntrs
 
     @staticmethod
-    def filter_contours(cntrs, min_size):
+    def filter_contours(cntrs, min_size, max_size):
         filtered_cntrs = []
         for cntr in cntrs:
             rect = cv2.minAreaRect(cntr)
@@ -108,8 +109,9 @@ class ColorDetector:
             lower_tolerance = 1 - ColorDetector.PARAMS.square_tolerance
             upper_tolerance = 1 + ColorDetector.PARAMS.square_tolerance
             if width > min_size and height > min_size:
-                if lower_tolerance <= (width / height) <= upper_tolerance:
-                    filtered_cntrs.append(cntr)
+                if width < max_size and height < max_size:
+                    if lower_tolerance <= (width / height) <= upper_tolerance:
+                        filtered_cntrs.append(cntr)
         return filtered_cntrs
 
     @staticmethod
@@ -143,12 +145,16 @@ class ColorDetector:
         boxes = []
         for color in self.__colors:
             cntrs = self.get_color_contours(img_hsv, color.ranges)
-            cntrs = self.filter_contours(cntrs, self.PARAMS.size_threshold)
+            cntrs = self.filter_contours(cntrs,
+                                         self.PARAMS.size_threshold_min,
+                                         self.PARAMS.size_threshold_max)
             for cntr in cntrs:
                 boxes.append(self.__Box(color, cntr))
 
         white_cntrs = self.get_white_contours(img_hsv)
-        white_cntrs = self.filter_contours(white_cntrs, self.PARAMS.size_threshold)
+        white_cntrs = self.filter_contours(white_cntrs,
+                                           self.PARAMS.size_threshold_min,
+                                           self.PARAMS.size_threshold_max)
         for white_cntr in white_cntrs:
             boxes.append(self.__Box(CubeColors.WHITE, white_cntr))
 
