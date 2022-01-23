@@ -13,8 +13,8 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 from picamera.array import PiRGBAnalysis
 
-class Camera(threading.Thread):
 
+class Camera(threading.Thread):
     class FrameProcessor(PiRGBAnalysis):
         def __init__(self, camera, callback):
             super().__init__(camera)
@@ -42,7 +42,7 @@ class Camera(threading.Thread):
         time.sleep(0.5)
 
         self.__camera = PiCamera(resolution=(self.__width, self.__height),
-                                framerate=self.__framerate)
+                                 framerate=self.__framerate)
         # self.__camera.awb_mode = 'off'
         # self.__camera.awb_gains = (1.2, 1.3)
         self.__camera.video_denoise = True
@@ -97,6 +97,7 @@ if __name__ == '__main__':
     last_time = time.time()
     counter = 0
 
+
     def receive(image):
         global last_time
         global counter
@@ -110,6 +111,7 @@ if __name__ == '__main__':
 
         counter += 1
         last_time = time.time()
+
 
     camera = Camera(width=640,
                     height=480,
