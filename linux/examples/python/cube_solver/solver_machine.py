@@ -148,10 +148,17 @@ class SolverMachine:
 
     def flip_cube(self):
         self.grabber_grab()
+        time.sleep(self.REST_TIME)
         self.grabber_flip()
+        time.sleep(self.REST_TIME)
+
+    def grab_cube(self):
+        self.grabber_grab()
+        time.sleep(self.REST_TIME)
 
     def release_cube(self):
         self.grabber_rest()
+        time.sleep(self.REST_TIME)
 
     def turn_cube(self, num_quarters, with_load=False):
         for i in range(abs(num_quarters)):
@@ -159,6 +166,12 @@ class SolverMachine:
                 self.turntable_turn_ccw(load=with_load)
             else:
                 self.turntable_turn_cw(load=with_load)
+            time.sleep(self.REST_TIME)
+
+    def all_home(self):
+        self.grabber_home()
+        self.scanner_home()
+        self.turntable_home()
 
     def execute_command(self, cmd):
         face_to_turn = None
@@ -229,9 +242,36 @@ class SolverMachine:
             self.__cube_orientation[0] = self.__cube_orientation[1]
             self.__cube_orientation[1] = self.opposite_face(tmp)
 
-        self.grab()
+        self.grab_cube()
         self.turn_cube(num_quarter_turns, True)
 
 
 if __name__ == '__main__':
     sm = SolverMachine()
+    sm.connect()
+
+    def handler(signum, frame):
+        sm.stop()
+        sys.exit()
+
+    signal.signal(signal.SIGINT, handler)
+
+    sm.start()
+
+    sm.all_home()
+
+    time.sleep(1)
+
+    sm.execute_command("U")
+    time.sleep(1)
+    sm.execute_command("D")
+    time.sleep(1)
+    sm.execute_command("U'")
+    time.sleep(1)
+    sm.execute_command("D'")
+
+    time.sleep(10)
+
+    sm.all_home()
+
+    sm.stop()
