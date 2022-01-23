@@ -60,15 +60,14 @@ class ColorDetector:
         return (((origin[1] + origin[3]) / 2 // tolerance) * tolerance) * cols + (origin[0] + origin[2]) / 2
 
     @staticmethod
-    def get_contours(img_hsv, ranges):
-        mask = None
+    def get_color_contours(img_hsv, ranges):
+        mask = np.zeros(img_hsv.shape, dtype=np.uint8)
         for r in ranges:
             lower = np.array(r[0], np.uint8)
             upper = np.array(r[1], np.uint8)
-            if mask is None:
-                mask = cv2.inRange(img_hsv, lower, upper)
-            else:
-                mask += cv2.inRange(img_hsv, lower, upper)
+            color_mask = cv2.inRange(img_hsv, lower, upper)
+            color_mask = cv2.merge([color_mask, color_mask, color_mask])
+            mask = cv2.bitwise_or(mask, color_mask)
 
         canny = cv2.Canny(mask, 0, 50)
         cntrs, _ = cv2.findContours(canny, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -116,7 +115,7 @@ class ColorDetector:
         for idx, box in enumerate(boxes):
             x, y, w, h = cv2.boundingRect(box.contour)
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            text = "#{}:{}".format(idx, box.color.name)
+            text = "#{}:{}".format(idx, box.color.location)
             img = cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
                               0.5, (255, 255, 255), 1, cv2.LINE_AA)
         return img
@@ -130,7 +129,7 @@ class ColorDetector:
         img_hsv = self.get_hsv(img)
         boxes = []
         for color in self.__colors:
-            cntrs = self.get_contours(img_hsv, color.ranges)
+            cntrs = self.get_color_contours(img_hsv, color.ranges)
             cntrs = self.filter_contours(cntrs, self.__size_threshold)
             for cntr in cntrs:
                 boxes.append(self.__Box(color, cntr))
