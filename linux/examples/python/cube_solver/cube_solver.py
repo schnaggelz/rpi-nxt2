@@ -11,6 +11,7 @@ import time
 import signal
 import queue
 import numpy as np
+import kociemba
 
 from collections import deque as RingBuffer
 
@@ -62,8 +63,9 @@ class CubeSolver:
         self.__solver_machine = SolverMachine()
 
         self.__detected_event = Event()
-        self.__detected_pattern = None
+        self.__detected_patterns = dict.fromkeys(['U', 'L', 'F', 'R', 'B', 'D'])
         self.__current_patterns = RingBuffer(maxlen=10)
+        self.__current_side = None
         self.__patterns = Queue(maxsize=10)
 
         self.__detector_process = Process(target=CubeSolver.run_detector,
@@ -118,6 +120,8 @@ class CubeSolver:
                 self.__solver_machine.scanner_home()
             if ch == ord('s'):
                 self.scan_all_colors()
+            if ch == ord('r'):
+                self.solve_cube()
             elif ch == ord('q'):
                 break
 
@@ -160,7 +164,8 @@ class CubeSolver:
     def scan_colors(self, side):
         scan_success = False
 
-        self.__detected_pattern = None
+        self.__current_side = side
+        self.__detected_patterns[side] = None
         self.__current_patterns.clear()
         self.__detected_event.clear()
 
@@ -173,7 +178,7 @@ class CubeSolver:
 
         if self.__detected_event.is_set():
             scan_success = True
-            self.__console.print_cube_notation(side, self.__detected_pattern)
+            self.__console.print_cube_notation(side, self.__detected_patterns[side])
 
         self.__solver_machine.scanner_home()
 
@@ -232,11 +237,25 @@ class CubeSolver:
 
                 if counts[max_index] > 8:
                     max_detect = counts[max_index]
-                    self.__detected_pattern = unique_patterns[max_index]
-                    self.__console.print_cube_notation('?', self.__detected_pattern)
+                    self.__console.print_cube_notation('?', unique_patterns[max_index])
+                    self.__detected_patterns[self.__current_side] = unique_patterns[max_index]
                     self.__detected_event.set()
 
         self.__console.print_max_detect(max_detect)
+
+    def solve_cube(self):
+        patterns = ''
+        patterns += ''.join(self.__detected_patterns['U'])
+        patterns += ''.join(self.__detected_patterns['R'])
+        patterns += ''.join(self.__detected_patterns['F'])
+        patterns += ''.join(self.__detected_patterns['D'])
+        patterns += ''.join(self.__detected_patterns['L'])
+        patterns += ''.join(self.__detected_patterns['B'])
+
+        cmds = kociemba.solve(patterns)
+        for cmd in cmds.split():
+            self.__console.print_command(cmd)
+            self.__solver_machine.execute_command(cmd)
 
 
 if __name__ == '__main__':
