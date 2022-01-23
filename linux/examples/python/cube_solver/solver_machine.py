@@ -7,7 +7,9 @@
 # This Python application will use my NXT remote control library with its Python binding `nxt_remote_py`
 # to control the Lego model gathered from the MindCuber page (see http://mindcuber.com/).
 
+import sys
 import time
+import signal
 import nxt_remote_py as nxt
 
 from enum import Enum
@@ -17,6 +19,8 @@ from common_utils.periodic_timer import PeriodicTimer
 
 class SolverMachine:
     VERSION = 1
+
+    REST_TIME = 0.2
 
     # Motor speed constants
     MOTOR_GRAB_SPEED = 50
