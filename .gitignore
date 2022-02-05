@@ -4,3 +4,6 @@
 # Temp
 build/
 install/
+
+#Python
+**/*.pyc
