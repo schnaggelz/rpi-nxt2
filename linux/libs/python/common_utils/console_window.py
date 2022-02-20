@@ -11,27 +11,42 @@ import curses
 
 class ConsoleWindow(object):
     def __init__(self):
-        self._window = curses.initscr()
+        self.__window = curses.initscr()
         curses.noecho()
         curses.cbreak()
 
     def __del__(self):
         curses.endwin()
 
+    def show_cursor(self):
+        curses.echo()
+        curses.curs_set(1)
+
+    def hide_cursor(self):
+        curses.curs_set(0)
+        curses.noecho()
+
     def refresh(self):
-        self._window.refresh()
+        self.__window.refresh()
+
+    def get_string(self, y, x, len):
+        return self.__window.getstr(y, x, len)
 
     def get_char(self):
-        return self._window.getch()
+        return self.__window.getch()
 
-    def put_char_at(self, x, y, ch):
-        self._window.addch(x, y, ch)
+    def get_char_at(self, y, x):
+        return self.__window.getch(y, x)
 
-    def print_at(self, x, y, text):
-        self._window.addstr(x, y, text)
+    def put_char_at(self, y, x, ch):
+        self.__window.addch(y, x, ch)
 
-    def print_status_at(self, x, y, text):
-        self.print_at(x, y, "STATUS: {:20s}".format(text))
+    def print_at(self, y, x, str):
+        self.__window.addstr(y, x, str)
 
-    def print_error_at(self, x, y, text):
-        self.print_at(x, y, "ERROR: {:20s}".format(text))
+    def print_status_at(self, y, x, str):
+        self.print_at(y, x, "STATUS: {:20s}".format(str))
+
+    def print_error_at(self, y, x, str):
+        self.print_at(y, x, "ERROR: {:20s}".format(str))
+

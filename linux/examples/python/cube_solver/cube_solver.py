@@ -78,6 +78,7 @@ class CubeSolver:
         self.__timer = PeriodicTimer(0.1, self.display)
 
     def init(self):
+        self.__console.setup()
         if self.__solver_machine.connect():
             self.__console.print_status("CONNECTED")
         else:
@@ -96,32 +97,34 @@ class CubeSolver:
             ch = self.__console.get_char()
             if ch == ord('h'):
                 self.__solver_machine.turntable_home()
-            if ch == ord('e'):
+            elif ch == ord('e'):
                 self.__solver_machine.turntable_turn_ccw()
-            if ch == ord('w'):
+            elif ch == ord('w'):
                 self.__solver_machine.turntable_turn_cw()
-            if ch == ord('z'):
+            elif ch == ord('z'):
                 self.__solver_machine.turntable_home(True)
-            if ch == ord('x'):
+            elif ch == ord('x'):
                 self.__solver_machine.turntable_turn_ccw(True)
-            if ch == ord('y'):
+            elif ch == ord('y'):
                 self.__solver_machine.turntable_turn_cw(True)
-            if ch == ord('o'):
+            elif ch == ord('o'):
                 self.__solver_machine.grabber_home()
-            if ch == ord('r'):
+            elif ch == ord('r'):
                 self.__solver_machine.grabber_rest()
-            if ch == ord('g'):
+            elif ch == ord('g'):
                 self.__solver_machine.grabber_grab()
-            if ch == ord('f'):
+            elif ch == ord('f'):
                 self.__solver_machine.grabber_flip()
-            if ch == ord('c'):
+            elif ch == ord('p'):
                 self.__solver_machine.scanner_scan()
-            if ch == ord('m'):
+            elif ch == ord('m'):
                 self.__solver_machine.scanner_home()
-            if ch == ord('s'):
+            elif ch == ord('s'):
                 self.scan_all_colors()
-            if ch == ord('r'):
+            elif ch == ord('r'):
                 self.solve_cube()
+            elif ch == ord('c'):
+                self.command_mode()
             elif ch == ord('q'):
                 break
 
@@ -241,6 +244,12 @@ class CubeSolver:
         for cmd in cmds.split():
             self.__console.print_command(cmd)
             self.__solver_machine.execute_command(cmd)
+
+    def command_mode(self):
+        cmd = self.__console.get_command()
+        self.__console.print_command(cmd)
+        res = self.__solver_machine.execute_command(cmd)
+        self.__console.print_result(res)
 
 
 if __name__ == '__main__':

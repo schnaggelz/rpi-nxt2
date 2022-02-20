@@ -31,6 +31,15 @@ class SolverMachine:
     MOTOR_SCAN = nxt.PORT_B
     MOTOR_GRAB = nxt.PORT_C
 
+    class Face(Enum):
+        UP = 0
+        FRONT = 1
+        RIGHT = 2
+        DOWN = 3
+        BACK = 4
+        LEFT = 5
+        INVALID = -1
+
     class TurntablePosition(Enum):
         HOME = 1
         CW = -270
@@ -178,26 +187,32 @@ class SolverMachine:
         self.turntable_home()
 
     def execute_command(self, cmd):
-        face_to_turn = None
         num_quarter_turns = 1
-        if cmd.find("2") != -1:
+        if cmd.find("1") != -1:
+            num_quarter_turns = 1  # redundant, but okay
+        elif cmd.find("2") != -1:
             num_quarter_turns = 2
         if cmd.find("'") != -1:
             num_quarter_turns = -1
-        
+
         if cmd.find("U") != -1:
-            face_to_turn = 0
+            face_to_turn = self.Face.UP.value
         elif cmd.find("F") != -1:
-            face_to_turn = 1
+            face_to_turn = self.Face.FRONT.value
         elif cmd.find("R") != -1:
-            face_to_turn = 2
+            face_to_turn = self.Face.RIGHT.value
         elif cmd.find("D") != -1:
-            face_to_turn = 3
+            face_to_turn = self.Face.DOWN.value
         elif cmd.find("B") != -1:
-            face_to_turn = 4
+            face_to_turn = self.Face.BACK.value
         elif cmd.find("L") != -1:
-            face_to_turn = 5
-        
+            face_to_turn = self.Face.LEFT.value
+        else:
+            face_to_turn = self.Face.INVALID.value
+
+        cmd_str = "F{}:N{}:R{}".format(face_to_turn, num_quarter_turns,
+                                       self.__cube_orientation.__str__())
+
         if face_to_turn == self.__cube_orientation[0]:
             # target is top, flip twice
             self.flip_cube()
@@ -249,14 +264,18 @@ class SolverMachine:
         self.grab_cube()
         self.turn_cube(num_quarter_turns, True)
 
+        return cmd_str
+
 
 if __name__ == '__main__':
     sm = SolverMachine()
     sm.connect()
 
+
     def handler(signum, frame):
         sm.stop()
         sys.exit()
+
 
     signal.signal(signal.SIGINT, handler)
 
