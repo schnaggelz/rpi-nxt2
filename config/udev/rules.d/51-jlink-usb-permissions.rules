@@ -28,6 +28,10 @@ ACTION!="add", SUBSYSTEM!="usb_device", GOTO="jlink_rules_end"
 # Terminal: cat /var/log/syslog
 # Find path to where J-Link device has been "mounted"
 # sudo udevadm info --query=all --attribute-walk --path=<PathExtractedFromSyslog>
+# sudo udevadm info --attribute-walk /dev/bus/usb/<Bus>/<Device> (extract <Bus> and <Device> from "lsusb")
+# Reload udev rules after rules file change:
+#   sudo udevadm control --reload-rules
+#   sudo udevadm trigger
 #
 # [old format]
 # 0x0101 - J-Link (default)                 | Flasher STM8 | Flasher ARM | Flasher 5 PRO
@@ -229,6 +233,28 @@ ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", MODE="666"
 ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", MODE="666"
 ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", MODE="666"
 #
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0x1366 (SEGGER)
+#     PID 0x1008-100f, 0x1018-101f, 0x1028-102f, 0x1058-105f, 0x1068-106f (SEGGER J-Link)
+#     We cover all of them via idProduct=10* and idVendor=1366
+#
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+KERNEL=="hidraw*", ATTRS{idProduct}=="10*",  ATTRS{idVendor}=="1366", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="c251", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f001", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="f002", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="2722", ATTRS{idVendor}=="0d28", MODE="666"
+KERNEL=="hidraw*", ATTRS{idProduct}=="0204", ATTRS{idVendor}=="0d28", MODE="666"
+#
 # Make sure that J-Links are not captured by modem manager service
 # as this service would try detect J-Link as a modem and send AT commands via the VCOM component which might not be liked by the target...
 #
@@ -311,6 +337,30 @@ ATTR{idProduct}=="106c", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTR{idProduct}=="106d", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTR{idProduct}=="106e", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
 ATTR{idProduct}=="106f", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Handle known CMSIS-DAP probes (taken from mbed website and OpenOCD):
+#   VID 0xC251 (Keil)
+#     PID 0xF001: (LPC-Link-II CMSIS_DAP)
+#     PID 0xF002: (OpenSDA CMSIS_DAP Freedom Board)
+#     PID 0x2722: (Keil ULINK2 CMSIS-DAP)
+#   VID 0x0D28 (mbed)
+#     PID 0x0204: MBED CMSIS-DAP
+#
+ATTR{idProduct}=="f001", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="c251", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f001", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="f002", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="2722", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTR{idProduct}=="0204", ATTR{idVendor}=="0d28", ENV{ID_MM_DEVICE_IGNORE}="1"
+#
+# Make sure that VCOM ports of J-Links can be opened with user rights
+# We simply say that all devices from SEGGER which are in the "tty" domain are enumerated with normal user == R/W
+#
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1366", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="c251", MODE="0666", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0d28", MODE="0666", GROUP="dialout"
 #
 # End of list
 #
