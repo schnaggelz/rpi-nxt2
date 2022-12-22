@@ -12,6 +12,8 @@
 
 #include "nxt/com/protocol/generic_packet.hpp"
 
+#include <cmath>
+
 namespace nxt
 {
 namespace rc
