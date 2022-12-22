@@ -6,12 +6,12 @@ find_package(pybind11 REQUIRED)
 
 add_library(${PROJECT_NAME} STATIC
     include/nxt/remote/remote.hpp
-    source/remote.cpp
+    src/remote.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-    include
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -24,7 +24,7 @@ target_link_libraries(${PROJECT_NAME}
 set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 pybind11_add_module(${PROJECT_NAME}_py
-    source/remote_py.cpp
+    src/remote_py.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_py

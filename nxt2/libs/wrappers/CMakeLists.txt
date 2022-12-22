@@ -4,7 +4,7 @@ project(nxt_wrappers CXX)
 
 add_library(${PROJECT_NAME} STATIC
     include/wrappers/monitor.hpp
-    source/monitor.cpp
+    src/monitor.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

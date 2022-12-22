@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.8)
 project(nxt_rc CXX)
 
 add_executable(${PROJECT_NAME}
-    source/main.cpp
-    source/remote.hpp
-    source/remote.cpp
+    src/main.cpp
+    src/remote.hpp
+    src/remote.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

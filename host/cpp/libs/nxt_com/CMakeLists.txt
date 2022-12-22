@@ -6,12 +6,12 @@ find_package(Threads REQUIRED)
 
 add_library(${PROJECT_NAME}
     include/nxt/usb/device.hpp
-    source/device.cpp
+    src/device.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-    include
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(${PROJECT_NAME}
