@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     from vision_utils.pi_camera import Camera
 
-    sender = VideoSender('treich-dt-1', 1234)
+    sender = VideoSender('192.168.242.163', 4243)
     sender.connect()
 
     def receive(img):

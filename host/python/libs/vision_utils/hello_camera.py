@@ -7,13 +7,14 @@ import picamera2 as picam2
 from picamera2 import encoders as picam2_encoders
 from picamera2 import outputs as picam2_outputs
 
-from vision_utils import video_sender
+import video_sender as vs
+import fps_calcularor as fps
 
 
-sender = video_sender.VideoSender('treich-dt1', 1234)
+sender = vs.VideoSender('192.168.242.163', 4243)
 sender.connect()
 
-camera = picam2.PiCamera2()
+camera = picam2.Picamera2()
 
 lores_size = (320, 240)
 main_size = (640, 480)
@@ -33,7 +34,13 @@ camera.configure(video_config)
 camera.start()
 #camera.start_encoder()
 
+fps = fps.FpsCalculator()
+
+counter = 0
 while True:
     img = camera.capture_array()
     sender.send(img)
-    
+    fps_val = fps()
+    if counter % 100 == 0:
+        print("currently sending at {} fps".format(fps_val))
+    counter += 1
