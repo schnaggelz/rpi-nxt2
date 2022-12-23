@@ -8,47 +8,37 @@
 import time
 import numpy as np
 import threading
+import picamera2 as picam2
 
-from picamera import PiCamera
-from picamera.array import PiRGBArray
-from picamera.array import PiRGBAnalysis
-
+from picamera2 import encoders as cam_encoders
+from picamera2 import outputs as cam_outputs
 
 class Camera(threading.Thread):
-    class FrameProcessor(PiRGBAnalysis):
-        def __init__(self, camera, callback):
-            super().__init__(camera)
-            self.__callback = callback
-            self.__counter = 0
-
-        @property
-        def counter(self):
-            return self.__counter
-
-        def analyze(self, array):
-            if self.__callback:
-                self.__callback(array)
 
     def __init__(self, width=1640, height=1232, framerate=30, callback=None):
         super().__init__()
-        self.__width = width
-        self.__height = height
+        self.__size = (width, height)
+        self.__lores_size = (320, 240)
         self.__framerate = framerate
         self.__callback = callback
         self.__processor = None
         self.__stop_flag = False
 
-    def open(self):
+    def open(self, lsize = (320, 240)):
         time.sleep(0.5)
 
-        self.__camera = PiCamera(resolution=(self.__width, self.__height),
-                                 framerate=self.__framerate)
-        # self.__camera.awb_mode = 'off'
-        # self.__camera.awb_gains = (1.2, 1.3)
-        self.__camera.video_denoise = True
-        self.__camera.image_effect = 'denoise'
+        self.__camera = picam2.PiCamera2()
+        video_config = self.__camera.create_video_configuration(
+            main={"size": self.__size, "format": "XRGB8888"},
+            lores={"size": self.__lores_size, "format": "YUV420"})
+        self.__camera.configure(video_config)
 
-        self.__processor = self.FrameProcessor(self.__camera, self.__callback)
+        encoder = cam_encoders.H264Encoder(1000000, repeat=True)
+        output = cam_outputs.CircularOutput()
+        encoder.output = [output]
+
+        self.__camera.encoder = encoder
+
 
     def close(self):
         if not self.is_open():
@@ -57,7 +47,10 @@ class Camera(threading.Thread):
         self.__camera.close()
 
     def run(self):
-        self.__camera.start_recording(self.__processor, 'bgr')
+        self.__camera.start()
+        self.__camera.start_encoder()
+
+        self.__processor = self.FrameProcessor(self.__camera, self.__callback)
         try:
             while not self.__stop_flag:
                 self.__camera.wait_recording(1)
@@ -86,9 +79,8 @@ class Camera(threading.Thread):
     def read(self):
         if not self.is_open():
             return
-
-        array = np.empty((self.__height, self.__width), dtype=np.uint8)
-        self.__camera.capture(array, 'bgr')
+        
+        array = self.__camera.picam2.capture_array()
 
         return array
 
