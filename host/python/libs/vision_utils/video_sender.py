@@ -29,9 +29,9 @@ class VideoSender(object):
         except zmq.ZMQError:
             pass
 
-if __name__ == '__main__':
 
-    from vision_utils.pi_camera import Camera
+if __name__ == '__main__':
+    import pi_camera
 
     sender = VideoSender('192.168.242.163', 4243)
     sender.connect()
@@ -39,9 +39,9 @@ if __name__ == '__main__':
     def receive(img):
         sender.send(img)
 
-    camera = Camera(width=320,
-                    height=320,
-                    framerate=10,
-                    callback=receive)
+    camera = pi_camera.Camera(width=320,
+                              height=320,
+                              framerate=10,
+                              callback=receive)
     camera.open()
     camera.run()
