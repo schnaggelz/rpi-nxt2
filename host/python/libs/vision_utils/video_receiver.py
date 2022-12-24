@@ -19,13 +19,13 @@ class VideoReceiver(object):
 
     def connect(self):
         self._socket.bind("tcp://*:{}".format(self._port))
-        self._socket.setsockopt_string(zmq.SUBSCRIBE, np.unicode(''))
+        self._socket.setsockopt_string(zmq.SUBSCRIBE, '')
 
     def receive(self):
         buffer = self._socket.recv_string()
         data = base64.b64decode(buffer)
 
-        npimg = np.fromstring(data, dtype=np.uint8)
+        npimg = np.frombuffer(data, dtype=np.uint8)
         img = cv2.imdecode(npimg, 1)
 
         return img
