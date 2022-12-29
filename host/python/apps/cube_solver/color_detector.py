@@ -19,10 +19,13 @@ from vision_utils.video_sender import VideoSender
 
 
 class ColorDetector:
+
+    DEBUG_MODE = False
+
     @dataclasses.dataclass
     class Parameters:
         size_threshold_min: int = 50
-        size_threshold_max: int = 80
+        size_threshold_max: int = 100
         precedence_tolerance: int = 5
         white_sensitivity: int = 75
         num_boxes: int = 9
@@ -45,10 +48,8 @@ class ColorDetector:
         self._output = output
         self._profile = profile
         self._fps = FpsCalculator()
-        self._camera = Camera(width=320,
-                               height=320,
-                               framerate=20,
-                               callback=self.analyze)
+        self._camera = Camera(lores_size=(320, 240),
+                              lores_callback=self.analyze)
         self._camera.open()
 
     @property
@@ -61,7 +62,8 @@ class ColorDetector:
 
     @staticmethod
     def get_hsv(img):
-        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        rgb = cv2.cvtColor(img, cv2.COLOR_YUV420p2RGB)
+        hsv = cv2.cvtColor(rgb, cv2.COLOR_BGR2HSV)
 
         return hsv
 
@@ -166,8 +168,9 @@ class ColorDetector:
             return False
 
         boxes = self.get_boxes(img)
+        num_boxes = len(boxes)
 
-        if len(boxes) == 9:
+        if num_boxes == 9 or (self.DEBUG_MODE and num_boxes > 0):
             (boxes, _) = self.sort_boxes(boxes, True)
             pattern = np.full(9, '?')
             sorted_rows = []

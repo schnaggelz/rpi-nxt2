@@ -13,20 +13,20 @@ import picamera2 as picam2
 
 class Camera(threading.Thread):
 
-    def __init__(self, width=1640, height=1232, framerate=30, callback=None):
+    def __init__(self, main_size=(1640, 1232), lores_size=(320, 240), main_callback=None, lores_callback=None):
         super().__init__()
         self._camera = None
-        self._main_size = (width, height)
-        self._lores_size = (320, 240)
-        self._framerate = framerate
-        self._callback = callback
+        self._main_size = main_size
+        self._lores_size = lores_size
+        self._main_callback = main_callback
+        self._lores_callback = lores_callback
         self._stop_flag = False
         self._is_open = False
 
     def open(self):
         self._camera = picam2.Picamera2()
         video_config = self._camera.create_video_configuration(
-            main={"size": self._main_size, "format": "XRGB8888"},
+            main={"size": self._main_size, "format": "RGB888"},
             lores={"size": self._lores_size, "format": "YUV420"})
 
         self._camera.configure(video_config)
@@ -50,9 +50,13 @@ class Camera(threading.Thread):
         self._camera.start()
         try:
             while not self._stop_flag:
-                array = self._camera.capture_array()
-                if self._callback:
-                    self._callback(array)
+                
+                if self._main_callback:
+                    array = self._camera.capture_array("main")
+                    self._main_callback(array)
+                if self._lores_callback:
+                    array = self._camera.capture_array("lores")
+                    self._lores_callback(array)
         finally:
             self._camera.stop()
 
@@ -91,10 +95,8 @@ if __name__ == '__main__':
 
         counter += 1
 
-    camera = Camera(width=1640,
-                    height=1232,
-                    framerate=10,
-                    callback=receive)
+    camera = Camera(lores_size=(640, 480),
+                    lores_callback=receive)
     camera.open()
     camera.start()
 

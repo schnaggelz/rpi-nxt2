@@ -22,7 +22,8 @@ class VideoSender(object):
         self._socket.connect("tcp://{}:{}".format(self._host, self._port))
 
     def send(self, img):
-        encoded, data = cv2.imencode('.jpg', img)
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_YUV420p2RGB)
+        encoded, data = cv2.imencode('.jpg', rgb_img)
         buffer = base64.b64encode(data)
         try:
             self._socket.send(buffer, zmq.NOBLOCK)
@@ -39,9 +40,7 @@ if __name__ == '__main__':
     def receive(img):
         sender.send(img)
 
-    camera = pi_camera.Camera(width=320,
-                              height=320,
-                              framerate=10,
-                              callback=receive)
+    camera = pi_camera.Camera(lores_size=(320, 240),
+                              lores_callback=receive)
     camera.open()
     camera.run()
