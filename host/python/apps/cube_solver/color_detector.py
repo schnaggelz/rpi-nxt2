@@ -31,14 +31,14 @@ class ColorDetector:
 
     PARAMS = Parameters()
 
-    class __Box:
+    class Box:
         __slots__ = ['color', 'contour']
 
         def __init__(self, color, contour):
             self.color = color
             self.contour = contour
 
-    def __init__(self, output, profile='original'):
+    def __init__(self, output=None, profile='original'):
         self._colors = CubeColors(profile).colors
         self._video_sink = None
 
@@ -149,14 +149,14 @@ class ColorDetector:
                                          self.PARAMS.size_threshold_min,
                                          self.PARAMS.size_threshold_max)
             for cntr in cntrs:
-                boxes.append(self._Box(color, cntr))
+                boxes.append(self.Box(color, cntr))
 
         white_cntrs = self.get_white_contours(img_hsv)
         white_cntrs = self.filter_contours(white_cntrs,
                                            self.PARAMS.size_threshold_min,
                                            self.PARAMS.size_threshold_max)
         for white_cntr in white_cntrs:
-            boxes.append(self._Box(CubeColors.WHITE, white_cntr))
+            boxes.append(self.Box(CubeColors.WHITE, white_cntr))
 
         return boxes
 
@@ -184,12 +184,14 @@ class ColorDetector:
                     unsorted_row = []
                     row_counter += 1
 
-            if not self._output.full():
-                self._output.put(pattern)
+            if self._output:
+                if not self._output.full():
+                    self._output.put(pattern)
 
-            img = self.display_boxes(img, list(itertools.chain(*sorted_rows)))
+            if self._video_sink:
+                img = self.display_boxes(img, list(itertools.chain(*sorted_rows)))
 
-        if self._video_sink is not None:
+        if self._video_sink:
             self.display_rate(img)
             self._video_sink.send(img)
 

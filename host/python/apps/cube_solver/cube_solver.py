@@ -33,21 +33,21 @@ class CubeSolver:
     class DetectorReceiver(Thread):
 
         def __init__(self, queue, callback):
-            super().__init__()
-            self.__queue = queue
-            self.__callback = callback
-            self.__stop = False
+            super()._init__()
+            self._queue = queue
+            self._callback = callback
+            self._stop = False
 
         def run(self):
-            while not self.__stop:
+            while not self._stop:
                 try:
-                    value = self.__queue.get(timeout=1)
-                    self.__callback(value)
+                    value = self._queue.get(timeout=1)
+                    self._callback(value)
                 except queue.Empty:
                     pass
 
         def stop(self):
-            self.__stop = True
+            self._stop = True
 
     @staticmethod
     def run_detector(output):
@@ -59,66 +59,66 @@ class CubeSolver:
         detector.start()
 
     def __init__(self):
-        self.__console = SolverConsole()
-        self.__solver_machine = SolverMachine()
+        self._console = SolverConsole()
+        self._solver_machine = SolverMachine()
 
-        self.__detected_event = Event()
-        self.__detected_patterns = dict.fromkeys(['U', 'L', 'F', 'R', 'B', 'D'])
-        self.__current_patterns = RingBuffer(maxlen=10)
-        self.__current_side = None
-        self.__patterns = Queue(maxsize=10)
+        self._detected_event = Event()
+        self._detected_patterns = dict.fromkeys(['U', 'L', 'F', 'R', 'B', 'D'])
+        self._current_patterns = RingBuffer(maxlen=10)
+        self._current_side = None
+        self._patterns = Queue(maxsize=10)
 
-        self.__detector_process = Process(target=CubeSolver.run_detector,
-                                          args=(self.__patterns,))
+        self._detector_process = Process(target=CubeSolver.run_detector,
+                                          args=(self._patterns,))
 
-        self.__detector_receiver = self.DetectorReceiver(
-            queue=self.__patterns,
+        self._detector_receiver = self.DetectorReceiver(
+            queue=self._patterns,
             callback=self.check_pattern)
 
-        self.__timer = PeriodicTimer(0.1, self.display)
+        self._timer = PeriodicTimer(0.1, self.display)
 
     def init(self):
-        self.__console.setup()
-        if self.__solver_machine.connect():
-            self.__console.print_status("CONNECTED")
+        self._console.setup()
+        if self._solver_machine.connect():
+            self._console.print_status("CONNECTED")
         else:
-            self.__console.print_status("NOT CONNECTED!")
+            self._console.print_status("NOT CONNECTED!")
 
     def exit(self):
-        self.__solver_machine.disconnect()
+        self._solver_machine.disconnect()
 
     def start(self):
-        self.__detector_process.start()
-        self.__detector_receiver.start()
-        self.__solver_machine.start()
+        self._detector_process.start()
+        self._detector_receiver.start()
+        self._solver_machine.start()
 
         while True:
             time.sleep(0.5)
-            ch = self.__console.get_char()
+            ch = self._console.get_char()
             if ch == ord('h'):
-                self.__solver_machine.turntable_home()
+                self._solver_machine.turntable_home()
             elif ch == ord('e'):
-                self.__solver_machine.turntable_turn_ccw()
+                self._solver_machine.turntable_turn_ccw()
             elif ch == ord('w'):
-                self.__solver_machine.turntable_turn_cw()
+                self._solver_machine.turntable_turn_cw()
             elif ch == ord('z'):
-                self.__solver_machine.turntable_home(True)
+                self._solver_machine.turntable_home(True)
             elif ch == ord('x'):
-                self.__solver_machine.turntable_turn_ccw(True)
+                self._solver_machine.turntable_turn_ccw(True)
             elif ch == ord('y'):
-                self.__solver_machine.turntable_turn_cw(True)
+                self._solver_machine.turntable_turn_cw(True)
             elif ch == ord('o'):
-                self.__solver_machine.grabber_home()
+                self._solver_machine.grabber_home()
             elif ch == ord('r'):
-                self.__solver_machine.grabber_rest()
+                self._solver_machine.grabber_rest()
             elif ch == ord('g'):
-                self.__solver_machine.grabber_grab()
+                self._solver_machine.grabber_grab()
             elif ch == ord('f'):
-                self.__solver_machine.grabber_flip()
+                self._solver_machine.grabber_flip()
             elif ch == ord('p'):
-                self.__solver_machine.scanner_scan()
+                self._solver_machine.scanner_scan()
             elif ch == ord('m'):
-                self.__solver_machine.scanner_home()
+                self._solver_machine.scanner_home()
             elif ch == ord('s'):
                 self.scan_all_colors()
             elif ch == ord('r'):
@@ -131,44 +131,44 @@ class CubeSolver:
         self.stop()
 
     def stop(self):
-        self.__detector_receiver.stop()
-        self.__detector_receiver.join(2)
+        self._detector_receiver.stop()
+        self._detector_receiver.join(2)
 
-        self.__detector_process.terminate()
-        self.__detector_process.join(2)
+        self._detector_process.terminate()
+        self._detector_process.join(2)
 
-        self.__solver_machine.stop()
-        self.__timer.stop()
+        self._solver_machine.stop()
+        self._timer.stop()
 
     def display(self):
-        self.__console.print_version("CUBER", self.VERSION)
+        self._console.print_version("CUBER", self.VERSION)
 
-        self.__console.print_counter(self.__solver_machine.counter)
-        self.__console.print_values(self.__solver_machine.decoder_values +
-                                    self.__solver_machine.sensor_values)
+        self._console.print_counter(self._solver_machine.counter)
+        self._console.print_values(self._solver_machine.decoder_values +
+                                    self._solver_machine.sensor_values)
 
-        self.__console.update()
+        self._console.update()
 
     def scan_colors(self, side):
         scan_success = False
 
-        self.__current_side = side
-        self.__detected_patterns[side] = None
-        self.__current_patterns.clear()
-        self.__detected_event.clear()
+        self._current_side = side
+        self._detected_patterns[side] = None
+        self._current_patterns.clear()
+        self._detected_event.clear()
 
-        self.__solver_machine.scanner_scan()
+        self._solver_machine.scanner_scan()
 
         counter = 0
         while counter < 50:  # max 5 seconds
-            self.__detected_event.wait(0.1)
+            self._detected_event.wait(0.1)
             counter += 1
 
-        if self.__detected_event.is_set():
+        if self._detected_event.is_set():
             scan_success = True
-            self.__console.print_cube_notation(side, self.__detected_patterns[side])
+            self._console.print_cube_notation(side, self._detected_patterns[side])
 
-        self.__solver_machine.scanner_home()
+        self._solver_machine.scanner_home()
 
         return scan_success
 
@@ -179,45 +179,45 @@ class CubeSolver:
         if not self.scan_colors('U'):  # red (top)
             scan_success = False
 
-        self.__solver_machine.flip_cube()
+        self._solver_machine.flip_cube()
         if not self.scan_colors('F'):  # green (front)
             scan_success = False
 
-        self.__solver_machine.flip_cube()
+        self._solver_machine.flip_cube()
         if not self.scan_colors('D'):  # orange (bottom)
             scan_success = False
 
-        self.__solver_machine.turn_cube(-1)
-        self.__solver_machine.flip_cube()
-        self.__solver_machine.turn_cube(1)
+        self._solver_machine.turn_cube(-1)
+        self._solver_machine.flip_cube()
+        self._solver_machine.turn_cube(1)
         if not self.scan_colors('L'):  # white (left)
             scan_success = False
 
-        self.__solver_machine.flip_cube()
+        self._solver_machine.flip_cube()
         if not self.scan_colors('B'):  # blue (back)
             scan_success = False
 
-        self.__solver_machine.flip_cube()
+        self._solver_machine.flip_cube()
         if not self.scan_colors('R'):  # yellow (right)
             scan_success = False
 
-        self.__solver_machine.flip_cube()
-        self.__solver_machine.all_home()
+        self._solver_machine.flip_cube()
+        self._solver_machine.all_home()
 
         if scan_success:
-            self.__console.print_status("SCAN SUCCESS")
+            self._console.print_status("SCAN SUCCESS")
         else:
-            self.__console.print_status("SCAN FAILURE!")
+            self._console.print_status("SCAN FAILURE!")
 
         return scan_success
 
     def check_pattern(self, pattern):
-        self.__current_patterns.append(pattern)
+        self._current_patterns.append(pattern)
 
         max_detect = 0
-        if len(self.__current_patterns) == self.__current_patterns.maxlen:
+        if len(self._current_patterns) == self._current_patterns.maxlen:
             unique_patterns, counts = np.unique(
-                self.__current_patterns, axis=0, return_counts=True)
+                self._current_patterns, axis=0, return_counts=True)
             max_indexes = np.where(counts == np.amax(counts))[0]
 
             if len(max_indexes) == 1:
@@ -225,31 +225,31 @@ class CubeSolver:
 
                 if counts[max_index] > 8:
                     max_detect = counts[max_index]
-                    self.__console.print_cube_notation('?', unique_patterns[max_index])
-                    self.__detected_patterns[self.__current_side] = unique_patterns[max_index]
-                    self.__detected_event.set()
+                    self._console.print_cube_notation('?', unique_patterns[max_index])
+                    self._detected_patterns[self._current_side] = unique_patterns[max_index]
+                    self._detected_event.set()
 
-        self.__console.print_max_detect(max_detect)
+        self._console.print_max_detect(max_detect)
 
     def solve_cube(self):
         patterns = ''
-        patterns += ''.join(self.__detected_patterns['U'])
-        patterns += ''.join(self.__detected_patterns['R'])
-        patterns += ''.join(self.__detected_patterns['F'])
-        patterns += ''.join(self.__detected_patterns['D'])
-        patterns += ''.join(self.__detected_patterns['L'])
-        patterns += ''.join(self.__detected_patterns['B'])
+        patterns += ''.join(self._detected_patterns['U'])
+        patterns += ''.join(self._detected_patterns['R'])
+        patterns += ''.join(self._detected_patterns['F'])
+        patterns += ''.join(self._detected_patterns['D'])
+        patterns += ''.join(self._detected_patterns['L'])
+        patterns += ''.join(self._detected_patterns['B'])
 
         cmds = kociemba.solve(patterns)
         for cmd in cmds.split():
-            self.__console.print_command(cmd)
-            self.__solver_machine.execute_command(cmd)
+            self._console.print_command(cmd)
+            self._solver_machine.execute_command(cmd)
 
     def command_mode(self):
-        cmd = self.__console.get_command()
-        self.__console.print_command(cmd)
-        res = self.__solver_machine.execute_command(cmd)
-        self.__console.print_result(res)
+        cmd = self._console.get_command()
+        self._console.print_command(cmd)
+        res = self._solver_machine.execute_command(cmd)
+        self._console.print_result(res)
 
 
 if __name__ == '__main__':
