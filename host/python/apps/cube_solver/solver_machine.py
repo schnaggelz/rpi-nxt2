@@ -56,66 +56,66 @@ class SolverMachine:
         SCAN = 20
 
     def __init__(self):
-        self.__timer = None
-        self.__counter = 0
-        self.__decoder_values = [0, 0, 0]
-        self.__sensor_values = [0, 0, 0, 0]
-        self.__nxt = nxt.Remote()
-        self.__cube_orientation = [0, 1, 2]  # side U, F, R
+        self._timer = None
+        self._counter = 0
+        self._decoder_values = [0, 0, 0]
+        self._sensor_values = [0, 0, 0, 0]
+        self._nxt = nxt.Remote()
+        self._cube_orientation = [0, 1, 2]  # side U, F, R
 
     @property
     def decoder_values(self):
-        return self.__decoder_values
+        return self._decoder_values
 
     @property
     def sensor_values(self):
-        return self.__sensor_values
+        return self._sensor_values
 
     @property
     def counter(self):
-        return self.__counter
+        return self._counter
 
     def connect(self):
-        return self.__nxt.connect()
+        return self._nxt.connect()
 
     def disconnect(self):
-        return self.__nxt.disconnect()
+        return self._nxt.disconnect()
 
     def start(self):
-        self.__timer = PeriodicTimer(0.001, self.periodic)
+        self._timer = PeriodicTimer(0.001, self.periodic)
 
     def stop(self):
-        if self.__timer is not None:
-            self.__timer.stop()
+        if self._timer is not None:
+            self._timer.stop()
 
-        self.__nxt.motor_stop(self.MOTOR_TURN)
-        self.__nxt.motor_stop(self.MOTOR_GRAB)
-        self.__nxt.motor_stop(self.MOTOR_SCAN)
+        self._nxt.motor_stop(self.MOTOR_TURN)
+        self._nxt.motor_stop(self.MOTOR_GRAB)
+        self._nxt.motor_stop(self.MOTOR_SCAN)
 
     def periodic(self):
-        self.__nxt.poll()
-        self.__decoder_values[0] = self.__nxt.motor_rcv(nxt.PORT_A, 0)
-        self.__decoder_values[1] = self.__nxt.motor_rcv(nxt.PORT_B, 0)
-        self.__decoder_values[2] = self.__nxt.motor_rcv(nxt.PORT_C, 0)
-        self.__sensor_values[0] = self.__nxt.sensor_rcv(nxt.PORT_1, 0)
-        self.__sensor_values[1] = self.__nxt.sensor_rcv(nxt.PORT_2, 0)
-        self.__sensor_values[2] = self.__nxt.sensor_rcv(nxt.PORT_3, 0)
-        self.__sensor_values[3] = self.__nxt.sensor_rcv(nxt.PORT_4, 0)
-        self.__counter += 1
+        self._nxt.poll()
+        self._decoder_values[0] = self._nxt.motor_rcv(nxt.PORT_A, 0)
+        self._decoder_values[1] = self._nxt.motor_rcv(nxt.PORT_B, 0)
+        self._decoder_values[2] = self._nxt.motor_rcv(nxt.PORT_C, 0)
+        self._sensor_values[0] = self._nxt.sensor_rcv(nxt.PORT_1, 0)
+        self._sensor_values[1] = self._nxt.sensor_rcv(nxt.PORT_2, 0)
+        self._sensor_values[2] = self._nxt.sensor_rcv(nxt.PORT_3, 0)
+        self._sensor_values[3] = self._nxt.sensor_rcv(nxt.PORT_4, 0)
+        self._counter += 1
 
     def run_to_pos(self, port, speed, position, tolerance):
-        cur_pos = self.__nxt.motor_rcv(port, 0)
+        cur_pos = self._nxt.motor_rcv(port, 0)
         if cur_pos < position - tolerance:
-            self.__nxt.motor_cmd(port, speed, position, tolerance)
+            self._nxt.motor_cmd(port, speed, position, tolerance)
             while cur_pos < position - tolerance:
                 time.sleep(0.001)
-                cur_pos = self.__nxt.motor_rcv(port, 0)
+                cur_pos = self._nxt.motor_rcv(port, 0)
         elif cur_pos > position + tolerance:
-            self.__nxt.motor_cmd(port, -speed, position, tolerance)
+            self._nxt.motor_cmd(port, -speed, position, tolerance)
             while cur_pos > position + tolerance:
                 time.sleep(0.001)
-                cur_pos = self.__nxt.motor_rcv(port, 0)
-        # self.__nxt.motor_stop(port)
+                cur_pos = self._nxt.motor_rcv(port, 0)
+        # self._nxt.motor_stop(port)
 
     @staticmethod
     def opposite_face(f):
@@ -211,55 +211,55 @@ class SolverMachine:
             face_to_turn = self.Face.INVALID.value
 
         cmd_str = "F{}:N{}:R{}".format(face_to_turn, num_quarter_turns,
-                                       self.__cube_orientation.__str__())
+                                       self._cube_orientation._str__())
 
-        if face_to_turn == self.__cube_orientation[0]:
+        if face_to_turn == self._cube_orientation[0]:
             # target is top, flip twice
             self.flip_cube()
             self.flip_cube()
-            self.__cube_orientation[0] = self.opposite_face(self.__cube_orientation[0])
-            self.__cube_orientation[1] = self.opposite_face(self.__cube_orientation[1])
-        elif face_to_turn == self.__cube_orientation[1]:
+            self._cube_orientation[0] = self.opposite_face(self._cube_orientation[0])
+            self._cube_orientation[1] = self.opposite_face(self._cube_orientation[1])
+        elif face_to_turn == self._cube_orientation[1]:
             # target is front, rotate 180 and flip
             self.release_cube()
             self.turn_cube(2)
-            self.__cube_orientation[1] = self.opposite_face(self.__cube_orientation[1])
-            self.__cube_orientation[2] = self.opposite_face(self.__cube_orientation[2])
+            self._cube_orientation[1] = self.opposite_face(self._cube_orientation[1])
+            self._cube_orientation[2] = self.opposite_face(self._cube_orientation[2])
             self.flip_cube()
-            tmp = self.__cube_orientation[0]
-            self.__cube_orientation[0] = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.opposite_face(tmp)
-        elif face_to_turn == self.__cube_orientation[2]:
+            tmp = self._cube_orientation[0]
+            self._cube_orientation[0] = self._cube_orientation[1]
+            self._cube_orientation[1] = self.opposite_face(tmp)
+        elif face_to_turn == self._cube_orientation[2]:
             # target is right, rotate -90 and flip
             self.release_cube()
             self.turn_cube(1)
-            tmp = self.__cube_orientation[2]
-            self.__cube_orientation[2] = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.opposite_face(tmp)
+            tmp = self._cube_orientation[2]
+            self._cube_orientation[2] = self._cube_orientation[1]
+            self._cube_orientation[1] = self.opposite_face(tmp)
             self.flip_cube()
-            tmp = self.__cube_orientation[0]
-            self.__cube_orientation[0] = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.opposite_face(tmp)
-        elif face_to_turn == self.opposite_face(self.__cube_orientation[0]):
+            tmp = self._cube_orientation[0]
+            self._cube_orientation[0] = self._cube_orientation[1]
+            self._cube_orientation[1] = self.opposite_face(tmp)
+        elif face_to_turn == self.opposite_face(self._cube_orientation[0]):
             # target is bottom, don't do anything
             pass
-        elif face_to_turn == self.opposite_face(self.__cube_orientation[1]):
+        elif face_to_turn == self.opposite_face(self._cube_orientation[1]):
             # target is back, flip
             self.flip_cube()
-            tmp = self.__cube_orientation[0]
-            self.__cube_orientation[0] = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.opposite_face(tmp)
-        elif face_to_turn == self.opposite_face(self.__cube_orientation[2]):
+            tmp = self._cube_orientation[0]
+            self._cube_orientation[0] = self._cube_orientation[1]
+            self._cube_orientation[1] = self.opposite_face(tmp)
+        elif face_to_turn == self.opposite_face(self._cube_orientation[2]):
             # target is left, rotate 90 and flip
             self.release_cube()
             self.turn_cube(1)
-            tmp = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.__cube_orientation[2]
-            self.__cube_orientation[2] = self.opposite_face(tmp)
+            tmp = self._cube_orientation[1]
+            self._cube_orientation[1] = self._cube_orientation[2]
+            self._cube_orientation[2] = self.opposite_face(tmp)
             self.flip_cube()
-            tmp = self.__cube_orientation[0]
-            self.__cube_orientation[0] = self.__cube_orientation[1]
-            self.__cube_orientation[1] = self.opposite_face(tmp)
+            tmp = self._cube_orientation[0]
+            self._cube_orientation[0] = self._cube_orientation[1]
+            self._cube_orientation[1] = self.opposite_face(tmp)
 
         self.grab_cube()
         self.turn_cube(num_quarter_turns, True)

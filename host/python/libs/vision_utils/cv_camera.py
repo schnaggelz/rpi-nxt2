@@ -11,30 +11,30 @@ import numpy as np
 
 class Camera:
     def __init__(self, image_width, image_height):
-        self.image_width = image_width
-        self.image_height = image_height
-        self.capture = None
+        self._image_width = image_width
+        self._image_height = image_height
+        self._capture = None
 
     def __del__(self):
-        self.capture.release()
+        self._capture.release()
 
     def open(self, source):
-        self.capture = cv2.VideoCapture(source)
+        self._capture = cv2.VideoCapture(source)
 
-        if not self.capture.isOpened():
+        if not self._capture.isOpened():
             print("Cannot open capture device")
             return False
 
         print("Camera image size: {}x{}".format(
-            int(self.capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
-            int(self.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+            int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+            int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT))))
 
     def isOpen(self):
-        self.capture.isOpened()
+        self._capture.isOpened()
 
     def read(self):
-        ret, frame = self.capture.read()
-        frame = cv2.resize(frame, (self.image_width, self.image_height))
+        ret, frame = self._capture.read()
+        frame = cv2.resize(frame, (self._image_width, self._image_height))
         if ret:
             return frame
         return None
@@ -52,5 +52,5 @@ if __name__ == '__main__':
         image = camera.read()
         if image is not None:
             cv2.imshow('original', image)
-        if source.exited():
+        if camera.exited():
             break

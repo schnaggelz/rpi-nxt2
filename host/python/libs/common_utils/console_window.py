@@ -11,7 +11,7 @@ import curses
 
 class ConsoleWindow(object):
     def __init__(self):
-        self.__window = curses.initscr()
+        self._window = curses.initscr()
         curses.noecho()
         curses.cbreak()
 
@@ -27,22 +27,22 @@ class ConsoleWindow(object):
         curses.noecho()
 
     def refresh(self):
-        self.__window.refresh()
+        self._window.refresh()
 
     def get_string(self, y, x, len):
-        return self.__window.getstr(y, x, len)
+        return self._window.getstr(y, x, len)
 
     def get_char(self):
-        return self.__window.getch()
+        return self._window.getch()
 
     def get_char_at(self, y, x):
-        return self.__window.getch(y, x)
+        return self._window.getch(y, x)
 
     def put_char_at(self, y, x, ch):
-        self.__window.addch(y, x, ch)
+        self._window.addch(y, x, ch)
 
     def print_at(self, y, x, str):
-        self.__window.addstr(y, x, str)
+        self._window.addstr(y, x, str)
 
     def print_status_at(self, y, x, str):
         self.print_at(y, x, "STATUS: {:20s}".format(str))

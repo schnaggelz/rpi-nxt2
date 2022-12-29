@@ -33,11 +33,11 @@ class CubeColors:
     }
 
     def __init__(self, profile):
-        self.__colors = CubeColors.colors_of_profile(profile)
+        self._colors = CubeColors.colors_of_profile(profile)
 
     @property
     def colors(self):
-        return self.__colors
+        return self._colors
 
     def calibrate(self):
         # TODO ;-)
@@ -45,7 +45,7 @@ class CubeColors:
 
     def ranges(self, color_name):
         colors = []
-        for color in self.__colors:
+        for color in self._colors:
             if color.name == color_name:
                 colors.append(color)
         return colors
@@ -60,7 +60,7 @@ class CubeColors:
         return colors
 
     def print(self):
-        for color in self.__colors:
+        for color in self._colors:
             for rng in color.ranges:
                 r_min = np.array(rng[0], np.uint8)
                 r_max = np.array(rng[1], np.uint8)

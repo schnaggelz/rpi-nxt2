@@ -39,25 +39,25 @@ class ColorDetector:
             self.contour = contour
 
     def __init__(self, output, profile='original'):
-        self.__colors = CubeColors(profile).colors
-        self.__video_sink = None
+        self._colors = CubeColors(profile).colors
+        self._video_sink = None
 
-        self.__output = output
-        self.__profile = profile
-        self.__fps = FpsCalculator()
-        self.__camera = Camera(width=320,
+        self._output = output
+        self._profile = profile
+        self._fps = FpsCalculator()
+        self._camera = Camera(width=320,
                                height=320,
                                framerate=20,
                                callback=self.analyze)
-        self.__camera.open()
+        self._camera.open()
 
     @property
     def video_sink(self):
-        return self.__video_sink
+        return self._video_sink
 
     @video_sink.setter
     def video_sink(self, sink):
-        self.__video_sink = sink
+        self._video_sink = sink
 
     @staticmethod
     def get_hsv(img):
@@ -136,27 +136,27 @@ class ColorDetector:
         return img
 
     def display_rate(self, img):
-        img = cv2.putText(img, "FPS:{:2.1f}".format(self.__fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
+        img = cv2.putText(img, "FPS:{:2.1f}".format(self._fps()), (5, 15), cv2.FONT_HERSHEY_SIMPLEX,
                           0.5, ColorDetector.PARAMS.font_color, 1, cv2.LINE_AA)
         return img
 
     def get_boxes(self, img):
         img_hsv = self.get_hsv(img)
         boxes = []
-        for color in self.__colors:
+        for color in self._colors:
             cntrs = self.get_color_contours(img_hsv, color.ranges)
             cntrs = self.filter_contours(cntrs,
                                          self.PARAMS.size_threshold_min,
                                          self.PARAMS.size_threshold_max)
             for cntr in cntrs:
-                boxes.append(self.__Box(color, cntr))
+                boxes.append(self._Box(color, cntr))
 
         white_cntrs = self.get_white_contours(img_hsv)
         white_cntrs = self.filter_contours(white_cntrs,
                                            self.PARAMS.size_threshold_min,
                                            self.PARAMS.size_threshold_max)
         for white_cntr in white_cntrs:
-            boxes.append(self.__Box(CubeColors.WHITE, white_cntr))
+            boxes.append(self._Box(CubeColors.WHITE, white_cntr))
 
         return boxes
 
@@ -184,24 +184,24 @@ class ColorDetector:
                     unsorted_row = []
                     row_counter += 1
 
-            if not self.__output.full():
-                self.__output.put(pattern)
+            if not self._output.full():
+                self._output.put(pattern)
 
             img = self.display_boxes(img, list(itertools.chain(*sorted_rows)))
 
-        if self.__video_sink is not None:
+        if self._video_sink is not None:
             self.display_rate(img)
-            self.__video_sink.send(img)
+            self._video_sink.send(img)
 
     def start(self):
-        self.__camera.start()
+        self._camera.start()
 
     def stop(self):
-        self.__camera.stop()
+        self._camera.stop()
 
 
 if __name__ == '__main__':
-    sender = VideoSender('192.168.242.137', 4243)
+    sender = VideoSender('192.168.242.163', 4243)
     sender.connect()
 
     detector = ColorDetector()
