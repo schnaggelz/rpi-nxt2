@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./host/python/libs"
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }
