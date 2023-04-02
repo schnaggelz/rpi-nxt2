@@ -74,7 +74,7 @@ sudo usermod -aG docker $USER
 Run setup script:
 
 ````
-cd docker
+cd docker/nxt-build
 ./setup.sh
 ````
 
