@@ -170,7 +170,7 @@ The Debian package can be downloaded from SEGGER: https://www.segger.com/downloa
 Set soft-link for `JLinkGDBServerCLExe`:
 
 ````
-sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbsvr
+sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbserver
 ````
 
 ### Run GDB Server
@@ -183,7 +183,7 @@ ide/jlink_gdbserver.sh
 
 ### Attach to GDB Server
 
-This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB script `ice/gdb/host_init.gdb`.
+This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB script `ide/gdb/host_init.gdb`.
 
 ## Debugging the Linux SW
 

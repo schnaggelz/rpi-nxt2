@@ -73,6 +73,7 @@ set(FW_DRIVERS_INCLUDE_FILES
     include/drivers/nxt_touch_sensor.h
     include/drivers/nxt_sonar_sensor.h
     include/drivers/nxt_ht_compass_sensor.h
+    include/drivers/nxt_ht_gyro_sensor.h
     include/drivers/nxt_ht_ir_seeker.h
     include/drivers/nxt_ht_ir_receiver.h
     include/drivers/nxt_devices.h
@@ -92,6 +93,7 @@ set(FW_DRIVERS_SOURCE_FILES
     src/drivers/nxt_touch_sensor.c
     src/drivers/nxt_sonar_sensor.c
     src/drivers/nxt_ht_compass_sensor.c
+    src/drivers/nxt_ht_gyro_sensor.c
     src/drivers/nxt_ht_ir_seeker.c
     #src/drivers/nxt_ht_ir_receiver.c
     src/drivers/nxt_devices.c
@@ -103,6 +105,7 @@ set(FW_CPP_API_INCLUDE_FILES
     include/api/nxt_light_sensor.hpp
     include/api/nxt_color_sensor.hpp
     include/api/nxt_ht_compass_sensor.hpp
+    include/api/nxt_ht_gyro_sensor.hpp
     include/api/nxt_ht_ir_seeker.hpp
     include/api/nxt_buttons.hpp
     include/api/nxt_motor.hpp
@@ -117,6 +120,7 @@ set(FW_CPP_API_SOURCE_FILES
     src/api/nxt_light_sensor.cpp
     src/api/nxt_color_sensor.cpp
     src/api/nxt_ht_compass_sensor.cpp
+    src/api/nxt_ht_gyro_sensor.cpp
     src/api/nxt_ht_ir_seeker.cpp
     src/api/nxt_buttons.cpp
     src/api/nxt_motor.cpp
