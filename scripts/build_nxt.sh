@@ -18,7 +18,7 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} -DBUILD_NXT_ARM=True \
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} \
   -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}
 make clean
 make -j 16 VERBOSE=1

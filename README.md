@@ -178,7 +178,7 @@ sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbsvr
 Connect the JTAG connector to the J-Link ICE and run:
 
 ````
-ice/jlink_gdbserver.sh
+ide/jlink_gdbserver.sh
 ````
 
 ### Attach to GDB Server
