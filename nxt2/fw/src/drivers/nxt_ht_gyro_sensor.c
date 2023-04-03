@@ -9,6 +9,7 @@
 #include "drivers/nxt_ht_gyro_sensor.h"
 
 #include "drivers/nxt_sensors.h"
+#include "drivers/nxt_avr.h"
 
 #include "platform/i2c.h"
 
