@@ -12,7 +12,21 @@
 
 #include "utils/status_monitor.hpp"
 
+#include "api/nxt_ht_gyro_sensor.hpp"
+
 nxt::app_utils::StatusMonitor monitor;
+
+struct Sensors
+{
+    Sensors()
+    : gyro_sensor(nxt::fw::Sensor::Port::PORT_1)
+    {
+    }
+
+    nxt::fw::ht::GyroSensor gyro_sensor;
+};
+
+Sensors sensors;
 
 //
 // Runnable scheduling
@@ -43,7 +57,7 @@ void os_app_background()
 
     if (counter % 100 == 0)
     {
-        monitor.setLineValue(0, 0, 0);
+        monitor.setLineValue(0, 0, sensors.gyro_sensor.getAnglarVelocity());
         monitor.setLineValue(1, 0, 0);
         monitor.setLineValue(2, 0, 0);
         monitor.setLineValue(3, 0, 0);
@@ -67,7 +81,7 @@ void os_app_init()
     addTasks();
 
     // Set up our application display
-    monitor.setTitle("GENERIC STATUS 3");
+    monitor.setTitle("GENERIC STATUS 4");
 
     monitor.setLineName(0, "0:");
     monitor.setLineName(1, "1:");

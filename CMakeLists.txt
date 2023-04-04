@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(rpi-nxt2)
 
-option(NXT_ARM7 "Build for the NXT2.0 target" OFF)
-option(LINUX_HOST "Build for the Linux target" OFF)
-option(APP_NAME "Application name to build" "nonexisting")
-
+set(APP_NAME "nonexisting" CACHE STRING "Application name to build")
 
 set(CMAKE_CXX_STANDARD 17 CACHE STRING "")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
