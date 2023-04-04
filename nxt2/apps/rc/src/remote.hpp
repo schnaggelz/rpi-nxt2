@@ -21,7 +21,7 @@
 #include "api/nxt_system.hpp"
 #include "api/nxt_usb_port.hpp"
 
-#include "wrappers/monitor.hpp"
+#include "utils/status_monitor.hpp"
 
 #include <array>
 #include <cstdint>
@@ -33,7 +33,7 @@ namespace rc
 class Remote
 {
   public:
-    Remote(nxt::wrappers::Monitor& monitor)
+    Remote(nxt::app_utils::StatusMonitor& monitor)
         : _monitor(monitor)
         , _motors({nxt::fw::Motor(nxt::fw::Actuator::Port::PORT_A),
                    nxt::fw::Motor(nxt::fw::Actuator::Port::PORT_B),
@@ -59,7 +59,7 @@ class Remote
     void display();
 
   private:
-    nxt::wrappers::Monitor& _monitor;
+    nxt::app_utils::StatusMonitor& _monitor;
 
     std::array<nxt::fw::Motor, 3> _motors;
     std::array<nxt::fw::DistanceSensor, 2> _distance_sensors;

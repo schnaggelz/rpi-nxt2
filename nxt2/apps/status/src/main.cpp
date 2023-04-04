@@ -10,9 +10,9 @@
 
 #include "os/os.h"
 
-#include "wrappers/monitor.hpp"
+#include "utils/status_monitor.hpp"
 
-nxt::wrappers::Monitor monitor;
+nxt::app_utils::StatusMonitor monitor;
 
 //
 // Runnable scheduling

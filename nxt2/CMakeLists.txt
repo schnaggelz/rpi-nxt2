@@ -14,7 +14,7 @@ set(APP_NAME "rc" CACHE STRING "Application to build on top of the BIOS")
 
 add_subdirectory(fw)
 
-add_subdirectory(libs/wrappers)
+add_subdirectory(libs/app_utils)
 add_subdirectory(libs/app_base)
 
 add_subdirectory(apps/${APP_NAME})

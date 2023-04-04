@@ -6,8 +6,8 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#ifndef __NXT_WRAPPERS_MONITOR_HPP__
-#define __NXT_WRAPPERS_MONITOR_HPP__
+#ifndef __NXT_APP_UTILS_MONITOR_HPP__
+#define __NXT_APP_UTILS_MONITOR_HPP__
 
 #include <array>
 #include <cstdint>
@@ -16,9 +16,9 @@
 
 namespace nxt
 {
-namespace wrappers
+namespace app_utils
 {
-class Monitor
+class StatusMonitor
 {
   public:
     static constexpr std::uint8_t NUM_LINES = 7;
@@ -26,7 +26,7 @@ class Monitor
     static constexpr std::uint8_t NUM_CHARS_PER_VALUE = 6;
 
   public:
-    Monitor()
+    StatusMonitor()
         : _lines()
         , _title(nullptr)
     {
@@ -57,7 +57,7 @@ class Monitor
     const char* _title;
 };
 
-} // namespace wrappers
+} // namespace app_utils
 } // namespace nxt
 
-#endif /* __NXT_WRAPPERS_MONITOR_HPP__ */
+#endif /* __NXT_APP_UTILS_MONITOR_HPP__ */

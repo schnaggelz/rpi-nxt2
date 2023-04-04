@@ -6,15 +6,15 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#include "wrappers/monitor.hpp"
+#include "utils/status_monitor.hpp"
 
 #include "drivers/nxt_display.h"
 
 namespace nxt
 {
-namespace wrappers
+namespace app_utils
 {
-void Monitor::init()
+void StatusMonitor::init()
 {
     nxt_display_clear(0);
     nxt_display_goto_xy(0, 0);
@@ -31,7 +31,7 @@ void Monitor::init()
     nxt_display_update();
 }
 
-void Monitor::update()
+void StatusMonitor::update()
 {
     for (auto i = 0U; i < _lines.size(); ++i)
     {
@@ -50,7 +50,7 @@ void Monitor::update()
     nxt_display_update();
 }
 
-void Monitor::setLineName(std::uint8_t line, char* name)
+void StatusMonitor::setLineName(std::uint8_t line, char* name)
 {
     if (line < _lines.size())
     {
@@ -58,8 +58,8 @@ void Monitor::setLineName(std::uint8_t line, char* name)
     }
 }
 
-void Monitor::setLineValue(std::uint8_t line, std::uint8_t idx,
-                           std::int32_t value)
+void StatusMonitor::setLineValue(std::uint8_t line, std::uint8_t idx,
+                                 std::int32_t value)
 {
     if (line < _lines.size() && idx < _lines[line].values.size())
     {
@@ -67,5 +67,5 @@ void Monitor::setLineValue(std::uint8_t line, std::uint8_t idx,
     }
 }
 
-} // namespace wrappers
+} // namespace app_utils
 } // namespace nxt

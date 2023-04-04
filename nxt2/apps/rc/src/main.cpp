@@ -10,11 +10,12 @@
 
 #include "os/os.h"
 
-#include "wrappers/monitor.hpp"
+#include "utils/status_monitor.hpp"
 
 #include "remote.hpp"
 
-nxt::wrappers::Monitor monitor;
+nxt::app_utils::StatusMonitor monitor;
+
 nxt::rc::Remote remote(monitor);
 
 //
