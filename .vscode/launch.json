@@ -4,5 +4,14 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    {
+        "type": "gdb",
+        "name": "Jlink debug nxt_status",
+        "request": "attach",
+        "executable": "./build/nxt-status-debug/nxt2/apps/status/nxt_status",
+        "target": ":2331",
+        "cwd": "${workspaceRoot}",
+        "remote": true
+    }
     ]
 }

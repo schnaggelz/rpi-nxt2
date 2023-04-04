@@ -178,16 +178,16 @@ sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbserver
 Connect the JTAG connector to the J-Link ICE and run:
 
 ````
-ide/jlink_gdbserver.sh
+tools/jlink_gdbserver.sh
 ````
 
 ### Attach to GDB Server
 
-This is IDE specific. I use CLion which controls the GDB. Use the host-side GDB script `ide/gdb/host_init.gdb`.
+This is tools specific. I use CLion which controls the GDB. Use the host-stools GDB script `tools/gdb/host_init.gdb`.
 
 ## Debugging the Linux SW
 
-This is a trivial process and well-documented for your IDE.
+This is a trivial process and well-documented for your tools.
 
 # Examples
 
