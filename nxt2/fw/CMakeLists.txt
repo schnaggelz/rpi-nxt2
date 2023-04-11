@@ -76,6 +76,7 @@ set(FW_DRIVERS_INCLUDE_FILES
     include/drivers/nxt_ht_gyro_sensor.h
     include/drivers/nxt_ht_ir_seeker.h
     include/drivers/nxt_ht_ir_receiver.h
+    include/drivers/nxt_sound.h
     include/drivers/nxt_devices.h
 )
 
@@ -96,6 +97,7 @@ set(FW_DRIVERS_SOURCE_FILES
     src/drivers/nxt_ht_gyro_sensor.c
     src/drivers/nxt_ht_ir_seeker.c
     #src/drivers/nxt_ht_ir_receiver.c
+    src/drivers/nxt_sound.c
     src/drivers/nxt_devices.c
 )
 

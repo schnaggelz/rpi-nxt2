@@ -32,6 +32,8 @@
 
 #include <string.h>
 
+#pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+
 /* Buffer length must be a multiple of 8 and at most 64 (preferably as long as
  * possible) */
 #define PDM_BUFFER_LENGTH 64
@@ -184,24 +186,26 @@ void nxt_sound_init(void)
     sample.cur_vol = -1;
 }
 
-static void create_tone(const uint8* lookup, int lulen, uint32* pat, int len)
+static void create_tone(const uint8* lookup, sint32 lookup_len, uint32* pattern,
+                        sint32 len)
 {
     // Fill the supplied buffer with len longs representing a pdm encoded
     // wave. We use a pre-generated lookup table for the wave shape.
     // The shape will be symmetric. The original code used interpolation as part
     // of the lookup but this was too slow.
-    int numsamples = len * 32 / 2;
-    int step = numsamples / lulen;
-    int word = 0;
+    sint32 num_samples = len * 32 / 2;
+    sint32 step = num_samples / lookup_len;
+    sint32 word = 0;
+
     uint32 bit = 0x80000000;
     uint32 bit2 = 0x00000001;
-    int i = numsamples / step;
-    int error = 0;
-    int error2 = 0;
-    int out = 0;
+    sint32 i = num_samples / step;
+    sint32 error = 0;
+    sint32 error2 = 0;
+    sint32 out = 0;
     uint32 bits = 0;
     uint32 bits2 = 0;
-    int entry = 0;
+    sint32 entry = 0;
 
     while (i-- > 0)
     {
@@ -229,8 +233,8 @@ static void create_tone(const uint8* lookup, int lulen, uint32* pat, int len)
             {
                 bit = 0x80000000;
                 bit2 = 0x00000001;
-                pat[word++] = bits;
-                pat[len - word] = bits2;
+                pattern[word++] = bits;
+                pattern[len - word] = bits2;
                 bits2 = bits = 0;
             }
         }
@@ -242,17 +246,24 @@ static void set_vol(uint8 vol)
     // Create the amplification control lookup table. We use a logarithmic
     // volume system mapped into a range of 0 to 120. 0 is muted, 100 is
     // full volume, 120 is driving into overload.
-    int i;
+    sint32 i;
     sint32 output;
 
     // Get into range and use log conversion
     if (vol < 0)
+    {
         vol = 0;
+    }
     if (vol > MAXVOL)
+    {
         vol = MAXVOL;
+    }
+
     // Do we need to create a new LUT?
     if (sample.cur_vol == vol)
+    {
         return;
+    }
     output = logvol[vol / 10];
     output = output + ((logvol[vol / 10 + 1] - output) * (vol % 10)) / 10;
 
@@ -277,38 +288,56 @@ void nxt_sound_freq_vol(uint32 freq, uint32 ms, uint8 vol)
     // Set things up ready to go, note we avoid using anything that may
     // be used by the interrupt routine because ints may still be enabled
     // at this point
-    int len;
+    sint32 len;
+
     // we use longer samples for lower frequencies
     if (freq > 1000)
+    {
         len = 16;
+    }
     else if (freq < 500)
+    {
         len = 64;
+    }
     else
+    {
         len = 32;
+    }
     sound_mode = SOUND_MODE_TONE;
+
     // Update the volume lookup table if we need to
     set_vol(vol);
-    int buf = sample.buf_id ^ 1;
+    sint32 buf = sample.buf_id ^ 1;
     create_tone(sine, sizeof(sine), sample.buf[buf], len);
+
     // The note generation takes approx 1ms, to ensure that we do not get gaps
     // when playing a series of tones we extend the requested period to cover
     // this 1ms cost.
     ms += TONE_OVERHEAD;
+
     // Turn of ints while we update shared values
     sound_interrupt_disable();
+
     /* Generate the pdm wave of the correct amplitude */
     sample.clock_div = (OSC / (len * 32 * 2) + freq / 2) / freq;
+
     // Calculate actual frequency and use this for length calc
     freq = (OSC / (2 * sample.clock_div)) / (len * 32);
     if (ms <= TONE_OVERHEAD)
+    {
         sample.count = 0;
+    }
     else
+    {
         sample.count = (freq * ms + 1000 - 1) / 1000;
+    }
     sample.len = len;
     sample.ptr = (uint8*)sample.buf[buf];
     sample.buf_id = buf;
+
     *AT91C_SSC_PTCR = AT91C_PDC_TXTEN;
     sound_mode = SOUND_MODE_TONE;
+
     sound_interrupt_enable(AT91C_SSC_TXBUFE);
 }
 
@@ -332,6 +361,7 @@ void nxt_sound_fill_sample_buffer(void)
     sample.buf_id ^= 1;
     uint32* sbuf = sample.buf[sample.buf_id];
     uint8 i;
+
     /* Each 8-bit sample is turned into 8 32-bit numbers, i.e. 256 bits
      * altogether */
     for (i = 0; i < PDM_BUFFER_LENGTH >> 3; i++)
@@ -339,6 +369,7 @@ void nxt_sound_fill_sample_buffer(void)
         uint8 smp = (sample.count > 0 ? sample.amp[*sample.ptr] : 128);
         uint8 msk = "\x00\x10\x22\x4a\x55\x6d\x77\x7f"[smp & 7];
         uint8 s3 = smp >> 3;
+
         *sbuf++ = sample_pattern[s3 + (msk & 1)];
         msk >>= 1;
         *sbuf++ = sample_pattern[s3 + (msk & 1)];
@@ -373,15 +404,23 @@ void nxt_sound_fill_sample_buffer(void)
 void nxt_sound_play_sample(uint8* data, uint32 length, uint32 freq, uint8 vol)
 {
     if (data == (uint8*)0 || length == 0)
+    {
         return;
+    }
 
     /* Calculate the clock divisor based upon the recorded sample frequency. */
     if (freq == 0)
+    {
         freq = DEFRATE;
+    }
     if (freq > MAXRATE)
+    {
         freq = MAXRATE;
+    }
     if (freq < MINRATE)
+    {
         freq = MINRATE;
+    }
     uint32 cdiv = (OSC / (2 * SAMPBITS) + freq / 2) / freq;
     set_vol(vol);
 
@@ -398,31 +437,34 @@ void nxt_sound_play_sample(uint8* data, uint32 length, uint32 freq, uint8 vol)
     *AT91C_SSC_PTCR = AT91C_PDC_TXTEN;
 }
 
-int nxt_sound_get_time()
+sint32 nxt_sound_get_time()
 {
     // Return the amount of time still to play for the current tone/sample
     if (sound_mode > SOUND_MODE_SILENCE)
     {
         // long long int is needed to avoid overflow (this is a bug in leJOS
         // original code)
-        int ms = (int)(((long long int)sample.count * 1000 * sample.len * 32) /
+        sint32 time_ms = (int)(((long long int)sample.count * 1000 * sample.len * 32) /
                        (OSC / (2 * sample.clock_div)));
         // remove the extra time we added
-        if (sound_mode == SOUND_MODE_TONE && ms > 0)
-            ms -= TONE_OVERHEAD;
-        return ms;
+        if (sound_mode == SOUND_MODE_TONE && time_ms > 0)
+        {
+            time_ms -= TONE_OVERHEAD;
+        }
+        return time_ms;
     }
-    else
-        return 0;
+
+    return 0;
 }
 
 void nxt_sound_isr_handler()
 {
     if (sample.count > 0)
     {
-        // refill the buffer, and adjust any clocks
+        // Refill the buffer, and adjust any clocks
         *AT91C_SSC_CMR = sample.clock_div;
         nxt_sound_enable();
+
         if (*AT91C_SSC_TCR == 0)
         {
             if (sound_mode == SOUND_MODE_PCM)
@@ -431,7 +473,9 @@ void nxt_sound_isr_handler()
                 *AT91C_SSC_TPR = (unsigned int)sample.buf[sample.buf_id];
             }
             else
+            {
                 *AT91C_SSC_TPR = (unsigned int)sample.ptr;
+            }
             *AT91C_SSC_TCR = sample.len;
             sample.count--;
         }
@@ -441,9 +485,13 @@ void nxt_sound_isr_handler()
             *AT91C_SSC_TNPR = (unsigned int)sample.buf[sample.buf_id];
         }
         else
+        {
             *AT91C_SSC_TNPR = (unsigned int)sample.ptr;
+        }
+
         *AT91C_SSC_TNCR = sample.len;
         sample.count--;
+
         // If this is the last sample wait for it to complete, otherwise wait
         // to switch buffers
         sound_interrupt_enable(sample.count <= 0
@@ -452,20 +500,10 @@ void nxt_sound_isr_handler()
                                           : AT91C_SSC_TXBUFE)
                                    : AT91C_SSC_ENDTX);
     }
-    else if (sound_mode == SOUND_MODE_SILENCE)
+    else
     {
         sound_mode = SOUND_MODE_NONE;
         nxt_sound_disable();
         sound_interrupt_disable();
-    }
-    else
-    {
-        // Add a short section of silence after the sample/tone
-        sound_mode = SOUND_MODE_SILENCE;
-        sample.clock_div = SILENCE_CLK;
-        sample.ptr = (uint8*)silence;
-        sample.count = SILENCE_CNT;
-        sample.len = 16;
-        sound_isr_C();
     }
 }

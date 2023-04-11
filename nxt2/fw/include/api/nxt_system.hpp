@@ -11,19 +11,20 @@
 
 #include "nxt_sensor.hpp"
 
+#include <cstdint>
+
 namespace nxt
 {
 namespace fw
 {
-class System
+namespace system
 {
-  public:
-    System() = delete;
+    std::int32_t getBatteryVoltage() noexcept;
 
-    static std::int32_t getBatteryVoltage() noexcept;
-
-    static void update() noexcept;
-    static void shutdown() noexcept;
+    void update() noexcept;
+    void shutdown() noexcept;
+    void wait(std::uint32_t time_ms);
+    void beep(std::uint32_t time_ms);
 };
 
 } // namespace fw

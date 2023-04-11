@@ -67,6 +67,9 @@ void nxt_devices_init(void)
 
     /* Initialize digital sensors. */
     nxt_sensors_init();
+
+    /* Initialize the sound generation. */
+    nxt_sound_init();
 }
 
 void nxt_devices_background()
