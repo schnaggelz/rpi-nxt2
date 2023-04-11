@@ -13,14 +13,21 @@
 #include "utils/status_monitor.hpp"
 
 #include "api/nxt_ht_gyro_sensor.hpp"
+#include "api/nxt_touch_sensor.hpp"
 
 nxt::app_utils::StatusMonitor monitor;
 
 struct Sensors
 {
     Sensors()
-    : gyro_sensor(nxt::fw::Sensor::Port::PORT_1)
+        : gyro_sensor(nxt::fw::Sensor::Port::PORT_1)
     {
+        gyro_sensor.init();
+    }
+
+    void read()
+    {
+        gyro_sensor.read();
     }
 
     nxt::fw::ht::GyroSensor gyro_sensor;
@@ -32,7 +39,10 @@ Sensors sensors;
 // Runnable scheduling
 //
 
-void taskCbk10ms() {}
+void taskCbk10ms() 
+{
+    sensors.read();
+}
 
 void taskCbk20ms() {}
 
@@ -55,7 +65,7 @@ void os_app_background()
 {
     static int counter = 0;
 
-    if (counter % 100 == 0)
+    if (counter % 10 == 0)
     {
         monitor.setLineValue(0, 0, sensors.gyro_sensor.getAnglarVelocity());
         monitor.setLineValue(1, 0, 0);
