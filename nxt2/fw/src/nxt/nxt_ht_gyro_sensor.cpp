@@ -16,18 +16,6 @@ namespace fw
 {
 namespace ht
 {
-std::uint16_t GyroSensor::getAnglarVelocity(bool preview) const noexcept
-{
-    if (preview)
-    {
-        return _angular_velocity_preview;
-    }
-    else
-    {
-        return _angular_velocity;
-    }
-}
-
 void GyroSensor::init()
 {
     nxt_ht_gyro_sensor_init(_port_number);
@@ -40,10 +28,18 @@ void GyroSensor::exit()
 
 void GyroSensor::read()
 {
-    _angular_velocity = nxt_ht_gyro_sensor_get_angular_velocity(_port_number);
-    _angular_velocity_preview = nxt_ht_gyro_sensor_get_angular_velocity_preview(_port_number);
+    if (_mode == GyroSensorMode::PREVIEW)
+    {
+        _angular_velocity =
+            nxt_ht_gyro_sensor_get_angular_velocity_preview(_port_number);
+    }
+    else
+    {
+        _angular_velocity =
+            nxt_ht_gyro_sensor_get_angular_velocity(_port_number);
+    }
 }
 
-} // namespace ht
-} // namespace fw
-} // namespace nxt
+}  // namespace ht
+}  // namespace fw
+}  // namespace nxt

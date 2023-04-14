@@ -17,28 +17,42 @@ namespace fw
 {
 namespace ht
 {
+enum class GyroSensorMode : std::uint8_t
+{
+    PREVIEW = 0,
+    I2C,
+};
+
 class GyroSensor : public Sensor
 {
-  public:
+   public:
     GyroSensor(Port port)
-        : Sensor(port)
-        , _angular_velocity(0)
+        : Sensor(port), _mode(GyroSensorMode::PREVIEW), _angular_velocity(0)
     {
     }
 
-    std::uint16_t getAnglarVelocity(bool preview = true) const noexcept;
+    void setMode(GyroSensorMode mode)
+    {
+        _mode = mode;
+    }
+
+    std::uint16_t getAnglarVelocity() const
+    {
+        return _angular_velocity;
+    };
 
     void init() noexcept override;
     void read() noexcept override;
     void exit() noexcept override;
 
-  private:
+   private:
+    GyroSensorMode _mode;
+
     std::uint16_t _angular_velocity;
-    std::uint16_t _angular_velocity_preview;
 };
 
-} // namespace ht
-} // namespace fw
-} // namespace nxt
+}  // namespace ht
+}  // namespace fw
+}  // namespace nxt
 
 #endif /* __NXT_HT_GYRO_SENSOR_HPP__ */
