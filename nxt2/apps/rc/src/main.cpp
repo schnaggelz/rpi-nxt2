@@ -104,4 +104,3 @@ void os_app_exit()
     remote.exit();
 }
 }
-

@@ -19,6 +19,12 @@
         "limits": "cpp",
         "new": "cpp",
         "*.tcc": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cstring": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "iosfwd": "cpp"
     }
 }
