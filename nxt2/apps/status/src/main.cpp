@@ -19,8 +19,7 @@ nxt::app_utils::StatusMonitor monitor;
 
 struct Sensors
 {
-    Sensors()
-        : gyro_sensor(nxt::fw::Sensor::Port::PORT_1)
+    Sensors() : gyro_sensor(nxt::fw::Sensor::Port::PORT_2)
     {
         gyro_sensor.init();
     }
@@ -39,7 +38,7 @@ Sensors sensors;
 // Runnable scheduling
 //
 
-void taskCbk10ms() 
+void taskCbk10ms()
 {
     sensors.read();
 }
@@ -91,7 +90,7 @@ void os_app_init()
     addTasks();
 
     // Set up our application display
-    monitor.setTitle("GENERIC STATUS 4");
+    monitor.setTitle("STATUS V05");
 
     monitor.setLineName(0, "0:");
     monitor.setLineName(1, "1:");

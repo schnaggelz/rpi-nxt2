@@ -48,8 +48,14 @@ void os_app_background()
 {
     static int counter = 0;
 
-    if (counter % 100 == 0)
+    if (counter % 10 == 0)
     {
+        monitor.setLineValue(3, 0, segway.getGyroRate());
+        monitor.setLineValue(4, 0, segway.getGyroSensorRawValue());
+        monitor.setLineValue(5, 0, segway.getMotorDutyCycle());
+
+        monitor.setLineValue(6, 1, counter);
+
         monitor.update();
     }
 
@@ -66,7 +72,7 @@ void os_app_init()
     addTasks();
 
     // Set up our application display
-    monitor.setTitle("SEGWAY V1");
+    monitor.setTitle("SEGWAY V02");
 
     monitor.setLineName(0, "M1:");
     monitor.setLineName(1, "M2:");
