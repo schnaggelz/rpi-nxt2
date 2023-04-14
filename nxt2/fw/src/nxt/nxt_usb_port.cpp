@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_usb_port.hpp"
+#include "nxt/nxt_usb_port.hpp"
 
 #include "drivers/nxt_usb.h"
 

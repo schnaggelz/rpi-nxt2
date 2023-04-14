@@ -11,9 +11,9 @@
 #ifndef __NXT_RC_SEGWAY_HPP__
 #define __NXT_RC_SEGWAY_HPP__
 
-#include "api/nxt_ht_gyro_sensor.hpp"
-#include "api/nxt_motor.hpp"
-#include "api/nxt_system.hpp"
+#include "nxt/nxt_ht_gyro_sensor.hpp"
+#include "nxt/nxt_motor.hpp"
+#include "nxt/nxt_system.hpp"
 
 #include <array>
 #include <cstdint>

@@ -102,32 +102,32 @@ set(FW_DRIVERS_SOURCE_FILES
 )
 
 set(FW_CPP_API_INCLUDE_FILES
-    include/api/nxt_touch_sensor.hpp
-    include/api/nxt_distance_sensor.hpp
-    include/api/nxt_light_sensor.hpp
-    include/api/nxt_color_sensor.hpp
-    include/api/nxt_ht_compass_sensor.hpp
-    include/api/nxt_ht_gyro_sensor.hpp
-    include/api/nxt_ht_ir_seeker.hpp
-    include/api/nxt_buttons.hpp
-    include/api/nxt_motor.hpp
-    include/api/nxt_usb_data.hpp
-    include/api/nxt_usb_port.hpp
-    include/api/nxt_system.hpp
+    include/nxt/nxt_touch_sensor.hpp
+    include/nxt/nxt_distance_sensor.hpp
+    include/nxt/nxt_light_sensor.hpp
+    include/nxt/nxt_color_sensor.hpp
+    include/nxt/nxt_ht_compass_sensor.hpp
+    include/nxt/nxt_ht_gyro_sensor.hpp
+    include/nxt/nxt_ht_ir_seeker.hpp
+    include/nxt/nxt_buttons.hpp
+    include/nxt/nxt_motor.hpp
+    include/nxt/nxt_usb_data.hpp
+    include/nxt/nxt_usb_port.hpp
+    include/nxt/nxt_system.hpp
 )
 
 set(FW_CPP_API_SOURCE_FILES
-    src/api/nxt_touch_sensor.cpp
-    src/api/nxt_distance_sensor.cpp
-    src/api/nxt_light_sensor.cpp
-    src/api/nxt_color_sensor.cpp
-    src/api/nxt_ht_compass_sensor.cpp
-    src/api/nxt_ht_gyro_sensor.cpp
-    src/api/nxt_ht_ir_seeker.cpp
-    src/api/nxt_buttons.cpp
-    src/api/nxt_motor.cpp
-    src/api/nxt_usb_port.cpp
-    src/api/nxt_system.cpp
+    src/nxt/nxt_touch_sensor.cpp
+    src/nxt/nxt_distance_sensor.cpp
+    src/nxt/nxt_light_sensor.cpp
+    src/nxt/nxt_color_sensor.cpp
+    src/nxt/nxt_ht_compass_sensor.cpp
+    src/nxt/nxt_ht_gyro_sensor.cpp
+    src/nxt/nxt_ht_ir_seeker.cpp
+    src/nxt/nxt_buttons.cpp
+    src/nxt/nxt_motor.cpp
+    src/nxt/nxt_usb_port.cpp
+    src/nxt/nxt_system.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC

@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_color_sensor.hpp"
+#include "nxt/nxt_color_sensor.hpp"
 
 #include "drivers/nxt_color_sensor.h"
 

@@ -6,7 +6,7 @@
 * License notes see LICENSE.txt
 *******************************************************************************/
 
-#include "api//nxt_touch_sensor.hpp"
+#include "nxt//nxt_touch_sensor.hpp"
 
 #include "drivers/nxt_touch_sensor.h"
 

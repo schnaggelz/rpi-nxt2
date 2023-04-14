@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_system.hpp"
+#include "nxt/nxt_system.hpp"
 
 #include "drivers/nxt_avr.h"
 #include "drivers/nxt_sound.h"

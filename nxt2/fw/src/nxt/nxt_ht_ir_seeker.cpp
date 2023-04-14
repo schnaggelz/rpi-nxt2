@@ -6,28 +6,31 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_distance_sensor.hpp"
+#include "nxt/nxt_ht_ir_seeker.hpp"
 
-#include "drivers/nxt_sonar_sensor.h"
+#include "drivers/nxt_ht_ir_seeker.h"
 
 namespace nxt
 {
 namespace fw
 {
-void DistanceSensor::init()
+namespace ht
 {
-    nxt_sonar_sensor_init(_port_number);
+void InfraredSeeker::init()
+{
+    nxt_ht_ir_seeker_init(_port_number);
 }
 
-void DistanceSensor::exit()
+void InfraredSeeker::exit()
 {
-    nxt_sonar_sensor_term(_port_number);
+    nxt_ht_ir_seeker_term(_port_number);
 }
 
-void DistanceSensor::read()
+void InfraredSeeker::read()
 {
-    _current_distance = nxt_sonar_sensor_get_distance(_port_number);
+    nxt_ht_ir_seeker_get_data(_port_number, _ir_data.data());
 }
 
+} // namespace ht
 } // namespace fw
 } // namespace nxt

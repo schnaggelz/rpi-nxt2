@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_buttons.hpp"
+#include "nxt/nxt_buttons.hpp"
 
 #include "drivers/nxt_buttons.h"
 

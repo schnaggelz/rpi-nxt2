@@ -12,8 +12,8 @@
 
 #include "utils/status_monitor.hpp"
 
-#include "api/nxt_ht_gyro_sensor.hpp"
-#include "api/nxt_touch_sensor.hpp"
+#include "nxt/nxt_ht_gyro_sensor.hpp"
+#include "nxt/nxt_touch_sensor.hpp"
 
 nxt::app_utils::StatusMonitor monitor;
 

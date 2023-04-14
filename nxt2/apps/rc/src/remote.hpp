@@ -15,11 +15,11 @@
 
 #include "nxt/utils/conversion.hpp"
 
-#include "api/nxt_color_sensor.hpp"
-#include "api/nxt_distance_sensor.hpp"
-#include "api/nxt_motor.hpp"
-#include "api/nxt_system.hpp"
-#include "api/nxt_usb_port.hpp"
+#include "nxt/nxt_color_sensor.hpp"
+#include "nxt/nxt_distance_sensor.hpp"
+#include "nxt/nxt_motor.hpp"
+#include "nxt/nxt_system.hpp"
+#include "nxt/nxt_usb_port.hpp"
 
 #include "utils/status_monitor.hpp"
 

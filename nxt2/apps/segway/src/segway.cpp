@@ -10,6 +10,8 @@
 
 #include "segway.hpp"
 
+#include "nxt/nxt_system.hpp"
+
 namespace nxt
 {
 namespace segway

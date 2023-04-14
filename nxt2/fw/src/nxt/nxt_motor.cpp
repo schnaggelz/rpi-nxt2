@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_motor.hpp"
+#include "nxt/nxt_motor.hpp"
 
 #include "drivers/nxt_motors.h"
 

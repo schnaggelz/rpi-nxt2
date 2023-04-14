@@ -6,7 +6,7 @@
  * License notes see LICENSE.txt
  *******************************************************************************/
 
-#include "api/nxt_ht_gyro_sensor.hpp"
+#include "nxt/nxt_ht_gyro_sensor.hpp"
 
 #include "drivers/nxt_ht_gyro_sensor.h"
 
