@@ -29,6 +29,8 @@ void Segway::init()
     }
 
     _gyro_offset /= NUM_CALIBRATION_CYCLES;
+
+    nxt::fw::system::beep(500);
 }
 
 void Segway::step() {}

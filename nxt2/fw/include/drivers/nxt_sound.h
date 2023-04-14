@@ -16,11 +16,19 @@ void nxt_sound_enable(void);
 void nxt_sound_disable(void);
 void nxt_sound_isr_handler(void);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void nxt_sound_freq(uint32 freq, uint32 ms);
 void nxt_sound_freq_vol(uint32 freq, uint32 ms, uint8 vol);
 void nxt_sound_play_sample(uint8* data, uint32 length, uint32 freq, uint8 vol);
 void nxt_sound_set_volume(uint8 vol);
 sint32 nxt_sound_get_time(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #define MAXVOL 100
 
