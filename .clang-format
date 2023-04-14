@@ -1,6 +1,7 @@
 ---
-# We'll use defaults from the LLVM style, but with 4 columns indentation.
-BasedOnStyle: LLVM
+# We'll use defaults from the Google style
+BasedOnStyle: Google
+SortIncludes: false
 ColumnLimit: 80
 IndentWidth: 4
 PointerAlignment: Left
@@ -12,7 +13,7 @@ BraceWrapping:
   AfterFunction: true
   AfterControlStatement: true
   AfterNamespace: true
-  "AfterClass": true
+  AfterClass: true
   AfterStruct: true
   AfterEnum: true
   BeforeElse: true
