@@ -83,7 +83,7 @@ cd docker/nxt-build
 Run the container:
 
 ````
-docker run --name rpi-nxt2 -it -v <root>/rpi-nxt2:/home/rpi-nxt2 ubuntu20-gcc-arm-none-eabi:latest
+docker run --user $(id -u):$(id -g) -it -v $(pwd)/../..:/workspace rpi-nxt2:latest
 ````
 
 To re-run after exit:
@@ -97,8 +97,17 @@ docker start rpi-nxt2 -i
 Run (in container):
 
 ````
-cd /home/rpi-nxt2
+cd /workspace
 scripts/build_nxt.sh <build_type> <app_name>
+````
+
+where `app_name` is the app added to `nxt/apps`.
+
+e.g.
+
+````
+cd /workspace
+scripts/build_nxt.sh debug status
 ````
 
 ### Build Linux Software
@@ -106,8 +115,13 @@ scripts/build_nxt.sh <build_type> <app_name>
 Run:
 
 ````
-cd /home/rpi-nxt2
+cd /workspace
 scripts/build_linux.sh <build_type>
+````
+
+````
+cd /workspace
+scripts/build_nxt.sh debug
 ````
 
 # Flashing
@@ -132,7 +146,7 @@ sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
 Bring the NXT into flash mode and connect it to USB or JTAG, then:
 
 ````
-ice/sam-ba.sh
+tools/sam-ba.sh
 ````
 
 # Running

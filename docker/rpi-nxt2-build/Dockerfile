@@ -13,3 +13,4 @@ RUN apt install -y gcc-arm-none-eabi
 
 USER nxt2
 
+WORKDIR /home/nxt2

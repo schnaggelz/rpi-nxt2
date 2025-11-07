@@ -1,1 +1,3 @@
-docker run --user $(id -u):$(id -g) -it -v $(pwd)/../..:/home/nxt2-build ubuntu22-rpi-nxt2-build:latest
+#!/bin/bash
+
+docker run --user $(id -u):$(id -g) -it -v $(pwd)/../..:/workspace rpi-nxt2:latest
