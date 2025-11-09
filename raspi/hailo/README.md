@@ -1,0 +1,1 @@
+# Hailo AI Kit Setup

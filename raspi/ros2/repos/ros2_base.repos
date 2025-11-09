@@ -1,0 +1,905 @@
+- git:
+    local-name: ament_cmake/ament_cmake
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_auto
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_auto/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_core
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_core/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_definitions
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_definitions/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_dependencies
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_dependencies/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_include_directories
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_include_directories/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_interfaces
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_interfaces/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_libraries
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_libraries/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_link_flags
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_link_flags/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_export_targets
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_export_targets/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_gen_version_h
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_gen_version_h/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_gmock
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_gmock/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_google_benchmark
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_google_benchmark/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_gtest
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_gtest/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_include_directories
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_include_directories/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_libraries
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_libraries/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_pytest
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_pytest/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_python
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_python/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_target_dependencies
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_target_dependencies/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_test
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_test/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_vendor_package
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_vendor_package/2.7.3-2
+- git:
+    local-name: ament_cmake/ament_cmake_version
+    uri: https://github.com/ros2-gbp/ament_cmake-release.git
+    version: release/kilted/ament_cmake_version/2.7.3-2
+- git:
+    local-name: ament_cmake_ros/ament_cmake_ros
+    uri: https://github.com/ros2-gbp/ament_cmake_ros-release.git
+    version: release/kilted/ament_cmake_ros/0.14.5-1
+- git:
+    local-name: ament_cmake_ros/ament_cmake_ros_core
+    uri: https://github.com/ros2-gbp/ament_cmake_ros-release.git
+    version: release/kilted/ament_cmake_ros_core/0.14.5-1
+- git:
+    local-name: ament_cmake_ros/domain_coordinator
+    uri: https://github.com/ros2-gbp/ament_cmake_ros-release.git
+    version: release/kilted/domain_coordinator/0.14.5-1
+- git:
+    local-name: ament_cmake_ros/rmw_test_fixture
+    uri: https://github.com/ros2-gbp/ament_cmake_ros-release.git
+    version: release/kilted/rmw_test_fixture/0.14.5-1
+- git:
+    local-name: ament_cmake_ros/rmw_test_fixture_implementation
+    uri: https://github.com/ros2-gbp/ament_cmake_ros-release.git
+    version: release/kilted/rmw_test_fixture_implementation/0.14.5-1
+- git:
+    local-name: ament_index/ament_index_cpp
+    uri: https://github.com/ros2-gbp/ament_index-release.git
+    version: release/kilted/ament_index_cpp/1.11.0-1
+- git:
+    local-name: ament_index/ament_index_python
+    uri: https://github.com/ros2-gbp/ament_index-release.git
+    version: release/kilted/ament_index_python/1.11.0-1
+- git:
+    local-name: ament_lint/ament_clang_format
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_clang_format/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_clang_format
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_clang_format/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_copyright
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_copyright/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_cppcheck
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_cppcheck/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_cpplint
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_cpplint/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_flake8
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_flake8/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_lint_cmake
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_lint_cmake/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_mypy
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_mypy/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_pep257
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_pep257/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_uncrustify
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_uncrustify/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cmake_xmllint
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cmake_xmllint/0.19.2-2
+- git:
+    local-name: ament_lint/ament_copyright
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_copyright/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cppcheck
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cppcheck/0.19.2-2
+- git:
+    local-name: ament_lint/ament_cpplint
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_cpplint/0.19.2-2
+- git:
+    local-name: ament_lint/ament_flake8
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_flake8/0.19.2-2
+- git:
+    local-name: ament_lint/ament_lint
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_lint/0.19.2-2
+- git:
+    local-name: ament_lint/ament_lint_auto
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_lint_auto/0.19.2-2
+- git:
+    local-name: ament_lint/ament_lint_cmake
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_lint_cmake/0.19.2-2
+- git:
+    local-name: ament_lint/ament_lint_common
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_lint_common/0.19.2-2
+- git:
+    local-name: ament_lint/ament_mypy
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_mypy/0.19.2-2
+- git:
+    local-name: ament_lint/ament_pep257
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_pep257/0.19.2-2
+- git:
+    local-name: ament_lint/ament_pycodestyle
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_pycodestyle/0.19.2-2
+- git:
+    local-name: ament_lint/ament_uncrustify
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_uncrustify/0.19.2-2
+- git:
+    local-name: ament_lint/ament_xmllint
+    uri: https://github.com/ros2-gbp/ament_lint-release.git
+    version: release/kilted/ament_xmllint/0.19.2-2
+- git:
+    local-name: ament_package
+    uri: https://github.com/ros2-gbp/ament_package-release.git
+    version: release/kilted/ament_package/0.17.2-2
+- git:
+    local-name: class_loader
+    uri: https://github.com/ros2-gbp/class_loader-release.git
+    version: release/kilted/class_loader/2.8.1-1
+- git:
+    local-name: common_interfaces/actionlib_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/actionlib_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/common_interfaces
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/common_interfaces/5.5.1-1
+- git:
+    local-name: common_interfaces/diagnostic_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/diagnostic_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/geometry_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/geometry_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/nav_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/nav_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/sensor_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/sensor_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/sensor_msgs_py
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/sensor_msgs_py/5.5.1-1
+- git:
+    local-name: common_interfaces/shape_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/shape_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/std_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/std_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/std_srvs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/std_srvs/5.5.1-1
+- git:
+    local-name: common_interfaces/stereo_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/stereo_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/trajectory_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/trajectory_msgs/5.5.1-1
+- git:
+    local-name: common_interfaces/visualization_msgs
+    uri: https://github.com/ros2-gbp/common_interfaces-release.git
+    version: release/kilted/visualization_msgs/5.5.1-1
+- git:
+    local-name: console_bridge_vendor
+    uri: https://github.com/ros2-gbp/console_bridge_vendor-release.git
+    version: release/kilted/console_bridge_vendor/1.8.0-2
+- git:
+    local-name: cyclonedds
+    uri: https://github.com/ros2-gbp/cyclonedds-release.git
+    version: release/kilted/cyclonedds/0.10.5-2
+- git:
+    local-name: eigen3_cmake_module
+    uri: https://github.com/ros2-gbp/eigen3_cmake_module-release.git
+    version: release/kilted/eigen3_cmake_module/0.4.0-2
+- git:
+    local-name: fastcdr
+    uri: https://github.com/ros2-gbp/fastcdr-release.git
+    version: release/kilted/fastcdr/2.3.3-1
+- git:
+    local-name: fastdds
+    uri: https://github.com/ros2-gbp/fastdds-release.git
+    version: release/kilted/fastdds/3.2.3-1
+- git:
+    local-name: foonathan_memory_vendor
+    uri: https://github.com/ros2-gbp/foonathan_memory_vendor-release.git
+    version: release/kilted/foonathan_memory_vendor/1.3.1-3
+- git:
+    local-name: geometry2/geometry2
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/geometry2/0.41.4-1
+- git:
+    local-name: geometry2/tf2
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2/0.41.4-1
+- git:
+    local-name: geometry2/tf2_bullet
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_bullet/0.41.4-1
+- git:
+    local-name: geometry2/tf2_eigen
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_eigen/0.41.4-1
+- git:
+    local-name: geometry2/tf2_eigen_kdl
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_eigen_kdl/0.41.4-1
+- git:
+    local-name: geometry2/tf2_geometry_msgs
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_geometry_msgs/0.41.4-1
+- git:
+    local-name: geometry2/tf2_kdl
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_kdl/0.41.4-1
+- git:
+    local-name: geometry2/tf2_msgs
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_msgs/0.41.4-1
+- git:
+    local-name: geometry2/tf2_py
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_py/0.41.4-1
+- git:
+    local-name: geometry2/tf2_ros
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_ros/0.41.4-1
+- git:
+    local-name: geometry2/tf2_ros_py
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_ros_py/0.41.4-1
+- git:
+    local-name: geometry2/tf2_sensor_msgs
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_sensor_msgs/0.41.4-1
+- git:
+    local-name: geometry2/tf2_tools
+    uri: https://github.com/ros2-gbp/geometry2-release.git
+    version: release/kilted/tf2_tools/0.41.4-1
+- git:
+    local-name: google_benchmark_vendor
+    uri: https://github.com/ros2-gbp/google_benchmark_vendor-release.git
+    version: release/kilted/google_benchmark_vendor/0.6.1-2
+- git:
+    local-name: googletest/gmock_vendor
+    uri: https://github.com/ros2-gbp/googletest-release.git
+    version: release/kilted/gmock_vendor/1.15.1-2
+- git:
+    local-name: googletest/gtest_vendor
+    uri: https://github.com/ros2-gbp/googletest-release.git
+    version: release/kilted/gtest_vendor/1.15.1-2
+- git:
+    local-name: kdl_parser
+    uri: https://github.com/ros2-gbp/kdl_parser-release.git
+    version: release/kilted/kdl_parser/2.12.1-2
+- git:
+    local-name: keyboard_handler
+    uri: https://github.com/ros2-gbp/keyboard_handler-release.git
+    version: release/kilted/keyboard_handler/0.4.0-2
+- git:
+    local-name: launch/launch
+    uri: https://github.com/ros2-gbp/launch-release.git
+    version: release/kilted/launch/3.8.6-1
+- git:
+    local-name: launch/launch_testing
+    uri: https://github.com/ros2-gbp/launch-release.git
+    version: release/kilted/launch_testing/3.8.6-1
+- git:
+    local-name: launch/launch_testing_ament_cmake
+    uri: https://github.com/ros2-gbp/launch-release.git
+    version: release/kilted/launch_testing_ament_cmake/3.8.6-1
+- git:
+    local-name: launch/launch_xml
+    uri: https://github.com/ros2-gbp/launch-release.git
+    version: release/kilted/launch_xml/3.8.6-1
+- git:
+    local-name: launch/launch_yaml
+    uri: https://github.com/ros2-gbp/launch-release.git
+    version: release/kilted/launch_yaml/3.8.6-1
+- git:
+    local-name: launch_ros/launch_ros
+    uri: https://github.com/ros2-gbp/launch_ros-release.git
+    version: release/kilted/launch_ros/0.28.4-1
+- git:
+    local-name: launch_ros/launch_testing_ros
+    uri: https://github.com/ros2-gbp/launch_ros-release.git
+    version: release/kilted/launch_testing_ros/0.28.4-1
+- git:
+    local-name: launch_ros/ros2launch
+    uri: https://github.com/ros2-gbp/launch_ros-release.git
+    version: release/kilted/ros2launch/0.28.4-1
+- git:
+    local-name: libstatistics_collector
+    uri: https://github.com/ros2-gbp/libstatistics_collector-release.git
+    version: release/kilted/libstatistics_collector/2.0.1-2
+- git:
+    local-name: libyaml_vendor
+    uri: https://github.com/ros2-gbp/libyaml_vendor-release.git
+    version: release/kilted/libyaml_vendor/1.7.1-2
+- git:
+    local-name: message_filters
+    uri: https://github.com/ros2-gbp/ros2_message_filters-release.git
+    version: release/kilted/message_filters/7.1.4-1
+- git:
+    local-name: mimick_vendor
+    uri: https://github.com/ros2-gbp/mimick_vendor-release.git
+    version: release/kilted/mimick_vendor/0.8.1-2
+- git:
+    local-name: orocos_kdl_vendor/orocos_kdl_vendor
+    uri: https://github.com/ros2-gbp/orocos_kdl_vendor-release.git
+    version: release/kilted/orocos_kdl_vendor/0.7.1-1
+- git:
+    local-name: orocos_kdl_vendor/python_orocos_kdl_vendor
+    uri: https://github.com/ros2-gbp/orocos_kdl_vendor-release.git
+    version: release/kilted/python_orocos_kdl_vendor/0.7.1-1
+- git:
+    local-name: osrf_pycommon
+    uri: https://github.com/ros2-gbp/osrf_pycommon-release.git
+    version: release/kilted/osrf_pycommon/2.1.6-1
+- git:
+    local-name: osrf_testing_tools_cpp
+    uri: https://github.com/ros2-gbp/osrf_testing_tools_cpp-release.git
+    version: release/kilted/osrf_testing_tools_cpp/2.2.0-2
+- git:
+    local-name: performance_test_fixture
+    uri: https://github.com/ros2-gbp/performance_test_fixture-release.git
+    version: release/kilted/performance_test_fixture/0.3.1-2
+- git:
+    local-name: pluginlib/pluginlib
+    uri: https://github.com/ros2-gbp/pluginlib-release.git
+    version: release/kilted/pluginlib/5.6.1-1
+- git:
+    local-name: pybind11_vendor
+    uri: https://github.com/ros2-gbp/pybind11_vendor-release.git
+    version: release/kilted/pybind11_vendor/3.2.0-2
+- git:
+    local-name: rcl/rcl
+    uri: https://github.com/ros2-gbp/rcl-release.git
+    version: release/kilted/rcl/10.1.3-1
+- git:
+    local-name: rcl/rcl_action
+    uri: https://github.com/ros2-gbp/rcl-release.git
+    version: release/kilted/rcl_action/10.1.3-1
+- git:
+    local-name: rcl/rcl_lifecycle
+    uri: https://github.com/ros2-gbp/rcl-release.git
+    version: release/kilted/rcl_lifecycle/10.1.3-1
+- git:
+    local-name: rcl/rcl_yaml_param_parser
+    uri: https://github.com/ros2-gbp/rcl-release.git
+    version: release/kilted/rcl_yaml_param_parser/10.1.3-1
+- git:
+    local-name: rcl_interfaces/action_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/action_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/builtin_interfaces
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/builtin_interfaces/2.3.0-2
+- git:
+    local-name: rcl_interfaces/composition_interfaces
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/composition_interfaces/2.3.0-2
+- git:
+    local-name: rcl_interfaces/lifecycle_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/lifecycle_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/rcl_interfaces
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/rcl_interfaces/2.3.0-2
+- git:
+    local-name: rcl_interfaces/rosgraph_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/rosgraph_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/service_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/service_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/statistics_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/statistics_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/test_msgs
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/test_msgs/2.3.0-2
+- git:
+    local-name: rcl_interfaces/type_description_interfaces
+    uri: https://github.com/ros2-gbp/rcl_interfaces-release.git
+    version: release/kilted/type_description_interfaces/2.3.0-2
+- git:
+    local-name: rcl_logging/rcl_logging_interface
+    uri: https://github.com/ros2-gbp/rcl_logging-release.git
+    version: release/kilted/rcl_logging_interface/3.2.3-4
+- git:
+    local-name: rcl_logging/rcl_logging_spdlog
+    uri: https://github.com/ros2-gbp/rcl_logging-release.git
+    version: release/kilted/rcl_logging_spdlog/3.2.3-4
+- git:
+    local-name: rclcpp/rclcpp
+    uri: https://github.com/ros2-gbp/rclcpp-release.git
+    version: release/kilted/rclcpp/29.5.4-1
+- git:
+    local-name: rclcpp/rclcpp_action
+    uri: https://github.com/ros2-gbp/rclcpp-release.git
+    version: release/kilted/rclcpp_action/29.5.4-1
+- git:
+    local-name: rclcpp/rclcpp_components
+    uri: https://github.com/ros2-gbp/rclcpp-release.git
+    version: release/kilted/rclcpp_components/29.5.4-1
+- git:
+    local-name: rclcpp/rclcpp_lifecycle
+    uri: https://github.com/ros2-gbp/rclcpp-release.git
+    version: release/kilted/rclcpp_lifecycle/29.5.4-1
+- git:
+    local-name: rclpy
+    uri: https://github.com/ros2-gbp/rclpy-release.git
+    version: release/kilted/rclpy/9.1.2-1
+- git:
+    local-name: rcpputils
+    uri: https://github.com/ros2-gbp/rcpputils-release.git
+    version: release/kilted/rcpputils/2.13.5-1
+- git:
+    local-name: rcutils
+    uri: https://github.com/ros2-gbp/rcutils-release.git
+    version: release/kilted/rcutils/6.9.8-1
+- git:
+    local-name: rmw/rmw
+    uri: https://github.com/ros2-gbp/rmw-release.git
+    version: release/kilted/rmw/7.8.2-2
+- git:
+    local-name: rmw/rmw_implementation_cmake
+    uri: https://github.com/ros2-gbp/rmw-release.git
+    version: release/kilted/rmw_implementation_cmake/7.8.2-2
+- git:
+    local-name: rmw/rmw_security_common
+    uri: https://github.com/ros2-gbp/rmw-release.git
+    version: release/kilted/rmw_security_common/7.8.2-2
+- git:
+    local-name: rmw_connextdds/rmw_connextdds
+    uri: https://github.com/ros2-gbp/rmw_connextdds-release.git
+    version: release/kilted/rmw_connextdds/1.1.1-1
+- git:
+    local-name: rmw_connextdds/rmw_connextdds_common
+    uri: https://github.com/ros2-gbp/rmw_connextdds-release.git
+    version: release/kilted/rmw_connextdds_common/1.1.1-1
+- git:
+    local-name: rmw_connextdds/rti_connext_dds_cmake_module
+    uri: https://github.com/ros2-gbp/rmw_connextdds-release.git
+    version: release/kilted/rti_connext_dds_cmake_module/1.1.1-1
+- git:
+    local-name: rmw_cyclonedds_cpp
+    uri: https://github.com/ros2-gbp/rmw_cyclonedds-release.git
+    version: release/kilted/rmw_cyclonedds_cpp/4.0.2-2
+- git:
+    local-name: rmw_dds_common
+    uri: https://github.com/ros2-gbp/rmw_dds_common-release.git
+    version: release/kilted/rmw_dds_common/4.0.0-1
+- git:
+    local-name: rmw_fastrtps/rmw_fastrtps_cpp
+    uri: https://github.com/ros2-gbp/rmw_fastrtps-release.git
+    version: release/kilted/rmw_fastrtps_cpp/9.3.3-1
+- git:
+    local-name: rmw_fastrtps/rmw_fastrtps_dynamic_cpp
+    uri: https://github.com/ros2-gbp/rmw_fastrtps-release.git
+    version: release/kilted/rmw_fastrtps_dynamic_cpp/9.3.3-1
+- git:
+    local-name: rmw_fastrtps/rmw_fastrtps_shared_cpp
+    uri: https://github.com/ros2-gbp/rmw_fastrtps-release.git
+    version: release/kilted/rmw_fastrtps_shared_cpp/9.3.3-1
+- git:
+    local-name: rmw_implementation
+    uri: https://github.com/ros2-gbp/rmw_implementation-release.git
+    version: release/kilted/rmw_implementation/3.0.4-2
+- git:
+    local-name: robot_state_publisher
+    uri: https://github.com/ros2-gbp/robot_state_publisher-release.git
+    version: release/kilted/robot_state_publisher/3.4.3-1
+- git:
+    local-name: ros2_tracing/tracetools
+    uri: https://github.com/ros2-gbp/ros2_tracing-release.git
+    version: release/kilted/tracetools/8.6.0-2
+- git:
+    local-name: ros2cli/ros2action
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2action/0.38.1-1
+- git:
+    local-name: ros2cli/ros2cli
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2cli/0.38.1-1
+- git:
+    local-name: ros2cli/ros2cli_test_interfaces
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2cli_test_interfaces/0.38.1-1
+- git:
+    local-name: ros2cli/ros2component
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2component/0.38.1-1
+- git:
+    local-name: ros2cli/ros2doctor
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2doctor/0.38.1-1
+- git:
+    local-name: ros2cli/ros2interface
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2interface/0.38.1-1
+- git:
+    local-name: ros2cli/ros2lifecycle
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2lifecycle/0.38.1-1
+- git:
+    local-name: ros2cli/ros2lifecycle_test_fixtures
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2lifecycle_test_fixtures/0.38.1-1
+- git:
+    local-name: ros2cli/ros2multicast
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2multicast/0.38.1-1
+- git:
+    local-name: ros2cli/ros2node
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2node/0.38.1-1
+- git:
+    local-name: ros2cli/ros2param
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2param/0.38.1-1
+- git:
+    local-name: ros2cli/ros2pkg
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2pkg/0.38.1-1
+- git:
+    local-name: ros2cli/ros2run
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2run/0.38.1-1
+- git:
+    local-name: ros2cli/ros2service
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2service/0.38.1-1
+- git:
+    local-name: ros2cli/ros2topic
+    uri: https://github.com/ros2-gbp/ros2cli-release.git
+    version: release/kilted/ros2topic/0.38.1-1
+- git:
+    local-name: ros2cli_common_extensions
+    uri: https://github.com/ros2-gbp/ros2cli_common_extensions-release.git
+    version: release/kilted/ros2cli_common_extensions/0.4.0-2
+- git:
+    local-name: ros_environment
+    uri: https://github.com/ros2-gbp/ros_environment-release.git
+    version: release/kilted/ros_environment/4.3.1-1
+- git:
+    local-name: ros_testing/ros2test
+    uri: https://github.com/ros2-gbp/ros_testing-release.git
+    version: release/kilted/ros2test/0.8.0-2
+- git:
+    local-name: ros_testing/ros_testing
+    uri: https://github.com/ros2-gbp/ros_testing-release.git
+    version: release/kilted/ros_testing/0.8.0-2
+- git:
+    local-name: rosbag2/liblz4_vendor
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/liblz4_vendor/0.32.0-2
+- git:
+    local-name: rosbag2/mcap_vendor
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/mcap_vendor/0.32.0-2
+- git:
+    local-name: rosbag2/ros2bag
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/ros2bag/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_compression
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_compression/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_compression_zstd
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_compression_zstd/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_cpp
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_cpp/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_interfaces
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_interfaces/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_py
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_py/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_storage
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_storage/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_storage_default_plugins
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_storage_default_plugins/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_storage_mcap
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_storage_mcap/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_storage_sqlite3
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_storage_sqlite3/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_test_common
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_test_common/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_test_msgdefs
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_test_msgdefs/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_tests
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_tests/0.32.0-2
+- git:
+    local-name: rosbag2/rosbag2_transport
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/rosbag2_transport/0.32.0-2
+- git:
+    local-name: rosbag2/sqlite3_vendor
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/sqlite3_vendor/0.32.0-2
+- git:
+    local-name: rosbag2/zstd_vendor
+    uri: https://github.com/ros2-gbp/rosbag2-release.git
+    version: release/kilted/zstd_vendor/0.32.0-2
+- git:
+    local-name: rosidl/rosidl_adapter
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_adapter/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_cli
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_cli/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_cmake
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_cmake/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_generator_c
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_generator_c/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_generator_cpp
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_generator_cpp/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_generator_type_description
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_generator_type_description/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_parser
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_parser/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_pycommon
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_pycommon/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_runtime_c
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_runtime_c/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_runtime_cpp
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_runtime_cpp/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_typesupport_interface
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_typesupport_interface/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_typesupport_introspection_c
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_typesupport_introspection_c/4.9.5-1
+- git:
+    local-name: rosidl/rosidl_typesupport_introspection_cpp
+    uri: https://github.com/ros2-gbp/rosidl-release.git
+    version: release/kilted/rosidl_typesupport_introspection_cpp/4.9.5-1
+- git:
+    local-name: rosidl_core/rosidl_core_generators
+    uri: https://github.com/ros2-gbp/rosidl_core-release.git
+    version: release/kilted/rosidl_core_generators/0.3.1-2
+- git:
+    local-name: rosidl_core/rosidl_core_runtime
+    uri: https://github.com/ros2-gbp/rosidl_core-release.git
+    version: release/kilted/rosidl_core_runtime/0.3.1-2
+- git:
+    local-name: rosidl_defaults/rosidl_default_generators
+    uri: https://github.com/ros2-gbp/rosidl_defaults-release.git
+    version: release/kilted/rosidl_default_generators/1.7.1-2
+- git:
+    local-name: rosidl_defaults/rosidl_default_runtime
+    uri: https://github.com/ros2-gbp/rosidl_defaults-release.git
+    version: release/kilted/rosidl_default_runtime/1.7.1-2
+- git:
+    local-name: rosidl_dynamic_typesupport
+    uri: https://github.com/ros2-gbp/rosidl_dynamic_typesupport-release.git
+    version: release/kilted/rosidl_dynamic_typesupport/0.3.1-2
+- git:
+    local-name: rosidl_dynamic_typesupport_fastrtps
+    uri: https://github.com/ros2-gbp/rosidl_dynamic_typesupport_fastrtps-release.git
+    version: release/kilted/rosidl_dynamic_typesupport_fastrtps/0.4.1-2
+- git:
+    local-name: rosidl_generator_py
+    uri: https://github.com/ros2-gbp/rosidl_python-release.git
+    version: release/kilted/rosidl_generator_py/0.24.2-1
+- git:
+    local-name: rosidl_runtime_py
+    uri: https://github.com/ros2-gbp/rosidl_runtime_py-release.git
+    version: release/kilted/rosidl_runtime_py/0.14.1-2
+- git:
+    local-name: rosidl_typesupport/rosidl_typesupport_c
+    uri: https://github.com/ros2-gbp/rosidl_typesupport-release.git
+    version: release/kilted/rosidl_typesupport_c/3.3.3-2
+- git:
+    local-name: rosidl_typesupport/rosidl_typesupport_cpp
+    uri: https://github.com/ros2-gbp/rosidl_typesupport-release.git
+    version: release/kilted/rosidl_typesupport_cpp/3.3.3-2
+- git:
+    local-name: rosidl_typesupport_fastrtps/rosidl_typesupport_fastrtps_c
+    uri: https://github.com/ros2-gbp/rosidl_typesupport_fastrtps-release.git
+    version: release/kilted/rosidl_typesupport_fastrtps_c/3.8.1-1
+- git:
+    local-name: rosidl_typesupport_fastrtps/rosidl_typesupport_fastrtps_cpp
+    uri: https://github.com/ros2-gbp/rosidl_typesupport_fastrtps-release.git
+    version: release/kilted/rosidl_typesupport_fastrtps_cpp/3.8.1-1
+- git:
+    local-name: rpyutils
+    uri: https://github.com/ros2-gbp/rpyutils-release.git
+    version: release/kilted/rpyutils/0.6.3-1
+- git:
+    local-name: spdlog_vendor
+    uri: https://github.com/ros2-gbp/spdlog_vendor-release.git
+    version: release/kilted/spdlog_vendor/1.7.0-2
+- git:
+    local-name: sros2/sros2
+    uri: https://github.com/ros2-gbp/sros2-release.git
+    version: release/kilted/sros2/0.15.2-1
+- git:
+    local-name: sros2/sros2_cmake
+    uri: https://github.com/ros2-gbp/sros2-release.git
+    version: release/kilted/sros2_cmake/0.15.2-1
+- git:
+    local-name: test_interface_files
+    uri: https://github.com/ros2-gbp/test_interface_files-release.git
+    version: release/kilted/test_interface_files/0.13.0-2
+- git:
+    local-name: tinyxml2_vendor
+    uri: https://github.com/ros2-gbp/tinyxml2_vendor-release.git
+    version: release/kilted/tinyxml2_vendor/0.10.0-2
+- git:
+    local-name: uncrustify_vendor
+    uri: https://github.com/ros2-gbp/uncrustify_vendor-release.git
+    version: release/kilted/uncrustify_vendor/3.1.0-2
+- git:
+    local-name: unique_identifier_msgs
+    uri: https://github.com/ros2-gbp/unique_identifier_msgs-release.git
+    version: release/kilted/unique_identifier_msgs/2.7.0-2
+- git:
+    local-name: urdf/urdf
+    uri: https://github.com/ros2-gbp/urdf-release.git
+    version: release/kilted/urdf/2.12.2-2
+- git:
+    local-name: urdf/urdf_parser_plugin
+    uri: https://github.com/ros2-gbp/urdf-release.git
+    version: release/kilted/urdf_parser_plugin/2.12.2-2
+- git:
+    local-name: urdfdom
+    uri: https://github.com/ros2-gbp/urdfdom-release.git
+    version: release/kilted/urdfdom/5.0.0-1
+- git:
+    local-name: urdfdom_headers
+    uri: https://github.com/ros2-gbp/urdfdom_headers-release.git
+    version: release/kilted/urdfdom_headers/1.1.2-1
+- git:
+    local-name: variants/ros_base
+    uri: https://github.com/ros2-gbp/variants-release.git
+    version: release/kilted/ros_base/0.12.0-2
+- git:
+    local-name: variants/ros_core
+    uri: https://github.com/ros2-gbp/variants-release.git
+    version: release/kilted/ros_core/0.12.0-2
+- git:
+    local-name: yaml_cpp_vendor
+    uri: https://github.com/ros2-gbp/yaml_cpp_vendor-release.git
+    version: release/kilted/yaml_cpp_vendor/9.1.0-2
+
