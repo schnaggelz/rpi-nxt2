@@ -25,7 +25,7 @@ I'm using Ubuntu 20 as development platform and a RasPi Zero 2 W (or RasPi 3B) a
 
 The embedded cross-build environment can be caught via Docker image below.
 
-## Build requirements (e.g. on Ubuntu 20)
+## Build Requirements (e.g. on Ubuntu 20)
 
 Install host build environment
 
@@ -42,7 +42,7 @@ sudo apt install libncurses5-dev
 sudo apt install libusb-1.0-0-dev
 ````
 
-## Runtime requirements (e.g. on Raspberry OS)
+## Runtime Requirements (e.g. on Raspberry OS)
 
 Install required libraries
 
@@ -53,7 +53,7 @@ sudo apt install libusb-1.0-0
 
 # Build
 
-## Docker for Cross-Building
+## Docker for cross building
 
 ### Install Docker
 
