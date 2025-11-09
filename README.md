@@ -98,7 +98,7 @@ Run (in container):
 
 ````
 cd /workspace
-scripts/build_nxt.sh <build_type> <app_name>
+./build_nxt.sh <build_type> <app_name>
 ````
 
 where `app_name` is the app added to `nxt/apps`.
@@ -107,7 +107,7 @@ e.g.
 
 ````
 cd /workspace
-scripts/build_nxt.sh debug status
+./build_nxt.sh debug status
 ````
 
 ### Build Linux Software
@@ -116,12 +116,12 @@ Run:
 
 ````
 cd /workspace
-scripts/build_linux.sh <build_type>
+./build_linux.sh <build_type>
 ````
 
 ````
 cd /workspace
-scripts/build_nxt.sh debug
+./build_nxt.sh debug
 ````
 
 # Flashing
@@ -192,7 +192,7 @@ sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbserver
 Connect the JTAG connector to the J-Link ICE and run:
 
 ````
-tools/jlink_gdbserver.sh
+tools/jlink/jlink_gdbserver.sh
 ````
 
 ### Attach to GDB Server

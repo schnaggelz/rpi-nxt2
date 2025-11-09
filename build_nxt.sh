@@ -19,7 +19,7 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} \
-  -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}
+  -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/src/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}/src
 make clean
 make -j 16 VERBOSE=1
 
