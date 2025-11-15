@@ -21,11 +21,12 @@ based on the code from there).
 
 # Prerequisites
 
-I'm using Ubuntu 20 as development platform and a RasPi Zero 2 W (or RasPi 3B) as the computer controlling the NXT2. 
+I'm using CachyOS and Ubuntu 24.04 as development platform and a RasPi Zero 2 W (or RasPi 4+5) as the computer controlling
+the NXT2.
 
 The embedded cross-build environment can be caught via Docker image below.
 
-## Build Requirements (e.g. on Ubuntu 20)
+## Build Requirements (e.g. on Ubuntu 24.04)
 
 Install host build environment
 
@@ -42,7 +43,7 @@ sudo apt install libncurses5-dev
 sudo apt install libusb-1.0-0-dev
 ````
 
-## Runtime Requirements (e.g. on Raspberry OS)
+## Runtime Requirements (e.g. on Raspberry OS or Ubuntu 24.04)
 
 Install required libraries
 
