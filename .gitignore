@@ -1,5 +1,8 @@
 # CLion
-.idea
+.idea/
+
+# VSCode
+.vscode/
 
 # Temp
 build/
