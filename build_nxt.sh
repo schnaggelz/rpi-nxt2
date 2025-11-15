@@ -13,6 +13,7 @@ BUILD_TYPE=$2
 TARGET_NAME=nxt
 
 BUILD_DIR=${ROOT_DIR}/build/${TARGET_NAME}-${APP_NAME}-${BUILD_TYPE,,}
+INSTALL_DIR=$ROOT_DIR/install/${TARGET_NAME}-${BUILD_TYPE,,}
 
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
@@ -20,7 +21,7 @@ cd "$BUILD_DIR"
 
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} \
   -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/src/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}/src
-make clean
-make -j 16 VERBOSE=1
+VERBOSE=1 cmake --build $BUILD_DIR
+cmake --install $BUILD_DIR --prefix $INSTALL_DIR
 
 cd ..

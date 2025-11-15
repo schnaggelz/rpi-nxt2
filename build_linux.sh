@@ -10,9 +10,10 @@ if [ $# -ne 1 ]
 fi
 
 BUILD_TYPE=$1
+TARGET_NAME=linux
 
-BUILD_DIR=$ROOT_DIR/build/linux-${BUILD_TYPE,,}
-INSTALL_DIR=$ROOT_DIR/install/linux-${BUILD_TYPE,,}
+BUILD_DIR=$ROOT_DIR/build/${TARGET_NAME}-${BUILD_TYPE,,}
+INSTALL_DIR=$ROOT_DIR/install/${TARGET_NAME}-${BUILD_TYPE,,}
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
