@@ -102,12 +102,12 @@ void Remote::process()
     }
     case nxt::com::protocol::Command::FW_UPDATE:
     {
-        nxt::fw::System::update();
+        nxt::fw::system::update();
         break;
     }
     case nxt::com::protocol::Command::POWER_OFF:
     {
-        nxt::fw::System::shutdown();
+        nxt::fw::system::shutdown();
         break;
     }
     default:
@@ -124,7 +124,7 @@ void Remote::send()
     namespace generic_protocol = nxt::com::protocol::generic;
 
     generic_protocol::setCommonData(_usb_data_tx.data, 0,
-                                    nxt::fw::System::getBatteryVoltage());
+                                    nxt::fw::system::getBatteryVoltage());
 
     generic_protocol::setMotorData(_usb_data_tx.data, 0, 0,
                                    _motors[0].getCurrentCount());
