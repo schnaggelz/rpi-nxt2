@@ -149,6 +149,12 @@ Bring the NXT into flash mode and connect it to USB or JTAG, then:
 tools/sam-ba.sh
 ````
 
+or just
+
+````
+sam-ba /dev/ttyACM0 at91sam7s256-ek
+````
+
 # Running
 
 ## Starting the NXT
@@ -169,12 +175,13 @@ build/linux/nxt_console/nxt_console
 You need to apply the USB permissions rules in the `config/taspi/udev/rules.d` directory to get it running.
 
 ````
+sudo usermod -a -G dialout $USER
 sudo cp config/raspi/udev/rules.d/70-nxt-usb-permissions.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ````
 
-
+Note: Use group `uucp` in the file if on Arch like me.
 
 # Debugging
 
