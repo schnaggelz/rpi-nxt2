@@ -74,8 +74,7 @@ sudo usermod -aG docker $USER
 Run setup script:
 
 ````
-cd docker/nxt-build
-./setup.sh
+docker build --tag rpi-nxt2 .
 ````
 
 ### Run Image
@@ -83,7 +82,7 @@ cd docker/nxt-build
 Run the container:
 
 ````
-docker run --user $(id -u):$(id -g) -it -v $(pwd)/../..:/workspace rpi-nxt2:latest
+docker run --user $(id -u):$(id -g) -it -v $(pwd)/../../..:/workspace rpi-nxt2:latest
 ````
 
 To re-run after exit:
@@ -92,7 +91,7 @@ To re-run after exit:
 docker start rpi-nxt2 -i
 ````
 
-### Build ARM7-TDMI Firmware 
+### Build ARM7-TDMI Firmware
 
 Run (in container):
 
