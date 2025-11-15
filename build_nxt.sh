@@ -2,14 +2,14 @@
 
 ROOT_DIR=$(git rev-parse --show-toplevel)
 
-if not [ $# -eq 2 ]
+if [ $# -ne 2 ]
   then
-    echo "No parameters specified! Need <app_name> and <build_type>"
+    echo "No parameters specified! Need <app_name> <build_type>"
     exit 1
 fi
 
-BUILD_TYPE=$1
-APP_NAME=$2
+APP_NAME=$1
+BUILD_TYPE=$2
 TARGET_NAME=nxt
 
 BUILD_DIR=${ROOT_DIR}/build/${TARGET_NAME}-${APP_NAME}-${BUILD_TYPE,,}
