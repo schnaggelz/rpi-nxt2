@@ -46,17 +46,17 @@ void receive()
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 1),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 2),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_1, 3));
-            mvprintw(6, 0, "PORT_2 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+            mvprintw(7, 0, "PORT_2 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 0),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 1),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 2),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_2, 3));
-            mvprintw(6, 0, "PORT_3 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+            mvprintw(8, 0, "PORT_3 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 0),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 1),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 2),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_3, 3));
-            mvprintw(6, 0, "PORT_4 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
+            mvprintw(9, 0, "PORT_4 : V0=%8d| V1=%8d| V2=%8d| V3=%8d|",
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 0),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 1),
                      remote.sensorRcv(nxt::com::protocol::Port::PORT_4, 2),
