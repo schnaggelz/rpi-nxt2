@@ -1,1 +1,2 @@
+# Generic access for all users to serial USB
 KERNEL=="ttyACM0", MODE="0666"

@@ -165,7 +165,15 @@ There is only the USB connection monitoring console tool available yet:
 build/linux/nxt_console/nxt_console
 ````
 
-You need to apply the USB permissions rules in the `config/udev/rules.d` directory to get it running.
+You need to apply the USB permissions rules in the `config/taspi/udev/rules.d` directory to get it running.
+
+````
+sudo cp config/raspi/udev/rules.d/70-nxt-usb-permissions.rules /etc/udev/rules.d
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+````
+
+
 
 # Debugging
 
