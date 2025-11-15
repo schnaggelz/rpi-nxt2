@@ -10,3 +10,4 @@ install/
 
 #Python
 **/*.pyc
+.venv/
