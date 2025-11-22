@@ -30,13 +30,13 @@ The embedded cross-build environment can be caught via Docker image below.
 
 Install host build environment
 
-````
+````sh
 sudo apt install git cmake gcc g++ gdb-multiarch
 ````
 
 Install required libraries
 
-````
+````sh
 sudo apt install python3-dev
 sudo apt install python3-pybind11
 sudo apt install libncurses5-dev
@@ -47,7 +47,7 @@ sudo apt install libusb-1.0-0-dev
 
 Install required libraries
 
-````
+````sh
 sudo apt install python3
 sudo apt install libusb-1.0-0
 ````
@@ -60,13 +60,13 @@ sudo apt install libusb-1.0-0
 
 Run install:
 
-````
+````sh
 sudo apt install docker.io
 ````
 
 Setup privileges for socket:
 
-````
+````sh
 sudo usermod -aG docker $USER
 ````
 
@@ -74,7 +74,7 @@ sudo usermod -aG docker $USER
 
 Run setup script:
 
-````
+````sh
 docker build --tag rpi-nxt2 .
 ````
 
@@ -82,13 +82,13 @@ docker build --tag rpi-nxt2 .
 
 Run the container:
 
-````
+````sh
 docker run --user $(id -u):$(id -g) -it -v $(pwd)/../../..:/workspace rpi-nxt2:latest
 ````
 
 To re-run after exit:
 
-````
+````sh
 docker start rpi-nxt2 -i
 ````
 
@@ -96,7 +96,7 @@ docker start rpi-nxt2 -i
 
 Run (in container):
 
-````
+````sh
 cd /workspace
 ./build_nxt.sh <build_type> <app_name>
 ````
@@ -105,7 +105,7 @@ where `app_name` is the app added to `nxt/apps`.
 
 e.g.
 
-````
+````sh
 cd /workspace
 ./build_nxt.sh debug status
 ````
@@ -114,12 +114,12 @@ cd /workspace
 
 Run:
 
-````
+````sh
 cd /workspace
 ./build_linux.sh <build_type>
 ````
 
-````
+````sh
 cd /workspace
 ./build_nxt.sh debug
 ````
@@ -137,7 +137,7 @@ https://www.microchip.com/en-us/development-tool/SAM-BA-IN-SYSTEM-PROGRAMMER#
 
 Unpack it and set a soft-link for `sam-ba_64`:
 
-````
+````sh
 sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
 ````
 
@@ -145,13 +145,13 @@ sudo ln -s /opt/atmel/sam-ba/sam-ba_64 /usr/local/bin/sam-ba
 
 Bring the NXT into flash mode and connect it to USB or JTAG, then:
 
-````
+````sh
 tools/sam-ba.sh
 ````
 
 or just
 
-````
+````sh
 sam-ba /dev/ttyACM0 at91sam7s256-ek
 ````
 
@@ -168,13 +168,13 @@ application (see `<app_name>` above).
 
 There is only the USB connection monitoring console tool available yet:
 
-````
+````sh
 build/linux/nxt_console/nxt_console
 ````
 
 You need to apply the USB permissions rules in the `config/taspi/udev/rules.d` directory to get it running.
 
-````
+````sh
 sudo usermod -a -G dialout $USER
 sudo cp config/raspi/udev/rules.d/70-nxt-usb-permissions.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules
@@ -198,7 +198,7 @@ The Debian package can be downloaded from SEGGER: https://www.segger.com/downloa
 
 Set soft-link for `JLinkGDBServerCLExe`:
 
-````
+````sh
 sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbserver
 ````
 
@@ -206,7 +206,7 @@ sudo ln -s /opt/segger/jlink/JLinkGDBServerCLExe /usr/local/bin/jlink-gdbserver
 
 Connect the JTAG connector to the J-Link ICE and run:
 
-````
+````sh
 tools/jlink/jlink_gdbserver.sh
 ````
 
