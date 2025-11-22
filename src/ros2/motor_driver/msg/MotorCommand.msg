@@ -1,2 +1,0 @@
-string speed
-string direction

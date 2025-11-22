@@ -6,7 +6,7 @@ To build the ROS 2 package, follow these steps:
 
 1. Navigate to the root directory of the package:
    ```
-   cd /path/to/motor_driver
+   cd /path/to/nxt_drivers
    ```
 
 2. Ensure that you have sourced your ROS 2 installation:
@@ -26,5 +26,6 @@ To build the ROS 2 package, follow these steps:
 
 5. You can now run the motor driver node using the launch file:
    ```
-   ros2 launch motor_driver motor_driver.launch.py
+   ros2 launch nxt_drivers motor_driver
    ```
+   
