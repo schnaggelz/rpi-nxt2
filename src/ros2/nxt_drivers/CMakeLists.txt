@@ -12,17 +12,17 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(motor_driver 
+add_executable(driver_node 
   src/motor_driver/motor_driver.cpp
-  src/motor_driver/motor_driver_main.cpp
+  src/node_main.cpp
 )
 
-target_include_directories(motor_driver PUBLIC
+target_include_directories(driver_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> 
   $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(motor_driver PUBLIC
+target_link_libraries(driver_node PUBLIC
   ${std_msgs_TARGETS}
   rclcpp::rclcpp
 )
@@ -31,6 +31,6 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/MotorCommand.msg"
 )
 
-install(TARGETS motor_driver DESTINATION lib/${PROJECT_NAME})
+install(TARGETS driver_node DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

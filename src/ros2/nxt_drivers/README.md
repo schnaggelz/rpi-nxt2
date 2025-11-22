@@ -1,4 +1,4 @@
-# Motor Driver Package
+# NXT2 Drivers Package
 
 ## Building the Package
 
@@ -26,6 +26,6 @@ To build the ROS 2 package, follow these steps:
 
 5. You can now run the motor driver node using the launch file:
    ```
-   ros2 launch nxt_drivers motor_driver
+   ros2 launch nxt_drivers driver_node
    ```
    
