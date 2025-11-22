@@ -13,10 +13,12 @@ the NXT to physically solve it (see below).
 Long-term goal: Raspberry Pi5 with PCIe3 and Halo-8 AI hat robot car navigating based on Pi camera stream. For that
 I will create some ROS2 serives and messages to controly and query the NXT2 sensors and actuators.
 
+**Note:** I've added app support in the firmware because formerly also the control software was running on the NXT. So there is still a split possible and not all software needs to run on the Raspberry Pi.
+
 ## Credits
 
 The FW is partly inspired by the LeJos project (especially the AVR support code and the I2C driver code initially 
-based on the code from there).
+based on the code from there, other parts were rewritten or written from scratch).
 
 *TODO* License?
 
@@ -38,10 +40,8 @@ sudo apt install git cmake gcc g++ gdb-multiarch
 Install required libraries
 
 ````sh
-sudo apt install python3-dev
-sudo apt install python3-pybind11
-sudo apt install libncurses5-dev
-sudo apt install libusb-1.0-0-dev
+sudo apt install python3-dev python3-pybind11
+sudo apt install libncurses5-dev libusb-1.0-0-dev
 ````
 
 ## Runtime Requirements (e.g. on Raspberry OS or Ubuntu 24.04)
@@ -74,7 +74,6 @@ pip install catkin_pkg ament-package empy lark
 ````
 
 For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).
-
 
 # Build
 
