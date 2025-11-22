@@ -1,20 +1,12 @@
-#include "rclcpp/rclcpp.hpp"
+#pragma once
 
 namespace nxt2
 {
-class MotorDriver : public rclcpp::Node
+class MotorDriver
 {
    public:
     MotorDriver();
     void initialize();
     void control(int speed, bool direction);
-
-   private:
-    void timerCallback()
-    {
-        RCLCPP_INFO(this->get_logger(), "Hello from ROS2");
-    }
-
-    rclcpp::TimerBase::SharedPtr timer_;
 };
 }  // namespace nxt2
