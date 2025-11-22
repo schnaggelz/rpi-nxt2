@@ -22,3 +22,11 @@ target_link_libraries(${PROJECT_NAME}
         pthread
         usb-1.0
 )
+
+install(DIRECTORY include/ DESTINATION include/
+    FILES_MATCHING PATTERN "*.hpp"
+)
+
+install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+)

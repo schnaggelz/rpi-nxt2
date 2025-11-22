@@ -32,6 +32,13 @@ target_link_libraries(${PROJECT_NAME}_py
         ${PROJECT_NAME}
 )
 
+install(DIRECTORY include/ DESTINATION include/
+    FILES_MATCHING PATTERN "*.hpp")
+
+install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+)
+
 install(TARGETS ${PROJECT_NAME}_py
     LIBRARY DESTINATION lib
 )

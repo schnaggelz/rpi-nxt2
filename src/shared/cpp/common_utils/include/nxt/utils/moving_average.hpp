@@ -10,7 +10,7 @@
 
 
 #ifndef __NXT_COMMON_UTILS_MOVING_AVERAGE_HPP__
-#define __NXT_UTILS_MOVING_AVERAGE_HPP__
+#define __NXT_COMMON_UTILS_MOVING_AVERAGE_HPP__
 
 namespace nxt
 {
@@ -57,4 +57,4 @@ private:
 } // shared
 } // nxt
 
-#endif /* __NXT_UTILS_MOVING_AVERAGE_HPP__ */
+#endif /* __NXT_COMMON_UTILS_MOVING_AVERAGE_HPP__ */
