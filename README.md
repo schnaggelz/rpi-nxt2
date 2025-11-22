@@ -1,16 +1,17 @@
 # About
 
-HIGHLY WORK-IN-PROGRESS, CODE NOT COMPLETELY WORKING YET AND MAY NOT BUILD.
+Lego Mindstorms NXT2 (ARM7-TDMI, AT91SAM7S, 64 kB RAM, bare-metal) C/C++ firmware communicating with a Raspberry Pi
+runnig C++ and/or Python bindings (will also be available for ROS 2.0).
 
-Lego Mindstorms NXT2 (ARM7-TDMI, AT91SAM7S, 64 kB RAM, bare-metal) C/C++ FW communicating with Raspberry Pi Zero 2 W
-(ARM Cortex-A53, 512 MB RAM, Cortex-A53, Debian Linux 10/11) C++/Python SW.
+Unfortunately I only have several Lego NXT2s (the NXT 2.0 was phased out a lot of years ago). However, ARM low-level
+programming is fun for me. So I experiment with own bare-metal firmware on the NXT (for sensor/actuator servicing)
+and control software on the Raspberry Pi (for the algorithms).
 
-Unfortunately I only have Lego NXT2s and don't want to buy a new EV3 set (the NXT2 was phased out several years ago). 
-However, ARM low-level programming is more fun for me. So I experiment with own bare-metal firmware on the NXT (for
-sensor/actuator servicing) and control software on the Raspberry Pi (for the algorithms).
+Achieved goal: Raspberry Pi4/5 (or: Pi Zero 2W) solving a Rubik's cube via Python/OpenCV and then controlling
+the NXT to physically solve it (see below).
 
-Long-term goal: Raspberry Pi4 (or: Pi 3, Pi Zero 2 W) solving a Rubik's cube via Python/OpenCV and then controlling 
-the NXT to physically solve it.
+Long-term goal: Raspberry Pi5 with PCIe3 and Halo-8 AI hat robot car navigating based on Pi camera stream. For that
+I will create some ROS2 serives and messages to controly and query the NXT2 sensors and actuators.
 
 ## Credits
 
@@ -21,8 +22,8 @@ based on the code from there).
 
 # Prerequisites
 
-I'm using CachyOS and Ubuntu 24.04 as development platform and a RasPi Zero 2 W (or RasPi 4+5) as the computer controlling
-the NXT2.
+I'm using CachyOS and Ubuntu 24.04 as development platform and a Raspi 5 (or RasPi 4 or  RasPi Zero 2 W) as the
+computer controlling the NXT2.
 
 The embedded cross-build environment can be caught via Docker image below.
 
@@ -243,19 +244,29 @@ This is a trivial process and well-documented for your tools.
 
 # Examples
 
-## Linux Examples
+## Python Examples
 
 ### Python API Demo
 
-See [linux/examples/python/hello_world](linux/examples/python/hello_world).
+See [hello_world](src/host/python/apps/hello_world).
 
 ### Minimal NXT Remote Console
 
-See [linux/examples/python/nxt_console](linux/examples/python/nxt_console).
+See [nxt_console](src/host/python/apps/nxt_console).
 
 ### Cube Solver
 
-See [linux/examples/python/cube_solver](linux/examples/python/cube_solver).
+See [cube_solver](src/host/python/apps/cube_solver).
 
 ![My Cuber](doc/cuber.jpg)
 
+
+# ROS
+
+## Driver Node
+
+See [linux/examples/python/nxt_console](src/ros2/nxt_drivers/README.md).
+
+## Robot Car
+
+![My Car](doc/robot_car.jpg)
