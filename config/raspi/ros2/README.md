@@ -49,6 +49,8 @@ rosdep update
 rosdep install --from-paths src --ignore-src -y --skip-keys "fastcdr rti-connext-dds-6.0.1"
 ````
 
+On my Raspi I sorted the generated install commands as listed [here](./base_deps_install.sh).
+
 Now build the workspace:
 
 ````sh

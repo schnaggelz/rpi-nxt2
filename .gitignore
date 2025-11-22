@@ -8,9 +8,12 @@
 build/
 install/
 
-#Python
+# Python
 **/*.pyc
 .venv/
+
+# Clang
+.cache/
 
 # ROS2
 **/ros2/**/log/
