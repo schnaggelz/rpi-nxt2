@@ -69,7 +69,7 @@ sudo apt install colcon vcstool
 And in the Python virtual environment
 
 ````sh
-pip install catkin_pkg ament-package
+pip install catkin_pkg ament-package empy lark
 ````
 
 For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).

@@ -14,10 +14,10 @@ Install Python libraries required for building:
 sudo apt install python3-rosdep2 python3-rosinstall-generator python3-setuptools
 ````
 
-I think the following should be installed in a Python virtual environment (TODO):
+I think the following Python packages should be installed (venv `requirements.txt` TODO):
 
 ````sh
-sudo apt install python3-colcon-argcomplete python3-colcon-bash python3-colcon-cd python3-colcon-cmake python3-colcon-core python3-colcon-defaults python3-colcon-devtools python3-colcon-library-path python3-colcon-metadata python3-colcon-notification python3-colcon-output python3-colcon-package-information python3-colcon-package-selection python3-colcon-parallel-executor python3-colcon-python-setup-py python3-colcon-recursive-crawl python3-colcon-ros python3-colcon-test-result python3-colcon-zsh  
+pip install colcon-argcomplete colcon-bash colcon-cd colcon-cmake colcon-core colcon-defaults colcon-devtools colcon-library-path colcon-metadata colcon-notification colcon-output colcon-package-information colcon-package-selection colcon-parallel-executor colcon-python-setup-py colcon-recursive-crawl colcon-ros colcon-test-result colcon-zsh  
 ````
 
 Create a workspace:
