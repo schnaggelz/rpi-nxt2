@@ -1,9 +1,9 @@
-<package.xml>
+<?xml version="1.0"?>
 <package format="2">
-  <name>motor_driver</name>
+  <name>nxt_motor_driver</name>
   <version>0.0.1</version>
-  <description>Motor driver package for controlling motors in ROS 2.</description>
-  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <description>Motor driver package for controlling NXT2 motors in ROS 2.</description>
+  <maintainer email="schnaggelz@gmx.de">Schnaggelz</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -17,4 +17,3 @@
 
   <test_depend>ament_cmake_gtest</test_depend>
 </package>
-</package.xml>

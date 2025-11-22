@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(motor_driver)
+project(nxt_motor_driver)
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
@@ -10,17 +10,19 @@ find_package(std_msgs REQUIRED)
 include_directories(include)
 
 # Add executable for the motor driver node
-add_executable(motor_driver_node src/motor_driver_node.cpp)
-ament_target_dependencies(motor_driver_node rclcpp std_msgs)
+add_executable(motor_driver
+  src/motor_driver.cpp
+  src/motor_driver_main.cpp
+)
 
-# Add executable for the motor interface
-add_executable(motor_interface src/drivers/motor_interface.cpp)
-ament_target_dependencies(motor_interface rclcpp std_msgs)
+target_link_libraries(motor_driver PUBLIC
+  ${std_msgs_TARGETS}
+  rclcpp::rclcpp
+)
 
 # Install targets
 install(TARGETS
-  motor_driver_node
-  motor_interface
+  motor_driver
   DESTINATION lib/${PROJECT_NAME}
 )
 
