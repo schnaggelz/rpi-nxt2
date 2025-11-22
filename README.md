@@ -241,6 +241,12 @@ This is tools specific. I use CLion which controls the GDB. Use the host-stools 
 
 This is a trivial process and well-documented for your tools.
 
+# Hailo Kit
+
+Hailo-8 AI Hat/Kit only required for camera inference (future).
+
+See [hailo_ai_hat](config/raspi/ai_hat/README.md).
+
 # ROS
 
 ## Driver Node
