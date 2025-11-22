@@ -52,6 +52,29 @@ sudo apt install python3
 sudo apt install libusb-1.0-0
 ````
 
+## Optional Requirements (e.g. on Ubuntu 24.04)
+
+Install host development environment:
+
+````sh
+sudo apt install clang-format clangd
+````
+
+For building ROS2 drivers install:
+
+````sh
+sudo apt install colcon vcstool
+````
+
+And in the Python virtual environment
+
+````sh
+pip install catkin_pkg ament-package
+````
+
+For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).
+
+
 # Build
 
 ## Docker for cross building

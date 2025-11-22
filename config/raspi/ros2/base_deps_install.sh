@@ -31,7 +31,7 @@ sudo -H apt-get install -y python3-pytest
 # sudo -H apt-get install -y google-mock
 # sudo -H apt-get install -y libacl1-dev
 # sudo -H apt-get install -y libasio-dev
-# sudo -H apt-get install -y libssl-dev
+sudo -H apt-get install -y libssl-dev
 # sudo -H apt-get install -y libgtest-dev
 # sudo -H apt-get install -y cargo
 # sudo -H apt-get install -y clang
