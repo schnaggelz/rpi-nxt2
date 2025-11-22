@@ -241,7 +241,36 @@ This is tools specific. I use CLion which controls the GDB. Use the host-stools 
 
 This is a trivial process and well-documented for your tools.
 
-# Examples
+# ROS
+
+## Driver Node
+
+See [linux/examples/python/nxt_console](src/ros2/nxt_drivers/README.md).
+
+
+# On-Target Examples
+
+## Apps
+
+### Remote App
+
+This app is used by the binding libraries.
+
+See [remote](src/nxt2/apps/remote).
+
+### Status App
+
+This app is used for testing the NXT.
+
+See [status](src/nxt2/apps/remote).
+
+### Segway App
+
+This app is bit older and tries two-wheel balancing directly on the NXT.
+
+See [status](src/nxt2/apps/segway).
+
+# Host Examples
 
 ## Python Examples
 
@@ -259,13 +288,11 @@ See [cube_solver](src/host/python/apps/cube_solver).
 
 ![My Cuber](doc/cuber.jpg)
 
-
-# ROS
-
-## Driver Node
-
-See [linux/examples/python/nxt_console](src/ros2/nxt_drivers/README.md).
+# ROS2 Examples
 
 ## Robot Car
 
+highly-work-in-progress
+
 ![My Car](doc/robot_car.jpg)
+
