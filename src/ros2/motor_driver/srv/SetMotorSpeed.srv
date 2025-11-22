@@ -1,0 +1,8 @@
+# Request for the contents of the file: /motor_driver/motor_driver/srv/SetMotorSpeed.srv
+
+# This file defines a service type for setting the motor speed.
+
+float64 speed
+---
+bool success
+string message

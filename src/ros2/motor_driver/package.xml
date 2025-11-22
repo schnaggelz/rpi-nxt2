@@ -1,0 +1,20 @@
+<package.xml>
+<package format="2">
+  <name>motor_driver</name>
+  <version>0.0.1</version>
+  <description>Motor driver package for controlling motors in ROS 2.</description>
+  <maintainer email="your_email@example.com">Your Name</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>example_interfaces</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>example_interfaces</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+</package>
+</package.xml>

@@ -129,12 +129,12 @@ int main()
             case KEY_F(0):
             case 'f':
                 mvprintw(0, 5, "<f%d>", nxt::utils::to_underlying(port));
-                remote.motorFwd(port, 50);
+                remote.motorFwd(port, 100);
                 break;
             case KEY_F(1):
             case 'r':
                 mvprintw(0, 5, "<r%d>", nxt::utils::to_underlying(port));
-                remote.motorRev(port, 50);
+                remote.motorRev(port, 100);
                 break;
             }
         }
