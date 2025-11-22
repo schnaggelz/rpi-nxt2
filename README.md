@@ -245,7 +245,7 @@ This is a trivial process and well-documented for your tools.
 
 ## Driver Node
 
-See [linux/examples/python/nxt_console](src/ros2/nxt_drivers/README.md).
+See [nxt_drivers](src/ros2/nxt_drivers/README.md).
 
 
 # On-Target Examples
