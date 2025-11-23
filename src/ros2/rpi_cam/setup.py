@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'cam_node = cam_node.cam_node:main',
         ],
     },
 )

@@ -21,4 +21,5 @@ mkdir -p $INSTALL_DIR
 
 export CMAKE_PREFIX_PATH=$ROOT_DIR/install/linux-${BUILD_TYPE,,}:$CMAKE_PREFIX_PATH
 
-colcon build --base-paths $ROOT_DIR/src/ros2/nxt_drivers/ --build-base $BUILD_DIR --install-base $INSTALL_DIR --cmake-args -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+colcon build --base-paths $ROOT_DIR/src/ros2/ --build-base $BUILD_DIR --install-base $INSTALL_DIR --cmake-args -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+    --packages-select rpi_cam nxt_drivers
