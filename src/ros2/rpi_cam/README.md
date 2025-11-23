@@ -1,4 +1,4 @@
-# NXT2 Drivers Node Package
+# Pi Camera Node Package
 
 ## Build
 
@@ -23,11 +23,11 @@ colcon build
 Source the local setup file after building:
 
 ````sh
-source install/setup.ah
+source install/setup.sh
 ````
 
 You can now run the motor driver node using the launch file:
 
 ````sh
-ros2 launch nxt_drivers driver_node
+ros2 launch rpi_cam cam_node
 ````

@@ -61,16 +61,20 @@ Install host development environment:
 sudo apt install clang-format clangd
 ````
 
-For building ROS2 drivers install:
+For building ROS2 nodes:
 
 ````sh
 sudo apt install colcon vcstool
+sudo apt install python3-catkin-pkg python3-ament-package python3-empy python3-lark python3-wheel python3-psutil
 ````
 
-And in the Python virtual environment
+(or do the same in a Python virtual environment)
+
+For running the ROS2 nodes:
 
 ````sh
-pip install catkin_pkg ament-package empy lark
+sudo apt install libcamera-dev python3-picamera2
+
 ````
 
 For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).
