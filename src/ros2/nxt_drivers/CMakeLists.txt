@@ -12,6 +12,8 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
+find_package(nxt_libs REQUIRED)
+
 add_executable(driver_node 
   src/motor_driver/motor_driver.cpp
   src/driver_node.cpp

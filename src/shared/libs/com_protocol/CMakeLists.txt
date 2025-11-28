@@ -5,10 +5,16 @@ project(nxt_com_protocol CXX)
 add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(${PROJECT_NAME}
-    INTERFACE 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 install(DIRECTORY include/ DESTINATION include/
     FILES_MATCHING PATTERN "*.hpp"
+)
+
+install(TARGETS ${PROJECT_NAME}
+    EXPORT lib_targets
+    LIBRARY DESTINATION lib
 )

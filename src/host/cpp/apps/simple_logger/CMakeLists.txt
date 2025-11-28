@@ -9,7 +9,12 @@ add_library(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
+install(DIRECTORY include/ DESTINATION include/
+    FILES_MATCHING PATTERN "*.hpp"
+)

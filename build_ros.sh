@@ -15,11 +15,11 @@ TARGET_NAME=ros2
 BUILD_DIR=$ROOT_DIR/build/${TARGET_NAME}-${BUILD_TYPE,,}
 INSTALL_DIR=$ROOT_DIR/install/${TARGET_NAME}-${BUILD_TYPE,,}
 
-rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 mkdir -p $INSTALL_DIR
 
-export CMAKE_PREFIX_PATH=$ROOT_DIR/install/linux-${BUILD_TYPE,,}:$CMAKE_PREFIX_PATH
+export CMAKE_PREFIX_PATH=$ROOT_DIR/install/linux-${BUILD_TYPE,,}/lib/cmake/nxt_libs:$CMAKE_PREFIX_PATH
+echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
 
 colcon build --base-paths $ROOT_DIR/src/ros2/ --build-base $BUILD_DIR --install-base $INSTALL_DIR --cmake-args -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
     --packages-select rpi_cam nxt_drivers

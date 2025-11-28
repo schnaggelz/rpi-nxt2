@@ -8,8 +8,7 @@ set(CMAKE_CXX_STANDARD 17 CACHE STRING "")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_subdirectory(shared/cpp/com_protocol)
-add_subdirectory(shared/cpp/common_utils)
+add_subdirectory(shared/libs)
 
 if (CMAKE_CROSSCOMPILING)
     message("Cross-building for ARM")

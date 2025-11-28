@@ -11,7 +11,8 @@ add_library(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(${PROJECT_NAME}
@@ -28,5 +29,6 @@ install(DIRECTORY include/ DESTINATION include/
 )
 
 install(TARGETS ${PROJECT_NAME}
+    EXPORT lib_targets
     LIBRARY DESTINATION lib
 )

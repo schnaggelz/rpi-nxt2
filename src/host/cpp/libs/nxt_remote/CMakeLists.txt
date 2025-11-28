@@ -11,14 +11,13 @@ add_library(${PROJECT_NAME} STATIC
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
         nxt_com
-    PRIVATE
-        simple_logger
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
@@ -36,9 +35,11 @@ install(DIRECTORY include/ DESTINATION include/
     FILES_MATCHING PATTERN "*.hpp")
 
 install(TARGETS ${PROJECT_NAME}
+    EXPORT lib_targets
     LIBRARY DESTINATION lib
 )
 
 install(TARGETS ${PROJECT_NAME}_py
+    EXPORT lib_targets
     LIBRARY DESTINATION lib
 )
