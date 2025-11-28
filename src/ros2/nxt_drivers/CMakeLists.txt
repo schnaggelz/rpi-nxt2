@@ -15,7 +15,6 @@ find_package(std_msgs REQUIRED)
 find_package(nxt_libs REQUIRED)
 
 add_executable(driver_node 
-  src/motor_driver/motor_driver.cpp
   src/driver_node.cpp
   src/node_main.cpp
 )
