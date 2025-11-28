@@ -7,6 +7,7 @@ sudo -H apt-get install -y libconsole-bridge-dev
 sudo -H apt-get install -y liblttng-ust-dev
 sudo -H apt-get install -y libssl-dev
 sudo -H apt-get install -y libgtest-dev
+sudo -H apt-get install -y libtinyxml2-dev
 
 # Install Python packages (absolute minimum for ROS2 base on Raspberry Pi OS)
 
@@ -21,7 +22,6 @@ sudo -H apt-get install -y python3-pytest
 # sudo -H apt-get install -y libyaml-cpp-dev
 # sudo -H apt-get install -y python3-pykdl
 # sudo -H apt-get install -y cppcheck
-# sudo -H apt-get install -y libtinyxml2-dev
 # sudo -H apt-get install -y libxml2-utils
 # sudo -H apt-get install -y pydocstyle
 # sudo -H apt-get install -y python3-importlib-resources
