@@ -8,7 +8,6 @@ int main(int argc, char **argv)
     
     auto node = std::make_shared<DriverNode>();
 
-
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;

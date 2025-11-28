@@ -2,16 +2,22 @@
 
 #include "rclcpp/rclcpp.hpp"
 
+#include "std_msgs/msg/int32_multi_array.hpp"
+
+#include "nxt/remote/remote.hpp"
+
 class DriverNode : public rclcpp::Node
 {
    public:
     DriverNode();
 
    private:
-    void timerCallback()
-    {
-        RCLCPP_INFO(this->get_logger(), "Hello from ROS2");
-    }
+    void timerCallback();
+    void publishSensorData();
 
-    rclcpp::TimerBase::SharedPtr timer_;
+   private:
+    rclcpp::TimerBase::SharedPtr _timer;
+    rclcpp::Publisher<std_msgs::msg::Int32MultiArray>::SharedPtr _sensors_pub;
+    
+    nxt::remote::Remote _remote;
 };
