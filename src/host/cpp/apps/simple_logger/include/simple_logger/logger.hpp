@@ -6,6 +6,8 @@
  * License notes see LICENSE.txt
  ******************************************************************************/
 
+#pragma once
+
 #include <iostream>
 #include <sstream>
 
