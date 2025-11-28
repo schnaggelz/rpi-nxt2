@@ -73,8 +73,8 @@ sudo apt install python3-catkin-pkg python3-ament-package python3-empy python3-l
 For running the ROS2 nodes:
 
 ````sh
-sudo apt install libcamera-dev python3-picamera2
-
+sudo apt install libcamera libtinyxml
+sudo apt install python3-picamera2 python3-psutil
 ````
 
 For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).
