@@ -1,3 +1,4 @@
-string speed
-string direction
-int8 motor
+uint8 port
+int8 speed
+int32 count
+int32 tolerance
