@@ -8,7 +8,7 @@
 DriverNode::DriverNode() : Node("driver_node"), _remote()
 {
     _timer =
-        this->create_wall_timer(std::chrono::milliseconds(200),
+        this->create_wall_timer(std::chrono::milliseconds(100),
                                 std::bind(&DriverNode::timer_callback, this));
 
     _sensor_data_pub = this->create_publisher<nxt_msgs::msg::SensorData>("nxt/sensor_data", 50);
@@ -21,10 +21,24 @@ DriverNode::DriverNode() : Node("driver_node"), _remote()
     _motor_command_sub = this->create_subscription<nxt_msgs::msg::MotorCommand>(
         "nxt/motor_cmd", 10,
         std::bind(&DriverNode::motor_command_callback, this, std::placeholders::_1));
+
+    if (_remote.connect())
+    {
+        RCLCPP_INFO(this->get_logger(), "Connected to NXT");
+    }
+    else
+    {
+        RCLCPP_ERROR(this->get_logger(), "Failed to connect to NXT, check connection");
+    }
 }
 
 void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
 {
+    if (!_remote.isConnected())
+    {
+        return;
+    }
+
     const auto port_idx = msg->port;
     if (port_idx >= MOTOR_PORTS.size())
     {
@@ -38,6 +52,11 @@ void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorC
 
 void DriverNode::motor_command_callback(const nxt_msgs::msg::MotorCommand::SharedPtr msg)
 {
+    if (!_remote.isConnected())
+    {
+        return;
+    }
+
     const auto port_idx = msg->port;
     if (port_idx >= MOTOR_PORTS.size())
     {
@@ -55,9 +74,9 @@ void DriverNode::timer_callback()
         return;
     }
 
-    RCLCPP_INFO(this->get_logger(), "NXT connected, polling sensors");
-
     publish_sensor_data();
+
+    // publish system state
 }
 
 void DriverNode::publish_sensor_data()
