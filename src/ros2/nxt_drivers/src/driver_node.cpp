@@ -9,18 +9,18 @@ DriverNode::DriverNode() : Node("driver_node"), _remote()
 {
     _timer =
         this->create_wall_timer(std::chrono::milliseconds(200),
-                                std::bind(&DriverNode::timerCallback, this));
+                                std::bind(&DriverNode::timer_callback, this));
 
     _sensor_data_pub = this->create_publisher<nxt_msgs::msg::SensorData>("nxt/sensor_data", 50);
 
     // subscribe to motor commands
     _simple_motor_command_sub = this->create_subscription<nxt_msgs::msg::SimpleMotorCommand>(
         "nxt/simple_motor_cmd", 10,
-        std::bind(&DriverNode::simpleMotorCommandCallback, this, std::placeholders::_1));
+        std::bind(&DriverNode::simple_motor_command_callback, this, std::placeholders::_1));
 
     _motor_command_sub = this->create_subscription<nxt_msgs::msg::MotorCommand>(
         "nxt/motor_cmd", 10,
-        std::bind(&DriverNode::motorCommandCallback, this, std::placeholders::_1));
+        std::bind(&DriverNode::motor_command_callback, this, std::placeholders::_1));
 }
 
 void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
@@ -57,7 +57,7 @@ void DriverNode::timer_callback()
 
     RCLCPP_INFO(this->get_logger(), "NXT connected, polling sensors");
 
-    publishSensorData();
+    publish_sensor_data();
 }
 
 void DriverNode::publish_sensor_data()
