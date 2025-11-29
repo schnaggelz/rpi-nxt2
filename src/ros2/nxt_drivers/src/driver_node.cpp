@@ -11,10 +11,44 @@ DriverNode::DriverNode() : Node("driver_node"), _remote()
         this->create_wall_timer(std::chrono::milliseconds(200),
                                 std::bind(&DriverNode::timerCallback, this));
 
-    _sensors_pub = this->create_publisher<std_msgs::msg::Int32MultiArray>("nxt/sensor_vector", 10);
+    _sensor_data_pub = this->create_publisher<nxt_msgs::msg::SensorData>("nxt/sensor_data", 50);
+
+    // subscribe to motor commands
+    _simple_motor_command_sub = this->create_subscription<nxt_msgs::msg::SimpleMotorCommand>(
+        "nxt/simple_motor_cmd", 10,
+        std::bind(&DriverNode::simpleMotorCommandCallback, this, std::placeholders::_1));
+
+    _motor_command_sub = this->create_subscription<nxt_msgs::msg::MotorCommand>(
+        "nxt/motor_cmd", 10,
+        std::bind(&DriverNode::motorCommandCallback, this, std::placeholders::_1));
 }
 
-void DriverNode::timerCallback()
+void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
+{
+    const auto port_idx = msg->port;
+    if (port_idx >= MOTOR_PORTS.size())
+    {
+        RCLCPP_WARN(this->get_logger(), "Invalid motor port index: %u", port_idx);
+        return;
+    }
+
+    const auto port = MOTOR_PORTS[port_idx];
+    const auto speed = msg->speed;
+}
+
+void DriverNode::motor_command_callback(const nxt_msgs::msg::MotorCommand::SharedPtr msg)
+{
+    const auto port_idx = msg->port;
+    if (port_idx >= MOTOR_PORTS.size())
+    {
+        RCLCPP_WARN(this->get_logger(), "Invalid motor port index: %u", port_idx);
+        return;
+    }
+
+    const auto port = MOTOR_PORTS[port_idx];
+}
+
+void DriverNode::timer_callback()
 {
     if (!_remote.isConnected())
     {
@@ -26,24 +60,21 @@ void DriverNode::timerCallback()
     publishSensorData();
 }
 
-void DriverNode::publishSensorData()
+void DriverNode::publish_sensor_data()
 {
-    using Port = nxt::com::protocol::Port;
+    _remote.poll();
 
-    std::array<Port, 4> ports = {Port::PORT_1, Port::PORT_2, Port::PORT_3,
-                                 Port::PORT_4};
-    std::vector<std::int32_t> values;
-
-    std::uint8_t idx = 0U;
-    for (auto p : ports)
+    std::uint8_t port_idx = 0U;
+    for (auto port : SENSOR_PORTS)
     {
-        int32_t v = _remote.sensorRcv(p, idx);
-        values.push_back(v);
-        ++idx;
+        auto value = _remote.sensorRcv(port, 0);
+        auto msg = nxt_msgs::msg::SensorData();
+
+        msg.port = port_idx;
+        msg.data[0] = value;
+
+        _sensor_data_pub->publish(msg);
+
+        ++port_idx;
     }
-
-    auto msg = std_msgs::msg::Int32MultiArray();
-    msg.data = std::move(values);
-
-    _sensors_pub->publish(msg);
 }
