@@ -8,11 +8,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
-find_package(rosidl_default_generators REQUIRED) 
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 find_package(nxt_libs REQUIRED)
+find_package(nxt_msgs REQUIRED)
 
 add_executable(driver_node 
     src/driver_node.cpp
@@ -26,12 +26,9 @@ target_include_directories(driver_node PUBLIC
 
 target_link_libraries(driver_node PUBLIC
     ${std_msgs_TARGETS}
+    ${nxt_msgs_TARGETS}
     rclcpp::rclcpp
     nxt::nxt_remote
-)
-
-rosidl_generate_interfaces(${PROJECT_NAME}
-    "msg/MotorCommand.msg"
 )
 
 install(TARGETS driver_node DESTINATION lib/${PROJECT_NAME})
