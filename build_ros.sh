@@ -22,4 +22,4 @@ export CMAKE_PREFIX_PATH=$ROOT_DIR/install/linux-${BUILD_TYPE,,}/lib/cmake/nxt_l
 echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
 
 colcon build --base-paths $ROOT_DIR/src/ros2/ --build-base $BUILD_DIR --install-base $INSTALL_DIR --cmake-args -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-    --packages-select rpi_cam nxt_drivers nxt_msgs
+    --packages-select rpi_cam nxt_drivers nxt_msgs py_nxt_test
