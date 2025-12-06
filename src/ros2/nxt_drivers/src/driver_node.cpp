@@ -99,6 +99,14 @@ void DriverNode::motor_command_callback(const nxt_msgs::msg::MotorCommand::Share
     }
 
     const auto port = MOTOR_PORTS[port_idx];
+    const auto count = msg->count;
+    const auto speed = msg->speed;
+    const auto tolerance = msg->tolerance;
+
+    RCLCPP_INFO(this->get_logger(),
+                "Setting motor on port %u to speed %d for %d increments with tolerance %d",
+                port_idx, speed, count, tolerance);
+    _remote.motorCmd(port, speed, count, tolerance);
 }
 
 void DriverNode::timer_callback()
