@@ -32,6 +32,18 @@ DriverNode::DriverNode() : Node("driver_node"), _remote()
     }
 }
 
+DriverNode::~DriverNode()
+{
+    if (_remote.isConnected())
+    {
+        _remote.motorStop(Port::PORT_A);
+        _remote.motorStop(Port::PORT_B);
+        _remote.motorStop(Port::PORT_C);
+
+        _remote.disconnect();
+    }
+}
+
 void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
 {
     if (!_remote.isConnected())
@@ -47,7 +59,29 @@ void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorC
     }
 
     const auto port = MOTOR_PORTS[port_idx];
+    const auto command = msg->command;
     const auto speed = msg->speed;
+
+    if (command == nxt_msgs::msg::SimpleMotorCommand::STOP)
+    {
+        RCLCPP_INFO(this->get_logger(), "Stopping motor on port %u", port_idx);
+        _remote.motorStop(port);
+    }
+    else if (command == nxt_msgs::msg::SimpleMotorCommand::FORWARD)
+    {
+        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (forward)", port_idx, speed);
+        _remote.motorFwd(port, speed);
+    }
+    else if (command == nxt_msgs::msg::SimpleMotorCommand::REVERSE)
+    {
+        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (reverse)", port_idx, speed);
+        _remote.motorRev(port, speed);
+    }
+    else
+    {
+        RCLCPP_WARN(this->get_logger(), "Invalid motor command: %u", command);
+        return;
+    }
 }
 
 void DriverNode::motor_command_callback(const nxt_msgs::msg::MotorCommand::SharedPtr msg)

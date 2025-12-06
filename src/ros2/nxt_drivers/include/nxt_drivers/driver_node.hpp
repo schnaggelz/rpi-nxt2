@@ -12,6 +12,7 @@ class DriverNode : public rclcpp::Node
 {
    public:
     DriverNode();
+    ~DriverNode();
 
    private:
     using Port = nxt::com::protocol::Port;
