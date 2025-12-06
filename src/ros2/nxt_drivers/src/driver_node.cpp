@@ -90,7 +90,7 @@ void DriverNode::publish_sensor_data()
         auto msg = nxt_msgs::msg::SensorData();
 
         msg.port = port_idx;
-        msg.data[0] = value;
+        msg.data.push_back(value);
 
         _sensor_data_pub->publish(msg);
 
