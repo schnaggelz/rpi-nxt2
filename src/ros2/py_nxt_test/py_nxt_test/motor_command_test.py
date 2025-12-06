@@ -1,6 +1,8 @@
 import rclpy
+
 from rclpy.node import Node
 from nxt_msgs.msg import SimpleMotorCommand
+from nxt_msgs.msg import Ports
 
 
 class MotorCommandTestNode(Node):
@@ -24,31 +26,33 @@ class MotorCommandTestNode(Node):
         cycle_idx = self.cycle % 4
         
         if cycle_idx == 0:
-            # Motor A forward at speed 100
+            # Motor A forward at speed 60
             msg.port = 0
             msg.command = SimpleMotorCommand.FORWARD
-            msg.speed = 100
-            self.get_logger().info('Sending: PORT_A FORWARD speed=100')
+            msg.speed = 60
+            self.get_logger().info('Sending: PORT_A FORWARD speed=60')
+            self.pub.publish(msg)
         elif cycle_idx == 1:
-            # Motor B reverse at speed 80
+            # Motor B reverse at speed 30
             msg.port = 1
             msg.command = SimpleMotorCommand.REVERSE
-            msg.speed = 80
-            self.get_logger().info('Sending: PORT_B REVERSE speed=80')
+            msg.speed = 30
+            self.get_logger().info('Sending: PORT_B REVERSE speed=30')
+            self.pub.publish(msg)
         elif cycle_idx == 2:
             # Motor C forward at speed 60
             msg.port = 2
             msg.command = SimpleMotorCommand.FORWARD
             msg.speed = 60
             self.get_logger().info('Sending: PORT_C FORWARD speed=60')
+            self.pub.publish(msg)
         else:
-            # All motors stop
-            msg.port = 0
-            msg.command = SimpleMotorCommand.STOP
-            msg.speed = 0
-            self.get_logger().info('Sending: ALL STOP')
+            self.get_logger().info('Sending: STOP on all ports')
+            for i in range(Ports.NUM_MOTOR_PORTS):
+                msg.port = i
+                msg.command = SimpleMotorCommand.STOP
+                self.pub.publish(msg)
         
-        self.pub.publish(msg)
         self.cycle += 1
 
 
