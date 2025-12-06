@@ -1,17 +1,35 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-    {
-        "type": "gdb",
-        "name": "Jlink debug nxt_status",
-        "request": "attach",
-        "executable": "./build/nxt-status-debug/nxt2/apps/status/nxt_status",
-        "target": ":2331",
-        "cwd": "${workspaceRoot}",
-        "remote": true
-    }
+    "configurations":
+    [
+        {
+            "type": "gdb",
+            "name": "(jlink) Remote Debug",
+            "request": "attach",
+            "executable": "${input:pickBinaryFile}",
+            "target": ":2331",
+            "cwd": "${workspaceRoot}",
+            "remote": true
+        },
+        {
+            "type": "cppdbg",
+            "name": "(gdb) C++ Server Debug",
+            "request": "launch",
+            "program": "install/ros2-debug/nxt_drivers/lib/nxt_drivers/driver_node",
+            "miDebuggerServerAddress": "localhost:3000",
+            "cwd": "${workspaceRoot}",
+        },
+    ],
+    "inputs":
+    [
+        {
+            "id": "pickBinaryFile",
+            "type": "command",
+            "command": "extension.commandvariable.file.pickFile",
+            "args":
+            {
+                "description": "Pick a binary file"
+            } 
+        } 
     ]
 }

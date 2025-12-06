@@ -245,6 +245,14 @@ This is tools specific. I use CLion which controls the GDB. Use the host-stools 
 
 This is a trivial process and well-documented for your tools.
 
+### Debugging ROS Nodes
+
+For ROS, it required the `gdbserver` bein installed. After soucing the environment, start it:
+
+````sh
+ros2 run --prefix 'gdbserver localhost:3000' nxt_drivers driver_node
+````
+
 # Hailo Kit
 
 Hailo-8 AI Hat/Kit only required for camera inference (future).
