@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'simple_motor_command_test = py_nxt_test.simple_motor_command_test:main',
             'motor_command_test = py_nxt_test.motor_command_test:main',
         ],
     },
