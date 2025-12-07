@@ -23,40 +23,29 @@ class MotorCommandTestNode(Node):
     def publish_commands(self):
 
         msg = MotorCommand()
-        step = self.cycle % 4
+        step = self.cycle % 3
 
         if step == 0:
-            # Motor A: speed 80, count 200 ticks, tolerance 5
-            msg.port = Ports.PORT_A
-            msg.speed = 80
-            msg.count = 200
-            msg.tolerance = 5
-            self.get_logger().info('Sending: PORT A, speed=80, count=200, tol=5')
+            msg.port = Ports.PORT_B
+            msg.speed = 30
+            msg.count = 90
+            msg.tolerance = 10
+            self.get_logger().info('Sending: PORT B, speed=30, count=90, tol=10')
             self.pub.publish(msg)
         elif step == 1:
-            # Motor B reverse: speed -60, continuous (count=0)
             msg.port = Ports.PORT_B
-            msg.speed = -60
-            msg.count = 0
-            msg.tolerance = 0
-            self.get_logger().info('Sending: PORT B, speed=-60 (continuous)')
+            msg.speed = 30
+            msg.count = -90
+            msg.tolerance = 10
+            self.get_logger().info('Sending: PORT B, speed=30, count=-90, tol=10')
             self.pub.publish(msg)
         elif step == 2:
-            # Motor C: speed 50, count 1000, tolerance 10
-            msg.port = Ports.PORT_C
-            msg.speed = 50
-            msg.count = 1000
+            msg.port = Ports.PORT_B
+            msg.speed = 30
+            msg.count = 0
             msg.tolerance = 10
-            self.get_logger().info('Sending: PORT C, speed=50, count=1000, tol=10')
+            self.get_logger().info('Sending: PORT B, speed=30, count=0, tol=10')
             self.pub.publish(msg)
-        else:
-            self.get_logger().info('Stopping all motors')
-            for i in range(Ports.NUM_MOTOR_PORTS):
-                msg.port = i
-                msg.speed = 0
-                msg.count = 0
-                msg.tolerance = 0
-                self.pub.publish(msg)
 
         self.cycle += 1
 
