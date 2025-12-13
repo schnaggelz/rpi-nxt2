@@ -4,6 +4,7 @@
 #include <atomic>
 #include <cstdint>
 #include <vector>
+#include <algorithm>
 
 DriverNode::DriverNode() : Node("driver_node"), _remote()
 {
@@ -138,4 +139,25 @@ void DriverNode::publish_sensor_data()
 
         ++port_idx;
     }
+
+    sensor_msgs::msg::Range rmsg;
+    rmsg.radiation_type = sensor_msgs::msg::Range::ULTRASOUND;
+    rmsg.field_of_view = static_cast<float>(_range_field_of_view);
+    rmsg.min_range = 0.02f;
+    rmsg.max_range = 2.0f;
+
+    // port 1
+    auto v1 = _remote.sensorRcv(Port::PORT_1, 0);
+    rmsg.header.stamp = this->now();
+    rmsg.header.frame_id = "nxt_port_1";
+    rmsg.range = std::clamp(static_cast<float>(v1) * 0.01f, rmsg.min_range, rmsg.max_range);
+    _range1_pub->publish(rmsg);
+
+    // port 2
+    auto v2 = _remote.sensorRcv(Port::PORT_2, 0);
+    rmsg.header.stamp = this->now();
+    rmsg.header.frame_id = "nxt_port_2";
+    rmsg.range = std::clamp(static_cast<float>(v2) * 0.01f, rmsg.min_range, rmsg.max_range);
+    _range2_pub->publish(rmsg);
 }
+

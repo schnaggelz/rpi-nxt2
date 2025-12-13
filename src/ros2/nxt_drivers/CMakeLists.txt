@@ -28,6 +28,7 @@ target_include_directories(driver_node PUBLIC
 target_link_libraries(driver_node PUBLIC
     ${std_msgs_TARGETS}
     ${nxt_msgs_TARGETS}
+    ${sensor_msgs_TARGETS}
     rclcpp::rclcpp
     nxt::nxt_remote
 )

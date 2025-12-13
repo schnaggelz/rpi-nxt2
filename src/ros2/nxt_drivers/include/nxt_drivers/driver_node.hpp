@@ -8,6 +8,10 @@
 
 #include "nxt/remote/remote.hpp"
 
+#include "sensor_msgs/msg/range.hpp"
+
+#include <array>
+
 class DriverNode : public rclcpp::Node
 {
    public:
@@ -26,10 +30,14 @@ class DriverNode : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr _timer;
     
     rclcpp::Publisher<nxt_msgs::msg::SensorData>::SharedPtr _sensor_data_pub;
+    rclcpp::Publisher<sensor_msgs::msg::Range>::SharedPtr _range1_pub;
+    rclcpp::Publisher<sensor_msgs::msg::Range>::SharedPtr _range2_pub;
     rclcpp::Subscription<nxt_msgs::msg::SimpleMotorCommand>::SharedPtr _simple_motor_command_sub;
     rclcpp::Subscription<nxt_msgs::msg::MotorCommand>::SharedPtr _motor_command_sub;
     
     nxt::remote::Remote _remote;
+
+    double _range_field_of_view = 0.1;
 
     static constexpr std::array<Port, 4> SENSOR_PORTS = {
         Port::PORT_1, Port::PORT_2, Port::PORT_3, Port::PORT_4};
