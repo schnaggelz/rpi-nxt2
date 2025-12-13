@@ -3,6 +3,7 @@
 
 # VSCode
 .vscode/
+compile_commands.json
 
 # Temp
 build/

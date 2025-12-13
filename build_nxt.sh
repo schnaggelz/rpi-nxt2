@@ -20,7 +20,8 @@ mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DAPP_NAME=${APP_NAME} \
-  -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/src/cmake/toolchains/arm-gcc-toolchain.cmake ${ROOT_DIR}/src
+  -DCMAKE_TOOLCHAIN_FILE=${ROOT_DIR}/src/cmake/toolchains/arm-gcc-toolchain.cmake \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ${ROOT_DIR}/src
 VERBOSE=1 cmake --build $BUILD_DIR
 cmake --install $BUILD_DIR --prefix $INSTALL_DIR
 
