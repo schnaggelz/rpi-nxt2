@@ -5,6 +5,7 @@
 #include "nxt_msgs/msg/motor_command.hpp"
 #include "nxt_msgs/msg/simple_motor_command.hpp"
 #include "nxt_msgs/msg/sensor_data.hpp"
+#include "nxt_msgs/msg/system_state.hpp"
 
 #include "nxt/remote/remote.hpp"
 
@@ -25,6 +26,7 @@ class DriverNode : public rclcpp::Node
     void simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg);
     void motor_command_callback(const nxt_msgs::msg::MotorCommand::SharedPtr msg);
     void publish_sensor_data();
+    void publish_system_state();
 
    private:
     rclcpp::TimerBase::SharedPtr _timer;

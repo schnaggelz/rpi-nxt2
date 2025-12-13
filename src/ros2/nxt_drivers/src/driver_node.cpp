@@ -13,6 +13,12 @@ DriverNode::DriverNode() : Node("driver_node"), _remote()
                                 std::bind(&DriverNode::timer_callback, this));
 
     _sensor_data_pub = this->create_publisher<nxt_msgs::msg::SensorData>("nxt/sensor_data", 50);
+    _range1_pub = this->create_publisher<sensor_msgs::msg::Range>("nxt/range/port1", 10);
+    _range2_pub = this->create_publisher<sensor_msgs::msg::Range>("nxt/range/port2", 10);
+
+    // parameter: field of view for range sensors (radians)
+    this->declare_parameter<double>("range_field_of_view", _range_field_of_view);
+    _range_field_of_view = this->get_parameter("range_field_of_view").as_double();
 
     // subscribe to motor commands
     _simple_motor_command_sub = this->create_subscription<nxt_msgs::msg::SimpleMotorCommand>(
@@ -118,8 +124,7 @@ void DriverNode::timer_callback()
     }
 
     publish_sensor_data();
-
-    // publish system state
+    publish_system_state();
 }
 
 void DriverNode::publish_sensor_data()
@@ -161,3 +166,7 @@ void DriverNode::publish_sensor_data()
     _range2_pub->publish(rmsg);
 }
 
+void DriverNode::publish_system_state()
+{
+    // Placeholder for future system state publishing
+}
