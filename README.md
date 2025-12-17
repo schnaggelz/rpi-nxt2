@@ -77,7 +77,9 @@ sudo apt install libcamera libtinyxml
 sudo apt install python3-picamera2 python3-psutil
 ````
 
-For a full ROS2 setup on Raspberry Pi refere to [ROS2 configuration](./config/raspi/ros2/README.md).
+For a full ROS2 setup on Raspberry Pi, refer to the [local ROS2 documentation](./config/raspi/ros2/README.md).
+
+For plain Ubuntu 24, refer to [official ROS2 documentation](https://docs.ros.org/en/kilted/Installation/Ubuntu-Install-Debs.html).
 
 # Build
 
