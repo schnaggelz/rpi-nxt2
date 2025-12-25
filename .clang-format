@@ -2,7 +2,7 @@
 # We'll use defaults from the Google style
 BasedOnStyle: Google
 SortIncludes: false
-ColumnLimit: 80
+ColumnLimit: 100
 IndentWidth: 4
 PointerAlignment: Left
 BreakBeforeBraces: Custom

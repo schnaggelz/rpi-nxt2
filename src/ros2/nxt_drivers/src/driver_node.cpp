@@ -8,9 +8,8 @@
 
 DriverNode::DriverNode() : Node("driver_node"), _remote()
 {
-    _timer =
-        this->create_wall_timer(std::chrono::milliseconds(100),
-                                std::bind(&DriverNode::timer_callback, this));
+    _timer = this->create_wall_timer(std::chrono::milliseconds(100),
+                                     std::bind(&DriverNode::timer_callback, this));
 
     _sensor_data_pub = this->create_publisher<nxt_msgs::msg::SensorData>("nxt/sensor_data", 50);
     _range1_pub = this->create_publisher<sensor_msgs::msg::Range>("nxt/range/port1", 10);
@@ -51,7 +50,8 @@ DriverNode::~DriverNode()
     }
 }
 
-void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
+void DriverNode::simple_motor_command_callback(
+    const nxt_msgs::msg::SimpleMotorCommand::SharedPtr msg)
 {
     if (!_remote.isConnected())
     {
@@ -76,12 +76,14 @@ void DriverNode::simple_motor_command_callback(const nxt_msgs::msg::SimpleMotorC
     }
     else if (command == nxt_msgs::msg::SimpleMotorCommand::FORWARD)
     {
-        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (forward)", port_idx, speed);
+        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (forward)", port_idx,
+                    speed);
         _remote.motorFwd(port, speed);
     }
     else if (command == nxt_msgs::msg::SimpleMotorCommand::REVERSE)
     {
-        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (reverse)", port_idx, speed);
+        RCLCPP_INFO(this->get_logger(), "Setting motor on port %u to speed %d (reverse)", port_idx,
+                    speed);
         _remote.motorRev(port, speed);
     }
     else
@@ -111,7 +113,8 @@ void DriverNode::motor_command_callback(const nxt_msgs::msg::MotorCommand::Share
     const auto tolerance = msg->tolerance;
 
     RCLCPP_INFO(this->get_logger(),
-                "Setting motor on port %u to speed %d for %d increments with tolerance %d",
+                "Setting motor on port %u to speed %d for %d increments with "
+                "tolerance %d",
                 port_idx, speed, count, tolerance);
     _remote.motorCmd(port, speed, count, tolerance);
 }
