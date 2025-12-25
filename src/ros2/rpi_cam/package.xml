@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>rpi_cam</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>Simple Raspberry Pi Camera node</description>
-  <maintainer email="timon.reich@gmx.de">Timon Reich</maintainer>
+  <maintainer email="schnaggelz@gmx.de">schnaggelz</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

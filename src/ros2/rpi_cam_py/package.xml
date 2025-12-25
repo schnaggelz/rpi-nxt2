@@ -4,7 +4,7 @@
   <name>rpi_cam_py</name>
   <version>0.0.0</version>
   <description>Raspberry Pi Camera Node</description>
-  <maintainer email="timon.reich@gmx.de">Timon Reich</maintainer>
+  <maintainer email="schnaggelz@gmx.de">schnaggelz</maintainer>
   <license>MIT</license>
 
   <depend>rclpy</depend>

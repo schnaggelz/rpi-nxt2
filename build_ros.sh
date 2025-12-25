@@ -23,4 +23,4 @@ echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
 
 colcon build --base-paths $ROOT_DIR/src/ros2/ --build-base $BUILD_DIR --install-base $INSTALL_DIR \
     --cmake-args -DCMAKE_BUILD_TYPE=$BUILD_TYPE --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    --packages-select nxt_drivers nxt_msgs rpi_cam rpi_cam_py nxt_test_py
+    --packages-select nxt_drivers nxt_msgs rpi_cam rpi_cam_py nxt_test_py nxt_rover
