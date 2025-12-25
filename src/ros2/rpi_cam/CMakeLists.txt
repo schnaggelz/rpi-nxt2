@@ -16,7 +16,10 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-add_executable(cam_node src/cam_node.cpp)
+add_executable(cam_node
+  src/cam_node.cpp
+  src/node_main.cpp
+)
 
 target_compile_features(cam_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 

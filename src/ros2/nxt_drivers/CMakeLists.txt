@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(nxt_drivers)
 
+set(CMAKE_CXX_STANDARD 17)
+
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")

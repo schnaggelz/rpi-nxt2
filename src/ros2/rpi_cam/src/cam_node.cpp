@@ -1,8 +1,2 @@
-#include <libcamera/camera.h>
+#include "rpi_cam/cam_node.hpp"
 
-#include <cstdio>
-
-int main([[maybe_unused]] int argc, [[maybe_unused]] char ** argv)
-{
-  printf("hello world rpi_cam package\n");
-}
