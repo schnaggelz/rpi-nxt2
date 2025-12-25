@@ -14,6 +14,14 @@
   <xacro:property name="caster_radius" value="0.03"/>
   <xacro:property name="caster_mass" value="0.1"/>
 
+  <!-- Dummy root link to avoid KDL root-inertia warning -->
+  <link name="base_link_root"/>
+  <joint name="root_to_base_link" type="fixed">
+    <parent link="base_link_root"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
   <!-- Base link -->
   <link name="base_link">
     <inertial>
