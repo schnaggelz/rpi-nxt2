@@ -73,7 +73,7 @@ sudo apt install python3-catkin-pkg python3-ament-package python3-empy python3-l
 For running the ROS2 nodes:
 
 ````sh
-sudo apt install libcamera libtinyxml
+sudo apt install libcamera libtinyxml sudo apt install libboost-python1.74.0
 sudo apt install python3-picamera2 python3-psutil
 ````
 

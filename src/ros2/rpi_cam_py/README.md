@@ -29,5 +29,5 @@ source install/setup.sh
 You can now run the motor driver node using the launch file:
 
 ````sh
-ros2 launch rpi_cam cam_node
+ros2 launch rpi_cam_py cam_node
 ````

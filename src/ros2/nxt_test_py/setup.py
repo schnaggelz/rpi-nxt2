@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'py_nxt_test'
+package_name = 'nxt_test_py'
 
 setup(
     name=package_name,
@@ -24,8 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'simple_motor_command_test = py_nxt_test.simple_motor_command_test:main',
-            'motor_command_test = py_nxt_test.motor_command_test:main',
+            'simple_motor_command_test = nxt_test.simple_motor_command_test:main',
+            'motor_command_test = nxt_test.motor_command_test:main',
         ],
     },
 )

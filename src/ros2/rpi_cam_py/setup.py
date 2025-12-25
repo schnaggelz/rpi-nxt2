@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'rpi_cam'
+package_name = 'rpi_cam_py'
 
 setup(
     name=package_name,
