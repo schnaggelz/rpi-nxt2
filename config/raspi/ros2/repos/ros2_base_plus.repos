@@ -1,4 +1,8 @@
 - git:
+    local-name: actuator_msgs
+    uri: https://github.com/ros2-gbp/actuator_msgs-release.git
+    version: release/kilted/actuator_msgs/0.0.1-4
+- git:
     local-name: ament_cmake/ament_cmake
     uri: https://github.com/ros2-gbp/ament_cmake-release.git
     version: release/kilted/ament_cmake/2.7.3-2
@@ -290,6 +294,18 @@
     local-name: demos/demo_nodes_py
     uri: https://github.com/ros2-gbp/demos-release.git
     version: release/kilted/demo_nodes_py/0.36.2-1
+- git:
+    local-name: demos/dummy_map_server
+    uri: https://github.com/ros2-gbp/demos-release.git
+    version: release/kilted/dummy_map_server/0.36.2-1
+- git:
+    local-name: demos/dummy_robot_bringup
+    uri: https://github.com/ros2-gbp/demos-release.git
+    version: release/kilted/dummy_robot_bringup/0.36.2-1
+- git:
+    local-name: demos/dummy_sensors
+    uri: https://github.com/ros2-gbp/demos-release.git
+    version: release/kilted/dummy_sensors/0.36.2-1
 - git:
     local-name: eigen3_cmake_module
     uri: https://github.com/ros2-gbp/eigen3_cmake_module-release.git
@@ -978,6 +994,10 @@
     local-name: variants/ros_core
     uri: https://github.com/ros2-gbp/variants-release.git
     version: release/kilted/ros_core/0.12.0-2
+- git:
+    local-name: vision_opencv/cv_bridge
+    uri: https://github.com/ros2-gbp/vision_opencv-release.git
+    version: release/kilted/cv_bridge/4.1.0-2
 - git:
     local-name: yaml_cpp_vendor
     uri: https://github.com/ros2-gbp/yaml_cpp_vendor-release.git
