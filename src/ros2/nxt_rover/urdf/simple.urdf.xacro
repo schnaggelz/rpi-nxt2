@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="minimal_robot">
+
+  <xacro:property name="track_width" value="0.2"/> <!-- distance between left and right wheels -->
+  <xacro:property name="wheel_base" value="0.5"/> <!-- distance between front and rear axles -->
+  <xacro:property name="wheel_radius" value="0.08"/>
+  <xacro:property name="wheel_width" value="0.01"/>
+  <xacro:property name="wheel_mass" value="1.0"/>
+  <xacro:property name="chassis_length" value="${wheel_base + 0.1}"/>
+  <xacro:property name="chassis_width" value="${track_width + 0.1}"/>
+  <xacro:property name="chassis_height" value="0.05"/>
+  <xacro:property name="chassis_mass" value="12.0"/>
+
+  <link name="base_link_root"/>
+  <joint name="root_to_base_link" type="fixed">
+    <parent link="base_link_root"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+      </geometry>
+      <material name="blue"><color rgba="0.2 0.4 0.8 1.0"/></material>
+    </visual>
+  </link>
+
+  <!-- front-left wheel -->
+  <link name="wheel_front_left">
+    <inertial>
+      <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+      <mass value="${wheel_mass}"/>
+      <inertia ixx="${(1.0/12.0)*wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}" ixy="0" ixz="0" iyy="${0.5*wheel_mass*wheel_radius*wheel_radius}" iyz="0" izz="${(1.0/12.0)*wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width)}"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <material name="black"><color rgba="0.05 0.05 0.05 1"/></material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="wheel_front_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_front_left"/>
+    <origin xyz="${wheel_base/2} ${track_width/2} ${wheel_radius}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+</robot>
