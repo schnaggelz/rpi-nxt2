@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="minimal_robot">
+
+  <!-- Define a property (variable) -->
+  <xacro:property name="box_size" value="0.5"/>
+
+  <!-- Single link with a visual box -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${box_size} ${box_size} ${box_size}"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+</robot>

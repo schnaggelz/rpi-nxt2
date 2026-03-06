@@ -8,7 +8,7 @@ import xacro
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('nxt_rover')
-    xacro_path = os.path.join(pkg_share, 'urdf', 'simple_rover.urdf.xacro')
+    xacro_path = os.path.join(pkg_share, 'urdf', 'simple.urdf.xacro')
 
     # Process xacro to produce an URDF string
     robot_description = {'robot_description': xacro.process_file(xacro_path).toxml()}
