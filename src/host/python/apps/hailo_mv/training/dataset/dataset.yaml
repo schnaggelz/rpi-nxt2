@@ -1,0 +1,10 @@
+path: /run/host/home/timon/Develop/rpi-nxt2/src/host/python/apps/hailo_mv/training/dataset
+train: images/train
+val: images/val
+
+names:
+  0: line
+  1: red_sign
+  2: green_sign
+  3: cross
+  4: circle
