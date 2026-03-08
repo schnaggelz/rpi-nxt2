@@ -7,3 +7,4 @@ if __name__ == "__main__":
     vision.start()
     server = VisionServer(vision)
     server.run()
+    vision.stop()
