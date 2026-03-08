@@ -22,6 +22,10 @@ class RobotVision:
     def start(self):
         self._camera.start()
 
+    def stop(self):
+        self._camera.stop()
+        self._hailo.close()
+
 if __name__ == "__main__":
     vision = RobotVision(model_path="/usr/share/hailo-models/yolov5n_seg_h8.hef")
     vision.start()
