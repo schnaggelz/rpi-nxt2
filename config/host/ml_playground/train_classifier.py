@@ -35,11 +35,9 @@ class ShapesDataset(Dataset):
     def __getitem__(self, index: int) -> tuple[torch.Tensor, int]:
         image_path, label = self.samples[index]
         image = Image.open(image_path).convert("RGB")
-
+        tensor = torch.frombuffer(image.tobytes(), dtype=torch.uint8).clone()
         w, h = image.size
-        tensor = torch.ByteTensor(torch.ByteStorage.from_buffer(image.tobytes()))
         tensor = tensor.view(h, w, 3).permute(2, 0, 1).float() / 255.0
-
         return tensor, label
 
 
