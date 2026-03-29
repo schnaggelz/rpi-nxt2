@@ -6,6 +6,9 @@ on a light background, for line-following / steering-angle experiments.
 ## Structure
 
 - `generate_dataset.py`: generate the track dataset
+- `train_classifier.py`: train SmallCNN and save `outputs/model.pt`
+- `export_onnx.py`: export `outputs/model.pt` to `outputs/model.onnx` (PyTorch venv)
+- `compile_hailo.py`: compile `outputs/model.onnx` to `outputs/model.hef` (Hailo SDK venv)
 - `requirements.txt`: Python dependencies
 
 ## Quick start
@@ -34,7 +37,7 @@ data/tracks/
 Each CSV row contains: `image`, `class_name`, `angle_degrees`, `thickness_px`,
 `offset_px`, `track_color`.
 
-## All options
+### All options
 
 | Flag | Default | Description |
 |---|---|---|
@@ -47,7 +50,13 @@ Each CSV row contains: `image`, `class_name`, `angle_degrees`, `thickness_px`,
 | `--black-track-prob` | `0.85` | Probability the track is pure black |
 | `--seed` | `42` | Random seed |
 
-## Notes
+### Notes
 
 - Uses `torch.cuda.is_available()` to pick GPU (ROCm appears as CUDA in PyTorch APIs).
 - The angle label enables regression / steering-angle training in addition to classification.
+
+## Export ONNX
+
+```bash
+python export_onnx.py --model outputs/model.pt --out-dir outputs --image-size 64
+```

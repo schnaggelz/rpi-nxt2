@@ -7,6 +7,7 @@ import argparse
 import json
 from pathlib import Path
 
+import numpy as np
 import torch
 from PIL import Image
 from torch import nn
@@ -35,9 +36,8 @@ class ShapesDataset(Dataset):
     def __getitem__(self, index: int) -> tuple[torch.Tensor, int]:
         image_path, label = self.samples[index]
         image = Image.open(image_path).convert("RGB")
-        tensor = torch.frombuffer(image.tobytes(), dtype=torch.uint8).clone()
-        w, h = image.size
-        tensor = tensor.view(h, w, 3).permute(2, 0, 1).float() / 255.0
+        tensor = torch.from_numpy(np.array(image, dtype=np.uint8))  # (H, W, 3)
+        tensor = tensor.permute(2, 0, 1).float() / 255.0            # (3, H, W)
         return tensor, label
 
 
@@ -88,7 +88,7 @@ def evaluate(model: nn.Module, loader: DataLoader, device: torch.device) -> tupl
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data-dir", type=Path, default=Path("data/tracks"))
+    parser.add_argument("--data-dir", type=Path, default=Path("data"))
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--lr", type=float, default=1e-3)
