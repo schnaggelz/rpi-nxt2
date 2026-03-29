@@ -1,4 +1,4 @@
-# Pytorch based ML Environment
+# Install Pytorch Based ML Environment
 
 ## Install ROCM
 
@@ -19,6 +19,7 @@ python3 -m venv ~/.venv-rocm-pytorch
 source ~/.venv-rocm-pytorch/bin/activate
 pip3 install wheel setuptools
 pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm7.2
+pip3 install onnxscript
 ````
 
 ### Check Installation
@@ -39,3 +40,11 @@ source ~/.venv-label-studio/bin/activate
 pip3 install ultralytics label-studio onnx onnxsim
 ````
 
+
+# Export ONNX Files for Edge AI
+
+In the PyTorch venv:
+
+```bash
+python3 ./export_onnx.py --model ./outputs/model.pt --out-dir ./outputs --image-size 64
+```

@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-# ---------------------------------------------------------------------------
+
+DEFAULT_ONNX = "outputs/model.onnx"
+DEFAULT_DATA_DIR = "data/tracks"
+DEFAULT_OUT_DIR = "outputs"
+
 # Hailo Dataflow Compiler — parse + optimize + quantize + compile
-# ---------------------------------------------------------------------------
 
 def compile_hailo(
     onnx_path: Path,
@@ -55,10 +58,6 @@ def compile_hailo(
     return hef_path
 
 
-# ---------------------------------------------------------------------------
-# Calibration image loader
-# ---------------------------------------------------------------------------
-
 def load_calib_images(data_dir: Path, image_size: int, max_images: int = 64) -> list:
     import numpy as np
     from PIL import Image as PILImage
@@ -79,17 +78,13 @@ def load_calib_images(data_dir: Path, image_size: int, max_images: int = 64) -> 
     return images
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Compile ONNX model to Hailo HEF.")
-    parser.add_argument("--onnx", type=Path, default=Path("outputs/model.onnx"),
-                        help="Path to ONNX model. Default: outputs/model.onnx")
-    parser.add_argument("--data-dir", type=Path, default=Path("data/tracks"),
+    parser.add_argument("--onnx", type=Path, default=DEFAULT_ONNX,
+                        help="Path to ONNX model.")
+    parser.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR,
                         help="Dataset root (used for calibration images).")
-    parser.add_argument("--out-dir", type=Path, default=Path("outputs"),
+    parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR,
                         help="Output directory for HEF file.")
     parser.add_argument("--image-size", type=int, default=64,
                         help="Square input resolution (must match ONNX input). Default: 64")

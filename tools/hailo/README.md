@@ -50,5 +50,5 @@ Check if anything is missing.
 In the Hailo SDK venv:
 
 ```bash
-python3 ./compile_hailo.py --onnx outputs/model.onnx --data-dir data/tracks --out-dir outputs --image-size 64
+python3 ./compile_hailo.py --onnx outputs/model.onnx --data-dir data/tracks --out-dir ./outputs --image-size 64
 ```

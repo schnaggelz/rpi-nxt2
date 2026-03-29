@@ -6,6 +6,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+DEFAULT_MODEL = "outputs/model.pt"
+DEFAULT_OUT_DIR = "outputs"
+
 
 def export_onnx(model_path: Path, out_path: Path, image_size: int) -> Path:
     try:
@@ -49,15 +52,22 @@ def export_onnx(model_path: Path, out_path: Path, image_size: int) -> Path:
     dummy = torch.zeros(1, 3, image_size, image_size)
     onnx_path = out_path / "model.onnx"
 
-    torch.onnx.export(
-        model,
-        dummy,
-        str(onnx_path),
-        input_names=["input"],
-        output_names=["output"],
-        dynamic_axes={"input": {0: "batch"}, "output": {0: "batch"}},
-        opset_version=11,
-    )
+    try:
+        torch.onnx.export(
+            model,
+            dummy,
+            str(onnx_path),
+            input_names=["input"],
+            output_names=["output"],
+            dynamic_axes={"input": {0: "batch"}, "output": {0: "batch"}},
+            opset_version=11,
+        )
+    except ModuleNotFoundError as exc:
+        if exc.name == "onnxscript":
+            raise RuntimeError(
+                "ONNX export requires onnxscript in the PyTorch venv. Install it with: pip install onnxscript"
+            ) from exc
+        raise
 
     print(f"ONNX model saved: {onnx_path}")
     return onnx_path
@@ -68,13 +78,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--model",
         type=Path,
-        default=Path("outputs/model.pt"),
+        default=DEFAULT_MODEL,
         help="Path to the trained model.pt checkpoint.",
     )
     parser.add_argument(
         "--out-dir",
         type=Path,
-        default=Path("outputs"),
+        default=DEFAULT_OUT_DIR,
         help="Output directory for model.onnx.",
     )
     parser.add_argument(
