@@ -79,9 +79,6 @@ def make_traffic_light_image(
 
 def make_track_image(
     image_size: int,
-    track_width_min: int,
-    track_width_max: int,
-    black_track_prob: float,
 ) -> tuple[Image.Image, dict[str, float | int | str]]:
     bg_level = random.randint(170, 245)
     bg = (bg_level, bg_level, bg_level)
@@ -89,8 +86,8 @@ def make_track_image(
     draw = ImageDraw.Draw(img)
     _add_background_noise(draw, image_size)
 
-    thickness = random.randint(track_width_min, track_width_max)
-    if random.random() < black_track_prob:
+    thickness = random.randint(8, 18)
+    if random.random() < 0.85:
         tone = random.randint(0, 30)
         track_color: tuple[int, int, int] = (tone, tone, tone)
         color_name = "black"
@@ -147,9 +144,6 @@ def make_track_image(
 
 def make_crossing_image(
     image_size: int,
-    track_width_min: int,
-    track_width_max: int,
-    black_track_prob: float,
 ) -> tuple[Image.Image, dict[str, float | int | str]]:
     bg_level = random.randint(170, 245)
     bg = (bg_level, bg_level, bg_level)
@@ -157,8 +151,8 @@ def make_crossing_image(
     draw = ImageDraw.Draw(img)
     _add_background_noise(draw, image_size)
 
-    thickness = random.randint(track_width_min, track_width_max)
-    if random.random() < black_track_prob:
+    thickness = random.randint(8, 18)
+    if random.random() < 0.85:
         tone = random.randint(0, 30)
         track_color: tuple[int, int, int] = (tone, tone, tone)
         color_name = "black"
@@ -239,9 +233,6 @@ def write_split(
     split: str,
     image_count: int,
     image_size: int,
-    track_width_min: int,
-    track_width_max: int,
-    black_track_prob: float,
 ) -> None:
     track_dir = root / split / "track"
     track_dir.mkdir(parents=True, exist_ok=True)
@@ -255,7 +246,7 @@ def write_split(
         writer.writeheader()
         for idx in range(image_count):
             image_name = f"{idx:04d}.png"
-            img, metadata = make_track_image(image_size, track_width_min, track_width_max, black_track_prob)
+            img, metadata = make_track_image(image_size)
             img.save(track_dir / image_name)
             writer.writerow({"image": f"track/{image_name}", "class_name": "track", **metadata})
 
@@ -272,7 +263,7 @@ def write_split(
         writer.writeheader()
         for idx in range(image_count):
             image_name = f"{idx:04d}.png"
-            img, metadata = make_crossing_image(image_size, track_width_min, track_width_max, black_track_prob)
+            img, metadata = make_crossing_image(image_size)
             img.save(crossing_dir / image_name)
             writer.writerow({"image": f"crossing/{image_name}", "class_name": "crossing", **metadata})
 
@@ -298,23 +289,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image-size", type=int, default=64)
     parser.add_argument("--train-count", type=int, default=400)
     parser.add_argument("--val-count", type=int, default=100)
-    parser.add_argument("--track-width-min", type=int, default=8)
-    parser.add_argument("--track-width-max", type=int, default=18)
-    parser.add_argument(
-        "--black-track-prob",
-        type=float,
-        default=0.85,
-        help="Probability a track is pure black (vs. a dark tone). Default: 0.85",
-    )
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-
-    if args.track_width_min < 1:
-        parser.error("--track-width-min must be at least 1")
-    if args.track_width_max < args.track_width_min:
-        parser.error("--track-width-max must be >= --track-width-min")
-    if not 0.0 <= args.black_track_prob <= 1.0:
-        parser.error("--black-track-prob must be between 0.0 and 1.0")
 
     return args
 
@@ -329,11 +305,11 @@ def main() -> None:
 
     write_split(
         args.out_dir, "train", args.train_count,
-        args.image_size, args.track_width_min, args.track_width_max, args.black_track_prob,
+        args.image_size,
     )
     write_split(
         args.out_dir, "val", args.val_count,
-        args.image_size, args.track_width_min, args.track_width_max, args.black_track_prob,
+        args.image_size,
     )
 
     print(f"Dataset created in: {args.out_dir}")
