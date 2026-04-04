@@ -145,6 +145,95 @@ def make_track_image(
     return img, metadata
 
 
+def make_crossing_image(
+    image_size: int,
+    track_width_min: int,
+    track_width_max: int,
+    black_track_prob: float,
+) -> tuple[Image.Image, dict[str, float | int | str]]:
+    bg_level = random.randint(170, 245)
+    bg = (bg_level, bg_level, bg_level)
+    img = Image.new("RGB", (image_size, image_size), color=bg)
+    draw = ImageDraw.Draw(img)
+    _add_background_noise(draw, image_size)
+
+    thickness = random.randint(track_width_min, track_width_max)
+    if random.random() < black_track_prob:
+        tone = random.randint(0, 30)
+        track_color: tuple[int, int, int] = (tone, tone, tone)
+        color_name = "black"
+    else:
+        warm = random.randint(0, 40)
+        track_color = (warm + 10, warm, warm)
+        color_name = "dark"
+
+    half = image_size / 2
+
+    # First track angle
+    angle1_deg = random.uniform(0.0, 360.0)
+    # Second track: ensure a minimum intersection angle of 25°
+    delta = random.uniform(25.0, 155.0) * random.choice([-1, 1])
+    angle2_deg = (angle1_deg + delta) % 360
+
+    # Intersection point near image centre
+    cx = half + random.uniform(-half * 0.3, half * 0.3)
+    cy = half + random.uniform(-half * 0.3, half * 0.3)
+    reach = image_size * 0.9
+
+    for angle_deg in (angle1_deg, angle2_deg):
+        angle_rad = math.radians(angle_deg)
+        dx, dy = math.cos(angle_rad), math.sin(angle_rad)
+        start = (cx - dx * reach, cy - dy * reach)
+        end = (cx + dx * reach, cy + dy * reach)
+        draw.line([start, end], fill=track_color, width=thickness)
+
+    # Optionally place a filled green direction-marker circle beside the
+    # chosen branch, just before the intersection point.
+    has_marker = random.random() < 0.5
+    follow_angle_deg: float = -1.0
+    if has_marker:
+        follow_angle_deg = random.choice([angle1_deg, angle2_deg])
+        marker_rad = math.radians(follow_angle_deg)
+        # Small distance before the crossing along the branch (0.8–1.5× track width)
+        along_dist = thickness * random.uniform(0.8, 1.5)
+        # Pick one of the two approach directions randomly
+        along_sign = random.choice([-1, 1])
+        along_x = cx + along_sign * math.cos(marker_rad) * along_dist
+        along_y = cy + along_sign * math.sin(marker_rad) * along_dist
+        # Offset perpendicular to the branch (left or right side)
+        # Ensure the circle clears the track edge: perp_dist > half_track + marker_r
+        perp_sign = random.choice([-1, 1])
+        marker_r = random.uniform(thickness * 0.25, thickness * 0.5)
+        min_perp = thickness / 2 + marker_r + thickness * 0.15
+        perp_dist = random.uniform(min_perp, min_perp + thickness * 0.6)
+        mx = along_x + perp_sign * (-math.sin(marker_rad)) * perp_dist
+        my = along_y + perp_sign * math.cos(marker_rad) * perp_dist
+        g = random.randint(140, 220)
+        marker_color = (random.randint(0, 40), g, random.randint(0, 40))
+        draw.ellipse(
+            [mx - marker_r, my - marker_r, mx + marker_r, my + marker_r],
+            fill=marker_color,
+        )
+
+    if random.random() < 0.2:
+        img = img.filter(ImageFilter.GaussianBlur(radius=random.uniform(0.15, 0.6)))
+
+    intersection_angle = abs(delta)
+    if intersection_angle > 180:
+        intersection_angle = 360 - intersection_angle
+
+    metadata: dict[str, float | int | str] = {
+        "angle1_degrees": round(angle1_deg, 3),
+        "angle2_degrees": round(angle2_deg, 3),
+        "intersection_angle": round(intersection_angle, 3),
+        "thickness_px": thickness,
+        "track_color": color_name,
+        "has_marker": int(has_marker),
+        "follow_angle_degrees": round(follow_angle_deg, 3),
+    }
+    return img, metadata
+
+
 def write_split(
     root: Path,
     split: str,
@@ -169,6 +258,23 @@ def write_split(
             img, metadata = make_track_image(image_size, track_width_min, track_width_max, black_track_prob)
             img.save(track_dir / image_name)
             writer.writerow({"image": f"track/{image_name}", "class_name": "track", **metadata})
+
+    crossing_dir = root / split / "crossing"
+    crossing_dir.mkdir(parents=True, exist_ok=True)
+    crossing_meta = root / split / "crossing_labels.csv"
+    with crossing_meta.open("w", newline="", encoding="utf-8") as csv_file:
+        writer = csv.DictWriter(
+            csv_file,
+            fieldnames=["image", "class_name", "angle1_degrees", "angle2_degrees",
+                         "intersection_angle", "thickness_px", "track_color",
+                         "has_marker", "follow_angle_degrees"],
+        )
+        writer.writeheader()
+        for idx in range(image_count):
+            image_name = f"{idx:04d}.png"
+            img, metadata = make_crossing_image(image_size, track_width_min, track_width_max, black_track_prob)
+            img.save(crossing_dir / image_name)
+            writer.writerow({"image": f"crossing/{image_name}", "class_name": "crossing", **metadata})
 
     tl_dir = root / split / "traffic_light"
     tl_dir.mkdir(parents=True, exist_ok=True)
@@ -232,8 +338,8 @@ def main() -> None:
 
     print(f"Dataset created in: {args.out_dir}")
     print(f"Train images per class: {args.train_count}, Val images per class: {args.val_count}")
-    print("Classes: track, traffic_light (signal: go/stop)")
-    print("Metadata: train/track_labels.csv, train/traffic_light_labels.csv (and val/*)") 
+    print("Classes: track, crossing, traffic_light (signal: go/stop)")
+    print("Metadata: train/track_labels.csv, train/crossing_labels.csv, train/traffic_light_labels.csv (and val/*)") 
 
 
 if __name__ == "__main__":
