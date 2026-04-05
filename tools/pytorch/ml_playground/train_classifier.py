@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from pathlib import Path
 
 import numpy as np
@@ -94,11 +95,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--out-dir", type=Path, default=Path("outputs"))
+    parser.add_argument("--cpu", action="store_true", help="Force CPU even if CUDA is available")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    t0 = time.monotonic()
 
     train_root = args.data_dir / "train"
     val_root = args.data_dir / "val"
@@ -109,22 +112,24 @@ def main() -> None:
     if train_ds.class_to_idx != val_ds.class_to_idx:
         raise ValueError("Train and validation class folders do not match")
 
+    use_cuda = torch.cuda.is_available() and not args.cpu
+
     train_loader = DataLoader(
         train_ds,
         batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.workers,
-        pin_memory=torch.cuda.is_available(),
+        pin_memory=use_cuda,
     )
     val_loader = DataLoader(
         val_ds,
         batch_size=args.batch_size,
         shuffle=False,
         num_workers=args.workers,
-        pin_memory=torch.cuda.is_available(),
+        pin_memory=use_cuda,
     )
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if use_cuda else "cpu")
     model = SmallCNN(num_classes=len(train_ds.class_to_idx)).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     criterion = nn.CrossEntropyLoss()
@@ -177,8 +182,10 @@ def main() -> None:
     with meta_path.open("w", encoding="utf-8") as f:
         json.dump(train_ds.class_to_idx, f, indent=2)
 
+    elapsed = time.monotonic() - t0
     print(f"Saved model to: {out_path}")
     print(f"Saved classes to: {meta_path}")
+    print(f"Total time: {elapsed:.1f}s")
 
 
 if __name__ == "__main__":
