@@ -6,45 +6,52 @@ I use Distrox. See ``distrobox-ubuntu-rocm.ini``.
 
 ### Check Installation
 
-````sh
+```sh
 rocm-smi
-````
+```
 
-## Install Pytorch
+## Install Pytorch (ROCm)
 
 In separate venv
 
-````sh
-python3 -m venv ~/.venv-rocm-pytorch  
-source ~/.venv-rocm-pytorch/bin/activate
+```sh
+python3 -m venv ~/.venv-pytorch-rocm
+source ~/.venv-pytorch-rocm/bin/activate
 pip3 install wheel setuptools
 pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/rocm7.2
 pip3 install onnxscript
-````
+```
 
 ### Check Installation
 
 For my local setup:
 
-````sh
-python3 ./check_rocm_ml_infra.py
-````
+```sh
+python3 ./check_cpu_ml_infra.py
+```
 
-## Label Studio
+## Install Pytorch (CPU only)
+
+```sh
+python3 -m venv ~/.venv-pytorch-rocm
+source ~/.venv-pytorch-rocm/bin/activate
+pip3 install wheel setuptools
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip3 install onnxscript
+```
+
+For my local setup:
+
+```sh
+python3 ./check_cpu_ml_infra.py
+```
+
+## Install Label Studio
 
 In separate venv
 
-````sh
+```sh
 python3 -m venv ~/.venv-label-studio
 source ~/.venv-label-studio/bin/activate
 pip3 install ultralytics label-studio onnx onnxsim
-````
-
-
-# Export ONNX Files for Edge AI
-
-In the PyTorch venv:
-
-```bash
-python3 ./export_onnx.py --model ./outputs/model.pt --out-dir ./outputs --image-size 64
 ```

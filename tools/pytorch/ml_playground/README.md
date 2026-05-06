@@ -7,14 +7,15 @@ on a light background, for line-following / steering-angle experiments.
 
 - `generate_dataset.py`: generate the track dataset
 - `train_classifier.py`: train SmallCNN and save `outputs/model.pt`
+- `capture_dataset.py`: capture labeled webcam photos on key press
 - `webcam_classify.py`: run live webcam inference with `outputs/model.pt`
 - `export_onnx.py`: export `outputs/model.pt` to `outputs/model.onnx` (PyTorch venv)
 - `requirements.txt`: Python dependencies
 
-## Generate Dataset
+## Generate Synthetic Dataset
 
 ```bash
-python generate_dataset.py --out-dir data --train-count 400 --val-count 100
+python generate_dataset.py --out-dir data --train-count 400
 ```
 
 From repo root:
@@ -22,18 +23,24 @@ From repo root:
 ```bash
 python tools/pytorch/ml_playground/generate_dataset.py \
   --out-dir=tools/pytorch/ml_playground/data \
-  --train-count=10000 --val-count=2000
+  --train-count=1000
 ```
+
+Synthetic classes: `track`, `crossing`, `sign`.
+
+### Hybrid mode (synthetic train + real val)
+
+The generator now creates only `train/` synthetic images, so your real `val/`
+images are not overwritten.
+
+Use `--clean` only when you intentionally want to delete existing data in `--out-dir` first.
 
 Output layout, e.g. for `track`:
 
 ```
-data/tracks/
+data/
   train/
     track/          ← PNG images
-    track_labels.csv
-  val/
-    track/
     track_labels.csv
 ```
 
@@ -44,11 +51,11 @@ Each CSV row contains: `image`, `class_name`, `angle_degrees`, `thickness_px`,
 
 | Flag            | Default       | Description                        |
 |-----------------|---------------|------------------------------------|
-| `--out-dir`     | `data/tracks` | Output root directory              |
+| `--out-dir`     | `data`        | Output root directory              |
 | `--image-size`  | `64`          | Square image side length in pixels |
 | `--train-count` | `400`         | Number of training images          |
-| `--val-count`   | `100`         | Number of validation images        |
 | `--seed`        | `42`          | Random seed                        |
+| `--clean`       | `false`       | Remove output directory before generation |
 
 ## Train Model
 
@@ -65,8 +72,12 @@ python tools/pytorch/ml_playground/train_classifier.py \
   --epochs 20
 ```
 
-Trains a `SmallCNN` classifier on the generated dataset. Classes are discovered
-automatically from subdirectory names under `data/train/`.
+Trains a `SmallCNN` classifier on image folders using an explicit split:
+
+- `data/train/<class>/*`
+- `data/val/<class>/*`
+
+Supported image formats: PNG, JPG/JPEG, BMP, WEBP.
 
 Outputs:
 
@@ -77,13 +88,14 @@ Outputs:
 
 | Flag           | Default   | Description                                   |
 |----------------|-----------|-----------------------------------------------|
-| `--data-dir`   | `data`    | Root directory containing `train/` and `val/` |
+| `--data-dir`   | `data`    | Dataset root containing `train/` and `val/` |
 | `--epochs`     | `10`      | Number of training epochs                     |
 | `--batch-size` | `64`      | Batch size                                    |
 | `--lr`         | `1e-3`    | Learning rate (Adam)                          |
 | `--workers`    | `2`       | DataLoader worker processes                   |
 | `--out-dir`    | `outputs` | Directory for saved model & metadata          |
 | `--cpu`        | `false`   | Force CPU training even if CUDA is available  |
+| `--image-size` | `64`      | Resize inputs to a square side length         |
 
 Training prints total elapsed wall-clock time at the end.
 
@@ -125,6 +137,39 @@ Press `q` in the preview window to quit.
 | `--size`         | `64`               | Resize input frame to this square size   |
 | `--cpu`          | `false`            | Force CPU inference even if CUDA exists  |
 | `--list-cameras` | `false`            | Probe cameras, print detected devices, and exit |
+
+## Webcam Data Capture
+
+Capture training images from webcam with keyboard control.
+
+Run from repo root:
+
+```bash
+python tools/pytorch/ml_playground/capture_dataset.py \
+  --camera 0 \
+  --label track \
+  --out-dir tools/pytorch/ml_playground/data \
+  --prefix img
+```
+
+Controls:
+
+- `Space`: capture one photo
+- `q`: quit
+
+Output:
+
+- Images are saved under `out-dir/label/` as JPG files
+- A capture manifest is appended to `out-dir/captures.csv`
+
+### Capture options
+
+| Flag         | Default       | Description                              |
+|--------------|---------------|------------------------------------------|
+| `--out-dir`  | `data`        | Root output directory                    |
+| `--label`    | `unlabeled`   | Class label (used as subfolder name)     |
+| `--camera`   | `0`           | Camera index                             |
+| `--prefix`   | `img`         | Prefix for generated image filenames     |
 
 
 ## Export ONNX
