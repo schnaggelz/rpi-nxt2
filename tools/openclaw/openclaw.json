@@ -3,13 +3,11 @@
     "defaults": {
       "workspace": "/home/timon/.distrobox/ubuntu-openclaw/.openclaw/workspace",
       "model": {
-        "primary": "ollama/qwen3:30b"
+        "primary": "ollama-medium/qwen3:30b"
       },
       "models": {
-        "ollama/qwen3:30b": {}
-      },
-      "sandbox": {
-        "mode": "all"
+        "ollama-small/qwen3:14b": {},
+        "ollama-medium/qwen3:30b": {}
       }
     }
   },
@@ -17,10 +15,10 @@
     "mode": "local",
     "auth": {
       "mode": "token",
-      "token": "519820edf070387f6a6067b5b30e84fbd6c60537d8fd458e"
+      "token": "d05c1e38553b16a7d4e5e043fce14c0d1e5cbf384d5e7bb8"
     },
     "port": 18789,
-    "bind": "loopback",
+    "bind": "lan",
     "tailscale": {
       "mode": "off",
       "resetOnExit": false
@@ -70,7 +68,55 @@
   "models": {
     "mode": "merge",
     "providers": {
-      "ollama": {
+      "ollama-small": {
+        "baseUrl": "http://192.168.242.97:11434",
+        "apiKey": "",
+        "api": "ollama",
+        "models": [
+          {
+            "id": "gemma4",
+            "name": "gemma4",
+            "api": "ollama",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192,
+            "compat": {
+              "supportsUsageInStreaming": true
+            }
+          },
+          {
+            "id": "qwen3:14b",
+            "name": "qwen3:14b",
+            "api": "ollama",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 40960,
+            "maxTokens": 8192,
+            "compat": {
+              "supportsUsageInStreaming": true,
+              "supportsTools": true
+            }
+          }
+        ]
+      },
+      "ollama-medium": {
         "baseUrl": "http://192.168.242.99:11434",
         "api": "ollama",
         "apiKey": "OLLAMA_API_KEY",
@@ -115,44 +161,17 @@
             }
           }
         ]
-      },
-      "ollama-worker": {
-        "baseUrl": "http://192.168.242.97:11434/v1",
-        "api": "openai",
-        "apiKey": "OLLAMA_API_KEY",
-        "models": [
-          {
-            "id": "qwen2.5-coder:14b",
-            "name": "qwen2.5-coder:14b",
-            "reasoning": true,
-            "input": [
-              "text"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 32768,
-            "maxTokens": 8192,
-            "compat": {
-              "supportsTools": true,
-              "supportsUsageInStreaming": true
-            }
-          }
-        ]
       }
     }
   },
   "auth": {
     "profiles": {
-      "ollama:default": {
-        "provider": "ollama",
+      "ollama-small:default": {
+        "provider": "ollama-small",
         "mode": "api_key"
       },
-      "ollama-worker:default": {
-        "provider": "ollama-worker",
+      "ollama-medium:default": {
+        "provider": "ollama-medium",
         "mode": "api_key"
       }
     }
@@ -168,13 +187,13 @@
     }
   },
   "wizard": {
-    "lastRunAt": "2026-05-14T14:12:43.620Z",
+    "lastRunAt": "2026-05-14T16:46:07.770Z",
     "lastRunVersion": "2026.5.7",
     "lastRunCommand": "onboard",
     "lastRunMode": "local"
   },
   "meta": {
     "lastTouchedVersion": "2026.5.7",
-    "lastTouchedAt": "2026-05-14T14:17:42.647Z"
+    "lastTouchedAt": "2026-05-14T16:46:07.799Z"
   }
 }
