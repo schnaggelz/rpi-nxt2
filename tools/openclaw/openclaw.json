@@ -15,7 +15,7 @@
     "mode": "local",
     "auth": {
       "mode": "token",
-      "token": "d05c1e38553b16a7d4e5e043fce14c0d1e5cbf384d5e7bb8"
+      "token": "xxx"
     },
     "port": 18789,
     "bind": "lan",
