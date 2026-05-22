@@ -1,0 +1,27 @@
+services:
+  rocm-ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ubuntu-rocm-ollama:latest
+    container_name: ubuntu-rocm-ollama
+    # Required devices for AMD ROCm to access the GPU
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/kfd:/dev/kfd
+    # Map the default Ollama port to the host
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_MAX_VRAM=22528
+      - OLLAMA_NUM_PARALLEL=1
+    volumes:
+      # Persist downloaded Ollama models across container restarts
+      - ollama_data:/root/.ollama
+    # Keeps the container running and allows interactive zsh session
+    tty: true
+    stdin_open: true
+
+volumes:
+  ollama_data:
