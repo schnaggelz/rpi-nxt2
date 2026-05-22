@@ -19,9 +19,8 @@ services:
     volumes:
       # Persist downloaded Ollama models across container restarts
       - ollama_data:/root/.ollama
-    # Keeps the container running and allows interactive zsh session
-    tty: true
-    stdin_open: true
+    # Start the Ollama server directly on container boot
+    command: ollama serve
 
 volumes:
   ollama_data:
