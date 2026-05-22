@@ -1,6 +1,9 @@
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:main
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: open-webui-custom:latest
     container_name: open-webui
     ports:
       - "3000:8080"
